@@ -25,7 +25,7 @@ class ActivateCommand extends Command
         } else {
             $key = text(
                 label: 'Enter your license key',
-                hint: 'Purchase a license key: https://fluxui.dev/pricing',
+                hint: 'Purchase a license key: https://flux-docs.test/pricing',
                 required: true,
             );
 
@@ -41,7 +41,7 @@ class ActivateCommand extends Command
 
         $response = spin(
             message: 'Activating your license...',
-            callback: fn () => Http::post('https://fluxui.dev/api/activate', [ 'key' => $key, 'fingerprint' =>  $fingerprint ]),
+            callback: fn () => Http::post('https://flux-docs.test/api/activate', [ 'key' => $key, 'fingerprint' =>  $fingerprint ]),
         );
 
         if ($response->failed() && $response->json('error') === 'not-found') {
@@ -93,9 +93,9 @@ class ActivateCommand extends Command
         info('[√] Repository added to composer.json');
 
         // Run composer require...
-        note('Running: composer require livewire/flux...');
+        note('Running: composer require livewire/flux-pro...');
 
-        $process = new Process(['composer', 'require', 'livewire/flux']);
+        $process = new Process(['composer', 'require', 'livewire/flux-pro']);
         $process->setTty(true);
         $process->setTimeout(null);
 
@@ -104,7 +104,7 @@ class ActivateCommand extends Command
         });
 
         if (! $process->isSuccessful()) {
-            error("We are unable to install Flux automatically. Try running `composer require livewire/flux` manually.");
+            error("We are unable to install Flux automatically. Try running `composer require livewire/flux-pro` manually.");
             note('Contact support@fluxui.dev for help');
             return;
         }
@@ -112,7 +112,7 @@ class ActivateCommand extends Command
         if ($expiresAt->isPast()) {
             note('');
             warning('This license has expired. You will need to purchase a new license to receive updates.');
-            note('Extend your license here: https://fluxui.dev/licenses');
+            note('Extend your license here: https://flux-docs.test/licenses');
         }
 
         note('');
