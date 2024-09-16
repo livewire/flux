@@ -34,29 +34,29 @@ class AssetManager
     public function registerAssetRoutes()
     {
         Route::get('/flux/flux.css', function () {
-            return $this->pretendResponseIsFile(
-                __DIR__.'/../../flux-pro/dist/flux.css', 'text/css'
-            );
+            return Flux::pro()
+                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.css', 'text/css')
+                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.css', 'text/css');
         });
 
         Route::get('/flux/flux.js', function () {
-            return $this->pretendResponseIsFile(
-                __DIR__.'/../../flux-pro/dist/flux.js'
-            );
+            return Flux::pro()
+                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.js', 'text/css')
+                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/css');
         });
 
         Route::get('/flux/flux.min.js', function () {
-            return $this->pretendResponseIsFile(
-                __DIR__.'/../../flux-pro/dist/flux.min.js'
-            );
+            return Flux::pro()
+                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.min.js', 'text/css')
+                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/css');
         });
     }
 
     public static function scripts()
     {
-        Flux::ensurePro();
-
-        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+        $manifest = Flux::pro()
+            ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
+            : json_decode(file_get_contents(__DIR__.'/../../flux/dist/manifest.json'), true);
 
         $versionHash = $manifest['/flux.js'];
 
@@ -69,9 +69,9 @@ class AssetManager
 
     public static function styles()
     {
-        Flux::ensurePro();
-
-        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+        $manifest = Flux::pro()
+            ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
+            : json_decode(file_get_contents(__DIR__.'/../../flux/dist/manifest.json'), true);
 
         $versionHash = $manifest['/flux.js'];
 

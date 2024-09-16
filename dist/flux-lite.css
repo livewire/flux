@@ -1,0 +1,28 @@
+/*
+Transition dialogs with fade a slight scale effect...
+*/
+[data-flux-modal] > dialog, [data-flux-modal] > dialog::backdrop {
+    opacity: 0;
+    transition: all 0.075s allow-discrete;
+    & { transform: scale(0.95); }
+}
+
+[data-flux-modal] > dialog[data-flux-flyout] { transform: scale(1) translateX(50px); }
+
+[data-flux-modal] > dialog[open], [data-flux-modal] > dialog[open]::backdrop {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition: all 0.15s allow-discrete;
+}
+
+@starting-style {
+    [data-flux-modal] > dialog[open], [data-flux-modal] > dialog[open]::backdrop {
+        opacity: 0;
+        & { transform: scale(0.95); }
+    }
+    [data-flux-modal] > dialog[open][data-flux-flyout] { transform: scale(1) translateX(50px); }
+}
+
+[data-flux-modal] > dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+}

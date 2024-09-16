@@ -26,6 +26,11 @@ class FluxManager
         }
     }
 
+    public function pro()
+    {
+        return InstalledVersions::isInstalled('livewire/flux-pro');
+    }
+
     public function markAssetsRendered()
     {
         $this->hasRenderedAssets = true;
