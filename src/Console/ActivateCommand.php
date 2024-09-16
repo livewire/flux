@@ -81,7 +81,7 @@ class ActivateCommand extends Command
         info('[√] License key added to auth.json');
 
         // Add repository to composer.json...
-        $process = new Process(['composer', 'config', 'repositories.flux', 'composer', 'https://flux-pro.composer.sh']);
+        $process = new Process(['composer', 'config', 'repositories.flux-pro', 'composer', 'https://flux-pro.composer.sh']);
         $process->run();
 
         if (! $process->isSuccessful()) {
