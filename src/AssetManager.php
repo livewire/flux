@@ -41,14 +41,14 @@ class AssetManager
 
         Route::get('/flux/flux.js', function () {
             return Flux::pro()
-                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.js', 'text/css')
-                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/css');
+                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.js', 'text/javascript')
+                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
         });
 
         Route::get('/flux/flux.min.js', function () {
             return Flux::pro()
-                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.min.js', 'text/css')
-                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/css');
+                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.min.js', 'text/javascript')
+                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
         });
     }
 
