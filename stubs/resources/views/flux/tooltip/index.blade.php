@@ -1,10 +1,11 @@
 @props([
     'position' => 'top',
+    'align' => 'center',
     'content' => null,
     'kbd' => null,
 ])
 
-<ui-tooltip position="{{ $position }}" {{ $attributes }} data-flux-tooltip>
+<ui-tooltip position="{{ $position }} {{ $align }}" {{ $attributes }} data-flux-tooltip>
     {{ $slot }}
 
     <?php if ($content): ?>
