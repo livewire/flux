@@ -2,6 +2,7 @@
 
 namespace Flux;
 
+use Flux\Concerns\InteractsWithComponents;
 use Composer\InstalledVersions;
 use Illuminate\Support\Str;
 use Flux\ClassBuilder;
@@ -10,6 +11,8 @@ use function Livewire\on;
 
 class FluxManager
 {
+    use InteractsWithComponents;
+
     public $hasRenderedAssets = false;
 
     public function boot()
@@ -17,6 +20,8 @@ class FluxManager
         on('flush-state', function () {
             $this->hasRenderedAssets = false;
         });
+
+        $this->bootComponents();
     }
 
     public function ensurePro()
@@ -102,14 +107,5 @@ class FluxManager
         ];
 
         return $insets->map(fn ($i) => $insetClasses[$i])->join(' ');
-    }
-
-    public function version()
-    {
-        if (InstalledVersions::isInstalled('livewire/flux')) {
-            return InstalledVersions::getVersion('livewire/flux');
-        } else {
-            throw new \Exception('livewire/flux is not installed.');
-        }
     }
 }

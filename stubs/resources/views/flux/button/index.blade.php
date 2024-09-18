@@ -71,12 +71,11 @@ $classes = Flux::classes()
         },
         default => '',
     })
-     // Grouped border treatments...
-    ->add(match ($variant) {
-        default => 'group-[]/button:border-r group-[]/button:last:border-r-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
+    ->add(match ($variant) { // Grouped border treatments...
         'outline' => 'group-[]/button:-ml-[1px] group-[]/button:first:ml-0',
         'ghost' => '',
         'subtle' => '',
+        default => 'group-[]/button:border-r group-[]/button:last:border-r-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
     })
     ;
 @endphp
