@@ -12,64 +12,42 @@ use Illuminate\Support\Carbon;
 #[AsCommand(name: 'flux:activate')]
 class ActivateCommand extends Command
 {
-    protected $signature = 'flux:activate {key?}';
+    protected $signature = 'flux:activate {email?} {key?}';
 
     protected $description = 'Activate Flux, the official UI component library for Livewire';
 
     public function handle()
     {
+        $email = $this->argument('email');
         $key = $this->argument('key');
 
-        if ($key) {
-            $this->installFluxPro($key);
-        } else {
+        if (! $email) {
+            $email = text(
+                label: 'Enter the email address associated with your license',
+                hint: 'Purchase a license key: https://flux-docs.test/pricing',
+                required: true,
+            );
+        }
+
+        if (! $key) {
             $key = text(
                 label: 'Enter your license key',
                 hint: 'Purchase a license key: https://flux-docs.test/pricing',
                 required: true,
             );
-
-            $this->installFluxPro($key);
         }
+
+        $this->installFluxPro($email, $key);
     }
 
-    public function installFluxPro($key)
+    public function installFluxPro($email, $key)
     {
-        $hashKey = app('encrypter')->getKey();
-
-        $fingerprint = hash_hmac('sha256', json_encode($key), $hashKey);
-
-        $response = spin(
-            message: 'Activating your license...',
-            callback: fn () => Http::post('https://flux-docs.test/api/activate', [ 'key' => $key, 'fingerprint' =>  $fingerprint ]),
-        );
-
-        if ($response->failed() && $response->json('error') === 'not-found') {
-            warning('Invalid license key');
-            note('Contact support@fluxui.dev for help');
-            return;
-        } elseif ($response->failed()) {
-            $response->throw();
-            alert('Failed to activate license');
-            note('Contact support@fluxui.dev for help');
-            return;
-        }
-
-        $key = (string) $response->json('key');
-        $email = (string) $response->json('email');
-        $expiresAt = Carbon::parse($response->json('expires_at'));
-
-        if ($key === '' || $email === '') {
-            error('Whoops, something went wrong. Either your license key or email is invalid.');
-            note('Contact support@fluxui.dev for help');
-            return;
-        }
-
         // Add creds to auth.json...
         $process = new Process([
             'composer', 'config', '-a',
-            'http-basic.flux-pro.composer.sh', $email, $key
+            'http-basic.composer.fluxui.dev', $email, $key
         ]);
+
         $process->run();
 
         if (! $process->isSuccessful()) {
@@ -81,7 +59,8 @@ class ActivateCommand extends Command
         info('[√] License key added to auth.json');
 
         // Add repository to composer.json...
-        $process = new Process(['composer', 'config', 'repositories.flux-pro', 'composer', 'https://flux-pro.composer.sh']);
+        $process = new Process(['composer', 'config', 'repositories.flux-pro', 'composer', 'https://composer.fluxui.dev']);
+
         $process->run();
 
         if (! $process->isSuccessful()) {
@@ -107,12 +86,6 @@ class ActivateCommand extends Command
             error("We are unable to install Flux automatically. Try running `composer require livewire/flux-pro` manually.");
             note('Contact support@fluxui.dev for help');
             return;
-        }
-
-        if ($expiresAt->isPast()) {
-            note('');
-            warning('This license has expired. You will need to purchase a new license to receive updates.');
-            note('Extend your license here: https://flux-docs.test/licenses');
         }
 
         note('');
