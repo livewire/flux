@@ -9,7 +9,7 @@ You can view the components in action at [https://fluxui.dev](https://fluxui.dev
 Run the following command from your project's root directory:
 
 ```bash
-composer require livewire/flux
+composer require livewire/flux:v1.0.0-beta.1 --prefer-dist
 ```
 
 Flux has built-in scripts and styles that are required to use the components. Add the following to your app template's `head` and `body` tags:
