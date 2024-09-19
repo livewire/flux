@@ -24,7 +24,7 @@ class ActivateCommand extends Command
         if (! $email) {
             $email = text(
                 label: 'Enter the email address associated with your license',
-                hint: 'Purchase a license key: https://flux-docs.test/pricing',
+                hint: 'Purchase a license key: https://fluxui.dev/pricing',
                 required: true,
             );
         }
@@ -32,7 +32,7 @@ class ActivateCommand extends Command
         if (! $key) {
             $key = text(
                 label: 'Enter your license key',
-                hint: 'Purchase a license key: https://flux-docs.test/pricing',
+                hint: 'Purchase a license key: https://fluxui.dev/pricing',
                 required: true,
             );
         }
