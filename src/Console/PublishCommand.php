@@ -23,15 +23,17 @@ class PublishCommand extends Command
 
     protected array $fluxComponents = [
         'free' => [
+            'Button' => ['button'],
             'Dropdown' => ['dropdown', 'menu'],
             'Icon' => ['icon'],
+            'Separator' => ['separator'],
+            'Tooltip' => ['tooltip'],
         ],
         'pro' => [
             'Accordion' => ['accordion'],
             'Autocomplete' => ['autocomplete'],
             'Badge' => ['badge'],
             'Breadcrumbs' => ['breadcrumbs'],
-            'Button' => ['button'],
             'Card' => ['card'],
             'Checkbox' => ['checkbox'],
             'Command' => ['command'],
@@ -44,12 +46,10 @@ class PublishCommand extends Command
             'Navbar' => ['navbar', 'navlist'],
             'Radio' => ['radio'],
             'Select' => ['select', 'option', 'options'],
-            'Separator' => ['separator'],
             'Switch' => ['switch'],
             'Table' => ['table', 'columns', 'column', 'rows', 'row', 'cell', 'pagination'],
             'Tabs' => ['tabs'],
             'Textarea' => ['textarea'],
-            'Tooltip' => ['tooltip'],
             'Typography' => ['heading', 'subheading', 'text', 'link'],
         ],
     ];

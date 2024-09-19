@@ -57,8 +57,11 @@ module.exports = {
 ## What's included?
 
 The following components are included in the `livewire/flux` package:
+* [Button](https://fluxui.dev/components/button)
 * [Dropdown](https://fluxui.dev/components/dropdown)
 * [Icon](https://fluxui.dev/components/icon)
+* [Separator](https://fluxui.dev/components/separator)
+* [Tooltip](https://fluxui.dev/components/tooltip)
 
 The rest of the Flux components are part of the paid (Pro) tier of Flux.
 
