@@ -1,6 +1,6 @@
 # Flux
 
-Flux is the official UI component library for [Livewire](https://laravel-livewire.com).
+Flux is the official UI component library for [Livewire](https://livewire.laravel.com).
 
 You can view the components in action at [https://fluxui.dev](https://fluxui.dev).
 
