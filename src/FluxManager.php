@@ -62,7 +62,7 @@ class FluxManager
         return $styles ? $builder->add($styles) : $builder;
     }
 
-    public function disalowWireModel($attributes, $componentName)
+    public function disallowWireModel($attributes, $componentName)
     {
         if ($attributes->whereStartsWith('wire:')->isNotEmpty()) {
             throw new \Exception('Cannot use wire:model on <'.$componentName.'>');
