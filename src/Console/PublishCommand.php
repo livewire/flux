@@ -50,6 +50,7 @@ class PublishCommand extends Command
             'Table' => ['table', 'columns', 'column', 'rows', 'row', 'cell', 'pagination'],
             'Tabs' => ['tabs'],
             'Textarea' => ['textarea'],
+            'Toast' => ['toast'],
             'Typography' => ['heading', 'subheading', 'text', 'link'],
         ],
     ];
