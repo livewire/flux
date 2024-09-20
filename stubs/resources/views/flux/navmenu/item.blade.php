@@ -35,14 +35,14 @@ $classes = Flux::classes()
     <?php endif; ?>
 
     <?php if ($icon): ?>
-        <flux:icon :$icon variant="mini" class="mr-2" data-navmenu-icon />
+        <flux:icon :$icon variant="mini" class="me-2" data-navmenu-icon />
     <?php endif; ?>
 
     {{ $slot }}
 
     <?php if ($suffix): ?>
         <?php if (is_string($suffix)): ?>
-            <div class="ml-auto opacity-50 text-xs">
+            <div class="ms-auto opacity-50 text-xs">
                 {{ $suffix }}
             </div>
         <?php else: ?>

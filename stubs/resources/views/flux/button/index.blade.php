@@ -32,14 +32,14 @@ $classes = Flux::classes()
     })
     ->add($inset ? match ($size) { // Inset...
         'base' => $square
-            ? Flux::applyInset($inset, top: '-mt-2.5', right: '-mr-2.5', bottom: '-mb-2.5', left: '-ml-2.5')
-            : Flux::applyInset($inset, top: '-mt-2.5', right: '-mr-4', bottom: '-mb-3', left: '-ml-4'),
+            ? Flux::applyInset($inset, top: '-mt-2.5', right: '-me-2.5', bottom: '-mb-2.5', left: '-ms-2.5')
+            : Flux::applyInset($inset, top: '-mt-2.5', right: '-me-4', bottom: '-mb-3', left: '-ms-4'),
         'sm' => $square
-            ? Flux::applyInset($inset, top: '-mt-1.5', right: '-mr-1.5', bottom: '-mb-1.5', left: '-ml-1.5')
-            : Flux::applyInset($inset, top: '-mt-1.5', right: '-mr-3', bottom: '-mb-1.5', left: '-ml-3'),
+            ? Flux::applyInset($inset, top: '-mt-1.5', right: '-me-1.5', bottom: '-mb-1.5', left: '-ms-1.5')
+            : Flux::applyInset($inset, top: '-mt-1.5', right: '-me-3', bottom: '-mb-1.5', left: '-ms-3'),
         'xs' => $square
-            ? Flux::applyInset($inset, top: '-mt-1', right: '-mr-1', bottom: '-mb-1', left: '-ml-1')
-            : Flux::applyInset($inset, top: '-mt-1', right: '-mr-2', bottom: '-mb-1', left: '-ml-2'),
+            ? Flux::applyInset($inset, top: '-mt-1', right: '-me-1', bottom: '-mb-1', left: '-ms-1')
+            : Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: '-ms-2'),
     } : '')
     ->add(match ($variant) { // Background color...
         'primary' => 'bg-zinc-800 hover:bg-zinc-900 dark:bg-white dark:hover:bg-zinc-100',
@@ -72,12 +72,12 @@ $classes = Flux::classes()
         default => '',
     })
     ->add(match ($variant) { // Grouped border treatments...
-        'outline' => 'group-[]/button:-ml-[1px] group-[]/button:first:ml-0',
+        'outline' => 'group-[]/button:-ms-[1px] group-[]/button:first:ms-0',
         'ghost' => '',
         'subtle' => '',
-        default => 'group-[]/button:border-r group-[]/button:last:border-r-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
-    })
-    ;
+        default => 'group-[]/button:ltr:border-e group-[]/button:rtl:border-e group-[]/button:last:border-e-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
+    });
+    
 @endphp
 
 <flux:with-tooltip :$attributes>
@@ -95,7 +95,7 @@ $classes = Flux::classes()
         <?php endif; ?>
 
         <?php if (is_string($iconTrailing)): ?>
-            <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$square ? '' : '-ml-1'" />
+            <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$square ? '' : '-ms-1'" />
         <?php elseif ($iconTrailing): ?>
             {{ $iconTrailing }}
         <?php endif; ?>

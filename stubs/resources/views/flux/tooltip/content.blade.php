@@ -16,6 +16,6 @@ $classes = Flux::classes([
     {{ $slot }}
 
     <?php if ($kbd): ?>
-        <span class="pl-1 text-zinc-300">{{ $kbd }}</span>
+        <span class="ps-1 text-zinc-300">{{ $kbd }}</span>
     <?php endif; ?>
 </div>

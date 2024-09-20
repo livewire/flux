@@ -32,7 +32,7 @@ $classes = Flux::classes()
     {{ $label ?? $slot }}
 
     <?php if ($suffix): ?>
-        <div class="ml-auto opacity-50 text-xs">
+        <div class="ms-auto opacity-50 text-xs">
             {{ $suffix }}
         </div>
     <?php endif; ?>
