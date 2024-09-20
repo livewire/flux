@@ -61,4 +61,17 @@ trait InteractsWithComponents
             }
         };
     }
+
+    public function toast($message, $heading = null, $duration = 5000)
+    {
+        $params = [
+            'duration' => $duration,
+            'slots' => [],
+        ];
+
+        if ($message) $params['slots']['message'] = $message;
+        if ($heading) $params['slots']['heading'] = $heading;
+
+        app('livewire')->current()->dispatch('toast-show', ...$params);
+    }
 }
