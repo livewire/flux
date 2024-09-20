@@ -26,6 +26,7 @@ class AssetManager
 
         Blade::directive('fluxScripts', function ($expression) {
             return <<<'PHP'
+            <?php app('livewire')->forceAssetInjection(); ?>
             {!! app('flux')->scripts() !!}
             PHP;
         });
