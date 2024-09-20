@@ -75,7 +75,7 @@ $classes = Flux::classes()
         'outline' => 'group-[]/button:-ms-[1px] group-[]/button:first:ms-0',
         'ghost' => '',
         'subtle' => '',
-        default => 'group-[]/button:ltr:border-e group-[]/button:rtl:border-e group-[]/button:last:border-e-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
+        default => 'group-[]/button:border-e group-[]/button:rtl:border-e group-[]/button:last:border-e-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
     });
     
 @endphp
