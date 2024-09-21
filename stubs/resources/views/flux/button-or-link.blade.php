@@ -5,7 +5,7 @@
 ])
 
 @php
-$current = $current === null ? ($href ? request()->is(trim($href, '/')) : false) : $current;
+$current = $current === null ? ($href ? request()->is($href === '/' ? '/' : trim($href, '/')) : false) : $current;
 @endphp
 
 <?php if ($href): ?>
