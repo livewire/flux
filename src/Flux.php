@@ -5,7 +5,7 @@ namespace Flux;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Livewire\FluxManager
+ * @see \Flux\FluxManager
  */
 class Flux extends Facade
 {
