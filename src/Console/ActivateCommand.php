@@ -2,6 +2,7 @@
 
 namespace Flux\Console;
 
+use RuntimeException;
 use function Laravel\Prompts\{ info, text, note, spin, warning, error, alert, intro, outro, suggest };
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Process\Process;
@@ -75,11 +76,19 @@ class ActivateCommand extends Command
         note('Running: composer require livewire/flux-pro...');
 
         $process = new Process(['composer', 'require', 'livewire/flux-pro']);
-        $process->setTty(true);
+
+        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+            try {
+                $process->setTty(true);
+            } catch (RuntimeException $e) {
+                $this->output->writeln('  <bg=yellow;fg=black> WARN </> '.$e->getMessage().PHP_EOL);
+            }
+        }
+
         $process->setTimeout(null);
 
-        $process->run(function ($type, $buffer) {
-            echo $buffer;
+        $process->run(function ($type, $line) {
+            $this->output->write('    '.$line);
         });
 
         if (! $process->isSuccessful()) {
