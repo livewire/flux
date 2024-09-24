@@ -24,7 +24,7 @@ class PublishCommand extends Command
     protected array $fluxComponents = [
         'free' => [
             'Button' => ['button'],
-            'Dropdown' => ['dropdown', 'menu'],
+            'Dropdown' => ['dropdown', 'menu', 'navmenu'],
             'Icon' => ['icon'],
             'Separator' => ['separator'],
             'Tooltip' => ['tooltip'],
