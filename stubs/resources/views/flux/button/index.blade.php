@@ -23,7 +23,7 @@ $iconVariant ??= ($size === 'xs')
     : ($square ? 'mini' : 'micro');
 
 $classes = Flux::classes()
-    ->add('flex items-center font-medium justify-center gap-2 whitespace-nowrap')
+    ->add('inline-flex items-center font-medium justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-50 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
     ->add(match ($size) { // Size...
         'base' => 'h-10 text-sm rounded-lg' . ' ' . ($square ? 'w-10' : 'px-4'),
