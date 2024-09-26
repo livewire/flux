@@ -48,7 +48,7 @@ class PublishCommand extends Command
             'Select' => ['select', 'option', 'options'],
             'Switch' => ['switch'],
             'Table' => ['table', 'columns', 'column', 'rows', 'row', 'cell', 'pagination'],
-            'Tabs' => ['tab'],
+            'Tabs' => ['tabs','tab'],
             'Textarea' => ['textarea'],
             'Toast' => ['toast'],
             'Typography' => ['heading', 'subheading', 'text', 'link'],
