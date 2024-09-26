@@ -5,7 +5,8 @@
 ])
 
 @php
-$href = $href ? (string) str($href)->after(config('app.url'))->rtrim('/') : $href;
+$appUrl = str(config('app.url'))->rtrim('/');
+$href = $href ? ((string) str($href)->after($appUrl)->rtrim('/') === '' ? '/' : (string) str($href)->after($appUrl)->rtrim('/')) : $href;
 
 $current = $current === null ? ($href ? request()->is($href === '/' ? '/' : trim($href, '/')) : false) : $current;
 @endphp
