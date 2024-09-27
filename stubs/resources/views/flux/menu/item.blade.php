@@ -42,7 +42,7 @@ $suffixClasses = Flux::classes()
 
     <?php if ($suffix): ?>
         <?php if (is_string($suffix)): ?>
-            <div class="{{ $suffixClasses }}"">
+            <div class="{{ $suffixClasses }}">
                 {{ $suffix }}
             </div>
         <?php else: ?>
