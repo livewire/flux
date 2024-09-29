@@ -19,7 +19,7 @@ $current = $current === null ? ($href ? request()->is($href === '/' ? '/' : trim
         {{ $slot }}
     </a>
 <?php else: ?>
-    <button {{ $attributes->merge(['type' => $type]) }}>
+    <button {{ $attributes->merge(['type' => $type, 'data-current' => $current]) }}>
         {{ $slot }}
     </button>
 <?php endif; ?>
