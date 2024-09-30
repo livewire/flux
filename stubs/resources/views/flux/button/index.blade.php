@@ -4,6 +4,7 @@
     'iconVariant' => null,
     'iconLeading' => null,
     'type' => 'button',
+    'loading' => null,
     'size' => 'base',
     'square' => null,
     'inset' => null,
@@ -22,9 +23,15 @@ $iconVariant ??= ($size === 'xs')
     ? ($square ? 'micro' : 'micro')
     : ($square ? 'mini' : 'micro');
 
+$loading ??= $loading ?? ($type === 'submit' || $attributes->whereStartsWith('wire:click')->isNotEmpty());
+
+if ($loading && $type !== 'submit') {
+    $attributes = $attributes->merge(['wire:loading.attr' => 'data-flux-loading']);
+}
+
 $classes = Flux::classes()
-    ->add('inline-flex items-center font-medium justify-center gap-2 whitespace-nowrap')
-    ->add('disabled:opacity-50 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
+    ->add('relative inline-flex items-center font-medium justify-center gap-2 whitespace-nowrap')
+    ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
     ->add(match ($size) { // Size...
         'base' => 'h-10 text-sm rounded-lg' . ' ' . ($square ? 'w-10' : 'px-4'),
         'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
@@ -77,6 +84,12 @@ $classes = Flux::classes()
         'subtle' => '',
         default => 'group-[]/button:border-r group-[]/button:last:border-r-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
     })
+    ->add($loading ? [ // Loading states...
+        '*:transition-opacity',
+        $type === 'submit' ? '[&[disabled]>:not([data-flux-loading-indicator])]:opacity-0' : '[&[data-flux-loading]>:not([data-flux-loading-indicator])]:opacity-0',
+        $type === 'submit' ? '[&[disabled]>[data-flux-loading-indicator]]:opacity-100' : '[&[data-flux-loading]>[data-flux-loading-indicator]]:opacity-100',
+        $type === 'submit' ? '[&[disabled]]:pointer-events-none' : '[&[data-flux-loading]]:pointer-events-none',
+    ] : [])
     ;
 @endphp
 
@@ -88,7 +101,15 @@ $classes = Flux::classes()
             {{ $iconLeading }}
         <?php endif; ?>
 
-        {{ $slot }}
+        <?php if (! $loading): ?>
+            {{ $slot }}
+        <?php else: ?>
+            <span>{{ $slot }}</span>
+
+            <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
+                <flux:icon icon="loading" :variant="$iconVariant" />
+            </div>
+        <?php endif; ?>
 
         <?php if ($kbd): ?>
             <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ $kbd }}</div>
