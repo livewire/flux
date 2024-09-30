@@ -95,20 +95,23 @@ $classes = Flux::classes()
 
 <flux:with-tooltip :$attributes>
     <flux:button-or-link :$type :attributes="$attributes->class($classes)" data-flux-button>
+        <?php if ($loading): ?>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
+                <flux:icon icon="loading" :variant="$iconVariant" />
+            </div>
+        <?php endif; ?>
+
         <?php if (is_string($iconLeading)): ?>
             <flux:icon :icon="$iconLeading" :variant="$iconVariant" />
         <?php elseif ($iconLeading): ?>
             {{ $iconLeading }}
         <?php endif; ?>
 
-        <?php if (! $loading): ?>
-            {{ $slot }}
-        <?php else: ?>
+        <?php if ($loading && ! $slot->isEmpty()): ?>
+            {{-- If we have a loading indicator, we need to wrap it in a span so it can be a target of *:opacity-0... --}}
             <span>{{ $slot }}</span>
-
-            <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
-                <flux:icon icon="loading" :variant="$iconVariant" />
-            </div>
+        <?php else: ?>
+            {{ $slot }}
         <?php endif; ?>
 
         <?php if ($kbd): ?>
