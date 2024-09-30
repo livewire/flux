@@ -108,4 +108,9 @@ class FluxManager
 
         return $insets->map(fn ($i) => $insetClasses[$i])->join(' ');
     }
+
+    public function componentExists($name)
+    {
+        return app('view')->exists(md5('flux') . '::' . $name);
+    }
 }
