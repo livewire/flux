@@ -16,7 +16,7 @@
         "illuminate/view": "^10.0|^11.0",
         "symfony/console": "^6.0|^7.0",
         "livewire/livewire": "^3.5",
-        "laravel/prompts": "^0.1|^0.2"
+        "laravel/prompts": "^0.1|^0.2|^0.3"
     },
     "autoload": {
         "psr-4": {
