@@ -3,9 +3,27 @@ contact_links:
   - name: Bug Report
     url: https://github.com/livewire/flux/issues/new
     about: Submit a bug or an issue
+    body: |
+      Hi there! 👋
+
+      Sorry you hit a problem with Flux.
+
+      Please provide us with:
+      * A concise description of the problem
+      * Minimal, copy-pastable code to reproduce the bug
+      * Screenshots if relevant
+
+      We will close this issue for any of the following reasons:
+      * The code snippets contain unrelated code such as left-over Blade variables
+      * We cannot reproduce the issue with the provided code snippets
+      * The issue is a duplicate
+
+      Thank you!
+
   - name: Feature request
     url: https://github.com/livewire/flux/discussions/new?category=feature-requests
     about: For ideas or feature requests
+
   - name: Flux Documentation
     url: https://fluxui.dev/docs
     about: View the documentation
