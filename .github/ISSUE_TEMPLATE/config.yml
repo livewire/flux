@@ -7,5 +7,5 @@ contact_links:
     url: https://github.com/livewire/flux/discussions/new?category=feature-requests
     about: For ideas or feature requests
   - name: Flux Documentation
-    url: https://fluxui.dev/
+    url: https://fluxui.dev/docs
     about: View the documentation
