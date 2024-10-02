@@ -2,9 +2,9 @@
 $classes = Flux::classes()
     ->add('flex group/button')
     ->add([ // Make the first, middle, and last buttons have proper border radiuses...
-        '[&>*:not(:last-child):not(:first-child)]:rounded-none',
-        'first:*:rounded-r-none',
-        'last:*:rounded-l-none',
+        '[&>[data-flux-group-target]:not(:first-child):not(:last-child)]:rounded-none',
+        '[&>[data-flux-group-target]:first-child:not(:last-child)]:rounded-r-none',
+        '[&>[data-flux-group-target]:last-child:not(:first-child)]:rounded-l-none',
     ])
     ;
 @endphp

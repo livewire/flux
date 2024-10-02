@@ -79,10 +79,12 @@ $classes = Flux::classes()
         default => '',
     })
     ->add(match ($variant) { // Grouped border treatments...
-        'outline' => 'group-[]/button:-ml-[1px] group-[]/button:first:ml-0',
         'ghost' => '',
         'subtle' => '',
-        default => 'group-[]/button:border-r group-[]/button:last:border-r-0 group-[]/button:border-black group-[]/button:dark:border-zinc-900/25',
+        'outline' => '[[data-flux-button-group]_&]:border-l-0 [[data-flux-button-group]_&:first-child]:border-l-[1px]',
+        'filled' => '[[data-flux-button-group]_&]:border-r [[data-flux-button-group]_&]:last:border-r-0 [[data-flux-button-group]_&]:border-zinc-200/80 [[data-flux-button-group]_&]:dark:border-zinc-900/50',
+        'danger' => '[[data-flux-button-group]_&]:border-r [[data-flux-button-group]_&]:last:border-r-0 [[data-flux-button-group]_&]:border-red-600 [[data-flux-button-group]_&]:dark:border-red-900/25',
+        default => '[[data-flux-button-group]_&]:border-r [[data-flux-button-group]_&]:last:border-r-0 [[data-flux-button-group]_&]:border-black [[data-flux-button-group]_&]:dark:border-zinc-900/25',
     })
     ->add($loading ? [ // Loading states...
         '*:transition-opacity',
@@ -91,6 +93,11 @@ $classes = Flux::classes()
         $type === 'submit' ? '[&[disabled]]:pointer-events-none' : '[&[data-flux-loading]]:pointer-events-none',
     ] : [])
     ;
+
+    // Exempt subtle and ghost buttons from receiving border roundness overrides from button.group...
+    $attributes = $attributes->merge([
+        'data-flux-group-target' => ! in_array($variant, ['subtle', 'ghost']),
+    ]);
 @endphp
 
 <flux:with-tooltip :$attributes>
