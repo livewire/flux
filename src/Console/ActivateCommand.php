@@ -3,12 +3,10 @@
 namespace Flux\Console;
 
 use RuntimeException;
-use function Laravel\Prompts\{ info, text, note, spin, warning, error, alert, intro, outro, suggest };
+use function Laravel\Prompts\{ info, text, note, error, outro};
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Process\Process;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
 
 #[AsCommand(name: 'flux:activate')]
 class ActivateCommand extends Command
