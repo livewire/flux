@@ -17,7 +17,7 @@ use function Laravel\Prompts\warning;
 #[AsCommand(name: 'flux:publish')]
 class PublishCommand extends Command
 {
-    protected $signature = 'flux:publish {components?*} {--multiple} {--all}';
+    protected $signature = 'flux:publish {components?*} {--multiple} {--all} {--force}';
 
     protected $description = 'Publish individual flux components.';
 
@@ -141,7 +141,7 @@ class PublishCommand extends Command
     {
         $filesystem = (new Filesystem);
 
-        if ($filesystem->exists($destination)) {
+        if ($filesystem->exists($destination) && !$this->option('force')) {
             warning("Skipping [{$component}]. Directory already exists: {$destination}");
 
             return null;
@@ -156,7 +156,7 @@ class PublishCommand extends Command
     {
         $filesystem = (new Filesystem);
 
-        if ($filesystem->exists($destination)) {
+        if ($filesystem->exists($destination) && !$this->option('force')) {
             warning("Skipping [{$component}]. File already exists: {$destination}");
 
             return null;
