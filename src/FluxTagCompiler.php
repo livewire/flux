@@ -2,6 +2,7 @@
 
 namespace Flux;
 
+use Flux\Helpers\Regex;
 use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class FluxTagCompiler extends ComponentTagCompiler
@@ -21,52 +22,7 @@ class FluxTagCompiler extends ComponentTagCompiler
      */
     protected function compileOpeningTags(string $value)
     {
-        $pattern = "/
-            <
-                \s*
-                flux[\:]([\w\-\:\.]*)
-                (?<attributes>
-                    (?:
-                        \s+
-                        (?:
-                            (?:
-                                @(?:class)(\( (?: (?>[^()]+) | (?-1) )* \))
-                            )
-                            |
-                            (?:
-                                @(?:style)(\( (?: (?>[^()]+) | (?-1) )* \))
-                            )
-                            |
-                            (?:
-                                \{\{\s*\\\$attributes(?:[^}]+?)?\s*\}\}
-                            )
-                            |
-                            (?:
-                                (\:\\\$)(\w+)
-                            )
-                            |
-                            (?:
-                                [\w\-:.@%]+
-                                (
-                                    =
-                                    (?:
-                                        \\\"[^\\\"]*\\\"
-                                        |
-                                        \'[^\']*\'
-                                        |
-                                        [^\'\\\"=<>]+
-                                    )
-                                )?
-                            )
-                        )
-                    )*
-                    \s*
-                )
-                (?<![\/=\-])
-            >
-        /x";
-
-        return preg_replace_callback($pattern, function (array $matches) {
+        return preg_replace_callback(Regex::getOpenTagPattern(), function (array $matches) {
             $this->boundAttributes = [];
 
             $attributes = $this->getAttributesFromAttributeString($matches['attributes']);
@@ -85,52 +41,7 @@ class FluxTagCompiler extends ComponentTagCompiler
      */
     protected function compileSelfClosingTags(string $value)
     {
-        $pattern = "/
-            <
-                \s*
-                flux[\:]([\w\-\:\.]*)
-                \s*
-                (?<attributes>
-                    (?:
-                        \s+
-                        (?:
-                            (?:
-                                @(?:class)(\( (?: (?>[^()]+) | (?-1) )* \))
-                            )
-                            |
-                            (?:
-                                @(?:style)(\( (?: (?>[^()]+) | (?-1) )* \))
-                            )
-                            |
-                            (?:
-                                \{\{\s*\\\$attributes(?:[^}]+?)?\s*\}\}
-                            )
-                            |
-                            (?:
-                                (\:\\\$)(\w+)
-                            )
-                            |
-                            (?:
-                                [\w\-:.@%]+
-                                (
-                                    =
-                                    (?:
-                                        \\\"[^\\\"]*\\\"
-                                        |
-                                        \'[^\']*\'
-                                        |
-                                        [^\'\\\"=<>]+
-                                    )
-                                )?
-                            )
-                        )
-                    )*
-                    \s*
-                )
-            \/>
-        /x";
-
-        return preg_replace_callback($pattern, function (array $matches) {
+        return preg_replace_callback(Regex::getSelfClosingTagPattern(), function (array $matches) {
             $this->boundAttributes = [];
 
             $attributes = $this->getAttributesFromAttributeString($matches['attributes']);

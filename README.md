@@ -12,7 +12,7 @@ Run the following command from your project's root directory:
 composer require livewire/flux --prefer-dist
 ```
 
-Flux has built-in scripts and styles that are required to use the components. Add the following to your app template's `head` and `body` tags:
+Flux has built-in scripts and styles that are required to use the components. Add the following directives to your app template's `head` and `body` tags:
 
 ```html
 <head>
