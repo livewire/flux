@@ -23,7 +23,9 @@ $iconVariant ??= ($size === 'xs')
     ? ($square ? 'micro' : 'micro')
     : ($square ? 'mini' : 'micro');
 
-$loading ??= $loading ?? ($type === 'submit' || $attributes->whereStartsWith('wire:click')->isNotEmpty());
+$isTypeSubmitAndNotDisabledOnRender = $type === 'submit' && ! $attributes->has('disabled');
+
+$loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->whereStartsWith('wire:click')->isNotEmpty());
 
 if ($loading && $type !== 'submit') {
     $attributes = $attributes->merge(['wire:loading.attr' => 'data-flux-loading']);
