@@ -82,11 +82,7 @@ class PublishCommand extends Command
         $components = $this->fluxComponents()->intersectByKeys(array_flip($componentNames))->values()->flatten()->unique()->all();
 
         foreach ($components as $component) {
-            $destination = $this->publishComponent($component);
-
-            if ($destination) {
-                info('Published: ' . $destination);
-            }
+            $this->publishComponent($component);
         }
     }
 
@@ -117,7 +113,7 @@ class PublishCommand extends Command
             ->all();
     }
 
-    protected function publishComponent(string $component): ?string
+    protected function publishComponent(string $component): void
     {
         $filesystem = (new Filesystem);
 
@@ -129,12 +125,30 @@ class PublishCommand extends Command
         $destinationAsDirectory = resource_path('views/flux/'.$component);
         $destinationAsFile = resource_path('views/flux/'.$component.'.blade.php');
 
-        return match (true) {
-            $filesystem->isDirectory($sourceAsDirectory) => $this->publishDirectory($component, $sourceAsDirectory, $destinationAsDirectory),
-            $filesystem->isFile($sourceAsFile) => $this->publishFile($component, $sourceAsFile, $destinationAsFile),
-            $filesystem->isDirectory($sourceAsProDirectory) => $this->publishDirectory($component, $sourceAsProDirectory, $destinationAsDirectory),
-            $filesystem->isFile($sourceAsProFile) => $this->publishFile($component, $sourceAsProFile, $destinationAsFile),
-        };
+        $destination = $filesystem->isDirectory($sourceAsDirectory) ? $this->publishDirectory($component, $sourceAsDirectory, $destinationAsDirectory) : null;
+        
+        if ($destination) {
+            info('Published: ' . $destination);
+        }
+
+        $destination = $filesystem->isFile($sourceAsFile) ? $this->publishFile($component, $sourceAsFile, $destinationAsFile) : null;
+        
+        if ($destination) {
+            info('Published: ' . $destination);
+        }
+
+        $destination = $filesystem->isDirectory($sourceAsProDirectory) ? $this->publishDirectory($component, $sourceAsProDirectory, $destinationAsDirectory) : null;
+        
+        if ($destination) {
+            info('Published: ' . $destination);
+        }
+
+        $destination = $filesystem->isFile($sourceAsProFile) ? $this->publishFile($component, $sourceAsProFile, $destinationAsFile) : null;
+        
+        if ($destination) {
+            info('Published: ' . $destination);
+        }
+
     }
 
     protected function publishDirectory($component, $source, $destination): ?string
