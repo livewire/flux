@@ -22,7 +22,7 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<ui-menu-checkbox {{ $attributes->class($classes) }} data-flux-menu-item-has-icon data-flux-menu-checkbox>
+<ui-menu-checkbox {{ $attributes->class($classes) }} data-flux-menu-item-has-icon data-flux-menu-checkbox data-variant="{{ $variant }}">
     <div class="w-7">
         <div class="hidden group-data-[checked]/menu-checkbox:block">
             <flux:icon variant="mini" icon="check" data-flux-menu-item-icon />

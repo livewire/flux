@@ -1,5 +1,6 @@
 @props([
     'type' => 'button',
+    'variant' => null,
     'current' => null,
     'href' => null,
 ])
@@ -18,11 +19,11 @@ $current = $current === null ? ($href
 
 <?php if ($href): ?>
     {{-- We are using e() here to escape the href attribute value instead of "{{ }}" because the latter will escape the entire attribute value, including the "&" character... --}}
-    <a href="{!! e($href) !!}" {{ $attributes->merge(['data-current' => $current]) }}>
+    <a href="{!! e($href) !!}" {{ $attributes->merge(['data-current' => $current, 'data-variant' => $variant]) }}>
         {{ $slot }}
     </a>
 <?php else: ?>
-    <button {{ $attributes->merge(['type' => $type, 'data-current' => $current]) }}>
+    <button {{ $attributes->merge(['type' => $type, 'data-current' => $current, 'data-variant' => $variant]) }}>
         {{ $slot }}
     </button>
 <?php endif; ?>

@@ -22,7 +22,7 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<ui-menu-radio {{ $attributes->class($classes) }} data-flux-menu-item-has-icon data-flux-menu-radio>
+<ui-menu-radio {{ $attributes->class($classes) }} data-flux-menu-item-has-icon data-flux-menu-radio data-variant="{{ $variant }}">
     <div class="w-7">
         <div class="hidden group-data-[checked]/menu-radio:block">
             <flux:icon variant="mini" icon="check" data-flux-menu-item-icon />
