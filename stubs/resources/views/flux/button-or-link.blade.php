@@ -5,14 +5,14 @@
 ])
 
 @php
-$href = str($href)->startsWith(trim(config('app.url')))
+$hrefForCurrentDetection = str($href)->startsWith(trim(config('app.url')))
     ? (string) str($href)->after(trim(config('app.url'), '/'))
     : $href;
 
-if ($href === '') $href = '/';
+if ($hrefForCurrentDetection === '') $hrefForCurrentDetection = '/';
 
-$current = $current === null ? ($href
-    ? request()->is($href === '/' ? '/' : trim($href, '/'))
+$current = $current === null ? ($hrefForCurrentDetection
+    ? request()->is($hrefForCurrentDetection === '/' ? '/' : trim($hrefForCurrentDetection, '/'))
     : false) : $current;
 @endphp
 
