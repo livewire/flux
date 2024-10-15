@@ -4,6 +4,7 @@ $classes = Flux::classes()
     ->add('rounded-lg shadow-sm')
     ->add('border border-zinc-200 dark:border-zinc-600')
     ->add('bg-white dark:bg-zinc-700')
+    ->add('focus:outline-none')
     ;
 @endphp
 
