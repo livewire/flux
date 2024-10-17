@@ -1,5 +1,9 @@
 @php
-$attributes = Flux::restorePassThroughProps($attributes, ['tooltip-kbd', 'tooltip-position']);
+extract(Flux::forwardedAttributes($attributes, [
+    'tooltipPosition',
+    'tooltipKbd',
+    'tooltip',
+]));
 @endphp
 
 @props([
