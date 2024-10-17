@@ -77,9 +77,7 @@ class FluxManager
         ];
     }
 
-    /**
-     * This is a hack to fix pass-through props with hyphenated names...
-     */
+    // @deprecated - use extract(Flux::forwardedAttributes()) instead...
     public function restorePassThroughProps($attributes, $passThroughProps)
     {
         foreach ($passThroughProps as $passThroughProp) {
@@ -89,6 +87,25 @@ class FluxManager
         }
 
         return $attributes;
+    }
+
+    public function forwardedAttributes($attributes, $propKeys)
+    {
+        $props = [];
+
+        foreach ($propKeys as $key) {
+            // Because Blade automatically escapes all "attributes" (not "props"), it errantly escaped these values.
+            // Therefore, we have to apply an "unescape" operation (htmlspecialchars_decode) to rectify that...
+            if (isset($attributes[$key])) {
+                $props[$key] = htmlspecialchars_decode($attributes[$key], ENT_QUOTES);
+            }
+            // If a kebab-cased prop is present, we need to convert it to camelCase so that @props() picks it up...
+            elseif (isset($attributes[Str::kebab($key)])) {
+                $props[$key] = htmlspecialchars_decode($attributes[Str::kebab($key)], ENT_QUOTES);
+            }
+        }
+
+        return $props;
     }
 
     public function applyInset($inset, $top, $right, $bottom, $left)
