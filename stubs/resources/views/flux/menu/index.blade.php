@@ -10,7 +10,7 @@ $classes = Flux::classes()
 
 <ui-menu
     {{ $attributes->class($classes) }}
-    popover
+    popover="manual"
     data-flux-menu
 >
     {{ $slot }}

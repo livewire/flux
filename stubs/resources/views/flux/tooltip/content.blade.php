@@ -12,7 +12,7 @@ $classes = Flux::classes([
 ]);
 @endphp
 
-<div popover {{ $attributes->class($classes) }} data-flux-tooltip-content>
+<div popover="manual" {{ $attributes->class($classes) }} data-flux-tooltip-content>
     {{ $slot }}
 
     <?php if ($kbd): ?>

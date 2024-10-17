@@ -7,6 +7,6 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<nav {{ $attributes->class($classes) }} popover data-flux-navmenu>
+<nav {{ $attributes->class($classes) }} popover="manual" data-flux-navmenu>
     {{ $slot }}
 </nav>
