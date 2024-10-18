@@ -73,7 +73,7 @@ class FluxManager
     {
         return [
             $strict ? $attributes->only($by) : $attributes->whereStartsWith($by),
-            $strict ? $attributes->except($by) : $attributes->whereDoesNotStartWith($by),
+            $strict ? $attributes->except($by) : $attributes->whereDoesntStartWith($by),
         ];
     }
 
