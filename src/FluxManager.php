@@ -69,11 +69,11 @@ class FluxManager
         }
     }
 
-    public function splitAttributes($attributes, $by = ['class', 'style'])
+    public function splitAttributes($attributes, $by = ['class', 'style'], $strict = false)
     {
         return [
-            $attributes->only($by),
-            $attributes->except($by),
+            $strict ? $attributes->only($by) : $attributes->whereStartsWith($by),
+            $strict ? $attributes->except($by) : $attributes->whereDoesNotStartWith($by),
         ];
     }
 
