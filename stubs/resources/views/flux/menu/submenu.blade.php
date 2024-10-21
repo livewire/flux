@@ -7,7 +7,7 @@
         {{ $heading }}
 
         <x-slot:suffix>
-            <flux:icon class="ml-auto text-zinc-400 [[data-flux-menu-item]:hover_&]:text-current" icon="chevron-right" variant="mini" />
+            <flux:icon class="ms-auto text-zinc-400 [[data-flux-menu-item]:hover_&]:text-current" icon="chevron-right" variant="mini" />
         </x-slot:suffix>
     </flux:menu.item>
 
