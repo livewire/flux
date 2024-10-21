@@ -22,7 +22,7 @@ $classes = Flux::classes('border-0')
 @endphp
 
 <?php if ($text): ?>
-    <div data-orientation="{{ $orientation }}" class="flex items-center w-full" role="none" data-flux-separator>
+    <div data-orientation="{{ $orientation }}" class="flex items-center w-full" role="none" data-flux-separator data-variant="{{ $variant }}">
         <div {{ $attributes->class([$classes, 'grow']) }}></div>
 
         <span class="shrink mx-6 font-medium text-sm text-zinc-500 dark:text-zinc-300 whitespace-nowrap">{{ $text }}</span>
@@ -30,5 +30,5 @@ $classes = Flux::classes('border-0')
         <div {{ $attributes->class([$classes, 'grow']) }}></div>
     </div>
 <?php else: ?>
-    <div data-orientation="{{ $orientation }}" role="none" {{ $attributes->class($classes, 'shrink-0') }} data-flux-separator></div>
+    <div data-orientation="{{ $orientation }}" role="none" {{ $attributes->class($classes, 'shrink-0') }} data-flux-separator data-variant="{{ $variant }}"></div>
 <?php endif; ?>
