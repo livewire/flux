@@ -1,3 +1,11 @@
+@php
+extract(Flux::forwardedAttributes($attributes, [
+    'type',
+    'current',
+    'href',
+]));
+@endphp
+
 @props([
     'type' => 'button',
     'current' => null,
