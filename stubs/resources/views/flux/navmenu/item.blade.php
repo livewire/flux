@@ -6,6 +6,7 @@
     'value' => null,
     'icon' => null,
     'kbd' => null,
+    'href' => null,
 ])
 
 @php
@@ -29,7 +30,7 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<flux:button-or-link :attributes="$attributes->class($classes)" data-flux-navmenu-item>
+<flux:button-or-link :$href :attributes="$attributes->class($classes)" data-flux-navmenu-item>
     <?php if ($indent): ?>
         <div class="w-7"></div>
     <?php endif; ?>
