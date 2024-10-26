@@ -93,15 +93,17 @@ class FluxManager
     {
         $props = [];
 
+        $unescape = fn ($value) => is_string($value) ? htmlspecialchars_decode($value, ENT_QUOTES) : $value;
+
         foreach ($propKeys as $key) {
             // Because Blade automatically escapes all "attributes" (not "props"), it errantly escaped these values.
             // Therefore, we have to apply an "unescape" operation (htmlspecialchars_decode) to rectify that...
             if (isset($attributes[$key])) {
-                $props[$key] = htmlspecialchars_decode($attributes[$key], ENT_QUOTES);
+                $props[$key] = $unescape($attributes[$key]);
             }
             // If a kebab-cased prop is present, we need to convert it to camelCase so that @props() picks it up...
             elseif (isset($attributes[Str::kebab($key)])) {
-                $props[$key] = htmlspecialchars_decode($attributes[Str::kebab($key)], ENT_QUOTES);
+                $props[$key] = $unescape($attributes[Str::kebab($key)]);
             }
         }
 
