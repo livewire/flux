@@ -3,6 +3,7 @@ extract(Flux::forwardedAttributes($attributes, [
     'type',
     'current',
     'href',
+    'as',
 ]));
 @endphp
 
@@ -10,6 +11,7 @@ extract(Flux::forwardedAttributes($attributes, [
     'type' => 'button',
     'current' => null,
     'href' => null,
+    'as' => null,
 ])
 
 @php
@@ -24,7 +26,11 @@ $current = $current === null ? ($hrefForCurrentDetection
     : false) : $current;
 @endphp
 
-<?php if ($href): ?>
+<?php if ($as === 'div'): ?>
+    <div {{ $attributes }}>
+        {{ $slot }}
+    </div>
+<?php elseif ($as === 'a' || $href): ?>
     {{-- We are using e() here to escape the href attribute value instead of "{{ }}" because the latter will escape the entire attribute value, including the "&" character... --}}
     <a href="{!! e($href) !!}" {{ $attributes->merge(['data-current' => $current]) }}>
         {{ $slot }}
