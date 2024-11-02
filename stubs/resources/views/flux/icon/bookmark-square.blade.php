@@ -1,5 +1,7 @@
 {{-- Credit: Heroicons (https://heroicons.com) --}}
 
+@php $attributes = $unescapedForwardedAttributes ?? $attributes; @endphp
+
 @props([
     'variant' => 'outline',
 ])

@@ -9,4 +9,4 @@
 $icon = $name ?? $icon;
 @endphp
 
-<x-dynamic-component :component="'flux::icon.' . $icon" :$attributes />
+<x-dynamic-component :component="'flux::icon.' . $icon" :$attributes :unescapedForwardedAttributes="$attributes" />
