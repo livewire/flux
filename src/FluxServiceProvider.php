@@ -64,6 +64,7 @@ class FluxServiceProvider extends ServiceProvider
         $this->commands([
             Console\ActivateCommand::class,
             Console\PublishCommand::class,
+            Console\IconCommand::class,
         ]);
     }
 }
