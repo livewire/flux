@@ -18,7 +18,7 @@ class FluxTagCompiler extends ComponentTagCompiler
     'view' => md5('flux') . '::' . {$component},
     'data' => \$__env->getCurrentComponentData(),
 ])
-<?php \$component->withAttributes(\$attributes->all()); ?>";
+<?php \$component->withAttributes(\$attributes->getAttributes()); ?>";
         }
 
         return parent::componentString($component, $attributes);
