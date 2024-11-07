@@ -97,8 +97,6 @@ class IconCommand extends Command
         $stub = <<<'HTML'
         {{-- Credit: Lucide (https://lucide.dev) --}}
 
-        @php $attributes = $unescapedForwardedAttributes ?? $attributes; @endphp
-
         @props([
             'variant' => 'outline',
         ])

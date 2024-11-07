@@ -8,6 +8,19 @@ class FluxTagCompiler extends ComponentTagCompiler
 {
     public function componentString(string $component, array $attributes)
     {
+        // A component that forwards all data, attributes, and named slots to another component...
+        if ($component === 'flux::delegate-component') {
+            $component = $attributes['component'];
+
+            $class = \Illuminate\View\AnonymousComponent::class;
+
+            return "##BEGIN-COMPONENT-CLASS##@component('{$class}', 'flux::' . {$component}, [
+    'view' => md5('flux') . '::' . {$component},
+    'data' => \$__env->getCurrentComponentData(),
+])
+<?php \$component->withAttributes(\$attributes->all()); ?>";
+        }
+
         return parent::componentString($component, $attributes);
     }
 
