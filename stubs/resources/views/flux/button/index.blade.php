@@ -111,7 +111,7 @@ $classes = Flux::classes()
             </div>
         <?php endif; ?>
 
-        <?php if (is_string($iconLeading)): ?>
+        <?php if (is_string($iconLeading) && $iconLeading !== ''): ?>
             <flux:icon :icon="$iconLeading" :variant="$iconVariant" />
         <?php elseif ($iconLeading): ?>
             {{ $iconLeading }}
@@ -128,7 +128,7 @@ $classes = Flux::classes()
             <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ $kbd }}</div>
         <?php endif; ?>
 
-        <?php if (is_string($iconTrailing)): ?>
+        <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
             <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$square ? '' : '-ml-1'" />
         <?php elseif ($iconTrailing): ?>
             {{ $iconTrailing }}
