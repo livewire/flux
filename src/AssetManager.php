@@ -51,6 +51,24 @@ class AssetManager
                 ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.min.js', 'text/javascript')
                 : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
         });
+
+        Route::get('/flux/editor.css', function () {
+            if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+
+            return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.css', 'text/css');
+        });
+
+        Route::get('/flux/editor.js', function () {
+            if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+
+            return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.js', 'text/javascript');
+        });
+
+        Route::get('/flux/editor.min.js', function () {
+            if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+
+            return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.min.js', 'text/javascript');
+        });
     }
 
     public static function scripts()
@@ -74,9 +92,31 @@ class AssetManager
             ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
             : json_decode(file_get_contents(__DIR__.'/../../flux/dist/manifest.json'), true);
 
-        $versionHash = $manifest['/flux.js'];
+        $versionHash = $manifest['/flux.css'];
 
         return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '">';
+    }
+
+    public static function editorScripts()
+    {
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+
+        $versionHash = $manifest['/editor.js'];
+
+        if (config('app.debug')) {
+            return '<script src="/flux/editor.js?id='. $versionHash . '" data-navigate-once></script>';
+        } else {
+            return '<script src="/flux/editor.min.js?id='. $versionHash . '" data-navigate-once></script>';
+        }
+    }
+
+    public static function editorStyles()
+    {
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+
+        $versionHash = $manifest['/editor.css'];
+
+        return '<link rel="stylesheet" href="/flux/editor.css?id='. $versionHash . '">';
     }
 
     public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8')

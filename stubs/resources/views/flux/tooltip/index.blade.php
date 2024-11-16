@@ -9,6 +9,6 @@
     {{ $slot }}
 
     <?php if ($content !== null): ?>
-        <flux:tooltip.content>{{ $content }}</flux:tooltip.content>
+        <flux:tooltip.content :$kbd>{{ $content }}</flux:tooltip.content>
     <?php endif; ?>
 </ui-tooltip>

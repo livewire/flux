@@ -55,6 +55,16 @@ class FluxManager
         return AssetManager::scripts();
     }
 
+    public function editorStyles()
+    {
+        return AssetManager::editorStyles();
+    }
+
+    public function editorScripts()
+    {
+        return AssetManager::editorScripts();
+    }
+
     public function classes($styles = null)
     {
         $builder = new ClassBuilder;
