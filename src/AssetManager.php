@@ -104,9 +104,9 @@ class AssetManager
         $versionHash = $manifest['/editor.js'];
 
         if (config('app.debug')) {
-            return '<script src="/flux/editor.js?id='. $versionHash . '" data-navigate-once></script>';
+            return '<script src="/flux/editor.js?id='. $versionHash . '" defer></script>';
         } else {
-            return '<script src="/flux/editor.min.js?id='. $versionHash . '" data-navigate-once></script>';
+            return '<script src="/flux/editor.min.js?id='. $versionHash . '" defer></script>';
         }
     }
 
