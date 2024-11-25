@@ -21,8 +21,15 @@ $hrefForCurrentDetection = str($href)->startsWith(trim(config('app.url')))
 
 if ($hrefForCurrentDetection === '') $hrefForCurrentDetection = '/';
 
+$requestIs = function ($pattern) {
+    // Support current route detection during Livewire update requests as well...
+    return app('livewire')?->isLivewireRequest()
+        ? str()->is($pattern, app('livewire')->originalPath())
+        : request()->is($pattern);
+};
+
 $current = $current === null ? ($hrefForCurrentDetection
-    ? request()->is($hrefForCurrentDetection === '/' ? '/' : trim($hrefForCurrentDetection, '/'))
+    ? $requestIs($hrefForCurrentDetection === '/' ? '/' : trim($hrefForCurrentDetection, '/'))
     : false) : $current;
 @endphp
 
