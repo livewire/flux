@@ -39,6 +39,7 @@ class PublishCommand extends Command
             'Command' => ['command'],
             'Context' => ['context'],
             'Field' => ['fieldset', 'legend', 'field', 'label', 'description', 'error'],
+            'Editor' => ['editor'],
             'Heading' => ['heading', 'subheading', 'text', 'link'],
             'Input' => ['input'],
             'Layout' => ['header', 'sidebar', 'aside', 'main', 'footer', 'container', 'brand', 'profile', 'spacer'],
@@ -126,25 +127,25 @@ class PublishCommand extends Command
         $destinationAsFile = resource_path('views/flux/'.$component.'.blade.php');
 
         $destination = $filesystem->isDirectory($sourceAsDirectory) ? $this->publishDirectory($component, $sourceAsDirectory, $destinationAsDirectory) : null;
-        
+
         if ($destination) {
             info('Published: ' . $destination);
         }
 
         $destination = $filesystem->isFile($sourceAsFile) ? $this->publishFile($component, $sourceAsFile, $destinationAsFile) : null;
-        
+
         if ($destination) {
             info('Published: ' . $destination);
         }
 
         $destination = $filesystem->isDirectory($sourceAsProDirectory) ? $this->publishDirectory($component, $sourceAsProDirectory, $destinationAsDirectory) : null;
-        
+
         if ($destination) {
             info('Published: ' . $destination);
         }
 
         $destination = $filesystem->isFile($sourceAsProFile) ? $this->publishFile($component, $sourceAsProFile, $destinationAsFile) : null;
-        
+
         if ($destination) {
             info('Published: ' . $destination);
         }
