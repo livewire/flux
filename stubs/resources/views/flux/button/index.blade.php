@@ -52,27 +52,27 @@ $classes = Flux::classes()
             : Flux::applyInset($inset, top: '-mt-1', right: '-mr-2', bottom: '-mb-1', left: '-ml-2'),
     } : '')
     ->add(match ($variant) { // Background color...
-        'primary' => 'bg-zinc-800 hover:bg-zinc-900 dark:bg-white dark:hover:bg-zinc-100',
-        'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
-        'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
+        'primary' => 'bg-accent-800 hover:bg-accent-900 dark:bg-white dark:hover:bg-accent-100',
+        'filled' => 'bg-accent-800/5 hover:bg-accent-800/10 dark:bg-white/10 dark:hover:bg-white/20',
+        'outline' => 'bg-white hover:bg-accent-50 dark:bg-accent-700 dark:hover:bg-accent-600/75',
         'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500',
-        'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
-        'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
+        'ghost' => 'bg-transparent hover:bg-accent-800/5 dark:hover:bg-white/15',
+        'subtle' => 'bg-transparent hover:bg-accent-800/5 dark:hover:bg-white/15',
     })
     ->add(match ($variant) { // Text color...
-        'primary' => 'text-white dark:text-zinc-800',
-        'filled' => 'text-zinc-800 dark:text-white',
-        'outline' => 'text-zinc-800 dark:text-white',
+        'primary' => 'text-white dark:text-accent-800',
+        'filled' => 'text-accent-800 dark:text-white',
+        'outline' => 'text-accent-800 dark:text-white',
         'danger' => 'text-white',
-        'ghost' => 'text-zinc-800 dark:text-white',
-        'subtle' => 'text-zinc-400 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+        'ghost' => 'text-accent-800 dark:text-white',
+        'subtle' => 'text-accent-400 hover:text-accent-800 dark:text-accent-400 dark:hover:text-white',
     })
     ->add(match ($variant) { // Border color...
-        'outline' => 'border border-zinc-200 hover:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600',
+        'outline' => 'border border-accent-200 hover:border-accent-200 border-b-accent-300/80 dark:border-accent-600 dark:hover:border-accent-600',
          default => '',
     })
     ->add(match ($variant) { // Shadows...
-        'primary' => 'shadow-[inset_0px_1px_theme(colors.zinc.900),inset_0px_2px_theme(colors.white/.15)] dark:shadow-none',
+        'primary' => 'shadow-[inset_0px_1px_theme(colors.accent.900),inset_0px_2px_theme(colors.white/.15)] dark:shadow-none',
         'danger' => 'shadow-[inset_0px_1px_theme(colors.red.500),inset_0px_2px_theme(colors.white/.15)] dark:shadow-none',
         'outline' => match ($size) {
             'base' => 'shadow-sm',
@@ -85,9 +85,9 @@ $classes = Flux::classes()
         'ghost' => '',
         'subtle' => '',
         'outline' => '[[data-flux-button-group]_&]:border-l-0 [:is([data-flux-button-group]>&:first-child,_[data-flux-button-group]_:first-child>&)]:border-l-[1px]',
-        'filled' => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-zinc-200/80 [[data-flux-button-group]_&]:dark:border-zinc-900/50',
+        'filled' => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-accent-200/80 [[data-flux-button-group]_&]:dark:border-accent-900/50',
         'danger' => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-red-600 [[data-flux-button-group]_&]:dark:border-red-900/25',
-        default => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-black [[data-flux-button-group]_&]:dark:border-zinc-900/25',
+        default => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-black [[data-flux-button-group]_&]:dark:border-accent-900/25',
     })
     ->add($loading ? [ // Loading states...
         '*:transition-opacity',
@@ -125,7 +125,7 @@ $classes = Flux::classes()
         <?php endif; ?>
 
         <?php if ($kbd): ?>
-            <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ $kbd }}</div>
+            <div class="text-xs text-accent-500 dark:text-accent-400">{{ $kbd }}</div>
         <?php endif; ?>
 
         <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
