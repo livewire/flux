@@ -40,6 +40,12 @@ class AssetManager
                 : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.css', 'text/css');
         });
 
+        Route::get('/flux/flux-tailwind.css', function () {
+            return Flux::pro()
+                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux-tailwind.css', 'text/css')
+                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-tailwind-lite.css', 'text/css');
+        });
+
         Route::get('/flux/flux.js', function () {
             return Flux::pro()
                 ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.js', 'text/javascript')
@@ -94,7 +100,18 @@ class AssetManager
 
         $versionHash = $manifest['/flux.css'];
 
-        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '">';
+        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '">' . static::tailwindStyles();
+    }
+
+    public static function tailwindStyles()
+    {
+        $manifest = Flux::pro()
+            ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
+            : json_decode(file_get_contents(__DIR__.'/../../flux/dist/manifest.json'), true);
+
+        $versionHash = $manifest['/flux-tailwind.css'];
+
+        return '<link rel="stylesheet" href="/flux/flux-tailwind.css?id='. $versionHash . '">';
     }
 
     public static function editorScripts()
