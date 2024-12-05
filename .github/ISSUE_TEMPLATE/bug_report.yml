@@ -17,7 +17,7 @@ body:
         * Delete any previously published Flux components (to avoid usage of old versions)
         * Run `npm run build` to compile all CSS and JS assets
         * Clear the view cache by running `php artisan view:clear`
-        * Make sure you have thoroughly searched the Issues and Discussions to make sure your question/issue has not already been answered
+        * Make sure you have thoroughly **searched all open and closed Issues and Discussions** to make sure your question/issue has not already been answered
 
   - type: input
     id: flux-version
