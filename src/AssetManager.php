@@ -79,12 +79,12 @@ class AssetManager
 
         $versionHash = $manifest['/flux.js'];
 
-        $nonce = isset($options) && isset($options['nonce']) ? 'nonce="' . $options['nonce'] . '"' : '';
+        $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
         if (config('app.debug')) {
-            return '<script src="/flux/flux.js?id='. $versionHash . '" data-navigate-once ' . $nonce . '></script>';
+            return '<script src="/flux/flux.js?id='. $versionHash . '" data-navigate-once' . $nonce . '></script>';
         } else {
-            return '<script src="/flux/flux.min.js?id='. $versionHash . '" data-navigate-once ' . $nonce . '></script>';
+            return '<script src="/flux/flux.min.js?id='. $versionHash . '" data-navigate-once' . $nonce . '></script>';
         }
     }
 
@@ -96,9 +96,9 @@ class AssetManager
 
         $versionHash = $manifest['/flux.css'];
 
-        $nonce = isset($options) && isset($options['nonce']) ? 'nonce="' . $options['nonce'] . '"' : '';
+        $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
-        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '" ' . $nonce . '>';
+        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '"' . $nonce . '>';
     }
 
     public static function editorScripts()
