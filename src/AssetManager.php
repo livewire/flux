@@ -19,15 +19,15 @@ class AssetManager
     public function registerAssetDirective()
     {
         Blade::directive('fluxStyles', function ($expression) {
-            return <<<'PHP'
-            {!! app('flux')->styles() !!}
+            return <<<PHP
+            {!! app('flux')->styles($expression) !!}
             PHP;
         });
 
         Blade::directive('fluxScripts', function ($expression) {
-            return <<<'PHP'
+            return <<<PHP
             <?php app('livewire')->forceAssetInjection(); ?>
-            {!! app('flux')->scripts() !!}
+            {!! app('flux')->scripts($expression) !!}
             PHP;
         });
     }
@@ -71,7 +71,7 @@ class AssetManager
         });
     }
 
-    public static function scripts()
+    public static function scripts($options = [])
     {
         $manifest = Flux::pro()
             ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
@@ -79,14 +79,16 @@ class AssetManager
 
         $versionHash = $manifest['/flux.js'];
 
+        $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
+
         if (config('app.debug')) {
-            return '<script src="/flux/flux.js?id='. $versionHash . '" data-navigate-once></script>';
+            return '<script src="/flux/flux.js?id='. $versionHash . '" data-navigate-once' . $nonce . '></script>';
         } else {
-            return '<script src="/flux/flux.min.js?id='. $versionHash . '" data-navigate-once></script>';
+            return '<script src="/flux/flux.min.js?id='. $versionHash . '" data-navigate-once' . $nonce . '></script>';
         }
     }
 
-    public static function styles()
+    public static function styles($options = [])
     {
         $manifest = Flux::pro()
             ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
@@ -94,7 +96,9 @@ class AssetManager
 
         $versionHash = $manifest['/flux.css'];
 
-        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '">';
+        $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
+
+        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '"' . $nonce . '>';
     }
 
     public static function editorScripts()
