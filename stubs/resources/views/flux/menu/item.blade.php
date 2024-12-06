@@ -31,7 +31,7 @@ $suffixClasses = Flux::classes()
     ;
 @endphp
 
-<flux:button-or-link :attributes="$attributes->class($classes)" data-flux-menu-item :data-flux-menu-item-has-icon="!! $icon">
+<flux:button-or-link :$variant :attributes="$attributes->class($classes)" data-flux-menu-item :data-flux-menu-item-has-icon="!! $icon">
     <?php if ($icon): ?>
         <flux:icon :$icon variant="mini" class="mr-2" data-flux-menu-item-icon />
     <?php else: ?>
