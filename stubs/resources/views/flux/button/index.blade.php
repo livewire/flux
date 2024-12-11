@@ -87,7 +87,7 @@ $classes = Flux::classes()
         'outline' => '[[data-flux-button-group]_&]:border-l-0 [:is([data-flux-button-group]>&:first-child,_[data-flux-button-group]_:first-child>&)]:border-l-[1px]',
         'filled' => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-zinc-200/80 [[data-flux-button-group]_&]:dark:border-zinc-900/50',
         'danger' => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-red-600 [[data-flux-button-group]_&]:dark:border-red-900/25',
-        default => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-black [[data-flux-button-group]_&]:dark:border-zinc-900/25',
+        default => '[[data-flux-button-group]_&]:border-r [:is([data-flux-button-group]>&:last-child,_[data-flux-button-group]_:last-child>&)]:border-r-0 [[data-flux-button-group]_&]:border-white/10 [[data-flux-button-group]_&]:dark:border-black/20',
     })
     ->add($loading ? [ // Loading states...
         '*:transition-opacity',
