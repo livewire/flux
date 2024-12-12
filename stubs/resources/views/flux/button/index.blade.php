@@ -33,7 +33,7 @@ if ($loading && $type !== 'submit') {
     // We need to add `wire:target` here because without it the loading indicator won't be scoped
     // by method params, causing multiple buttons with the same method but different params to
     // trigger each other's loading indicators...
-    if (! $attributes->has('wire:target') && $target = $attributes->whereStartsWith('wire:click')) {
+    if (! $attributes->has('wire:target') && $target = $attributes->whereStartsWith('wire:click')->first()) {
         $attributes = $attributes->merge(['wire:target' => $target], escape: false);
     }
 }
