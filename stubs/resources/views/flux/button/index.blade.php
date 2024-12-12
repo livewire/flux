@@ -29,6 +29,12 @@ $loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->wh
 
 if ($loading && $type !== 'submit') {
     $attributes = $attributes->merge(['wire:loading.attr' => 'data-flux-loading']);
+
+    // A button with `wire:click` will automatically have `wire:target` set, but it doesn't
+    // include parameters. So manually add `wire:target` if there isn't one.
+    if (! $attributes->has('wire:target') && $target = $attributes->get('wire:click')) {
+        $attributes = $attributes->merge(['wire:target' => $target]);
+    }
 }
 
 $classes = Flux::classes()
