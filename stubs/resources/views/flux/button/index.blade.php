@@ -30,8 +30,9 @@ $loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->wh
 if ($loading && $type !== 'submit') {
     $attributes = $attributes->merge(['wire:loading.attr' => 'data-flux-loading']);
 
-    // A button with `wire:click` will automatically have `wire:target` set, but it doesn't
-    // include parameters. So manually add `wire:target` if there isn't one.
+    // We need to add wire:target here because without the loading indicator won't be scoped by
+    // method params, causing multiple buttons with with same method but different params to
+    // trigger each others loading indicators... 
     if (! $attributes->has('wire:target') && $target = $attributes->get('wire:click')) {
         $attributes = $attributes->merge(['wire:target' => $target]);
     }
