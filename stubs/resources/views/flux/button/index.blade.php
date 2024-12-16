@@ -75,12 +75,12 @@ $classes = Flux::classes()
         'subtle' => 'text-zinc-400 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
     })
     ->add(match ($variant) { // Border color...
-        'primary' => 'border border-black/10 dark:border-white/20',
+        'primary' => 'border border-black/10 dark:border-none',
         'outline' => 'border border-zinc-200 hover:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600',
          default => '',
     })
     ->add(match ($variant) { // Shadows...
-        'primary' => 'shadow-[inset_0px_1px_theme(colors.white/.2)] dark:shadow-none',
+        'primary' => 'shadow-[inset_0px_1px_theme(colors.white/.2)]',
         'danger' => 'shadow-[inset_0px_1px_theme(colors.red.500),inset_0px_2px_theme(colors.white/.15)] dark:shadow-none',
         'outline' => match ($size) {
             'base' => 'shadow-sm',
