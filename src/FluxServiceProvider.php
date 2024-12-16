@@ -2,6 +2,7 @@
 
 namespace Flux;
 
+use Illuminate\View\ComponentAttributeBag;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Arr;
@@ -59,6 +60,14 @@ class FluxServiceProvider extends ServiceProvider
     {
         app('view')::macro('getCurrentComponentData', function () {
             return $this->currentComponentData;
+        });
+
+        ComponentAttributeBag::macro('pluck', function ($key) {
+            $result = $this->get($key);
+
+            unset($this->attributes[$key]);
+
+            return $result;
         });
     }
 
