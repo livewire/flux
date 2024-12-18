@@ -44,14 +44,14 @@ To get started quickly, you can include the Tailwind Play CDN in your `head` tag
 Or, for a more robust setup, you can include Flux's Blade files as part of your build in your Tailwind config's `content` array:
 
 ```javascript
-module.exports = {
+export default {
     content: [
         ...,
         "./vendor/livewire/flux-pro/stubs/**/*.blade.php",
         "./vendor/livewire/flux/stubs/**/*.blade.php",
     ],
     ...
-}
+};
 ```
 
 ## What's included?
