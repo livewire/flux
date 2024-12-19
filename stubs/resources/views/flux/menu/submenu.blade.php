@@ -1,9 +1,10 @@
 @props([
     'heading' => '',
+    'icon' => null,
 ])
 
 <ui-submenu data-flux-menu-submenu>
-    <flux:menu.item>
+    <flux:menu.item :$icon>
         {{ $heading }}
 
         <x-slot:suffix>
