@@ -13,7 +13,7 @@ if ($kbd) $suffix = $kbd;
 $classes = Flux::classes()
     ->add('group/menu-radio flex items-center px-2 py-1.5 w-full focus:outline-none')
     ->add('rounded-md')
-    ->add('text-left text-sm font-medium')
+    ->add('text-start text-sm font-medium')
     ->add('[[disabled]_&]:opacity-50 [&[disabled]]:opacity-50')
     ->add([
         'text-zinc-800 data-[active]:bg-zinc-50 dark:text-white data-[active]:dark:bg-zinc-600',
@@ -32,7 +32,7 @@ $classes = Flux::classes()
     {{ $label ?? $slot }}
 
     <?php if ($suffix): ?>
-        <div class="ml-auto opacity-50 text-xs">
+        <div class="ms-auto opacity-50 text-xs">
             {{ $suffix }}
         </div>
     <?php endif; ?>
