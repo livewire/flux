@@ -101,28 +101,13 @@ class AssetManager
         return <<<'HTML'
 <link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '"' . $nonce . '>
 <script>
-    function setAppearance(appearance) {
-        let applyDark = () => document.documentElement.classList.add('dark')
-        let applyLight = () => document.documentElement.classList.remove('dark')
+    let appearance = window.localStorage.getItem('flux.appearance') || 'system'
 
-        if (appearance === 'system') {
-            let media = window.matchMedia('(prefers-color-scheme: dark)')
-
-            window.localStorage.removeItem('flux.appearance')
-
-            media.matches ? applyDark() : applyLight()
-        } else if (appearance === 'dark') {
-            window.localStorage.setItem('flux.appearance', 'dark')
-
-            applyDark()
-        } else if (appearance === 'light') {
-            window.localStorage.setItem('flux.appearance', 'light')
-
-            applyLight()
-        }
+    if (appearance === 'system') {
+        appearance = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     }
 
-    setAppearance(window.localStorage.getItem('flux.appearance') || 'system')
+    appearance === 'dark' ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
 </script>
 HTML;
     }
