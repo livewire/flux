@@ -98,7 +98,33 @@ class AssetManager
 
         $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
-        return '<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '"' . $nonce . '>';
+        return <<<'HTML'
+<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '"' . $nonce . '>
+<script>
+    function setAppearance(appearance) {
+        let applyDark = () => document.documentElement.classList.add('dark')
+        let applyLight = () => document.documentElement.classList.remove('dark')
+
+        if (appearance === 'system') {
+            let media = window.matchMedia('(prefers-color-scheme: dark)')
+
+            window.localStorage.removeItem('flux.appearance')
+
+            media.matches ? applyDark() : applyLight()
+        } else if (appearance === 'dark') {
+            window.localStorage.setItem('flux.appearance', 'dark')
+
+            applyDark()
+        } else if (appearance === 'light') {
+            window.localStorage.setItem('flux.appearance', 'light')
+
+            applyLight()
+        }
+    }
+
+    setAppearance(window.localStorage.getItem('flux.appearance') || 'system')
+</script>
+HTML;
     }
 
     public static function editorScripts()
