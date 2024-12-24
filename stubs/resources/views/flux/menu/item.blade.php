@@ -12,7 +12,7 @@ if ($kbd) $suffix = $kbd;
 $classes = Flux::classes()
     ->add('flex items-center px-2 py-1.5 w-full focus:outline-none')
     ->add('rounded-md')
-    ->add('text-left text-sm font-medium')
+    ->add('text-start text-sm font-medium')
     ->add('[&[disabled]]:opacity-50')
     ->add(match ($variant) {
         'danger' => [
@@ -27,13 +27,13 @@ $classes = Flux::classes()
     ;
 
 $suffixClasses = Flux::classes()
-    ->add('ml-auto text-xs text-zinc-400')
+    ->add('ms-auto text-xs text-zinc-400')
     ;
 @endphp
 
 <flux:button-or-link :attributes="$attributes->class($classes)" data-flux-menu-item :data-flux-menu-item-has-icon="!! $icon">
     <?php if ($icon): ?>
-        <flux:icon :$icon variant="mini" class="mr-2" data-flux-menu-item-icon />
+        <flux:icon :$icon variant="mini" class="me-2" data-flux-menu-item-icon />
     <?php else: ?>
         <div class="w-7 hidden [[data-flux-menu]:has(>[data-flux-menu-item-has-icon])_&]:block"></div>
     <?php endif; ?>
