@@ -98,8 +98,8 @@ class AssetManager
 
         $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
-        return <<<'HTML'
-<link rel="stylesheet" href="/flux/flux.css?id='. $versionHash . '"' . $nonce . '>
+        return <<<HTML
+<link rel="stylesheet" href="/flux/flux.css?id=$versionHash"$nonce>
 <script>
     let appearance = window.localStorage.getItem('flux.appearance') || 'system'
 
