@@ -23,6 +23,11 @@ $iconVariant ??= ($size === 'xs')
     ? ($square ? 'micro' : 'micro')
     : ($square ? 'mini' : 'micro');
 
+// When using the outline icon variant, we need to size it down to match the default icon sizes...
+$iconClasses = Flux::classes()
+    ->add($iconVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5' : 'size-4') : '')
+    ;
+
 $isTypeSubmitAndNotDisabledOnRender = $type === 'submit' && ! $attributes->has('disabled');
 
 $loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->whereStartsWith('wire:click')->isNotEmpty());
@@ -115,12 +120,12 @@ $classes = Flux::classes()
     <flux:button-or-link :$type :attributes="$attributes->class($classes)" data-flux-button>
         <?php if ($loading): ?>
             <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
-                <flux:icon icon="loading" :variant="$iconVariant" />
+                <flux:icon icon="loading" :variant="$iconVariant" :class="$iconClasses" />
             </div>
         <?php endif; ?>
 
         <?php if (is_string($iconLeading) && $iconLeading !== ''): ?>
-            <flux:icon :icon="$iconLeading" :variant="$iconVariant" />
+            <flux:icon :icon="$iconLeading" :variant="$iconVariant" :class="$iconClasses" />
         <?php elseif ($iconLeading): ?>
             {{ $iconLeading }}
         <?php endif; ?>
@@ -137,7 +142,9 @@ $classes = Flux::classes()
         <?php endif; ?>
 
         <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-            <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$square ? '' : '-ml-1'" />
+            {{-- Adding the extra margin class inline on the icon component below was causing a double up, so it needs to be added here first... --}}
+            <?php $iconClasses->add($square ? '' : '-ml-1'); ?>
+            <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
         <?php elseif ($iconTrailing): ?>
             {{ $iconTrailing }}
         <?php endif; ?>
