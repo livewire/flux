@@ -119,27 +119,24 @@ $classes = Flux::classes()
             </div>
         <?php endif; ?>
 
-        <?php if (is_string($iconLeading) && $iconLeading !== ''): ?>
-            <flux:icon :icon="$iconLeading" :variant="$iconVariant" />
-        <?php elseif ($iconLeading): ?>
-            {{ $iconLeading }}
-        <?php endif; ?>
+        <div class="flex items-center gap-2">
+            <?php if (is_string($iconLeading) && $iconLeading !== ''): ?>
+                <flux:icon :icon="$iconLeading" :variant="$iconVariant" />
+            <?php elseif ($iconLeading): ?>
+                {{ $iconLeading }}
+            <?php endif; ?>
 
-        <?php if ($loading && ! $slot->isEmpty()): ?>
-            {{-- If we have a loading indicator, we need to wrap it in a span so it can be a target of *:opacity-0... --}}
-            <span>{{ $slot }}</span>
-        <?php else: ?>
             {{ $slot }}
-        <?php endif; ?>
 
-        <?php if ($kbd): ?>
-            <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ $kbd }}</div>
-        <?php endif; ?>
+            <?php if ($kbd): ?>
+                <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ $kbd }}</div>
+            <?php endif; ?>
 
-        <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-            <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$square ? '' : '-ml-1'" />
-        <?php elseif ($iconTrailing): ?>
-            {{ $iconTrailing }}
-        <?php endif; ?>
+            <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+                <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$square ? '' : '-ml-1'" />
+            <?php elseif ($iconTrailing): ?>
+                {{ $iconTrailing }}
+            <?php endif; ?>
+        </div>
     </flux:button-or-link>
 </flux:with-tooltip>
