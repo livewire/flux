@@ -70,12 +70,12 @@ class AssetManager
 
     public function registerAssetRoutes()
     {
-        Route::get('/flux/flux.css', [self::class, 'getFluxCss']);
-        Route::get('/flux/flux.js', [self::class, 'getFluxJs']);
-        Route::get('/flux/flux.min.js', [self::class, 'getFluxMinJs']);
-        Route::get('/flux/editor.css', [self::class, 'getEditorCss']);
-        Route::get('/flux/editor.js', [self::class, 'getEditorJs']);
-        Route::get('/flux/editor.min.js', [self::class, 'getEditorMinJs']);
+        Route::get('/flux/flux.css', [static::class, 'getFluxCss']);
+        Route::get('/flux/flux.js', [static::class, 'getFluxJs']);
+        Route::get('/flux/flux.min.js', [static::class, 'getFluxMinJs']);
+        Route::get('/flux/editor.css', [static::class, 'getEditorCss']);
+        Route::get('/flux/editor.js', [static::class, 'getEditorJs']);
+        Route::get('/flux/editor.min.js', [static::class, 'getEditorMinJs']);
     }
 
     public static function scripts($options = [])
