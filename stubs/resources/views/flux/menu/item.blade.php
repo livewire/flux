@@ -1,4 +1,5 @@
 @props([
+    'iconVariant' => 'mini',
     'variant' => 'default',
     'suffix' => null,
     'value' => null,
@@ -8,6 +9,12 @@
 
 @php
 if ($kbd) $suffix = $kbd;
+
+$iconClasses = Flux::classes()
+    ->add('mr-2')
+    // When using the outline icon variant, we need to size it down to match the default icon sizes...
+    ->add($iconVariant === 'outline' ? 'size-5' : null)
+    ;
 
 $classes = Flux::classes()
     ->add('flex items-center px-2 py-1.5 w-full focus:outline-none')
@@ -33,7 +40,7 @@ $suffixClasses = Flux::classes()
 
 <flux:button-or-link :attributes="$attributes->class($classes)" data-flux-menu-item :data-flux-menu-item-has-icon="!! $icon">
     <?php if ($icon): ?>
-        <flux:icon :$icon variant="mini" class="mr-2" data-flux-menu-item-icon />
+        <flux:icon :$icon :variant="$iconVariant" :class="$iconClasses" data-flux-menu-item-icon />
     <?php else: ?>
         <div class="w-7 hidden [[data-flux-menu]:has(>[data-flux-menu-item-has-icon])_&]:block"></div>
     <?php endif; ?>
