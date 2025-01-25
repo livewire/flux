@@ -34,41 +34,48 @@ class AssetManager
 
     public function registerAssetRoutes()
     {
-        Route::get('/flux/flux.css', function () {
-            return Flux::pro()
-                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.css', 'text/css')
-                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.css', 'text/css');
-        });
+        Route::get('/flux/flux.css', [static::class, 'fluxCss']);
+        Route::get('/flux/flux.js', [static::class, 'fluxJs']);
+        Route::get('/flux/flux.min.js', [static::class, 'fluxMinJs']);
+        Route::get('/flux/editor.css', [static::class, 'editorCss']);
+        Route::get('/flux/editor.js', [static::class, 'editorJs']);
+        Route::get('/flux/editor.min.js', [static::class, 'editorMinJs']);
+    }
 
-        Route::get('/flux/flux.js', function () {
-            return Flux::pro()
-                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.js', 'text/javascript')
-                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
-        });
+    public function fluxCss() {
+        return Flux::pro()
+            ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.css', 'text/css')
+            : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.css', 'text/css');
+    }
 
-        Route::get('/flux/flux.min.js', function () {
-            return Flux::pro()
-                ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.min.js', 'text/javascript')
-                : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
-        });
+    public function fluxJs() {
+        return Flux::pro()
+            ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.js', 'text/javascript')
+            : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
+    }
 
-        Route::get('/flux/editor.css', function () {
-            if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+    public function fluxMinJs() {
+        return Flux::pro()
+            ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.min.js', 'text/javascript')
+            : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.min.js', 'text/javascript');
+    }
 
-            return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.css', 'text/css');
-        });
+    public function editorCss() {
+        if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
 
-        Route::get('/flux/editor.js', function () {
-            if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+        return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.css', 'text/css');
+    }
 
-            return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.js', 'text/javascript');
-        });
+    public function editorJs() {
+        if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
 
-        Route::get('/flux/editor.min.js', function () {
-            if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+        return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.js', 'text/javascript');
+    }
 
-            return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.min.js', 'text/javascript');
-        });
+    public function editorMinJs() {
+        if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
+
+        return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.min.js', 'text/javascript');
     }
 
     public static function scripts($options = [])
