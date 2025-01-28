@@ -1,4 +1,6 @@
 @props([
+    'iconVariant' => 'mini',
+    'iconTrailing' => null,
     'variant' => 'default',
     'disabled' => false,
     'indent' => false,
@@ -10,6 +12,18 @@
 
 @php
 if ($kbd) $suffix = $kbd;
+
+$iconClasses = Flux::classes()
+    ->add('mr-2')
+    // When using the outline icon variant, we need to size it down to match the default icon sizes...
+    ->add($iconVariant === 'outline' ? 'size-5' : null)
+    ;
+
+$trailingIconClasses = Flux::classes()
+    ->add('ml-auto')
+    // When using the outline icon variant, we need to size it down to match the default icon sizes...
+    ->add($iconVariant === 'outline' ? 'size-5' : null)
+    ;
 
 $classes = Flux::classes()
     ->add('group flex items-center px-2 py-2 lg:py-1.5 w-full')
@@ -34,8 +48,10 @@ $classes = Flux::classes()
         <div class="w-7"></div>
     <?php endif; ?>
 
-    <?php if ($icon): ?>
-        <flux:icon :$icon variant="mini" class="mr-2" data-navmenu-icon />
+    <?php if (is_string($icon) && $icon !== ''): ?>
+        <flux:icon :$icon :variant="$iconVariant" :class="$iconClasses" data-navmenu-icon />
+    <?php elseif ($icon): ?>
+        {{ $icon }}
     <?php endif; ?>
 
     {{ $slot }}
@@ -48,5 +64,11 @@ $classes = Flux::classes()
         <?php else: ?>
             {{ $suffix }}
         <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" />
+    <?php elseif ($iconTrailing): ?>
+        {{ $iconTrailing }}
     <?php endif; ?>
 </flux:button-or-link>
