@@ -1,4 +1,5 @@
 @props([
+    'iconTrailing' => null,
     'iconVariant' => 'mini',
     'variant' => 'default',
     'suffix' => null,
@@ -12,6 +13,12 @@ if ($kbd) $suffix = $kbd;
 
 $iconClasses = Flux::classes()
     ->add('mr-2')
+    // When using the outline icon variant, we need to size it down to match the default icon sizes...
+    ->add($iconVariant === 'outline' ? 'size-5' : null)
+    ;
+
+$trailingIconClasses = Flux::classes()
+    ->add('ml-auto text-zinc-400 [[data-flux-menu-item-icon]:hover_&]:text-current')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : null)
     ;
@@ -39,8 +46,10 @@ $suffixClasses = Flux::classes()
 @endphp
 
 <flux:button-or-link :attributes="$attributes->class($classes)" data-flux-menu-item :data-flux-menu-item-has-icon="!! $icon">
-    <?php if ($icon): ?>
+    <?php if (is_string($icon) && $icon !== ''): ?>
         <flux:icon :$icon :variant="$iconVariant" :class="$iconClasses" data-flux-menu-item-icon />
+    <?php elseif ($icon): ?>
+        {{ $icon }}
     <?php else: ?>
         <div class="w-7 hidden [[data-flux-menu]:has(>[data-flux-menu-item-has-icon])_&]:block"></div>
     <?php endif; ?>
@@ -55,6 +64,12 @@ $suffixClasses = Flux::classes()
         <?php else: ?>
             {{ $suffix }}
         <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" data-flux-menu-item-icon />
+    <?php elseif ($iconTrailing): ?>
+        {{ $iconTrailing }}
     <?php endif; ?>
 
     {{ $submenu ?? '' }}
