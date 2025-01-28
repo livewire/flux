@@ -107,7 +107,7 @@ class AssetManager
 
         return <<<HTML
 <link rel="stylesheet" href="/flux/flux.css?id=$versionHash"$nonce>
-<script>
+<script$nonce>
     let appearance = window.localStorage.getItem('flux.appearance') || 'system'
 
     if (appearance === 'system') {
