@@ -1,4 +1,4 @@
-@layer base {
+@layer theme {
     :root {
         --color-accent: var(--color-zinc-800);
         --color-accent-content: var(--color-zinc-800);
