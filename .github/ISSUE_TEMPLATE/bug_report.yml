@@ -37,6 +37,15 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: tailwind-version
+    attributes:
+      label: Tailwind version
+      description: Which version of Tailwind are you using? Please provide the full version, e.g. v3.4.17.
+      placeholder: v3.4.17
+    validations:
+      required: true
+
   - type: textarea
     attributes:
       label: What is the problem?
