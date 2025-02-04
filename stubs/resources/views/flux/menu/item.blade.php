@@ -24,18 +24,18 @@ $trailingIconClasses = Flux::classes()
     ;
 
 $classes = Flux::classes()
-    ->add('flex items-center px-2 py-1.5 w-full focus:outline-none')
+    ->add('flex items-center px-2 py-1.5 w-full focus:outline-hidden')
     ->add('rounded-md')
     ->add('text-left text-sm font-medium')
     ->add('[&[disabled]]:opacity-50')
     ->add(match ($variant) {
         'danger' => [
-            'text-zinc-800 data-[active]:text-red-600 data-[active]:bg-red-50 dark:text-white dark:data-[active]:bg-red-400/20 dark:data-[active]:text-red-400',
-            '[&_[data-flux-menu-item-icon]]:text-zinc-400 dark:[&_[data-flux-menu-item-icon]]:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
+            'text-zinc-800 data-active:text-red-600 data-active:bg-red-50 dark:text-white dark:data-active:bg-red-400/20 dark:data-active:text-red-400',
+            '**:data-flux-menu-item-icon:text-zinc-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
         ],
         'default' => [
-            'text-zinc-800 data-[active]:bg-zinc-50 dark:text-white data-[active]:dark:bg-zinc-600',
-            '[&_[data-flux-menu-item-icon]]:text-zinc-400 dark:[&_[data-flux-menu-item-icon]]:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
+            'text-zinc-800 data-active:bg-zinc-50 dark:text-white dark:data-active:bg-zinc-600',
+            '**:data-flux-menu-item-icon:text-zinc-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
         ]
     })
     ;
