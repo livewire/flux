@@ -8,10 +8,6 @@
 }
 
 @layer theme {
-    :root.dark {
-        color-scheme: dark;
-    }
-
     .dark {
         --color-accent: var(--color-white);
         --color-accent-content: var(--color-white);

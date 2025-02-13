@@ -92,7 +92,13 @@ class AssetManager
     {
         $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
+        // Make scrollbars dark in dark mode...
         return <<<HTML
+<style$nonce>
+    :root.dark {
+        color-scheme: dark;
+    }
+</style>
 <script$nonce>
     window.fluxAppearance = (appearance) => {
         let applyDark = () => document.documentElement.classList.add('dark')
