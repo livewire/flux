@@ -26,7 +26,7 @@ $classes = Flux::classes()
     ->add('group/menu-checkbox flex items-center px-2 py-1.5 w-full focus:outline-hidden')
     ->add('rounded-md')
     ->add('text-left text-sm font-medium')
-    ->add('in-[[disabled]]:opacity-50 [&[disabled]]:opacity-50')
+    ->add('[[disabled]_&]:opacity-50 [&[disabled]]:opacity-50')
     ->add([
         'text-zinc-800 data-active:bg-zinc-50 dark:text-white dark:data-active:bg-zinc-600',
         '**:data-flux-menu-item-icon:text-zinc-400 dark:**:data-flux-menu-item-icon:text-white/60 [&[data-active]_[data-flux-menu-item-icon]]:text-current',
