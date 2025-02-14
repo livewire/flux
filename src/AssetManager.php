@@ -100,28 +100,30 @@ class AssetManager
     }
 </style>
 <script$nonce>
-    window.fluxAppearance = (appearance) => {
-        let applyDark = () => document.documentElement.classList.add('dark')
-        let applyLight = () => document.documentElement.classList.remove('dark')
+    window.Flux = {
+        applyAppearance (appearance) {
+            let applyDark = () => document.documentElement.classList.add('dark')
+            let applyLight = () => document.documentElement.classList.remove('dark')
 
-        if (appearance === 'system') {
-            let media = window.matchMedia('(prefers-color-scheme: dark)')
+            if (appearance === 'system') {
+                let media = window.matchMedia('(prefers-color-scheme: dark)')
 
-            window.localStorage.removeItem('flux.appearance')
+                window.localStorage.removeItem('flux.appearance')
 
-            media.matches ? applyDark() : applyLight()
-        } else if (appearance === 'dark') {
-            window.localStorage.setItem('flux.appearance', 'dark')
+                media.matches ? applyDark() : applyLight()
+            } else if (appearance === 'dark') {
+                window.localStorage.setItem('flux.appearance', 'dark')
 
-            applyDark()
-        } else if (appearance === 'light') {
-            window.localStorage.setItem('flux.appearance', 'light')
+                applyDark()
+            } else if (appearance === 'light') {
+                window.localStorage.setItem('flux.appearance', 'light')
 
-            applyLight()
+                applyLight()
+            }
         }
     }
 
-    fluxAppearance(window.localStorage.getItem('flux.appearance') || 'system')
+    window.Flux.applyAppearance(window.localStorage.getItem('flux.appearance') || 'system')
 </script>
 HTML;
     }
