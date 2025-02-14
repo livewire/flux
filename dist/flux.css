@@ -1,0 +1,127 @@
+@source "../../flux-pro/stubs";
+@source "../stubs";
+
+@theme {
+    --color-accent: var(--color-zinc-800);
+    --color-accent-content: var(--color-zinc-800);
+    --color-accent-foreground: var(--color-white);
+}
+
+@layer theme {
+    .dark {
+        --color-accent: var(--color-white);
+        --color-accent-content: var(--color-white);
+        --color-accent-foreground: var(--color-zinc-800);
+    }
+}
+
+
+*:has(>[data-flux-main]) {
+    display: grid;
+    grid-area: body;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: min-content minmax(0, 1fr) min-content;
+    grid-template-areas:
+        "header  header  header"
+        "sidebar main    aside"
+        "sidebar footer  aside";
+}
+
+*:has(>[data-flux-sidebar]+[data-flux-header]) {
+    grid-template-areas:
+        "sidebar header  header"
+        "sidebar main    aside"
+        "sidebar footer  aside";
+}
+
+/*
+Transition dialogs with fade a slight scale effect...
+*/
+[data-flux-modal] > dialog, [data-flux-modal] > dialog::backdrop {
+    opacity: 0;
+    transition: all 0.075s allow-discrete;
+    & { transform: scale(0.95); }
+}
+
+[data-flux-modal] > dialog[data-flux-flyout] { transform: scale(1) var(--fx-flyout-translate, translateX(50px)); }
+
+[data-flux-modal] > dialog[open], [data-flux-modal] > dialog[open]::backdrop {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    transition: all 0.15s allow-discrete;
+}
+
+@starting-style {
+    [data-flux-modal] > dialog[open], [data-flux-modal] > dialog[open]::backdrop {
+        opacity: 0;
+        & { transform: scale(0.95); }
+    }
+    [data-flux-modal] > dialog[open][data-flux-flyout] { transform: scale(1) var(--fx-flyout-translate, translateX(50px)); }
+}
+
+[data-flux-modal] > dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+/**
+Native select styles...
+*/
+select[data-flux-select-native] {
+    background-image: url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 9L12 5L16 9' stroke='%23d4d4d4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M16 15L12 19L8 15' stroke='%23d4d4d4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+    background-position: right .5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+}
+
+select[data-flux-select-native]:hover:not(:disabled) {
+    background-image: url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 9L12 5L16 9' stroke='%2327272a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M16 15L12 19L8 15' stroke='%2327272a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+}
+
+body.dark select[data-flux-select-native] {
+    background-image: url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 9L12 5L16 9' stroke='%23A1A1AA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M16 15L12 19L8 15' stroke='%23A1A1AA' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+}
+
+body.dark select[data-flux-select-native]:hover:not(:disabled) {
+    background-image: url("data:image/svg+xml,%3csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8 9L12 5L16 9' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3cpath d='M16 15L12 19L8 15' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+}
+
+/**
+Toast styles...
+*/
+ui-toast {
+    [popover] {
+        opacity: 0;
+        transition: all 0.2s allow-discrete;
+
+        & {
+            transform: translate(0);
+        }
+    }
+
+    [popover]:popover-open {
+        opacity: 1;
+        transform: translate(0);
+        transition: all 0.35s allow-discrete;
+    }
+
+    @starting-style {
+        [popover]:popover-open {
+            opacity: 0;
+
+            &[data-position*="top"][data-position*="left"] {
+                transform: translateX(-0.5rem);
+            }
+
+            &[data-position*="top"][data-position*="right"] {
+                transform: translateX(0.5rem);
+            }
+
+            &[data-position*="bottom"] {
+                transform: translateY(0.5rem);
+            }
+        }
+    }
+}

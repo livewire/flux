@@ -18,34 +18,27 @@ class AssetManager
 
     public function registerAssetDirective()
     {
-        Blade::directive('fluxStyles', function ($expression) {
-            return <<<PHP
-            {!! app('flux')->styles($expression) !!}
-            PHP;
-        });
-
         Blade::directive('fluxScripts', function ($expression) {
             return <<<PHP
             <?php app('livewire')->forceAssetInjection(); ?>
             {!! app('flux')->scripts($expression) !!}
             PHP;
         });
+
+        Blade::directive('fluxAppearance', function ($expression) {
+            return <<<PHP
+            {!! app('flux')->fluxAppearance($expression) !!}
+            PHP;
+        });
     }
 
     public function registerAssetRoutes()
     {
-        Route::get('/flux/flux.css', [static::class, 'fluxCss']);
         Route::get('/flux/flux.js', [static::class, 'fluxJs']);
         Route::get('/flux/flux.min.js', [static::class, 'fluxMinJs']);
         Route::get('/flux/editor.css', [static::class, 'editorCss']);
         Route::get('/flux/editor.js', [static::class, 'editorJs']);
         Route::get('/flux/editor.min.js', [static::class, 'editorMinJs']);
-    }
-
-    public function fluxCss() {
-        return Flux::pro()
-            ? $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/flux.css', 'text/css')
-            : $this->pretendResponseIsFile(__DIR__.'/../../flux/dist/flux-lite.css', 'text/css');
     }
 
     public function fluxJs() {
@@ -95,26 +88,42 @@ class AssetManager
         }
     }
 
-    public static function styles($options = [])
+    public static function fluxAppearance($options = [])
     {
-        $manifest = Flux::pro()
-            ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
-            : json_decode(file_get_contents(__DIR__.'/../../flux/dist/manifest.json'), true);
-
-        $versionHash = $manifest['/flux.css'];
-
         $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
+        // Make scrollbars dark in dark mode...
         return <<<HTML
-<link rel="stylesheet" href="/flux/flux.css?id=$versionHash"$nonce>
+<style$nonce>
+    :root.dark {
+        color-scheme: dark;
+    }
+</style>
 <script$nonce>
-    let appearance = window.localStorage.getItem('flux.appearance') || 'system'
+    window.Flux = {
+        applyAppearance (appearance) {
+            let applyDark = () => document.documentElement.classList.add('dark')
+            let applyLight = () => document.documentElement.classList.remove('dark')
 
-    if (appearance === 'system') {
-        appearance = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            if (appearance === 'system') {
+                let media = window.matchMedia('(prefers-color-scheme: dark)')
+
+                window.localStorage.removeItem('flux.appearance')
+
+                media.matches ? applyDark() : applyLight()
+            } else if (appearance === 'dark') {
+                window.localStorage.setItem('flux.appearance', 'dark')
+
+                applyDark()
+            } else if (appearance === 'light') {
+                window.localStorage.setItem('flux.appearance', 'light')
+
+                applyLight()
+            }
+        }
     }
 
-    appearance === 'dark' ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark')
+    window.Flux.applyAppearance(window.localStorage.getItem('flux.appearance') || 'system')
 </script>
 HTML;
     }
