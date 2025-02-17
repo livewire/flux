@@ -5,10 +5,8 @@
 ])
 
 @php
-// This prevents variants from non-select components like flux::modal from being used here...
-$variant = $variant !== 'default' && Flux::componentExists('select.variants.' . $variant)
-    ? 'custom'
-    : 'default';
+// If the variant is coming from the parent component and is not default, we need to use the custom variant...
+$variant = $variant === 'default' ? 'default' : 'custom';
 @endphp
 
 <flux:with-field :$attributes>

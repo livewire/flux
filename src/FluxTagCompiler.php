@@ -14,7 +14,7 @@ class FluxTagCompiler extends ComponentTagCompiler
 
             $class = \Illuminate\View\AnonymousComponent::class;
 
-            return "##BEGIN-COMPONENT-CLASS##@component('{$class}', 'flux::' . {$component}, [
+            return "<?php if (!Flux::componentExists(\$name = {$component})) throw new \Exception(\"Flux component [{\$name}] does not exist.\"); ?>##BEGIN-COMPONENT-CLASS##@component('{$class}', 'flux::' . {$component}, [
     'view' => md5('flux') . '::' . {$component},
     'data' => \$__env->getCurrentComponentData(),
 ])
