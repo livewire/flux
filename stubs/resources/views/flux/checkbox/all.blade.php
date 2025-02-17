@@ -1,0 +1,2 @@
+
+<flux:checkbox all :$attributes />

@@ -25,6 +25,8 @@ class FluxServiceProvider extends ServiceProvider
         $this->bootTagCompiler();
         $this->bootMacros();
 
+        app('livewire')->propertySynthesizer(DateRangeSynth::class);
+
         AssetManager::boot();
 
         app('flux')->boot();
