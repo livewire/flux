@@ -1,7 +1,13 @@
 {
     "name": "livewire/flux",
     "description": "The official UI component library for Livewire.",
-    "keywords": ["flux", "laravel", "livewire", "components", "ui"],
+    "keywords": [
+        "flux",
+        "laravel",
+        "livewire",
+        "components",
+        "ui"
+    ],
     "license": "proprietary",
     "authors": [
         {
@@ -11,9 +17,9 @@
     ],
     "require": {
         "php": "^8.1",
-        "illuminate/console": "^10.0|^11.0",
-        "illuminate/support": "^10.0|^11.0",
-        "illuminate/view": "^10.0|^11.0",
+        "illuminate/console": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/view": "^10.0|^11.0|^12.0",
         "symfony/console": "^6.0|^7.0",
         "livewire/livewire": "^3.5.19",
         "laravel/prompts": "^0.1|^0.2|^0.3"
