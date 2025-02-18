@@ -51,7 +51,7 @@ $classes = Flux::classes()
         type="file"
         class="sr-only"
         tabindex="-1"
-        {{ $attributes }} {{ $multiple ? 'multiple' : '' }} {{ $name ? 'name="'.$name.'"' : '' }}
+        {{ $attributes }} {{ $multiple ? 'multiple' : '' }} @if($name)name="{{ $name }}"@endif
     >
 
     <flux:button as="div" class="cursor-pointer" :$size aria-hidden="true">
