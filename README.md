@@ -24,12 +24,12 @@ composer require livewire/flux
 
 ### 1. Include Flux Assets
 
-Add the `@fluxAppearance` and `@fluxScripts` Blade directives to your layout file:
+Add the `@fluxStyles` and `@fluxScripts` Blade directives to your layout file:
 
 ```html
 <head>
     ...
-    @fluxAppearance
+    @fluxStyles
 </head>
 
 <body>
