@@ -53,6 +53,10 @@ class DateRangeSynth extends Synth
         $preset = $value['preset'] ?? null;
 
         if ($preset) {
+            if ($preset === DateRangePreset::AllTime->value) {
+                return DateRange::allTime($value['start']);
+            }
+
             return DateRange::fromPreset(DateRangePreset::from($preset));
         }
 
