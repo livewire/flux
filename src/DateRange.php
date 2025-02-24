@@ -44,6 +44,11 @@ class DateRange extends CarbonPeriod
         return $this->preset !== null;
     }
 
+    public function isNotAllTime(): bool
+    {
+        return $this->preset !== DateRangePreset::AllTime;
+    }
+
     protected static function fromPreset(DateRangePreset $preset)
     {
         if ($preset === DateRangePreset::AllTime) {
