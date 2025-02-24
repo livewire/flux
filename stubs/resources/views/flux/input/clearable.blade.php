@@ -14,6 +14,7 @@ $attributes = $attributes->merge([
     x-on:click="$el.closest('[data-flux-input]').querySelector('input').value = ''; $el.closest('[data-flux-input]').querySelector('input').dispatchEvent(new Event('input', { bubbles: false })); $el.closest('[data-flux-input]').querySelector('input').focus()"
     tabindex="-1"
     aria-label="Clear input"
+    data-flux-clear-button
 >
     <flux:icon.x-mark variant="micro" />
 </flux:button>
