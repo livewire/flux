@@ -1,5 +1,6 @@
 @props([
     'size' => null,
+    'variant' => null,
 ])
 
 @php
@@ -10,7 +11,10 @@ $classes = Flux::classes()
         default => 'text-sm',
         'sm' => 'text-xs',
     })
-    ->add('text-zinc-500 dark:text-white/70')
+    ->add(match ($variant) {
+        'strong' => '[:where(&)]:text-zinc-800 [:where(&)]:dark:text-white',
+        default => '[:where(&)]:text-zinc-500 [:where(&)]:dark:text-white/70',
+    })
     ;
 @endphp
 {{-- NOTE: It's important that this file has NO newline at the end of the file. --}}

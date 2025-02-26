@@ -30,9 +30,11 @@ $iconClasses = Flux::classes()
 
 $isTypeSubmitAndNotDisabledOnRender = $type === 'submit' && ! $attributes->has('disabled');
 
-$loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->whereStartsWith('wire:click')->isNotEmpty());
+$isJsMethod = str_starts_with($attributes->whereStartsWith('wire:click')->first(), '$js.');
 
-if ($loading && $type !== 'submit') {
+$loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->whereStartsWith('wire:click')->isNotEmpty() && ! $isJsMethod);
+
+if ($loading && $type !== 'submit' && ! $isJsMethod) {
     $attributes = $attributes->merge(['wire:loading.attr' => 'data-flux-loading']);
 
     // We need to add `wire:target` here because without it the loading indicator won't be scoped

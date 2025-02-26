@@ -1,1 +1,1 @@
-<div class="flex-1" data-flux-spacer></div>
+<div {{ $attributes->class('flex-1') }} data-flux-spacer></div>
