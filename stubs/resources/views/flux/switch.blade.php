@@ -1,6 +1,6 @@
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
-    'leftAlign' => false,
+    'align' => 'right',
 ])
 
 @php
@@ -27,7 +27,7 @@ $indicatorClasses = Flux::classes()
     ]);
 @endphp
 
-@if ($leftAlign)
+@if ($align === 'left')
     <flux:with-inline-field :$attributes>
         <ui-switch {{ $attributes->class($classes) }} data-flux-control data-flux-switch>
             <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
