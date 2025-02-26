@@ -1,5 +1,6 @@
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
+    'align' => 'right',
 ])
 
 @php
@@ -26,8 +27,16 @@ $indicatorClasses = Flux::classes()
     ]);
 @endphp
 
-<flux:with-reversed-inline-field :$attributes>
-    <ui-switch {{ $attributes->class($classes) }} data-flux-control data-flux-switch>
-        <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
-    </ui-switch>
-</flux:with-reversed-inline-field>
+@if ($align === 'left')
+    <flux:with-inline-field :$attributes>
+        <ui-switch {{ $attributes->class($classes) }} data-flux-control data-flux-switch>
+            <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
+        </ui-switch>
+    </flux:with-inline-field>
+@else
+    <flux:with-reversed-inline-field :$attributes>
+        <ui-switch {{ $attributes->class($classes) }} data-flux-control data-flux-switch>
+            <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
+        </ui-switch>
+    </flux:with-reversed-inline-field>
+@endif
