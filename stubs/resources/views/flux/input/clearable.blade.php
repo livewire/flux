@@ -11,7 +11,7 @@ $attributes = $attributes->merge([
     :$attributes
     :size="$size === 'sm' ? 'xs' : 'sm'"
     x-data
-    x-on:click="$el.closest('[data-flux-input]').querySelector('input').value = ''; $el.closest('[data-flux-input]').querySelector('input').dispatchEvent(new Event('input', { bubbles: false })); $el.closest('[data-flux-input]').querySelector('input').focus()"
+    x-on:click="let input = $el.closest('[data-flux-input]').querySelector('input'); input.value = ''; input.dispatchEvent(new Event('input', { bubbles: false })); input.dispatchEvent(new Event('change', { bubbles: false })); input.focus()"
     tabindex="-1"
     aria-label="Clear input"
 >
