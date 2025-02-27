@@ -163,12 +163,6 @@ class PublishCommand extends Command
     {
         $filesystem = (new Filesystem);
 
-        if ($filesystem->exists($destination) && !$this->option('force')) {
-            warning("Skipping [{$component}]. Directory already exists: {$destination}");
-
-            return null;
-        }
-
         $filesystem->copyDirectory($source, $destination);
 
         return $destination;
