@@ -30,7 +30,7 @@ $iconClasses = Flux::classes()
 
 $isTypeSubmitAndNotDisabledOnRender = $type === 'submit' && ! $attributes->has('disabled');
 
-$isJsMethod = str_starts_with($attributes->whereStartsWith('wire:click')->first(), '$js.');
+$isJsMethod = str_starts_with($attributes->whereStartsWith('wire:click')->first() ?? '', '$js.');
 
 $loading ??= $loading ?? ($isTypeSubmitAndNotDisabledOnRender || $attributes->whereStartsWith('wire:click')->isNotEmpty() && ! $isJsMethod);
 
