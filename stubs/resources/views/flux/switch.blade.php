@@ -5,7 +5,7 @@
 
 @php
 $classes = Flux::classes()
-    ->add('group h-5 w-8 relative inline-flex items-center outline-offset-2')
+    ->add('group h-5 w-8 min-w-8 relative inline-flex items-center outline-offset-2')
     ->add('rounded-full')
     ->add('transition')
     ->add('bg-zinc-800/15 [&[disabled]]:opacity-50 dark:bg-transparent dark:border dark:border-white/20 dark:[&[disabled]]:border-white/10')
