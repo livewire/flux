@@ -22,9 +22,6 @@ $invalid ??= ($name && $errors->has($name));
 
 $iconLeading ??= $icon;
 
-// Clearable is not supported on xs size...
-if ($size === 'xs') $clearable = null;
-
 $hasLeadingIcon = (bool) ($iconLeading);
 $hasTrailingIcon = (bool) ($iconTrailing) || (bool) $kbd || (bool) $clearable || (bool) $copyable || (bool) $viewable || (bool) $expandable;
 $hasBothIcons = $hasLeadingIcon && $hasTrailingIcon;
@@ -112,7 +109,7 @@ $classes = Flux::classes()
 
             <?php if ($expandable): ?>
                 <div class="absolute top-0 bottom-0 flex items-center justify-center pr-2 right-0">
-                    <flux:input.expandable />
+                    <flux:input.expandable :$size />
                 </div>
             <?php endif; ?>
 
