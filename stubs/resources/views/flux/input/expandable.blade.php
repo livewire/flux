@@ -9,7 +9,7 @@ $attributes = $attributes->merge([
 
 <flux:button
     :$attributes
-    :size="$size === 'sm' ? 'xs' : 'sm'"
+    :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
     x-on:click="$el.closest('[data-flux-input]').querySelector('input').value = ''"
 >
     <flux:icon.chevron-down variant="micro" />

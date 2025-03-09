@@ -9,7 +9,7 @@ $attributes = $attributes->merge([
 
 <flux:button
     :$attributes
-    :size="$size === 'sm' ? 'xs' : 'sm'"
+    :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
     x-data="{ copied: false }"
     x-on:click="copied = ! copied; navigator.clipboard && navigator.clipboard.writeText($el.closest('[data-flux-input]').querySelector('input').value); setTimeout(() => copied = false, 2000)"
     x-bind:data-copyable-copied="copied"

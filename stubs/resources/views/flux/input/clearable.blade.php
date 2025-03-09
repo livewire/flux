@@ -9,7 +9,7 @@ $attributes = $attributes->merge([
 
 <flux:button
     :$attributes
-    :size="$size === 'sm' ? 'xs' : 'sm'"
+    :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
     x-data
     x-on:click="let input = $el.closest('[data-flux-input]').querySelector('input'); input.value = ''; input.dispatchEvent(new Event('input', { bubbles: false })); input.dispatchEvent(new Event('change', { bubbles: false })); input.focus()"
     tabindex="-1"

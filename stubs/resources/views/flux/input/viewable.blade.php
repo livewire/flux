@@ -9,7 +9,7 @@ $attributes = $attributes->merge([
 
 <flux:button
     :$attributes
-    :size="$size === 'sm' ? 'xs' : 'sm'"
+    :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
     x-data="{ open: false }"
     x-on:click="open = ! open; $el.closest('[data-flux-input]').querySelector('input').setAttribute('type', open ? 'text' : 'password')"
     x-bind:data-viewable-open="open"
