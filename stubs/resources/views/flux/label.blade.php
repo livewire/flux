@@ -5,7 +5,7 @@
 
 @php
     $classes = Flux::classes()
-        ->add('text-sm font-medium select-none')
+        ->add('text-sm font-medium')
         ->add('text-zinc-800 dark:text-white')
         ;
 @endphp
