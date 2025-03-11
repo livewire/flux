@@ -116,7 +116,7 @@ class PublishCommand extends Command
 
         return $this->fluxComponents()
             ->keys()
-            ->filter(fn (string $component) => str($component)->lower()->startsWith($value))
+            ->filter(fn (string $component) => str($component)->lower()->startsWith(str($value)->lower()))
             ->values()
             ->all();
     }
