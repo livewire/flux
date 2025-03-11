@@ -9,7 +9,7 @@
 ])
 
 @php
-$insetClasses = Flux::applyInset($inset, top: '-mt-1', right: '-mr-2', bottom: '-mb-1', left: '-ml-1');
+$insetClasses = Flux::applyInset($inset, top: '-mt-1', right: '-mr-2', bottom: '-mb-1', left: '-ml-2');
 
 // When using the outline icon variant, we need to size it down to match the default icon sizes...
 $iconClasses = Flux::classes()->add($iconVariant === 'outline' ? 'size-4' : '');
