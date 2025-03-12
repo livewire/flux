@@ -17,6 +17,19 @@ class DateRangeSynth extends Synth
         return $type === DateRange::class;
     }
 
+    static function unwrapForValidation($target) {
+        $data = [
+            'start' => $target->start()?->format('Y-m-d'),
+            'end' => $target->end()?->format('Y-m-d'),
+        ];
+
+        $preset = $target->preset();
+
+        $preset && $data['preset'] = $preset->value;
+
+        return $data;
+    }
+
     static function hydrateFromType($type, $value) {
         if ($value === '' || $value === null) return null;
 
