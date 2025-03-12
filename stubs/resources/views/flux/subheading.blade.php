@@ -1,5 +1,5 @@
 @props([
-    'size' => null,
+    'size' => 'base',
 ])
 
 @php
