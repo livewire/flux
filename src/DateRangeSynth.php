@@ -17,7 +17,7 @@ class DateRangeSynth extends Synth
         return $type === DateRange::class;
     }
 
-    static function unwrap($target) {
+    static function unwrapForValidation($target) {
         $data = [
             'start' => $target->start()?->format('Y-m-d'),
             'end' => $target->end()?->format('Y-m-d'),
