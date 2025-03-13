@@ -41,10 +41,10 @@ $classes = Flux::classes()
         'xs' => 'text-xs py-1.5 h-6 leading-[1.125rem]',
     })
     ->add(match (true) { // Spacing...
-        $hasNoIcons => 'pl-3 pr-3',
-        $hasBothIcons =>'pl-10 pr-10',
-        $hasLeadingIcon => 'pl-10 pr-3',
-        $hasTrailingIcon => 'pl-3 pr-10',
+        $hasNoIcons => 'ps-3 pr-3',
+        $hasBothIcons =>'ps-10 pr-10',
+        $hasLeadingIcon => 'ps-10 pr-3',
+        $hasTrailingIcon => 'ps-3 pr-10',
     })
     ->add(match ($variant) { // Background...
         'outline' => 'bg-white dark:bg-white/10 dark:disabled:bg-white/[7%]',
@@ -70,11 +70,11 @@ $classes = Flux::classes()
     <flux:with-field :$attributes :$name>
         <div {{ $attributes->only('class')->class('w-full relative block group/input') }} data-flux-input>
             <?php if (is_string($iconLeading)): ?>
-                <div class="z-10 pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pl-3 left-0">
+                <div class="z-10 pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 left-0">
                     <flux:icon :icon="$iconLeading" :variant="$iconVariant" :class="$iconClasses" />
                 </div>
             <?php elseif ($iconLeading): ?>
-                <div {{ $iconLeading->attributes->class('z-10 absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pl-3 left-0') }}>
+                <div {{ $iconLeading->attributes->class('z-10 absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 left-0') }}>
                     {{ $iconLeading }}
                 </div>
             <?php endif; ?>
@@ -135,11 +135,11 @@ $classes = Flux::classes()
 <?php else: ?>
     <button {{ $attributes->merge(['type' => 'button'])->class([$classes, 'w-full relative flex']) }}>
         <?php if (is_string($iconLeading)): ?>
-            <div class="z-10 absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pl-3 left-0">
+            <div class="z-10 absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 left-0">
                 <flux:icon :icon="$iconLeading" :variant="$iconVariant" :class="$iconClasses" />
             </div>
         <?php elseif ($iconLeading): ?>
-            <div {{ $iconLeading->attributes->class('z-10 absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pl-3 left-0') }}>
+            <div {{ $iconLeading->attributes->class('z-10 absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 left-0') }}>
                 {{ $iconLeading }}
             </div>
         <?php endif; ?>
