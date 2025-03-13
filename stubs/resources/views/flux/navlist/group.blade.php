@@ -16,7 +16,7 @@
         </button>
 
         <div class="relative hidden data-open:block space-y-[2px] ps-7" @if ($expanded === true) data-open @endif>
-            <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 left-0 ms-4"></div>
+            <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-4"></div>
 
             {{ $slot }}
         </div>
