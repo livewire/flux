@@ -8,11 +8,11 @@ $classes = Flux::classes()
     ->add('*:data-flux-input:grow')
     ->add([
         '[&>[data-flux-input]:not(:first-child):not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-x-0',
-        '[&>[data-flux-input]:first-child:not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-r-0',
-        '[&>[data-flux-input]:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-l-0',
+        '[&>[data-flux-input]:first-child:not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-e-0',
+        '[&>[data-flux-input]:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
 
         // Prevent sandwhiched selects (next to inputs) from causing double borders...
-        '[&>*:not(:first-child):not(:last-child):not(:only-child)_[data-flux-group-target]:not([data-invalid])]:border-l-0',
+        '[&>*:not(:first-child):not(:last-child):not(:only-child)_[data-flux-group-target]:not([data-invalid])]:border-s-0',
 
         // "Weld" the borders of inputs together by overriding their border radiuses...
         '[&>[data-flux-group-target]:not(:first-child):not(:last-child)]:rounded-none',
