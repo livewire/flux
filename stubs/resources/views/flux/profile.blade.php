@@ -40,19 +40,19 @@ $classes = Flux::classes()
     </div>
 
     <?php if ($name): ?>
-        <span class="ml-2 text-sm text-zinc-500 dark:text-white/80 group-hover:text-zinc-800 dark:group-hover:text-white font-medium truncate">
+        <span class="ms-2 text-sm text-zinc-500 dark:text-white/80 group-hover:text-zinc-800 dark:group-hover:text-white font-medium truncate">
             {{ $name }}
         </span>
     <?php endif; ?>
 
     <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-        <div class="shrink-0 ml-auto size-8 flex justify-center items-center">
+        <div class="shrink-0 ms-auto size-8 flex justify-center items-center">
             <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
         </div>
     <?php elseif ($iconTrailing): ?>
         {{ $iconTrailing }}
     <?php elseif ($chevron): ?>
-        <div class="shrink-0 ml-auto size-8 flex justify-center items-center">
+        <div class="shrink-0 ms-auto size-8 flex justify-center items-center">
             <flux:icon.chevron-down :variant="$iconVariant" :class="$iconClasses" />
         </div>
     <?php endif; ?>

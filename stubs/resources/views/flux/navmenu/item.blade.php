@@ -20,7 +20,7 @@ $iconClasses = Flux::classes()
     ;
 
 $trailingIconClasses = Flux::classes()
-    ->add('ml-auto')
+    ->add('ms-auto')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : null)
     ;
@@ -58,7 +58,7 @@ $classes = Flux::classes()
 
     <?php if ($suffix): ?>
         <?php if (is_string($suffix)): ?>
-            <div class="ml-auto opacity-50 text-xs">
+            <div class="ms-auto opacity-50 text-xs">
                 {{ $suffix }}
             </div>
         <?php else: ?>

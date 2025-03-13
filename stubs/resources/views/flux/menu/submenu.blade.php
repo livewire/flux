@@ -7,7 +7,7 @@
 
 @php
 $iconClasses = Flux::classes()
-    ->add('ml-auto text-zinc-400 [[data-flux-menu-item]:hover_&]:text-current')
+    ->add('ms-auto text-zinc-400 [[data-flux-menu-item]:hover_&]:text-current')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : '');
 @endphp

@@ -18,7 +18,7 @@ $iconClasses = Flux::classes()
     ;
 
 $trailingIconClasses = Flux::classes()
-    ->add('ml-auto text-zinc-400 [[data-flux-menu-item-icon]:hover_&]:text-current')
+    ->add('ms-auto text-zinc-400 [[data-flux-menu-item-icon]:hover_&]:text-current')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : null)
     ;
@@ -41,7 +41,7 @@ $classes = Flux::classes()
     ;
 
 $suffixClasses = Flux::classes()
-    ->add('ml-auto text-xs text-zinc-400')
+    ->add('ms-auto text-xs text-zinc-400')
     ;
 @endphp
 
