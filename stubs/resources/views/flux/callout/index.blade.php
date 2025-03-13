@@ -168,7 +168,7 @@
         ;
 
     $iconWrapperClasses = Flux::classes()
-        ->add('ps-2 py-2 pr-0 flex items-baseline')
+        ->add('ps-2 py-2 pe-0 flex items-baseline')
         ;
 
     $iconClasses = Flux::classes()
@@ -189,7 +189,7 @@
     <?php endif; ?>
 
     <div class="ps-2 flex-1 {{ $inline ? '@md:flex @md:[&>[data-slot="content"]:has([data-slot="heading"]):has([data-slot="text"])+[data-slot="actions"]]:p-2' : '' }}">
-        <div class="flex-1 py-2 pr-3 @md:pr-4 flex flex-col justify-center gap-2" data-slot="content">
+        <div class="flex-1 py-2 pe-3 @md:pe-4 flex flex-col justify-center gap-2" data-slot="content">
             <?php if ($heading): ?>
                 <flux:callout.heading>{{ $heading }}</flux:callout.heading>
             <?php endif; ?>
