@@ -15,8 +15,8 @@ $classes = Flux::classes()
         default => 'p-6 [:where(&)]:max-w-xl shadow-lg rounded-xl',
         'flyout' => match($position) {
             'bottom' => 'fixed m-0 p-8 min-w-[100vw] overflow-y-auto mt-auto [--fx-flyout-translate:translateY(50px)] border-t',
-            'left' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto me-auto [--fx-flyout-translate:translateX(-50px)] border-r',
-            default => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ms-auto [--fx-flyout-translate:translateX(50px)] border-l',
+            'left' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto me-auto [--fx-flyout-translate:translateX(-50px)] border-e',
+            default => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ms-auto [--fx-flyout-translate:translateX(50px)] border-s',
         },
         'flyout' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ms-auto',
         'bare' => '',
