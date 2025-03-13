@@ -6,7 +6,7 @@
 
 @php
 $classes = Flux::classes()
-    ->add('h-10 flex items-center mr-4')
+    ->add('h-10 flex items-center me-4')
     ;
 
 $textClasses = Flux::classes()

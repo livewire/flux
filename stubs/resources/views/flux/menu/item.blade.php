@@ -12,7 +12,7 @@
 if ($kbd) $suffix = $kbd;
 
 $iconClasses = Flux::classes()
-    ->add('mr-2')
+    ->add('me-2')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : null)
     ;
