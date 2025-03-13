@@ -25,7 +25,7 @@ $iconTrailingClasses = Flux::classes()
 $classes = Flux::classes()
     ->add('group/menu-radio flex items-center px-2 py-1.5 w-full focus:outline-hidden')
     ->add('rounded-md')
-    ->add('text-left text-sm font-medium')
+    ->add('text-start text-sm font-medium')
     ->add('[[disabled]_&]:opacity-50 [&[disabled]]:opacity-50')
     ->add([
         'text-zinc-800 data-active:bg-zinc-50 dark:text-white dark:data-active:bg-zinc-600',

@@ -145,11 +145,11 @@ $classes = Flux::classes()
         <?php endif; ?>
 
         <?php if ($attributes->has('placeholder')): ?>
-            <div class="block self-center text-left flex-1 font-medium text-zinc-400 dark:text-white/40">
+            <div class="block self-center text-start flex-1 font-medium text-zinc-400 dark:text-white/40">
                 {{ $attributes->get('placeholder') }}
             </div>
         <?php else: ?>
-            <div class="text-left self-center flex-1 font-medium text-zinc-800 dark:text-white">
+            <div class="text-start self-center flex-1 font-medium text-zinc-800 dark:text-white">
                 {{ $slot }}
             </div>
         <?php endif; ?>
