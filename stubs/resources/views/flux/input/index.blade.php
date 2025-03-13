@@ -92,41 +92,41 @@ $classes = Flux::classes()
             >
 
             <?php if ($kbd): ?>
-                <div class="pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400 pe-4 right-0">
+                <div class="pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400 pe-4 end-0">
                     {{ $kbd }}
                 </div>
             <?php endif; ?>
 
             <?php if (is_string($iconTrailing)): ?>
-                <div class="pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-3 right-0">
+                <div class="pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-3 end-0">
                     <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
                 </div>
             <?php elseif ($iconTrailing): ?>
-                <div {{ $iconTrailing->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-2 right-0') }}>
+                <div {{ $iconTrailing->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-2 end-0') }}>
                     {{ $iconTrailing }}
                 </div>
             <?php endif; ?>
 
             <?php if ($expandable): ?>
-                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 right-0">
+                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 end-0">
                     <flux:input.expandable :$size />
                 </div>
             <?php endif; ?>
 
             <?php if ($clearable): ?>
-                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 right-0">
+                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 end-0">
                     <flux:input.clearable :$size />
                 </div>
             <?php endif; ?>
 
             <?php if ($copyable): ?>
-                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 right-0">
+                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 end-0">
                     <flux:input.copyable :$size />
                 </div>
             <?php endif; ?>
 
             <?php if ($viewable): ?>
-                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 right-0">
+                <div class="absolute top-0 bottom-0 flex items-center justify-center pe-2 end-0">
                     <flux:input.viewable :$size />
                 </div>
             <?php endif; ?>
@@ -155,17 +155,17 @@ $classes = Flux::classes()
         <?php endif; ?>
 
         <?php if ($kbd): ?>
-            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-4 right-0">
+            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-4 end-0">
                 {{ $kbd }}
             </div>
         <?php endif; ?>
 
         <?php if (is_string($iconTrailing)): ?>
-            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-3 right-0">
+            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-3 end-0">
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
             </div>
         <?php elseif  ($iconTrailing): ?>
-            <div {{ $iconTrailing->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-2 right-0') }}>
+            <div {{ $iconTrailing->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-2 end-0') }}>
                 {{ $iconTrailing }}
             </div>
         <?php endif; ?>

@@ -55,7 +55,7 @@ $classes = Flux::classes()
             <?php endif; ?>
 
             <?php if ($iconDot): ?>
-                <div class="absolute top-[-2px] right-[-2px]">
+                <div class="absolute top-[-2px] end-[-2px]">
                     <div class="size-[6px] rounded-full bg-zinc-500 dark:bg-zinc-400"></div>
                 </div>
             <?php endif; ?>

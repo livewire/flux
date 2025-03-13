@@ -85,7 +85,7 @@ if ($dismissible === false) {
         {{ $slot }}
 
         <?php if ($closable): ?>
-            <div class="absolute top-0 right-0 mt-4 me-4">
+            <div class="absolute top-0 end-0 mt-4 me-4">
                 <flux:modal.close>
                     <flux:button variant="ghost" icon="x-mark" size="sm" alt="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
                 </flux:modal.close>
