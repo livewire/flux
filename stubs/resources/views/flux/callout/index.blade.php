@@ -179,7 +179,7 @@
         ;
 @endphp
 
-<div {{ $attributes->class($classes) }} data-flux-callout>
+<flux:button-or-link {{ $attributes->class($classes) }} data-flux-callout>
     <?php if (is_string($icon) && $icon !== ''): ?>
         <div class="{{ $iconWrapperClasses }}">
             <flux:icon :icon="$icon" :variant="$iconVariant" :class="$iconClasses" />
@@ -218,4 +218,4 @@
             {{ $controls }}
         </div>
     <?php endif; ?>
-</div>
+</flux:button-or-link>

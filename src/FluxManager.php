@@ -120,6 +120,19 @@ class FluxManager
         return $props;
     }
 
+    public function attributesAfter($prefix, $attributes, $default = [])
+    {
+        $newAttributes = new \Illuminate\View\ComponentAttributeBag($default);
+
+        foreach ($attributes->all() as $key => $value) {
+            if (str_starts_with($key, $prefix)) {
+                $newAttributes[substr($key, strlen($prefix))] = $value;
+            }
+        }
+
+        return $newAttributes;
+    }
+
     public function applyInset($inset, $top, $right, $bottom, $left)
     {
         if ($inset === null) return '';

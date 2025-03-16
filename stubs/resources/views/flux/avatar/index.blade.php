@@ -152,32 +152,22 @@ $badgeClasses = Flux::classes()
     ;
 
 $label = $alt ?? $name;
-
-$isDecorative = true
-    && ($src && (! $name && ! $alt)) // If there's an image but no name or alt, it's decorative.
-    && ($icon && (! $name && ! $alt)) // If there's an icon but no name or alt, it's decorative.
-    && $as !== 'button' // Buttons are interactive.
-    && $href !== null // Links are interactive.
-    && $hasTextContent // Text content is decorative.
-;
 @endphp
 
 <flux:with-tooltip :$tooltip :$attributes>
-    <flux:button-or-link :attributes="$attributes->class($classes)->merge($isDecorative ? ['aria-hidden' => 'true'] : [])" :$as :$href data-flux-avatar data-slot="avatar" data-size="{{ $size }}">
+    <flux:button-or-link :attributes="$attributes->class($classes)->merge($circle ? ['data-circle' => 'true'] : [])" :$as :$href data-flux-avatar data-slot="avatar" data-size="{{ $size }}">
         <?php if ($src): ?>
-            <img src="{{ $src }}" alt="{{ $alt ?? $name }}" class="rounded-[var(--avatar-radius)]" />
+            <img src="{{ $src }}" alt="{{ $alt ?? $name }}" class="rounded-[var(--avatar-radius)]">
         <?php elseif ($icon): ?>
             <flux:icon :name="$icon" :variant="$iconVariant" :class="$iconClasses" />
         <?php elseif ($hasTextContent): ?>
             <span class="select-none">{{ $initials ?? $slot }}</span>
         <?php endif; ?>
 
-        <?php if ($badge && ! $badge instanceof \Illuminate\View\ComponentSlot): ?>
-            <div class="{{ $badgeClasses }}" aria-hidden="true">{{ is_string($badge) ? $badge : '' }}</div>
+        <?php if ($badge instanceof \Illuminate\View\ComponentSlot): ?>
+            <div {{ $badge->attributes->class($badgeClasses) }} aria-hidden="true">{{ $badge }}</div>
         <?php elseif ($badge): ?>
-            <div {{ $badge->attributes->class($badgeClasses) }} aria-hidden="true">
-                {{ $badge }}
-            </div>
+            <div class="{{ $badgeClasses }}" aria-hidden="true">{{ is_string($badge) ? $badge : '' }}</div>
         <?php endif; ?>
     </flux:button-or-link>
 </flux:with-tooltip>
