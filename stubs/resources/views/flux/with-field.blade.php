@@ -8,6 +8,8 @@ extract(Flux::forwardedAttributes($attributes, [
 ]));
 @endphp
 
+@php $descriptionTrailing = $descriptionTrailing ??= $attributes->pluck('description:trailing'); @endphp
+
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
     'descriptionTrailing' => null,

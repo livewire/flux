@@ -85,7 +85,7 @@ $classes = Flux::classes()
     {{ $slot }}
 
     <?php if ($iconTrailing): ?>
-        <div class="pl-1 flex items-center" data-flux-badge-icon-trailing>
+        <div class="pl-1 flex items-center" data-flux-badge-icon:trailing>
             <?php if (is_string($iconTrailing)): ?>
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
             <?php else: ?>
