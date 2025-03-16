@@ -9,7 +9,7 @@
     'badge' => null,
     'name' => null,
     'icon' => null,
-    'size' => null,
+    'size' => 'md',
     'src' => null,
     'href' => null,
     'alt' => null,
@@ -63,7 +63,7 @@ $classes = Flux::classes()
         'xs' => '[--avatar-radius:var(--radius-sm)]',
     })
     ->add('relative isolate flex items-center justify-center')
-    ->add(' [:where(&)]:font-medium')
+    ->add('[:where(&)]:font-medium')
     ->add('rounded-[var(--avatar-radius)]')
     ->add($hasTextContent ? '[:where(&)]:bg-zinc-200 [:where(&)]:dark:bg-zinc-600 [:where(&)]:text-zinc-800 [:where(&)]:dark:text-white' : '')
     ->add(match($color) {
@@ -163,7 +163,7 @@ $isDecorative = true
 @endphp
 
 <flux:with-tooltip :$tooltip :$attributes>
-    <flux:button-or-link :attributes="$attributes->class($classes)->merge($isDecorative ? ['aria-hidden' => 'true'] : [])" :$as :$href data-flux-avatar>
+    <flux:button-or-link :attributes="$attributes->class($classes)->merge($isDecorative ? ['aria-hidden' => 'true'] : [])" :$as :$href data-flux-avatar data-slot="avatar" data-size="{{ $size }}">
         <?php if ($src): ?>
             <img src="{{ $src }}" alt="{{ $alt ?? $name }}" class="rounded-[var(--avatar-radius)]" />
         <?php elseif ($icon): ?>

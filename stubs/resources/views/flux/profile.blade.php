@@ -30,15 +30,13 @@ $classes = Flux::classes()
 @endphp
 
 <button type="button" {{ $attributes->class($classes) }} data-flux-profile>
-    <div class="shrink-0 size-8 bg-zinc-200 rounded-sm overflow-hidden dark:bg-zinc-700">
+    <div class="shrink-0">
         <?php if (is_string($avatar)): ?>
-            <img src="{{ $avatar }}" />
+            <flux:avatar :src="$avatar" size="sm" />
         <?php elseif ($avatar): ?>
             {{ $avatar }}
         <?php else: ?>
-            <div class="w-full h-full flex items-center justify-center text-sm">
-                {{ $initials }}
-            </div>
+            <flux:avatar :$initials :$name size="sm" />
         <?php endif; ?>
     </div>
 
