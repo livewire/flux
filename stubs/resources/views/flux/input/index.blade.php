@@ -1,3 +1,7 @@
+@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconLeading = $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
     'iconVariant' => 'mini',

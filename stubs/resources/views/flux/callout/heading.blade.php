@@ -1,3 +1,5 @@
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
     'iconVariant' => 'mini',
     'icon' => null,

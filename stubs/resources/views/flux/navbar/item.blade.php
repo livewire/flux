@@ -1,3 +1,6 @@
+@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @aware([ 'variant' ])
 
 @props([
@@ -22,7 +25,7 @@ $iconClasses = Flux::classes($square ? 'size-6' : 'size-5');
 $classes = Flux::classes()
     ->add('px-3 h-8 flex items-center rounded-lg')
     ->add('relative') // This is here for the "active" bar at the bottom to be positioned correctly...
-    ->add($square ? 'px-2.5!' : '')
+    ->add($square ? '' : 'px-2.5!')
     ->add('text-zinc-500 dark:text-white/80 ')
     // Styles for when this link is the "current" one...
     ->add('data-current:after:absolute data-current:after:-bottom-3 data-current:after:inset-x-0 data-current:after:h-[2px]')

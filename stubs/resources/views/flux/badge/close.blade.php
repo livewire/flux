@@ -1,6 +1,8 @@
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
-    'icon' => 'x-mark',
     'iconVariant' => 'micro',
+    'icon' => 'x-mark',
 ])
 
 @php

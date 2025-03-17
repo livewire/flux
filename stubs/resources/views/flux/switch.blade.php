@@ -27,7 +27,7 @@ $indicatorClasses = Flux::classes()
     ]);
 @endphp
 
-@if ($align === 'left')
+@if ($align === 'left' || $align === 'start')
     <flux:with-inline-field :$attributes>
         <ui-switch {{ $attributes->class($classes) }} data-flux-control data-flux-switch>
             <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
