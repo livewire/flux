@@ -43,7 +43,7 @@ $classes = Flux::classes()
     </div>
 
     <?php if ($name): ?>
-        <span class="ms-2 text-sm text-zinc-500 dark:text-white/80 group-hover:text-zinc-800 dark:group-hover:text-white font-medium truncate">
+        <span class="mx-2 text-sm text-zinc-500 dark:text-white/80 group-hover:text-zinc-800 dark:group-hover:text-white font-medium truncate">
             {{ $name }}
         </span>
     <?php endif; ?>
