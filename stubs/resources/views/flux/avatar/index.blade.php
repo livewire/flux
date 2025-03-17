@@ -112,7 +112,12 @@ $badgePosition = $attributes->pluck('badge:position') ?: (is_object($badge) ? $b
 $badgeVariant = $attributes->pluck('badge:variant') ?: (is_object($badge) ? $badge?->attributes?->pluck('variant') : null);
 
 $badgeClasses = Flux::classes()
-    ->add('absolute min-h-3 min-w-3 ring-[2px] ring-white dark:ring-zinc-900 z-10')
+    ->add('absolute ring-[2px] ring-white dark:ring-zinc-900 z-10')
+    ->add(match($size) {
+        default => 'min-h-3 min-w-3',
+        'sm' => 'min-h-2 min-w-2',
+        'xs' => 'min-h-2 min-w-2',
+    })
     ->add('flex items-center justify-center tabular-nums overflow-hidden')
     ->add('text-[.625rem] text-zinc-800 dark:text-white font-medium')
     ->add($badgeCircle ? 'rounded-full' : 'rounded-[3px]')
