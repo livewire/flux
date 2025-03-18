@@ -49,7 +49,7 @@ $classes = Flux::classes()
     <?php endif; ?>
 
     <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-        <div class="shrink-0 ml-auto size-8 flex justify-center items-center">
+        <div class="shrink-0 ms-auto size-8 flex justify-center items-center">
             <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
         </div>
     <?php elseif ($iconTrailing): ?>

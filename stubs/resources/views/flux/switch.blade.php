@@ -19,10 +19,10 @@ $classes = Flux::classes()
 $indicatorClasses = Flux::classes()
     ->add('size-3.5')
     ->add('rounded-full')
-    ->add('transition translate-x-[3px] dark:translate-x-[2px]')
+    ->add('transition translate-x-[3px] dark:translate-x-[2px] rtl:-translate-x-[3px] dark:rtl:-translate-x-[2px]')
     ->add('bg-white')
     ->add([
-        'group-data-checked:translate-x-[15px]',
+        'group-data-checked:translate-x-[15px] rtl:group-data-checked:-translate-x-[15px]',
         'group-data-checked:bg-(--color-accent-foreground)',
     ]);
 @endphp
