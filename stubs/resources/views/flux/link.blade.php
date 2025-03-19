@@ -2,6 +2,7 @@
     'external' => null,
     'accent' => true,
     'variant' => null,
+    'strong' => false,
 ])
 
 @php
@@ -13,6 +14,7 @@ $classes = Flux::classes()
         'subtle' => 'no-underline',
         default => 'underline',
     })
+    ->add('[[data-color]>&]:text-inherit [[data-color]>&]:decoration-current/20 dark:[[data-color]>&]:decoration-current/50 [[data-color]>&]:hover:decoration-current')
     ->add(match ($variant) {
         'subtle' => 'text-zinc-500 dark:text-white/70 hover:text-zinc-800 dark:hover:text-white',
         default => match ($accent) {

@@ -15,10 +15,10 @@ $classes = Flux::classes()
         default => 'p-6 [:where(&)]:max-w-xl shadow-lg rounded-xl',
         'flyout' => match($position) {
             'bottom' => 'fixed m-0 p-8 min-w-[100vw] overflow-y-auto mt-auto [--fx-flyout-translate:translateY(50px)] border-t',
-            'left' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto mr-auto [--fx-flyout-translate:translateX(-50px)] border-r',
-            default => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ml-auto [--fx-flyout-translate:translateX(50px)] border-l',
+            'left' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto me-auto [--fx-flyout-translate:translateX(-50px)] border-e',
+            default => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ms-auto [--fx-flyout-translate:translateX(50px)] border-s',
         },
-        'flyout' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ml-auto',
+        'flyout' => 'fixed m-0 p-8 max-h-dvh min-h-dvh md:[:where(&)]:min-w-[25rem] overflow-y-auto ms-auto',
         'bare' => '',
     })
     ->add(match ($variant) {
@@ -85,7 +85,7 @@ if ($dismissible === false) {
         {{ $slot }}
 
         <?php if ($closable): ?>
-            <div class="absolute top-0 right-0 mt-4 mr-4">
+            <div class="absolute top-0 end-0 mt-4 me-4">
                 <flux:modal.close>
                     <flux:button variant="ghost" icon="x-mark" size="sm" alt="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
                 </flux:modal.close>

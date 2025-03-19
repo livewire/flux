@@ -10,7 +10,7 @@ $invalid ??= ($name && $errors->has($name));
 
 $classes = Flux::classes()
     ->add('appearance-none') // Strip the browser's default <select> styles...
-    ->add('w-full pl-3 pr-10 block')
+    ->add('w-full ps-3 pe-10 block')
     ->add(match ($size) {
         default => 'h-10 py-2 text-base sm:text-sm leading-none rounded-lg',
         'sm' => 'h-8 py-1.5 text-sm leading-none rounded-md',

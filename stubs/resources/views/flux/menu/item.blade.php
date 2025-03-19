@@ -1,3 +1,6 @@
+@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
     'iconTrailing' => null,
     'iconVariant' => 'mini',
@@ -12,13 +15,13 @@
 if ($kbd) $suffix = $kbd;
 
 $iconClasses = Flux::classes()
-    ->add('mr-2')
+    ->add('me-2')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : null)
     ;
 
 $trailingIconClasses = Flux::classes()
-    ->add('ml-auto text-zinc-400 [[data-flux-menu-item-icon]:hover_&]:text-current')
+    ->add('ms-auto text-zinc-400 [[data-flux-menu-item-icon]:hover_&]:text-current')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : null)
     ;
@@ -26,7 +29,7 @@ $trailingIconClasses = Flux::classes()
 $classes = Flux::classes()
     ->add('flex items-center px-2 py-1.5 w-full focus:outline-hidden')
     ->add('rounded-md')
-    ->add('text-left text-sm font-medium')
+    ->add('text-start text-sm font-medium')
     ->add('[&[disabled]]:opacity-50')
     ->add(match ($variant) {
         'danger' => [
@@ -41,7 +44,7 @@ $classes = Flux::classes()
     ;
 
 $suffixClasses = Flux::classes()
-    ->add('ml-auto text-xs text-zinc-400')
+    ->add('ms-auto text-xs text-zinc-400')
     ;
 @endphp
 

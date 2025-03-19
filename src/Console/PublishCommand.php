@@ -24,7 +24,9 @@ class PublishCommand extends Command
     protected array $fluxComponents = [
         'free' => [
             'Accent' => ['accent'],
+            'Avatar' => ['avatar'],
             'Badge' => ['badge'],
+            'Brand' => ['brand'],
             'Breadcrumbs' => ['breadcrumbs'],
             'Button' => ['button'],
             'Checkbox' => ['checkbox'],
@@ -58,7 +60,7 @@ class PublishCommand extends Command
             'Radio' => ['radio'],
             'Select' => ['select'],
             'Tabs' => ['tabs','tab'],
-            'Table' => ['table', 'pagination', 'avatar'],
+            'Table' => ['table', 'pagination'],
             'Toast' => ['toast'],
         ],
     ];
@@ -116,7 +118,7 @@ class PublishCommand extends Command
 
         return $this->fluxComponents()
             ->keys()
-            ->filter(fn (string $component) => str($component)->lower()->startsWith($value))
+            ->filter(fn (string $component) => str($component)->lower()->startsWith(str($value)->lower()))
             ->values()
             ->all();
     }
