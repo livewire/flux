@@ -22,7 +22,7 @@ $classes = Flux::classes()
 @endphp
 
 <flux:with-field :$attributes>
-    <ui-radio-group {{ $attributes->class($classes)->when($showName, fn ($attributes) => $attributes->merge(['name' => $name])) }} data-flux-radio-group-segmented>
+    <ui-radio-group {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif data-flux-radio-group-segmented>
         {{ $slot }}
     </ui-radio-group>
 </flux:with-field>

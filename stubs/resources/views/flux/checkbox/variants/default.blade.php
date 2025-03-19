@@ -17,7 +17,7 @@ $classes = Flux::classes()
 @endphp
 
 <flux:with-inline-field :$attributes>
-    <ui-checkbox {{ $attributes->class($classes)->when($showName, fn ($attributes) => $attributes->merge(['name' => $name])) }} data-flux-control data-flux-checkbox>
+    <ui-checkbox {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif data-flux-control data-flux-checkbox>
         <flux:checkbox.indicator />
     </ui-checkbox>
 </flux:with-inline-field>

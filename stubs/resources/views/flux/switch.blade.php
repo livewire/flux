@@ -36,13 +36,13 @@ $indicatorClasses = Flux::classes()
 
 @if ($align === 'left' || $align === 'start')
     <flux:with-inline-field :$attributes>
-        <ui-switch {{ $attributes->class($classes)->when($showName, fn ($attributes) => $attributes->merge(['name' => $name])) }} data-flux-control data-flux-switch>
+        <ui-switch {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif data-flux-control data-flux-switch>
             <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
         </ui-switch>
     </flux:with-inline-field>
 @else
     <flux:with-reversed-inline-field :$attributes>
-        <ui-switch {{ $attributes->class($classes)->when($showName, fn ($attributes) => $attributes->merge(['name' => $name])) }} data-flux-control data-flux-switch>
+        <ui-switch {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif data-flux-control data-flux-switch>
             <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>
         </ui-switch>
     </flux:with-reversed-inline-field>
