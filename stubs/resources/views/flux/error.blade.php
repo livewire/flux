@@ -7,7 +7,7 @@
 @php
 $message ??= $name ? $errors->first($name) : null;
 
-if ((is_null($message) || $message === '') && filter_var($nested, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== false) {
+if ($name && (is_null($message) || $message === '') && filter_var($nested, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== false) {
     $message = $errors->first($name . '.*');
 }
 
