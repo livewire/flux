@@ -13,6 +13,7 @@
     'copyable' => null,
     'viewable' => null,
     'invalid' => null,
+    'loading' => null,
     'type' => 'text',
     'mask' => null,
     'size' => null,
@@ -22,6 +23,28 @@
 ])
 
 @php
+
+// There are a few loading scenarios that this covers:
+// If `:loading="false"` then never show loading.
+// If `:loading="true"` then always show loading.
+// If `:loading="foo"` then show loading when `foo` request is happening.
+// If `wire:model` then never show loading.
+// If `wire:model.live` then show loading when the `wire:model` value request is happening.
+$wireModel = $attributes->wire('model');
+$wireTarget = null;
+
+if ($loading !== false) {
+    if ($loading === true) {
+        $loading = true;
+    } elseif ($wireModel?->directive) {
+        $loading = $wireModel->hasModifier('live');
+        $wireTarget = $loading ? $wireModel->value() : null;
+    } else {
+        $wireTarget = $loading;
+        $loading = true;
+    }
+}
+
 $invalid ??= ($name && $errors->has($name));
 
 $iconLeading ??= $icon;
@@ -94,6 +117,12 @@ $classes = Flux::classes()
                 data-flux-control
                 data-flux-group-target
             >
+
+            <?php if ($loading): ?>
+                <div wire:loading.flex @if($wireTarget) wire:target="{{ $wireTarget }}" @endif class="absolute top-0 bottom-0 flex items-center pe-3 end-0">
+                    <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" />
+                </div>
+            <?php endif; ?>
 
             <?php if ($kbd): ?>
                 <div class="pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400 pe-4 end-0">
