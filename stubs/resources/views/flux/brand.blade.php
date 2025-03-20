@@ -18,13 +18,13 @@ $textClasses = Flux::classes()
 <?php if ($name): ?>
     <a href="{{ $href }}" {{ $attributes->class([ $classes, 'gap-2' ]) }} data-flux-brand>
         <?php if ($logo instanceof \Illuminate\View\ComponentSlot): ?>
-            <div {{ $logo->attributes->class('flex items-center justify-center [:where(&)]:size-6 [:where(&)]:rounded-sm overflow-hidden shrink-0') }}>
+            <div {{ $logo->attributes->class('flex items-center justify-center [:where(&)]:h-6 [:where(&)]:min-w-6 [:where(&)]:rounded-sm overflow-hidden shrink-0') }}>
                 {{ $logo }}
             </div>
         <?php else: ?>
-            <div class="flex items-center justify-center size-6 rounded-sm overflow-hidden shrink-0">
+            <div class="flex items-center justify-center h-6 rounded-sm overflow-hidden shrink-0">
                 <?php if ($logo): ?>
-                    <img src="{{ $logo }}" alt="{{ $alt }}" />
+                    <img src="{{ $logo }}" alt="{{ $alt }}" class="h-6" />
                 <?php else: ?>
                     {{ $slot }}
                 <?php endif; ?>
@@ -36,13 +36,13 @@ $textClasses = Flux::classes()
 <?php else: ?>
     <a href="{{ $href }}" {{ $attributes->class($classes) }} data-flux-brand>
         <?php if ($logo instanceof \Illuminate\View\ComponentSlot): ?>
-            <div {{ $logo->attributes->class('flex items-center justify-center [:where(&)]:size-6 [:where(&)]:rounded-sm overflow-hidden shrink-0') }}>
+            <div {{ $logo->attributes->class('flex items-center justify-center [:where(&)]:h-6 [:where(&)]:min-w-6 [:where(&)]:rounded-sm overflow-hidden shrink-0') }}>
                 {{ $logo }}
             </div>
         <?php else: ?>
-            <div class="flex items-center justify-center size-6 rounded-sm overflow-hidden shrink-0">
+            <div class="flex items-center justify-center h-6 rounded-sm overflow-hidden shrink-0">
                 <?php if ($logo): ?>
-                    <img src="{{ $logo }}" alt="{{ $alt }}" />
+                    <img src="{{ $logo }}" alt="{{ $alt }}" class="h-6" />
                 <?php else: ?>
                     {{ $slot }}
                 <?php endif; ?>
