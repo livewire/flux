@@ -13,6 +13,8 @@
     'mask' => null,
     'size' => null,
     'icon' => null,
+    'min' => null,
+    'max' => null,
     'kbd' => null,
     'as' => null,
 ])
@@ -87,6 +89,8 @@ $classes = Flux::classes()
                 @if ($mask) x-mask="{{ $mask }}" @endif
                 @if ($invalid) aria-invalid="true" data-invalid @endif
                 @if (is_numeric($size)) size="{{ $size }}" @endif
+                @if (is_numeric($min)) min="{{ $min }}" @endif
+                @if (is_numeric($max)) max="{{ $max }}" @endif
                 data-flux-control
                 data-flux-group-target
             >
