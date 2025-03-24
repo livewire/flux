@@ -1,3 +1,6 @@
+@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
     'iconVariant' => 'micro',
     'iconTrailing' => null,
@@ -9,7 +12,7 @@
 ])
 
 @php
-$insetClasses = Flux::applyInset($inset, top: '-mt-1', right: '-mr-2', bottom: '-mb-1', left: '-ml-1');
+$insetClasses = Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: '-ms-2');
 
 // When using the outline icon variant, we need to size it down to match the default icon sizes...
 $iconClasses = Flux::classes()->add($iconVariant === 'outline' ? 'size-4' : '');
@@ -19,9 +22,9 @@ $classes = Flux::classes()
     ->add($insetClasses)
     ->add('[print-color-adjust:exact]')
     ->add(match ($size) {
-        'lg' => 'text-sm py-1.5 **:data-flux-badge-icon:mr-2',
-        default => 'text-sm py-1 **:data-flux-badge-icon:mr-1.5',
-        'sm' => 'text-xs py-1 **:data-flux-badge-icon:size-3 **:data-flux-badge-icon:mr-1',
+        'lg' => 'text-sm py-1.5 **:data-flux-badge-icon:me-2',
+        default => 'text-sm py-1 **:data-flux-badge-icon:me-1.5',
+        'sm' => 'text-xs py-1 **:data-flux-badge-icon:size-3 **:data-flux-badge-icon:me-1',
     })
     ->add(match ($variant) {
         'pill' => 'rounded-full px-3',
@@ -82,7 +85,7 @@ $classes = Flux::classes()
     {{ $slot }}
 
     <?php if ($iconTrailing): ?>
-        <div class="pl-1 flex items-center" data-flux-badge-icon-trailing>
+        <div class="ps-1 flex items-center" data-flux-badge-icon:trailing>
             <?php if (is_string($iconTrailing)): ?>
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
             <?php else: ?>

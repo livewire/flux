@@ -15,6 +15,7 @@ extract(Flux::forwardedAttributes($attributes, [
 ])
 
 @php
+
 $hrefForCurrentDetection = str($href)->startsWith(trim(config('app.url')))
     ? (string) str($href)->after(trim(config('app.url'), '/'))
     : $href;
@@ -33,7 +34,7 @@ $current = $current === null ? ($hrefForCurrentDetection
     : false) : $current;
 @endphp
 
-<?php if ($as === 'div'): ?>
+<?php if ($as === 'div' && ! $href): ?>
     <div {{ $attributes }}>
         {{ $slot }}
     </div>

@@ -1,3 +1,6 @@
+@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @aware([ 'variant' ])
 
 @props([
@@ -21,7 +24,7 @@ $iconClasses = Flux::classes($square ? 'size-5!' : 'size-4!');
 $classes = Flux::classes()
     ->add('h-10 lg:h-8 relative flex items-center gap-3 rounded-lg')
     ->add($square ? 'px-2.5!' : '')
-    ->add('py-0 text-left w-full px-3 my-px')
+    ->add('py-0 text-start w-full px-3 my-px')
     ->add('text-zinc-500 dark:text-white/80')
     ->add(match ($variant) {
         'outline' => match ($accent) {
@@ -63,7 +66,7 @@ $classes = Flux::classes()
             <?php endif; ?>
 
             <?php if ($iconDot): ?>
-                <div class="absolute top-[-2px] right-[-2px]">
+                <div class="absolute top-[-2px] end-[-2px]">
                     <div class="size-[6px] rounded-full bg-zinc-500 dark:bg-zinc-400"></div>
                 </div>
             <?php endif; ?>

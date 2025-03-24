@@ -1,3 +1,5 @@
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
     'iconVariant' => 'mini',
     'controls' => null,
@@ -168,7 +170,7 @@
         ;
 
     $iconWrapperClasses = Flux::classes()
-        ->add('pl-2 py-2 pr-0 flex items-baseline')
+        ->add('ps-2 py-2 pe-0 flex items-baseline')
         ;
 
     $iconClasses = Flux::classes()
@@ -188,8 +190,8 @@
         </div>
     <?php endif; ?>
 
-    <div class="pl-2 flex-1 {{ $inline ? '@md:flex @md:[&>[data-slot="content"]:has([data-slot="heading"]):has([data-slot="text"])+[data-slot="actions"]]:p-2' : '' }}">
-        <div class="flex-1 py-2 pr-3 @md:pr-4 flex flex-col justify-center gap-2" data-slot="content">
+    <div class="ps-2 flex-1 {{ $inline ? '@md:flex @md:[&>[data-slot="content"]:has([data-slot="heading"]):has([data-slot="text"])+[data-slot="actions"]]:p-2' : '' }}">
+        <div class="flex-1 py-2 pe-3 @md:pe-4 flex flex-col justify-center gap-2" data-slot="content">
             <?php if ($heading): ?>
                 <flux:callout.heading>{{ $heading }}</flux:callout.heading>
             <?php endif; ?>
@@ -203,7 +205,7 @@
 
         <?php if ($actions): ?>
             <div {{ $actions->attributes->class([
-                $inline ? '@max-md:py-2 @md:m-[-2px] @md:pl-4 @md:justify-end @md:flex-row-reverse' : 'py-2',
+                $inline ? '@max-md:py-2 @md:m-[-2px] @md:ps-4 @md:justify-end @md:flex-row-reverse' : 'py-2',
                 'self-start flex items-center gap-2'
             ]) }} data-slot="actions">
                 {{ $actions }}
@@ -212,7 +214,7 @@
     </div>
 
     <?php if ($controls): ?>
-        <div {{ $controls->attributes->class($inline ? 'pl-2 m-[-2px]' : 'pl-2') }}>
+        <div {{ $controls->attributes->class($inline ? 'ps-2 m-[-2px]' : 'ps-2') }}>
             {{ $controls }}
         </div>
     <?php endif; ?>

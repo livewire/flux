@@ -19,15 +19,15 @@ $classes = Flux::classes()
 $indicatorClasses = Flux::classes()
     ->add('size-3.5')
     ->add('rounded-full')
-    ->add('transition translate-x-[3px] dark:translate-x-[2px]')
+    ->add('transition translate-x-[3px] dark:translate-x-[2px] rtl:-translate-x-[3px] dark:rtl:-translate-x-[2px]')
     ->add('bg-white')
     ->add([
-        'group-data-checked:translate-x-[15px]',
+        'group-data-checked:translate-x-[15px] rtl:group-data-checked:-translate-x-[15px]',
         'group-data-checked:bg-(--color-accent-foreground)',
     ]);
 @endphp
 
-@if ($align === 'left')
+@if ($align === 'left' || $align === 'start')
     <flux:with-inline-field :$attributes>
         <ui-switch {{ $attributes->class($classes) }} data-flux-control data-flux-switch>
             <span class="{{ \Illuminate\Support\Arr::toCssClasses($indicatorClasses) }}"></span>

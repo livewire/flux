@@ -1,3 +1,6 @@
+@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
     'iconVariant' => 'mini',
     'iconTrailing' => null,
@@ -7,7 +10,7 @@
 
 @php
 $iconClasses = Flux::classes()
-    ->add('ml-auto text-zinc-400 [[data-flux-menu-item]:hover_&]:text-current')
+    ->add('ms-auto text-zinc-400 [[data-flux-menu-item]:hover_&]:text-current')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
     ->add($iconVariant === 'outline' ? 'size-5' : '');
 @endphp
@@ -22,7 +25,8 @@ $iconClasses = Flux::classes()
             <?php elseif ($iconTrailing): ?>
                 {{ $iconTrailing }}
             <?php else: ?>
-                <flux:icon icon="chevron-right" :variant="$iconVariant" :class="$iconClasses" />
+                <flux:icon icon="chevron-right" :variant="$iconVariant" :class="$iconClasses->add('rtl:hidden')" />
+                <flux:icon icon="chevron-left" :variant="$iconVariant" :class="$iconClasses->add('hidden rtl:inline')" />
             <?php endif; ?>
         </x-slot:suffix>
     </flux:menu.item>

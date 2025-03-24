@@ -1,6 +1,8 @@
+@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+
 @props([
-    'icon' => 'x-mark',
     'iconVariant' => 'micro',
+    'icon' => 'x-mark',
 ])
 
 @php
@@ -8,7 +10,7 @@
 $iconClasses = Flux::classes()->add($iconVariant === 'outline' ? 'size-4' : '');
 
 $classes = Flux::classes()
-    ->add('p-1 -my-1 -mr-1 opacity-50 hover:opacity-100')
+    ->add('p-1 -my-1 -me-1 opacity-50 hover:opacity-100')
     ;
 @endphp
 
