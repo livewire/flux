@@ -18,7 +18,7 @@
 
 @php
 if ($name && ! $initials) {
-    $parts = explode(' ', preg_replace('/[^a-zA-Z\s]/', '', $name));
+    $parts = explode(' ', preg_replace('/[^a-zA-Z0-9\s]/', '', trim($name)));
 
     if ($attributes->pluck('initials:single')) {
         $initials = strtoupper($parts[0][0]);
