@@ -23,6 +23,8 @@ if ($name && ! $initials) {
     if ($attributes->pluck('initials:single')) {
         $initials = strtoupper($parts[0][0]);
     } else {
+        // Remove empty strings from the array...
+        $parts = collect($parts)->filter()->values()->all();
         if (count($parts) > 1) {
             $initials = strtoupper($parts[0][0] . $parts[1][0]);
         } else {
