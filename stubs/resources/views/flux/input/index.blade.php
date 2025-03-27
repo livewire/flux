@@ -175,7 +175,7 @@ $classes = Flux::classes()
                 <?php if (is_string($iconTrailing)): ?>
                     <?php
                         $trailingIconClasses = clone $iconClasses;
-                        $trailingIconClasses->add('pointer-events-none');
+                        $trailingIconClasses->add('pointer-events-none text-zinc-400/75');
                     ?>
                     <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" />
                 <?php elseif ($iconTrailing): ?>
