@@ -13,19 +13,19 @@ $classes = Flux::classes()
         // That way we shouldn't ever have a double border...
 
         // All inputs borders...
-        '[&>[data-flux-input]:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-l-0',
-        '[&>[data-flux-input]:not(:first-child):not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-l-0',
-        '[&>[data-flux-input]:has(+[data-flux-input-group-suffix])>[data-flux-group-target]:not([data-invalid])]:border-r-0',
+        '[&>[data-flux-input]:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>[data-flux-input]:not(:first-child):not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>[data-flux-input]:has(+[data-flux-input-group-suffix])>[data-flux-group-target]:not([data-invalid])]:border-e-0',
 
         // Selects and date pickers borders...
-        '[&>*:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-l-0',
-        '[&>*:not(:first-child):not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-l-0',
-        '[&>*:has(+[data-flux-input-group-suffix])>[data-flux-group-target]:not([data-invalid])]:border-r-0',
+        '[&>*:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>*:not(:first-child):not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>*:has(+[data-flux-input-group-suffix])>[data-flux-group-target]:not([data-invalid])]:border-e-0',
 
         // Buttons borders...
-        '[&>[data-flux-group-target]:last-child:not(:first-child)]:border-l-0',
-        '[&>[data-flux-group-target]:not(:first-child):not(:last-child)]:border-l-0',
-        '[&>[data-flux-group-target]:has(+[data-flux-input-group-suffix])]:border-r-0',
+        '[&>[data-flux-group-target]:last-child:not(:first-child)]:border-s-0',
+        '[&>[data-flux-group-target]:not(:first-child):not(:last-child)]:border-s-0',
+        '[&>[data-flux-group-target]:has(+[data-flux-input-group-suffix])]:border-e-0',
 
         // "Weld" the borders of inputs together by overriding their border radiuses...
         '[&>[data-flux-group-target]:not(:first-child):not(:last-child)]:rounded-none',
