@@ -4,8 +4,8 @@ $classes = Flux::classes([
     'text-zinc-800 dark:text-zinc-200',
     'bg-zinc-800/5 dark:bg-white/20',
     'border-zinc-200 dark:border-white/10',
-    'rounded-l-lg',
-    'border-l border-t border-b shadow-xs',
+    'rounded-s-lg',
+    'border-s border-t border-b shadow-xs',
 ]);
 @endphp
 

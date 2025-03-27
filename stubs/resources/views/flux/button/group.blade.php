@@ -24,8 +24,8 @@ $classes = Flux::classes()
 
         // "Weld" the borders of inputs together by overriding their border radiuses...
         '[&>[data-flux-group-target]:not(:first-child):not(:last-child)]:rounded-none',
-        '[&>[data-flux-group-target]:first-child:not(:last-child)]:rounded-r-none',
-        '[&>[data-flux-group-target]:last-child:not(:first-child)]:rounded-l-none',
+        '[&>[data-flux-group-target]:first-child:not(:last-child)]:rounded-e-none',
+        '[&>[data-flux-group-target]:last-child:not(:first-child)]:rounded-s-none',
 
         // "Weld" borders for sub-children of group targets (button element inside ui-select element, etc.)...
         '[&>*:not(:first-child):not(:last-child):not(:only-child)>[data-flux-group-target]]:rounded-none',

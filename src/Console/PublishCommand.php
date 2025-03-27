@@ -51,6 +51,7 @@ class PublishCommand extends Command
             'Autocomplete' => ['autocomplete'],
             'Calendar' => ['calendar'],
             'Card' => ['card'],
+            'Callout' => ['callout'],
             'Chart' => ['chart'],
             'Checkbox' => ['checkbox'],
             'Command' => ['command'],
