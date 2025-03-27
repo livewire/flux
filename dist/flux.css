@@ -128,6 +128,14 @@ ui-toast {
                 transform: translateX(0.5rem);
             }
 
+            [dir="rtl"] &[data-position*="top"][data-position*="left"] {
+                transform: translateX(0.5rem);
+            }
+
+            [dir="rtl"] &[data-position*="top"][data-position*="right"] {
+                transform: translateX(-0.5rem);
+            }
+
             &[data-position*="bottom"] {
                 transform: translateY(0.5rem);
             }
