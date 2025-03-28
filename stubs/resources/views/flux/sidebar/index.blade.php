@@ -22,7 +22,7 @@ if ($stashable) {
         'x-init' => '$el.classList.add(\'-translate-x-full\', \'rtl:translate-x-full\'); $el.removeAttribute(\'data-mobile-cloak\'); $el.classList.add(\'transition-transform\')',
     ])->class([
         'max-lg:data-mobile-cloak:hidden',
-        '[[data-show-stashed-sidebar]_&]:translate-x-0! lg:translate-x-0!',
+        '[[data-show-stashed-sidebar]_&]:translate-x-0! lg:ltr:translate-x-0! lg:rtl:translate-x-0!',
         'z-20! data-stashed:start-0! data-stashed:fixed! data-stashed:top-0! data-stashed:min-h-dvh! data-stashed:max-h-dvh!'
     ]);
 }
