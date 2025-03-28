@@ -116,9 +116,9 @@ $badgeVariant = $attributes->pluck('badge:variant') ?: (is_object($badge) ? $bad
 $badgeClasses = Flux::classes()
     ->add('absolute ring-[2px] ring-white dark:ring-zinc-900 z-10')
     ->add(match($size) {
-        default => 'min-h-3 min-w-3',
-        'sm' => 'min-h-2 min-w-2',
-        'xs' => 'min-h-2 min-w-2',
+        default => 'h-3 min-w-3',
+        'sm' => 'h-2 min-w-2',
+        'xs' => 'h-2 min-w-2',
     })
     ->add('flex items-center justify-center tabular-nums overflow-hidden')
     ->add('text-[.625rem] text-zinc-800 dark:text-white font-medium')
