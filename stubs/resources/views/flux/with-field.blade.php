@@ -36,7 +36,6 @@ extract(Flux::forwardedAttributes($attributes, [
             <flux:description :attributes="Flux::attributesAfter('description:', $attributes, [])">{{ $descriptionTrailing }}</flux:description>
         <?php endif; ?>
     </flux:field>
-    <div {{ $attributes }}></div>
 <?php else: ?>
     {{ $slot }}
 <?php endif; ?>
