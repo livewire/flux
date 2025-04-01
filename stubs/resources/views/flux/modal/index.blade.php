@@ -1,5 +1,6 @@
 @props([
     'dismissible' => null,
+    'autofocus' => null,
     'position' => null,
     'closable' => null,
     'trigger' => null,
@@ -62,6 +63,7 @@ if ($dismissible === false) {
     <?php endif; ?>
 
     <dialog
+        @if (isset($autofocus)){!! $autofocus === 'false' || $autofocus === false ? 'autofocus="false"' : 'autofocus' !!}@endif
         wire:ignore.self {{-- This needs to be here because the dialog element adds a "close" attribute that isn't durable... --}}
         {{ $styleAttributes->class($classes) }}
         @if ($name) data-modal="{{ $name }}" @endif
