@@ -11,6 +11,7 @@
     'inline' => null,
     'text' => null,
     'icon' => null,
+    'container' => null,
 ])
 
 @php
@@ -25,7 +26,10 @@
     };
 
     $classes = Flux::classes()
-        ->add('@container p-2 flex border rounded-xl')
+        ->add(match(isset($container)) {
+            true => '@container p-2 flex border rounded-xl',
+            default => 'p-2 flex border rounded-xl'
+        })
         ->add([
             'border-(--callout-border) bg-(--callout-background)',
             '[&_[data-slot=heading]]:text-(--callout-heading)',
