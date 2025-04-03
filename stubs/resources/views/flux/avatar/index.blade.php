@@ -18,17 +18,18 @@
 
 @php
 if ($name && ! $initials) {
-    $parts = explode(' ', preg_replace('/[^a-zA-Z0-9\s]/', '', trim($name)));
+    $parts = explode(' ', trim($name));
 
     if ($attributes->pluck('initials:single')) {
-        $initials = strtoupper($parts[0][0]);
+        $initials = strtoupper(mb_substr($parts[0], 0, 1));
     } else {
         // Remove empty strings from the array...
         $parts = collect($parts)->filter()->values()->all();
+
         if (count($parts) > 1) {
-            $initials = strtoupper($parts[0][0] . $parts[1][0]);
-        } else {
-            $initials = strtoupper($parts[0][0]) . strtolower($parts[0][1]);
+            $initials = strtoupper(mb_substr($parts[0], 0, 1) . mb_substr($parts[1], 0, 1));
+        } else if (count($parts) === 1) {
+            $initials = strtoupper(mb_substr($parts[0], 0, 1)) . strtolower(mb_substr($parts[0], 1, 1));
         }
     }
 }
@@ -38,6 +39,12 @@ if ($name && $tooltip === true) {
 }
 
 $hasTextContent = $icon ?? $initials ?? $slot->isNotEmpty();
+
+// If there's no text content, we'll fallback to using the user icon otherwise there will be an empty white square...
+if (! $hasTextContent) {
+    $icon = 'user';
+    $hasTextContent = true;
+}
 
 // Be careful not to change the order of these colors.
 // They're used in the hash function below and changing them would change actual user avatar colors that they might have grown to identify with.
