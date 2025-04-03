@@ -1,6 +1,5 @@
 @props([
     'dismissible' => null,
-    'autofocus' => null,
     'position' => null,
     'closable' => null,
     'trigger' => null,
@@ -54,7 +53,7 @@ if ($dismissible === false) {
     $attributes = $attributes->merge(['disable-click-outside' => '']);
 }
 
-[ $styleAttributes, $attributes ] = Flux::splitAttributes($attributes, ['class', 'style', 'wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
+[ $styleAttributes, $attributes ] = Flux::splitAttributes($attributes, ['autofocus', 'class', 'style', 'wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
 @endphp
 
 <ui-modal {{ $attributes }} data-flux-modal>
@@ -63,7 +62,6 @@ if ($dismissible === false) {
     <?php endif; ?>
 
     <dialog
-        @if (isset($autofocus)){!! $autofocus === 'false' || $autofocus === false ? 'autofocus="false"' : 'autofocus' !!}@endif
         wire:ignore.self {{-- This needs to be here because the dialog element adds a "close" attribute that isn't durable... --}}
         {{ $styleAttributes->class($classes) }}
         @if ($name) data-modal="{{ $name }}" @endif
