@@ -18,18 +18,18 @@
 
 @php
 if ($name && ! $initials) {
-    $parts = explode(' ', preg_replace('/[^a-zA-Z0-9\s]/', '', trim($name)));
+    $parts = explode(' ', trim($name));
 
     if ($attributes->pluck('initials:single')) {
-        $initials = strtoupper(substr($parts[0], 0, 1));
+        $initials = strtoupper(mb_substr($parts[0], 0, 1));
     } else {
         // Remove empty strings from the array...
         $parts = collect($parts)->filter()->values()->all();
 
         if (count($parts) > 1) {
-            $initials = strtoupper(substr($parts[0], 0, 1) . substr($parts[1], 0, 1));
+            $initials = strtoupper(mb_substr($parts[0], 0, 1) . mb_substr($parts[1], 0, 1));
         } else if (count($parts) === 1) {
-            $initials = strtoupper(substr($parts[0], 0, 1)) . strtolower(substr($parts[0], 1, 1));
+            $initials = strtoupper(mb_substr($parts[0], 0, 1)) . strtolower(mb_substr($parts[0], 1, 1));
         }
     }
 }
