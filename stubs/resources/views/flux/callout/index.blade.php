@@ -30,7 +30,6 @@
             'border-(--callout-border) bg-(--callout-background)',
             '[&_[data-slot=heading]]:text-(--callout-heading)',
             '[&_[data-slot=text]]:text-(--callout-text)',
-            '[&_[data-slot=icon]]:text-(--callout-icon)',
         ])
         ->add(match($color) {
             'blue' => [
@@ -174,7 +173,7 @@
         ;
 
     $iconClasses = Flux::classes()
-        ->add('inline-block size-5 text-zinc-400 dark:text-zinc-400')
+        ->add('inline-block size-5 text-[var(--callout-icon)] dark:text-[var(--callout-icon)]')
         ->add($attributes->pluck('class:icon'))
         ;
 @endphp
