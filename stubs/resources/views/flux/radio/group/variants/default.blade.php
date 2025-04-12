@@ -1,9 +1,16 @@
 @props([
-    'name' => $attributes->whereStartsWith('wire:model')->first(),
+    'name' => null,
     'variant' => null,
 ])
 
 @php
+// We only want to show the name attribute it has been set manually
+// but not if it has been set from the `wire:model` attribute...
+$showName = isset($name);
+if (! isset($name)) {
+    $name = $attributes->whereStartsWith('wire:model')->first();
+}
+
 $classes = Flux::classes()
     // Adjust spacing between fields...
     ->add('*:data-flux-field:mb-3')
@@ -13,7 +20,7 @@ $classes = Flux::classes()
 @endphp
 
 <flux:with-field :$attributes>
-    <ui-radio-group {{ $attributes->class($classes) }} data-flux-radio-group>
+    <ui-radio-group {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif data-flux-radio-group>
         {{ $slot }}
     </ui-radio-group>
 </flux:with-field>
