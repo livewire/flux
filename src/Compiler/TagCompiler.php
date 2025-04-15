@@ -1,13 +1,14 @@
 <?php
 
-namespace Flux;
+namespace Flux\Compiler;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\AnonymousComponent;
 use Illuminate\View\Compilers\ComponentTagCompiler;
 use Illuminate\View\DynamicComponent;
 
-class FluxTagCompiler extends ComponentTagCompiler
+class TagCompiler extends ComponentTagCompiler
 {
     public function componentString(string $component, array $attributes)
     {
@@ -18,7 +19,7 @@ class FluxTagCompiler extends ComponentTagCompiler
             $class = \Illuminate\View\AnonymousComponent::class;
 
             // Laravel 12+ uses xxh128 hashing for views https://github.com/laravel/framework/pull/52301...
-            return "<?php if (!Flux::componentExists(\$name = {$component})) throw new \Exception(\"Flux component [{\$name}] does not exist.\"); ?>##BEGIN-COMPONENT-CLASS##@component('{$class}', 'flux::' . {$component}, [
+            return "<?php if (!Flux::componentExists(\$name = {$component})) throw new \Exception(\"Flux component [{\$name}] does not exist.\"); ?>##BEGIN-COMPONENT-CLASS##@fluxComponent('{$class}', 'flux::' . {$component}, [
     'view' => (app()->version() >= 12 ? hash('xxh128', 'flux') : md5('flux')) . '::' . {$component},
     'data' => \$__env->getCurrentComponentData(),
 ])
@@ -56,11 +57,26 @@ class FluxTagCompiler extends ComponentTagCompiler
             $parameters = $data->all();
         }
 
-        return "##BEGIN-COMPONENT-CLASS##@fluxComponent('{$class}', '{$component}', [".$this->attributesToString($parameters, $escapeBound = false).'])
+        return "##BEGIN-COMPONENT-CLASS##@fluxComponent('{$class}', '{$component}', [".$this->attributesToString($parameters, $escapeBound = false).'] )
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\\'.$class.'::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['.$this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
+<?php $component->withAttributes(['.$this->fluxAttributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
+    }
+
+    protected function fluxAttributesToString(array $attributes, $escapeBound = true)
+    {
+        return (new Collection($attributes))
+            ->map(function (string $value, string $attribute) use ($escapeBound) {
+                $propName = Str::camel($attribute);
+                // Use this retrieval fallback behavior to avoid invoking methods more than needed.
+                $retrieval = "\$__fluxHoistedComponentData['data']['{$propName}'] ?? \$__fluxHoistedComponentData['data']['{$attribute}'] ?? {$value}";
+
+                return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && ! is_numeric($value)
+                    ? "'{$attribute}' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute({$retrieval})"
+                    : "'{$attribute}' => {$retrieval}";
+            })
+            ->implode(',');
     }
 
     /**
@@ -193,10 +209,10 @@ class FluxTagCompiler extends ComponentTagCompiler
 
                 unset($attributes['slot']);
 
-                return '@slot('.$slot.') ' . $this->componentString('flux::'.$matches[1], $attributes)."\n@endComponentClass##END-COMPONENT-CLASS##" . ' @endslot';
+                return '@slot('.$slot.') ' . $this->componentString('flux::'.$matches[1], $attributes)."\n@endFluxComponentClass##END-COMPONENT-CLASS##" . ' @endslot';
             }
 
-            return $this->componentString('flux::'.$matches[1], $attributes)."\n@endComponentClass##END-COMPONENT-CLASS##";
+            return $this->componentString('flux::'.$matches[1], $attributes)."\n@endFluxComponentClass##END-COMPONENT-CLASS##";
         }, $value);
     }
 
@@ -208,6 +224,6 @@ class FluxTagCompiler extends ComponentTagCompiler
      */
     protected function compileClosingTags(string $value)
     {
-        return preg_replace("/<\/\s*flux[\:][\w\-\:\.]*\s*>/", ' @endComponentClass##END-COMPONENT-CLASS##', $value);
+        return preg_replace("/<\/\s*flux[\:][\w\-\:\.]*\s*>/", ' @endFluxComponentClass##END-COMPONENT-CLASS##', $value);
     }
 }
