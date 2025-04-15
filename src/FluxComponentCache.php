@@ -4,6 +4,7 @@ namespace Flux;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\View\ComponentAttributeBag;
 
 class FluxComponentCache
 {
@@ -82,6 +83,19 @@ class FluxComponentCache
 
         if (count($ignoreKeys) > 0) {
             $cacheData = array_diff_key($cacheData, $ignoreKeys);
+
+            // If we find an attribute bag, we will want to exclude
+            // our ignored values from that as well. If we do
+            // not do this, the ignored values will sneak
+            // into the cache key this way, usually in
+            // components that are nested in others
+            foreach ($cacheData as $k => $v) {
+                if (! $v instanceof ComponentAttributeBag) {
+                    continue;
+                }
+
+                $cacheData[$k] = $v->except(array_keys($ignoreKeys));
+            }
         }
 
         return $component . '|' .serialize($cacheData);
