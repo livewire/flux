@@ -144,3 +144,25 @@ HTML;
     $this->assertSame($expected, $result);
     $this->assertSame(1, $counter->count);
 });
+
+test('inner components do not force caching of wrapper components', function () {
+    $flux = <<<'BLADE'
+@for ($i = 0; $i < 10; $i++)
+<flux:tests.wrapper :counter="$wrapperCounter">
+    <flux:tests.wrapper_inner :counter="$innerCounter">|{{ $i }}</flux:tests.wrapper_inner>
+</flux:tests.wrapper>
+@endfor
+BLADE;
+
+    $wrapperCounter = new \Flux\Tests\TestCounter;
+    $innerCounter = new \Flux\Tests\TestCounter;
+
+    $result = $this->render($flux, [
+        'wrapperCounter' => $wrapperCounter,
+        'innerCounter' => $innerCounter,
+    ]);
+
+    $this->assertStringContainsString('|9', $result);
+    $this->assertSame(1, $innerCounter->count);
+    $this->assertSame(10, $wrapperCounter->count);
+});

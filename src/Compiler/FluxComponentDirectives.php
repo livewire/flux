@@ -54,9 +54,9 @@ class FluxComponentDirectives
         return static::normalizeLineEndings(<<<PHP
 <?php
     if (isset(\$__fluxHoistedComponentData)) { \$__fluxHoistedComponentDataOriginal{$hash} = \$__fluxHoistedComponentData; } /* Preserve data in the event someone is nesting the same component over, and over, and over. */
+    if (isset(\$__fluxCacheKey{$hash})) { \$__fluxCacheKeyOriginal{$hash} = \$__fluxCacheKey{$hash}; }
     \$__fluxCacheKey{$hash} = \Flux\Flux::runtimeCache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
     \$__componentRenderData{$hash} = \$__env->fluxComponentData();
-    if (isset(\$__fluxCacheKey{$hash})) { \$__fluxCacheKeyOriginal{$hash} = \$__fluxCacheKey{$hash}; }
     if (\$__fluxCacheKey{$hash} === null || \Flux\Flux::runtimeCache()->has(\$__fluxCacheKey{$hash}) === false): /* START: CACHE BLOCK */
 
     \Flux\Flux::runtimeCache()->startObserving(\$component->componentName);

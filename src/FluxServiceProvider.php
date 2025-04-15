@@ -15,8 +15,11 @@ use Illuminate\View\ComponentSlot;
 
 class FluxServiceProvider extends ServiceProvider
 {
+    protected $useCachingCompiler = true;
+
     public function register(): void
     {
+
         $this->app->alias(FluxManager::class, 'flux');
 
         $this->app->singleton(FluxManager::class);
@@ -55,7 +58,13 @@ class FluxServiceProvider extends ServiceProvider
         app('blade.compiler')->directive('endFluxComponentClass', fn () => FluxComponentDirectives::compileEndFluxComponentClass());
         app('blade.compiler')->directive('fluxAware', fn ($expression) => FluxComponentDirectives::compileFluxAware($expression));
 
-        $compiler = new TagCompiler(
+        $compilerClass = FluxTagCompiler::class;
+
+        if ($this->useCachingCompiler) {
+            $compilerClass = TagCompiler::class;
+        }
+
+        $compiler = new $compilerClass(
             app('blade.compiler')->getClassComponentAliases(),
             app('blade.compiler')->getClassComponentNamespaces(),
             app('blade.compiler')

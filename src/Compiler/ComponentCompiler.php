@@ -70,7 +70,11 @@ PHP;
                 $attributes = $this->getAttributesFromAttributeString($matches[1]);
 
                 if (isset($attributes['use'])) {
-                    $ignore = '['.$attributes['use'].']';
+                    $variables = str(mb_substr($attributes['use'], 1, -1))
+                        ->explode(',')
+                        ->map(fn ($var) => "'{$var}'")
+                        ->implode(', ');
+                    $ignore = '['.$variables.']';
                 }
             }
 
