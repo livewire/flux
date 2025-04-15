@@ -1,0 +1,3 @@
+<?php Flux::cache(); ?>
+
+{{ $slot }}
