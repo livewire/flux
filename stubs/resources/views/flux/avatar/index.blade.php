@@ -8,6 +8,7 @@
     'color' => null,
     'badge' => null,
     'name' => null,
+    'email' => null,
     'icon' => null,
     'size' => 'md',
     'src' => null,
@@ -33,6 +34,25 @@ if ($name && ! $initials) {
         }
     }
 }
+
+if ($email && ! $src) {
+
+    if (strpos($email, '@')) {
+        $emailHash = hash('sha256',strtolower(trim($email)));
+    } elseif (preg_match('/^[a-f0-9]{64}$/i', $email)) {
+        $emailHash = $email;
+    } else {
+        $emailHash = null;
+    }
+
+    if ($emailHash) {
+        $imageHeaders = @get_headers("https://www.gravatar.com/avatar/{$emailHash}?d=404");
+        if (isset($imageHeaders) && str_contains($imageHeaders[0], '200')) {
+           $src = "https://www.gravatar.com/avatar/{$emailHash}?d=mp";
+        }
+    }
+}
+
 
 if ($name && $tooltip === true) {
     $tooltip = $name;
