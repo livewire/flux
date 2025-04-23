@@ -61,22 +61,7 @@ class TagCompiler extends ComponentTagCompiler
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\\'.$class.'::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['.$this->fluxAttributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
-    }
-
-    protected function fluxAttributesToString(array $attributes, $escapeBound = true)
-    {
-        return (new Collection($attributes))
-            ->map(function (string $value, string $attribute) use ($escapeBound) {
-                $propName = Str::camel($attribute);
-                // Use this retrieval fallback behavior to avoid invoking methods more than needed.
-                $retrieval = "\$__fluxHoistedComponentData['data']['{$propName}'] ?? \$__fluxHoistedComponentData['data']['{$attribute}'] ?? {$value}";
-
-                return $escapeBound && isset($this->boundAttributes[$attribute]) && $value !== 'true' && ! is_numeric($value)
-                    ? "'{$attribute}' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute({$retrieval})"
-                    : "'{$attribute}' => {$retrieval}";
-            })
-            ->implode(',');
+<?php $component->withAttributes(['.$this->attributesToString($attributes->all(), $escapeAttributes = $class !== DynamicComponent::class).']); ?>';
     }
 
     /**
