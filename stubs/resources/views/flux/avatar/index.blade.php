@@ -71,7 +71,7 @@ $classes = Flux::classes()
         'sm' => '[--avatar-radius:var(--radius-md)]',
         'xs' => '[--avatar-radius:var(--radius-sm)]',
     })
-    ->add('relative isolate flex items-center justify-center')
+    ->add('relative flex-none isolate flex items-center justify-center')
     ->add('[:where(&)]:font-medium')
     ->add('rounded-[var(--avatar-radius)]')
     ->add($hasTextContent ? '[:where(&)]:bg-zinc-200 [:where(&)]:dark:bg-zinc-600 [:where(&)]:text-zinc-800 [:where(&)]:dark:text-white' : '')
