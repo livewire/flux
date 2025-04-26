@@ -111,6 +111,7 @@ class ComponentCompiler extends ComponentTagCompiler
     $compiledExclude
     \Flux\Flux::cache()->addSwap('$replacement', function (\$data) {
         extract(\$data);
+        \$__env = \$__env ?? view();
         \$attributes ??= new \\Illuminate\\View\\ComponentAttributeBag;
 
         \$__newAttributes = [];
