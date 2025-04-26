@@ -7,8 +7,6 @@ use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class ComponentCompiler extends ComponentTagCompiler
 {
-    protected $count = 0;
-
     public function canCompileComponent($value)
     {
         return Str::startsWith(ltrim($value), '<?php Flux::cache(); ?>');
@@ -34,8 +32,7 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileNoCache($content, $ignore)
     {
-        $this->count++;
-        $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random() . $this->count;
+        $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random();
 
         $compiledIgnore = '';
 
