@@ -15,6 +15,8 @@ class FluxComponentCache
      */
     protected $cacheableComponents = [];
 
+    protected $optimizedComponents = [];
+
     /**
      * @var array
      */
@@ -43,6 +45,13 @@ class FluxComponentCache
 
     public function key($component, $data, $env)
     {
+        // Optimized components will share the same key
+        // The component's contents will always be
+        // re-evaluated, so we don't need data
+        if (array_key_exists($component, $this->optimizedComponents)) {
+            return $component;
+        }
+
         if ($this->shouldSkipComponent($component)) {
             return null;
         }
@@ -153,6 +162,13 @@ class FluxComponentCache
     public function usesVariable(string $name, $currentValue, $default = null)
     {
         $this->observingStack[array_key_last($this->observingStack)]['aware'][$name] = [$currentValue, $default];
+    }
+
+    public function isOptimized()
+    {
+        $this->isCacheable();
+
+        $this->optimizedComponents[$this->currentComponent()] = true;
     }
 
     public function isCacheable()

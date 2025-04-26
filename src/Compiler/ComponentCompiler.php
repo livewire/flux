@@ -3,6 +3,7 @@
 namespace Flux\Compiler;
 
 use Flux\Flux;
+use Flux\Support\StrUtil;
 use Illuminate\Support\Str;
 use Illuminate\View\Compilers\ComponentTagCompiler;
 
@@ -10,7 +11,63 @@ class ComponentCompiler extends ComponentTagCompiler
 {
     public function isFluxComponent($value)
     {
-        return Str::startsWith(ltrim($value), '@cached');
+        return Str::startsWith(ltrim($value), ['@cached', '@optimized']);
+    }
+
+    protected function compileOptimizedComponent($value)
+    {
+        $value = StrUtil::normalizeLineEndings($value);
+
+        // If the Flux component contains @aware or @props, we need
+        // to make sure we insert our @uncached directive pair
+        // after them. Otherwise, we will be missing info
+        // later on, which will lead to state errors
+        //
+        // This error presents itself as "undefined array key index ''"
+        $value = ltrim(preg_replace('/(?<!@)@optimized/', '<?php Flux::shouldOptimize(); ?>', $value));
+        preg_match_all('/(?<!@)@(props|aware)\(/', $value, $matches, PREG_OFFSET_CAPTURE);
+
+        if (count($matches[1] ?? []) === 0) {
+            return "@uncached\n$value\n@enduncached";
+        }
+
+        $matches = $matches[1];
+
+        // Get the offset of the last directive we are interested in
+        $lastMatchOffset = $matches[array_key_last($matches)][1];
+
+        $startLine = str($value)
+            ->substr(0, $lastMatchOffset) // Limit the search space to the start of the last important directive.
+            ->substrCount("\n"); // Find the 0-indexed line number of the directive.
+
+        // Now that we have the line our directive starts on, we need to find the ending of it.
+        $lines = explode("\n", $value);
+        $endLine = null;
+
+        for ($i = $startLine; $i < count($lines); $i++) {
+            $line = (string) str($lines[$i])
+                ->squish(); // Collapse the whitespace to make finding our ending easier.
+
+            if (Str::endsWith($line, ['])', '] )'])) {
+                $endLine = $i;
+                break;
+            }
+        }
+
+        if ($endLine === null) {
+            return $value;
+        }
+
+        // Insert the beginning of our uncached directive.
+        array_splice(
+            $lines,
+            $endLine, 1,
+            [ $lines[$endLine], '@uncached' ]
+        );
+
+        $lines[] = '@enduncached';
+
+        return implode("\n", $lines);
     }
 
     public function compile($value)
@@ -21,6 +78,10 @@ class ComponentCompiler extends ComponentTagCompiler
 
         if (! $this->isFluxComponent($value)) {
             return $value;
+        }
+
+        if (Str::startsWith(ltrim($value), '@optimized')) {
+            $value = $this->compileOptimizedComponent($value);
         }
 
         $value = preg_replace('/(?<!@)@cached/', '<?php Flux::shouldCache(); ?>', $value);

@@ -39,6 +39,11 @@ class FluxManager
         $this->cache()->isCacheable();
     }
 
+    public function shouldOptimize()
+    {
+        $this->cache()->isOptimized();
+    }
+
     public function ensurePro()
     {
         if (! InstalledVersions::isInstalled('livewire/flux-pro')) {
