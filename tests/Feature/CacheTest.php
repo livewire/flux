@@ -53,7 +53,7 @@ EXP;
 test('uncached component with variables can exclude items from the cache', function () {
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 5; $i++)
-<flux:tests.uncached_component_use :value="$i">{{ $i }}</flux:tests.uncached_component_use>
+<flux:tests.uncached_component_exclude :value="$i">{{ $i }}</flux:tests.uncached_component_exclude>
 @endfor
 BLADE;
 

@@ -95,8 +95,8 @@ PHP;
             if ($matches[1]) {
                 $attributes = $this->getAttributesFromAttributeString($matches[1]);
 
-                if (isset($attributes['use'])) {
-                    $variables = str(mb_substr($attributes['use'], 1, -1))
+                if (isset($attributes['exclude'])) {
+                    $variables = str(mb_substr($attributes['exclude'], 1, -1))
                         ->explode(',')
                         ->map(fn ($var) => "'{$var}'")
                         ->implode(', ');
