@@ -1,6 +1,6 @@
 <?php
 
-test('components that do not have nocache regions are fully cached', function () {
+test('components that do not have uncached regions are fully cached', function () {
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 2; $i++)
 <flux:tests.full_cache>{{ $i }}|</flux:tests.full_cache>
@@ -31,10 +31,10 @@ HTML;
     $this->assertSame($expected, $this->render($flux));
 });
 
-test('nocache directive with variables can exclude items from the cache', function () {
+test('uncached directive with variables can exclude items from the cache', function () {
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 5; $i++)
-<flux:tests.nocache_directive :value="$i">{{ $i }}</flux:tests.nocache_directive>
+<flux:tests.uncached_directive :value="$i">{{ $i }}</flux:tests.uncached_directive>
 @endfor
 BLADE;
 
@@ -50,10 +50,10 @@ EXP;
     $this->assertSame($expected, $this->render($flux));
 });
 
-test('nocache component with variables can exclude items from the cache', function () {
+test('uncached component with variables can exclude items from the cache', function () {
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 5; $i++)
-<flux:tests.nocache_component_use :value="$i">{{ $i }}</flux:tests.nocache_component_use>
+<flux:tests.uncached_component_use :value="$i">{{ $i }}</flux:tests.uncached_component_use>
 @endfor
 BLADE;
 
@@ -69,10 +69,10 @@ EXP;
     $this->assertSame($expected, $this->render($flux));
 });
 
-test('nocache can be applied to slot contents', function () {
+test('uncached can be applied to slot contents', function () {
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 3; $i++)
-<flux:tests.nocache_slot :$counter>Slot: {{ $i }}</flux:tests.nocache_slot>
+<flux:tests.uncached_slot :$counter>Slot: {{ $i }}</flux:tests.uncached_slot>
 @endfor
 BLADE;
 
@@ -84,16 +84,16 @@ BLADE;
     $this->assertSame('Slot: 0Slot: 0Slot: 0', $result);
 });
 
-test('nocache can be applied to named slots', function () {
+test('uncached can be applied to named slots', function () {
     $flux = <<<'BLADE'
-<flux:tests.nocache_named_slot :$counter icon="bell" />
-<flux:tests.nocache_named_slot :$counter>
+<flux:tests.uncached_named_slot :$counter icon="bell" />
+<flux:tests.uncached_named_slot :$counter>
     <x-slot name="icon">A slot!</x-slot>
-</flux:tests.nocache_named_slot>
+</flux:tests.uncached_named_slot>
 
-<flux:tests.nocache_named_slot :$counter>
+<flux:tests.uncached_named_slot :$counter>
     <x-slot name="icon">Another slot!</x-slot>
-</flux:tests.nocache_named_slot>
+</flux:tests.uncached_named_slot>
 BLADE;
 
     $counter = new \Flux\Tests\TestCounter;
@@ -107,11 +107,11 @@ BLADE;
     $this->assertStringContainsString('Another slot!', $result);
 });
 
-test('multiple nocache regions can be declared', function () {
+test('multiple uncached regions can be declared', function () {
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 3; $i++)
-<flux:tests.multiple_nocache :$counter>Slot 1: {{ $i }}</flux:tests.multiple_nocache>
-<flux:tests.multiple_nocache :$counter value="value-{{ $i }}">Slot 2: {{ $i }}</flux:tests.multiple_nocache>
+<flux:tests.multiple_uncached :$counter>Slot 1: {{ $i }}</flux:tests.multiple_uncached>
+<flux:tests.multiple_uncached :$counter value="value-{{ $i }}">Slot 2: {{ $i }}</flux:tests.multiple_uncached>
 @endfor
 BLADE;
 

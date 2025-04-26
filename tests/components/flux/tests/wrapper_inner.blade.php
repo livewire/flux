@@ -5,4 +5,4 @@
 
 @php($counter->increment())
 
-<flux:nocache>{{ $slot }}</flux:nocache>
+<flux:uncached>{{ $slot }}</flux:uncached>

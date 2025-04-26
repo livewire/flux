@@ -8,8 +8,8 @@
 
 <option
     {{ $attributes }}
-    @nocache(['value'])
+    @uncached(['value'])
     @if (isset($value)) value="{{ $value }}" @endif
     @if (isset($value)) wire:key="{{ $value }}" @endif
-    @endnocache
-><flux:nocache>{{ $slot }}</flux:nocache></option>
+    @enduncached
+><flux:uncached>{{ $slot }}</flux:uncached></option>

@@ -3,8 +3,8 @@
     'value' => null,
 ])
 
-@nocache(['value'])
+@uncached(['value'])
 
 The Value: {{ $value }}
-@endnocache
+@enduncached
 Slot: {{ $slot }}

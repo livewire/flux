@@ -27,13 +27,13 @@ class ComponentCompiler extends ComponentTagCompiler
         $value = preg_replace('/(?<!@)@props\(/', '@fluxProps(', $value);
         $value = preg_replace('/(?<!@)@aware\(/', '@fluxAware(', $value);
 
-        $value = $this->compileNoCacheMetaComponent($value);
-        $value = $this->compileNocacheDirective($value);
+        $value = $this->compileUncachedComponent($value);
+        $value = $this->compileUncachedDirective($value);
 
         return $value;
     }
 
-    protected function compileNoCache($content, $excludeExpression)
+    protected function compileUncached($content, $excludeExpression)
     {
         $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random();
 
@@ -87,9 +87,9 @@ class ComponentCompiler extends ComponentTagCompiler
 PHP;
     }
 
-    protected function compileNoCacheMetaComponent($value)
+    protected function compileUncachedComponent($value)
     {
-        return preg_replace_callback('/<flux:nocache(?:\s+([^>]+))?>(.*?)<\/flux:nocache>/s', function ($matches) {
+        return preg_replace_callback('/<flux:uncached(?:\s+([^>]+))?>(.*?)<\/flux:uncached>/s', function ($matches) {
             $excludeExpression = '';
 
             if ($matches[1]) {
@@ -104,14 +104,14 @@ PHP;
                 }
             }
 
-            return $this->compileNoCache($matches[2], $excludeExpression);
+            return $this->compileUncached($matches[2], $excludeExpression);
         }, $value);
     }
 
-    protected function compileNocacheDirective($value)
+    protected function compileUncachedDirective($value)
     {
-        return preg_replace_callback('/@nocache(?:\((.*?)\))?([\s\S]*?)@endnocache/s', function ($matches) {
-            return $this->compileNoCache(trim($matches[2]), $matches[1] ?? '');
+        return preg_replace_callback('/@uncached(?:\((.*?)\))?([\s\S]*?)@enduncached/s', function ($matches) {
+            return $this->compileUncached(trim($matches[2]), $matches[1] ?? '');
         }, $value);
     }
 }

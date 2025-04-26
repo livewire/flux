@@ -2,7 +2,7 @@
 
 @props(['title'])
 
-<flux:nocache>
+<flux:uncached>
 Title: {{ $title ?? 'nope' }}
 Attributes: {{ $attributes }}
-</flux:nocache>
+</flux:uncached>
