@@ -55,18 +55,18 @@ class FluxComponentDirectives
 <?php
     if (isset(\$__fluxHoistedComponentData)) { \$__fluxHoistedComponentDataOriginal{$hash} = \$__fluxHoistedComponentData; } /* Preserve data in the event someone is nesting the same component over, and over, and over. */
     if (isset(\$__fluxCacheKey{$hash})) { \$__fluxCacheKeyOriginal{$hash} = \$__fluxCacheKey{$hash}; }
-    \$__fluxCacheKey{$hash} = \Flux\Flux::runtimeCache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
+    \$__fluxCacheKey{$hash} = \Flux\Flux::cache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
     \$__componentRenderData{$hash} = \$__env->fluxComponentData();
-    if (\$__fluxCacheKey{$hash} === null || \Flux\Flux::runtimeCache()->has(\$__fluxCacheKey{$hash}) === false): /* START: CACHE BLOCK */
+    if (\$__fluxCacheKey{$hash} === null || \Flux\Flux::cache()->has(\$__fluxCacheKey{$hash}) === false): /* START: CACHE BLOCK */
 
-    \Flux\Flux::runtimeCache()->startObserving(\$component->componentName);
+    \Flux\Flux::cache()->startObserving(\$component->componentName);
     \$__fluxTmpOutput{$hash} = \$__env->renderFluxComponent(\$__componentRenderData{$hash});
-    \Flux\Flux::runtimeCache()->stopObserving(\$component->componentName);
-    \$__fluxCacheKey{$hash} = \Flux\Flux::runtimeCache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
+    \Flux\Flux::cache()->stopObserving(\$component->componentName);
+    \$__fluxCacheKey{$hash} = \Flux\Flux::cache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
     
     if (\$__fluxCacheKey{$hash} !== null) {
-        \Flux\Flux::runtimeCache()->put(\$component->componentName, \$__fluxCacheKey{$hash}, \$__fluxTmpOutput{$hash});
-        \$__fluxTmpOutput{$hash} = \Flux\Flux::runtimeCache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
+        \Flux\Flux::cache()->put(\$component->componentName, \$__fluxCacheKey{$hash}, \$__fluxTmpOutput{$hash});
+        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
     }
 
     echo \$__fluxTmpOutput{$hash};
@@ -74,8 +74,8 @@ class FluxComponentDirectives
     
     else: /* ELSE: CACHE BLOCK */
         \$__env->popFluxComponent();
-        \$__fluxTmpOutput{$hash} = \Flux\Flux::runtimeCache()->get(\$__fluxCacheKey{$hash});
-        \$__fluxTmpOutput{$hash} = \Flux\Flux::runtimeCache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
+        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->get(\$__fluxCacheKey{$hash});
+        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
         echo \$__fluxTmpOutput{$hash};
         
         unset(\$__fluxTmpOutput{$hash});
@@ -112,10 +112,10 @@ PHP);
     \$__consumeVariable = is_string(\$__key) ? \$__key : \$__value;
     if (is_string (\$__key)) {
         \$\$__consumeVariable = \$__env->getConsumableComponentData(\$__key, \$__value);
-        \Flux\Flux::runtimeCache()->usesVariable(\$___key, \$\$__consumeVariable, \$__value);
+        \Flux\Flux::cache()->usesVariable(\$___key, \$\$__consumeVariable, \$__value);
     } else {
         \$\$__consumeVariable = \$__env->getConsumableComponentData(\$__value);
-        \Flux\Flux::runtimeCache()->usesVariable(\$__value, \$\$__consumeVariable);
+        \Flux\Flux::cache()->usesVariable(\$__value, \$\$__consumeVariable);
     }
 } ?>");
     }

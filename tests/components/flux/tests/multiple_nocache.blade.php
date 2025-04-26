@@ -1,4 +1,4 @@
-<?php Flux::cache(); ?>
+<?php Flux::shouldCache(); ?>
 @props([
     'value' => null,
     'counter',

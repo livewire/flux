@@ -9,7 +9,7 @@ class ComponentCompiler extends ComponentTagCompiler
 {
     public function canCompileComponent($value)
     {
-        return Str::startsWith(ltrim($value), '<?php Flux::cache(); ?>');
+        return Str::startsWith(ltrim($value), '<?php Flux::shouldCache(); ?>');
     }
 
     public function compile($value)
@@ -37,14 +37,14 @@ class ComponentCompiler extends ComponentTagCompiler
         $compiledIgnore = '';
 
         if (strlen($ignore) > 0) {
-            $compiledIgnore = "\Flux\Flux::runtimeCache()->ignore({$ignore});";
+            $compiledIgnore = "\Flux\Flux::cache()->ignore({$ignore});";
         }
 
 
         $swap = <<<'PHP'
 <?php
     #ignore#
-    \Flux\Flux::runtimeCache()->addSwap('$replacement', function ($data) {
+    \Flux\Flux::cache()->addSwap('$replacement', function ($data) {
         extract($data); ob_start(); ?>#body#<?php
         return ob_get_clean();
     });

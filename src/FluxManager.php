@@ -16,11 +16,11 @@ class FluxManager
     public $hasRenderedAssets = false;
 
     /** @var FluxComponentCache */
-    protected $runtimeCache = null;
+    protected $cache = null;
 
     public function boot()
     {
-        $this->runtimeCache = new FluxComponentCache;
+        $this->cache = new FluxComponentCache;
 
         on('flush-state', function () {
             $this->hasRenderedAssets = false;
@@ -29,14 +29,14 @@ class FluxManager
         $this->bootComponents();
     }
 
-    public function runtimeCache()
-    {
-        return $this->runtimeCache;
-    }
-
     public function cache()
     {
-        $this->runtimeCache()->isCacheable();
+        return $this->cache;
+    }
+
+    public function shouldCache()
+    {
+        $this->cache()->isCacheable();
     }
 
     public function ensurePro()
