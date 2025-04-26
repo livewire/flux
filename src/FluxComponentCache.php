@@ -65,7 +65,7 @@ class FluxComponentCache
 
         $observedComponent = $this->observedComponents[$component];
         $ignoreKeys = $observedComponent['exclude'] ?? [];
-        $uses = $observedComponent['uses'] ?? [];
+        $uses = $observedComponent['aware'] ?? [];
 
         if (count($uses) > 0) {
             foreach ($uses as $variableName => $details) {
@@ -107,7 +107,7 @@ class FluxComponentCache
             'component' => $componentName,
             'cacheable' => false,
             'exclude' => [],
-            'uses' => [],
+            'aware' => [],
         ];
     }
 
@@ -135,7 +135,7 @@ class FluxComponentCache
 
     public function usesVariable(string $name, $currentValue, $default = null)
     {
-        $this->observingStack[array_key_last($this->observingStack)]['uses'][$name] = [$currentValue, $default];
+        $this->observingStack[array_key_last($this->observingStack)]['aware'][$name] = [$currentValue, $default];
     }
 
     public function isCacheable()
