@@ -31,14 +31,14 @@ class ComponentCompiler extends ComponentTagCompiler
         return $value;
     }
 
-    protected function compileNoCache($content, $ignore)
+    protected function compileNoCache($content, $excludeExpression)
     {
         $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random();
 
-        $compiledIgnore = '';
+        $comopiledExclude = '';
 
-        if (strlen($ignore) > 0) {
-            $compiledIgnore = "\Flux\Flux::cache()->ignore({$ignore});";
+        if (strlen($excludeExpression) > 0) {
+            $comopiledExclude = "\Flux\Flux::cache()->exclude({$excludeExpression});";
         }
 
 
@@ -55,14 +55,14 @@ PHP;
         return Str::swap([
             '$replacement' => $replacement,
             '#body#' => $content,
-            '#ignore#' => $compiledIgnore,
+            '#ignore#' => $comopiledExclude,
         ], $swap);
     }
 
     protected function compileNoCacheMetaComponent($value)
     {
         return preg_replace_callback('/<flux:nocache(?:\s+([^>]+))?>(.*?)<\/flux:nocache>/s', function ($matches) {
-            $ignore = '';
+            $excludeExpression = '';
 
             if ($matches[1]) {
                 $attributes = $this->getAttributesFromAttributeString($matches[1]);
@@ -72,11 +72,11 @@ PHP;
                         ->explode(',')
                         ->map(fn ($var) => "'{$var}'")
                         ->implode(', ');
-                    $ignore = '['.$variables.']';
+                    $excludeExpression = '['.$variables.']';
                 }
             }
 
-            return $this->compileNoCache($matches[2], $ignore);
+            return $this->compileNoCache($matches[2], $excludeExpression);
         }, $value);
     }
 

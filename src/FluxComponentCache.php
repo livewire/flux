@@ -64,7 +64,7 @@ class FluxComponentCache
         ksort($cacheData);
 
         $observedComponent = $this->observedComponents[$component];
-        $ignoreKeys = $observedComponent['ignore'] ?? [];
+        $ignoreKeys = $observedComponent['exclude'] ?? [];
         $uses = $observedComponent['uses'] ?? [];
 
         if (count($uses) > 0) {
@@ -106,7 +106,7 @@ class FluxComponentCache
         $this->observingStack[] = [
             'component' => $componentName,
             'cacheable' => false,
-            'ignore' => [],
+            'exclude' => [],
             'uses' => [],
         ];
     }
@@ -114,7 +114,7 @@ class FluxComponentCache
     public function stopObserving(string $componentName)
     {
         $lastObserved = array_pop($this->observingStack);
-        $lastObserved['ignore'] = array_flip($lastObserved['ignore']);
+        $lastObserved['exclude'] = array_flip($lastObserved['exclude']);
 
         if ($lastObserved['cacheable']) {
             $this->observedComponents[$componentName] = $lastObserved;
@@ -126,11 +126,11 @@ class FluxComponentCache
         }
     }
 
-    public function ignore($keys)
+    public function exclude($keys)
     {
         $keys = Arr::wrap($keys);
 
-        $this->observingStack[array_key_last($this->observingStack)]['ignore'] = $keys;
+        $this->observingStack[array_key_last($this->observingStack)]['exclude'] = $keys;
     }
 
     public function usesVariable(string $name, $currentValue, $default = null)
