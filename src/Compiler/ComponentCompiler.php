@@ -9,6 +9,8 @@ use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class ComponentCompiler extends ComponentTagCompiler
 {
+    protected $hoistedContent = '';
+
     public function isFluxComponent($value)
     {
         return Str::startsWith(ltrim($value), ['@cached', '@optimized']);
@@ -16,6 +18,8 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileOptimizedComponent($value)
     {
+        $this->hoistedContent = '';
+
         $value = StrUtil::normalizeLineEndings($value);
 
         // If the Flux component contains @aware or @props, we need
@@ -24,14 +28,22 @@ class ComponentCompiler extends ComponentTagCompiler
         // later on, which will lead to state errors
         //
         // This error presents itself as "undefined array key index ''"
-        $value = ltrim(preg_replace('/(?<!@)@optimized/', '<?php Flux::shouldOptimize(); ?>', $value));
+        $value = ltrim(preg_replace('/(?<!@)@optimized/', '', $value));
         preg_match_all('/(?<!@)@(props|aware)\(/', $value, $matches, PREG_OFFSET_CAPTURE);
 
         if (count($matches[1] ?? []) === 0) {
-            return "@uncached\n$value\n@enduncached";
+            return "<?php Flux::shouldOptimize(); ?>\n@uncached\n$value\n@enduncached";
         }
 
         $matches = $matches[1];
+
+        // Get the offset of the first interesting directive.
+        $firstMatchOffset = $matches[0][1];
+
+        // Find anything interesting we may want to hoist
+        $this->hoistedContent = (string) str($value)
+            ->substr(0, $firstMatchOffset - 1)
+            ->trim();
 
         // Get the offset of the last directive we are interested in
         $lastMatchOffset = $matches[array_key_last($matches)][1];
@@ -66,6 +78,9 @@ class ComponentCompiler extends ComponentTagCompiler
         );
 
         $lines[] = '@enduncached';
+
+        // Add our shouldOptimize call.
+        array_unshift($lines, '<?php Flux::shouldOptimize(); ?>');
 
         return implode("\n", $lines);
     }
@@ -113,6 +128,8 @@ class ComponentCompiler extends ComponentTagCompiler
         extract(\$data);
         \$__env = \$__env ?? view();
         \$attributes ??= new \\Illuminate\\View\\ComponentAttributeBag;
+
+?>{$this->hoistedContent}<?php
 
         \$__newAttributes = [];
         [\$__propNames, \$__originalPropValues] = \Flux\Flux::cache()->componentProps('$component');
