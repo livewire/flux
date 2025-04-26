@@ -35,10 +35,10 @@ class ComponentCompiler extends ComponentTagCompiler
     {
         $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random();
 
-        $comopiledExclude = '';
+        $compiledExclude = '';
 
         if (strlen($excludeExpression) > 0) {
-            $comopiledExclude = "\Flux\Flux::cache()->exclude({$excludeExpression});";
+            $compiledExclude = "\Flux\Flux::cache()->exclude({$excludeExpression});";
         }
 
 
@@ -55,7 +55,7 @@ PHP;
         return Str::swap([
             '$replacement' => $replacement,
             '#body#' => $content,
-            '#ignore#' => $comopiledExclude,
+            '#ignore#' => $compiledExclude,
         ], $swap);
     }
 
