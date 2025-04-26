@@ -7,7 +7,7 @@ use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class ComponentCompiler extends ComponentTagCompiler
 {
-    public function canCompileComponent($value)
+    public function isFluxComponent($value)
     {
         return Str::startsWith(ltrim($value), '@cached');
     }
@@ -18,7 +18,7 @@ class ComponentCompiler extends ComponentTagCompiler
             return $value;
         }
 
-        if (! $this->canCompileComponent($value)) {
+        if (! $this->isFluxComponent($value)) {
             return $value;
         }
 
