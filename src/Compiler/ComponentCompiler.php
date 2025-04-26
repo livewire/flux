@@ -9,7 +9,7 @@ class ComponentCompiler extends ComponentTagCompiler
 {
     public function canCompileComponent($value)
     {
-        return Str::startsWith(ltrim($value), '<?php Flux::shouldCache(); ?>');
+        return Str::startsWith(ltrim($value), '@cached');
     }
 
     public function compile($value)
@@ -22,6 +22,7 @@ class ComponentCompiler extends ComponentTagCompiler
             return $value;
         }
 
+        $value = preg_replace('/(?<!@)@cached/', '<?php Flux::shouldCache(); ?>', $value);
         $value = preg_replace('/(?<!@)@aware\(/', '@fluxAware(', $value);
 
         $value = $this->compileNoCacheMetaComponent($value);

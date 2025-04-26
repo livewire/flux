@@ -1,4 +1,4 @@
-<?php Flux::shouldCache(); ?>
+@cached
 @props([
     'counter',
 ])

@@ -1,3 +1,3 @@
-<?php Flux::shouldCache(); ?>
+@cached
 
 {{ $slot }}

@@ -1,2 +1,2 @@
-<?php Flux::shouldCache(); ?>
+@cached
 <div {{ $attributes }}>{{ $slot }}</div>
