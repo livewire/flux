@@ -18,13 +18,6 @@ class FluxManager
     /** @var FluxComponentCache */
     protected $cache = null;
 
-    protected $cacheEnabled = false;
-
-    public function __construct($cacheEnabled)
-    {
-        $this->cacheEnabled = $cacheEnabled;
-    }
-
     public function boot()
     {
         $this->cache = new FluxComponentCache;
@@ -49,11 +42,6 @@ class FluxManager
     public function shouldOptimize()
     {
         $this->cache()->isOptimized();
-    }
-
-    public function cacheEnabled()
-    {
-        return $this->cacheEnabled;
     }
 
     public function ensurePro()

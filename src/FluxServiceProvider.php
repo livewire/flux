@@ -15,14 +15,14 @@ use Illuminate\View\ComponentSlot;
 
 class FluxServiceProvider extends ServiceProvider
 {
-    protected $useCachingCompiler = false;
+    protected $useCachingCompiler = true;
 
     public function register(): void
     {
 
         $this->app->alias(FluxManager::class, 'flux');
 
-        $this->app->singleton(FluxManager::class, fn () => new FluxManager($this->useCachingCompiler));
+        $this->app->singleton(FluxManager::class);
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Flux', \Flux\Flux::class);
@@ -72,6 +72,7 @@ class FluxServiceProvider extends ServiceProvider
         );
 
         $componentCompiler = new ComponentCompiler;
+        $componentCompiler->outputOptimizations = $this->useCachingCompiler;
 
         app()->bind('flux.compiler', fn () => $compiler);
 

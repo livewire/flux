@@ -4,11 +4,14 @@ namespace Flux\Compiler;
 
 use Flux\Flux;
 use Illuminate\Support\Str;
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class ComponentCompiler extends ComponentTagCompiler
 {
     protected $isOptimizedComponent = false;
+
+    public $outputOptimizations = false;
 
     public function isFluxComponent($value)
     {
@@ -45,7 +48,7 @@ class ComponentCompiler extends ComponentTagCompiler
             return $value;
         }
 
-        if (! Flux::cacheEnabled()) {
+        if (! $this->outputOptimizations) {
             return $this->removeCacheFeatures($value);
         }
 
@@ -68,7 +71,7 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileUncached($content, $excludeExpression)
     {
-        if (! Flux::cacheEnabled()) {
+        if (! $this->outputOptimizations) {
             return $content;
         }
 
