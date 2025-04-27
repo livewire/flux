@@ -12,9 +12,9 @@ $classes = Flux::classes()
     ->add('appearance-none') // Strip the browser's default <select> styles...
     ->add('w-full ps-3 pe-10 block')
     ->add(match ($size) {
-        default => 'h-10 py-2 text-base sm:text-sm leading-none rounded-lg',
-        'sm' => 'h-8 py-1.5 text-sm leading-none rounded-md',
-        'xs' => 'h-6 text-xs leading-none rounded-md',
+        default => 'h-10 py-2 text-base sm:text-sm leading-[1.375rem] rounded-lg',
+        'sm' => 'h-8 py-1.5 text-sm leading-[1.125rem] rounded-md',
+        'xs' => 'h-6 text-xs leading-[1.125rem] rounded-md',
     })
     ->add('shadow-xs border')
     ->add('bg-white dark:bg-white/10 dark:disabled:bg-white/[9%]')
