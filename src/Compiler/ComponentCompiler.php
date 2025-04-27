@@ -24,6 +24,17 @@ class ComponentCompiler extends ComponentTagCompiler
         return "<?php Flux::shouldOptimize(); ?>\n@uncached\n$value\n@enduncached";
     }
 
+    protected function removeCacheFeatures($value)
+    {
+        $value = preg_replace('/(?<!@)@optimized/', '', $value);
+        $value = preg_replace('/(?<!@)@cached/', '', $value);
+
+        $value = $this->compileUncachedComponent($value);
+        $value = $this->compileUncachedDirective($value);
+
+        return $value;
+    }
+
     public function compile($value)
     {
         if (! $value) {
@@ -32,6 +43,10 @@ class ComponentCompiler extends ComponentTagCompiler
 
         if (! $this->isFluxComponent($value)) {
             return $value;
+        }
+
+        if (! Flux::cacheEnabled()) {
+            return $this->removeCacheFeatures($value);
         }
 
         if (Str::startsWith(ltrim($value), '@optimized')) {
@@ -53,6 +68,10 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileUncached($content, $excludeExpression)
     {
+        if (! Flux::cacheEnabled()) {
+            return $content;
+        }
+
         $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random();
 
         $compiledExclude = '';
