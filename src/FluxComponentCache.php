@@ -24,8 +24,6 @@ class FluxComponentCache
 
     protected $observingStack = [];
 
-    protected $componentProps = [];
-
     protected $items = [];
 
     protected $swaps = [];
@@ -147,16 +145,6 @@ class FluxComponentCache
         $keys = Arr::wrap($keys);
 
         $this->observingStack[array_key_last($this->observingStack)]['exclude'] = $keys;
-    }
-
-    public function props($props, $values)
-    {
-        $this->componentProps[$this->currentComponent()] = [$props, $values];
-    }
-
-    public function componentProps($component)
-    {
-        return $this->componentProps[$component] ?? [[], []];
     }
 
     public function usesVariable(string $name, $currentValue, $default = null)

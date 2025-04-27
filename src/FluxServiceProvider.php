@@ -57,7 +57,6 @@ class FluxServiceProvider extends ServiceProvider
         app('blade.compiler')->directive('fluxComponent', fn ($expression) => FluxComponentDirectives::compileFluxComponentClass($expression));
         app('blade.compiler')->directive('endFluxComponentClass', fn () => FluxComponentDirectives::compileEndFluxComponentClass());
         app('blade.compiler')->directive('fluxAware', fn ($expression) => FluxComponentDirectives::compileFluxAware($expression));
-        app('blade.compiler')->directive('fluxProps', fn ($expression) => FluxComponentDirectives::compileFluxProps($expression));
 
         $compilerClass = FluxTagCompiler::class;
 
