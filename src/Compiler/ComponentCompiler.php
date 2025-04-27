@@ -8,7 +8,7 @@ use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class ComponentCompiler extends ComponentTagCompiler
 {
-    protected $isOptimized = false;
+    protected $isOptimizedComponent = false;
 
     public function isFluxComponent($value)
     {
@@ -17,7 +17,7 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileOptimizedComponent($value)
     {
-        $this->isOptimized = true;
+        $this->isOptimizedComponent = true;
 
         $value = ltrim(preg_replace('/(?<!@)@optimized/', '', $value));
 
@@ -55,7 +55,7 @@ class ComponentCompiler extends ComponentTagCompiler
 
         $value = preg_replace('/(?<!@)@cached/', '<?php Flux::shouldCache(); ?>', $value);
 
-        if (! $this->isOptimized) {
+        if (! $this->isOptimizedComponent) {
             $value = preg_replace('/(?<!@)@props\(/', '@fluxProps(', $value);
             $value = preg_replace('/(?<!@)@aware\(/', '@fluxAware(', $value);
         }
