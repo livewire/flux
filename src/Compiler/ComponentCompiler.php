@@ -27,15 +27,20 @@ class ComponentCompiler extends ComponentTagCompiler
         return "<?php Flux::shouldOptimize(); ?>\n@uncached\n$value\n@enduncached";
     }
 
+    protected function compileComponent($value)
+    {
+        $value = $this->compileUncachedComponent($value);
+        $value = $this->compileUncachedDirective($value);
+
+        return $value;
+    }
+
     protected function removeCacheFeatures($value)
     {
         $value = preg_replace('/(?<!@)@optimized/', '', $value);
         $value = preg_replace('/(?<!@)@cached/', '', $value);
 
-        $value = $this->compileUncachedComponent($value);
-        $value = $this->compileUncachedDirective($value);
-
-        return $value;
+        return $this->compileComponent($value);
     }
 
     public function compile($value)
@@ -63,10 +68,7 @@ class ComponentCompiler extends ComponentTagCompiler
             $value = preg_replace('/(?<!@)@aware\(/', '@fluxAware(', $value);
         }
 
-        $value = $this->compileUncachedComponent($value);
-        $value = $this->compileUncachedDirective($value);
-
-        return $value;
+        return $this->compileComponent($value);
     }
 
     protected function compileUncached($content, $excludeExpression)
