@@ -28,6 +28,8 @@ class FluxComponentCache
 
     protected $swaps = [];
 
+    protected $setupFunctions = [];
+
     protected function shouldSkipComponent($component)
     {
         if (! isset($this->observedComponents[$component])) {
@@ -209,5 +211,26 @@ class FluxComponentCache
         }
 
         return $value;
+    }
+
+    public function registerSetup($callback)
+    {
+        $component = $this->currentComponent();
+
+        $this->setupFunctions[$component] = $callback;
+    }
+
+    public function runCurrentComponentSetup($data)
+    {
+        return $this->runComponentSetup($this->currentComponent(), $data);
+    }
+
+    public function runComponentSetup($component, $data)
+    {
+        if (! array_key_exists($component, $this->setupFunctions)) {
+            return $data;
+        }
+
+        return $this->setupFunctions[$component]($data);
     }
 }

@@ -67,6 +67,7 @@ class FluxComponentDirectives
     
     if (\$__fluxCacheKey{$hash} !== null) {
         \Flux\Flux::cache()->put(\$component->componentName, \$__fluxCacheKey{$hash}, \$__fluxTmpOutput{$hash});
+        \$__componentRenderData{$hash} = \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash});
         \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
     }
 
@@ -76,6 +77,7 @@ class FluxComponentDirectives
     else: /* ELSE: CACHE BLOCK */
         \$__env->popFluxComponent();
         \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->get(\$__fluxCacheKey{$hash});
+        \$__componentRenderData{$hash} = \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash});
         \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
         echo \$__fluxTmpOutput{$hash};
         
