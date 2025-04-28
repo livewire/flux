@@ -29,6 +29,7 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileComponent($value)
     {
+        $value = $this->compileSetupDirective($value);
         $value = $this->compileUncachedComponent($value);
         $value = $this->compileUncachedDirective($value);
 
@@ -64,11 +65,27 @@ class ComponentCompiler extends ComponentTagCompiler
         $value = preg_replace('/(?<!@)@cached/', '<?php Flux::shouldCache(); ?>', $value);
 
         if (! $this->isOptimizedComponent) {
-            $value = preg_replace('/(?<!@)@props\(/', '@fluxProps(', $value);
             $value = preg_replace('/(?<!@)@aware\(/', '@fluxAware(', $value);
         }
 
         return $this->compileComponent($value);
+    }
+
+    protected function compileSetup($content)
+    {
+        return <<<PHP
+<?php
+    \Flux\Flux::cache()->registerSetup(function (\$__tmpComponentData) {
+        extract(\$__tmpComponentData);
+        \$__env = \$__env ?? view();
+        ?>{$content}<?php
+        unset(\$__tmpComponentData);
+        return get_defined_vars();
+    });
+    extract(\Flux\Flux::cache()->runCurrentComponentSetup(get_defined_vars()));
+?>
+PHP;
+
     }
 
     protected function compileUncached($content, $excludeExpression)
@@ -117,6 +134,13 @@ PHP;
             }
 
             return $this->compileUncached($matches[2], $excludeExpression);
+        }, $value);
+    }
+
+    protected function compileSetupDirective($value)
+    {
+        return preg_replace_callback('/@setup(?:\((.*?)\))?([\s\S]*?)@endsetup/s', function ($matches) {
+            return $this->compileSetup(trim($matches[2]));
         }, $value);
     }
 
