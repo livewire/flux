@@ -21,6 +21,7 @@
         'danger' => 'red',
         'warning' => 'yellow',
         'secondary' => 'zinc',
+        'info' => 'blue',
         default => $color,
     };
 
