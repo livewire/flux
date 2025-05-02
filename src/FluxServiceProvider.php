@@ -90,6 +90,7 @@ class FluxServiceProvider extends ServiceProvider
         app('blade.compiler')->directive('fluxComponent', fn ($expression) => FluxComponentDirectives::compileFluxComponentClass($expression));
         app('blade.compiler')->directive('endFluxComponentClass', fn () => FluxComponentDirectives::compileEndFluxComponentClass());
         app('blade.compiler')->directive('fluxAware', fn ($expression) => FluxComponentDirectives::compileFluxAware($expression));
+        app('blade.compiler')->directive('cached', fn ($expression) => FluxComponentDirectives::compileCached($expression));
     }
 
     public function bootMacros()

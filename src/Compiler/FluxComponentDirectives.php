@@ -109,6 +109,17 @@ class FluxComponentDirectives
 PHP);
     }
 
+    public static function compileCached($expression)
+    {
+        $expression = trim($expression);
+
+        while (Str::startsWith($expression, '(') && Str::endsWith($expression, ')')) {
+            $expression = trim(Str::substr($expression, 1, -1));
+        }
+
+        return '<?php Flux::shouldCache(); ?>';
+    }
+
     public static function compileFluxAware($expression)
     {
         return static::normalizeLineEndings("<?php foreach ({$expression} as \$__key => \$__value) {

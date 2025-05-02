@@ -63,8 +63,6 @@ class ComponentCompiler extends ComponentTagCompiler
             $value = $this->compileOptimizedComponent($value);
         }
 
-        $value = preg_replace('/(?<!@)@cached/', '<?php Flux::shouldCache(); ?>', $value);
-
         if (! $this->isOptimizedComponent) {
             $value = preg_replace('/(?<!@)@aware\(/', '@fluxAware(', $value);
         }
