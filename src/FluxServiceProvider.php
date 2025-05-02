@@ -97,12 +97,6 @@ class FluxServiceProvider extends ServiceProvider
             $this->slots[$this->currentComponent()] = [];
         });
 
-        app('view')::macro('registerFluxComponentSlot', function ($name, $attributes, $callback) {
-            last($this->componentStack);
-
-            $this->slots[$this->currentComponent()][$name] = new LazyComponentSlot($callback, $attributes);
-        });
-
         app('view')::macro('fluxComponentData', function () {
 
             $defaultSlot = new ComponentSlot(trim(ob_get_clean()));
