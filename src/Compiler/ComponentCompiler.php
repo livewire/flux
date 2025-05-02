@@ -86,7 +86,6 @@ class ComponentCompiler extends ComponentTagCompiler
     extract(\Flux\Flux::cache()->runCurrentComponentSetup(get_defined_vars()));
 ?>
 PHP;
-
     }
 
     protected function compileUncached($content, $excludeExpression)
