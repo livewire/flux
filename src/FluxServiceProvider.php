@@ -34,6 +34,11 @@ class FluxServiceProvider extends ServiceProvider
         $this->bootTagCompiler();
         $this->bootMacros();
 
+        if ($this->useCachingCompiler) {
+            $this->bootCacheCompilerDirectives();
+            $this->bootCacheCompilerMacros();
+        }
+
         app('livewire')->propertySynthesizer(DateRangeSynth::class);
 
         AssetManager::boot();
@@ -54,10 +59,6 @@ class FluxServiceProvider extends ServiceProvider
 
     public function bootTagCompiler()
     {
-        app('blade.compiler')->directive('fluxComponent', fn ($expression) => FluxComponentDirectives::compileFluxComponentClass($expression));
-        app('blade.compiler')->directive('endFluxComponentClass', fn () => FluxComponentDirectives::compileEndFluxComponentClass());
-        app('blade.compiler')->directive('fluxAware', fn ($expression) => FluxComponentDirectives::compileFluxAware($expression));
-
         $compilerClass = FluxTagCompiler::class;
 
         if ($this->useCachingCompiler) {
@@ -84,12 +85,30 @@ class FluxServiceProvider extends ServiceProvider
         });
     }
 
+    protected function bootCacheCompilerDirectives()
+    {
+        app('blade.compiler')->directive('fluxComponent', fn ($expression) => FluxComponentDirectives::compileFluxComponentClass($expression));
+        app('blade.compiler')->directive('endFluxComponentClass', fn () => FluxComponentDirectives::compileEndFluxComponentClass());
+        app('blade.compiler')->directive('fluxAware', fn ($expression) => FluxComponentDirectives::compileFluxAware($expression));
+    }
+
     public function bootMacros()
     {
         app('view')::macro('getCurrentComponentData', function () {
             return $this->currentComponentData;
         });
 
+        ComponentAttributeBag::macro('pluck', function ($key) {
+            $result = $this->get($key);
+
+            unset($this->attributes[$key]);
+
+            return $result;
+        });
+    }
+
+    protected function bootCacheCompilerMacros()
+    {
         app('view')::macro('startFluxComponent', function ($view, array $data = []) {
             $this->componentStack[] = $view;
 
@@ -138,14 +157,6 @@ class FluxServiceProvider extends ServiceProvider
             } finally {
                 $this->currentComponentData = $previousComponentData;
             }
-        });
-
-        ComponentAttributeBag::macro('pluck', function ($key) {
-            $result = $this->get($key);
-
-            unset($this->attributes[$key]);
-
-            return $result;
         });
     }
 
