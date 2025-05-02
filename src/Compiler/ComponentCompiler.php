@@ -22,13 +22,12 @@ class ComponentCompiler extends ComponentTagCompiler
     {
         $this->isOptimizedComponent = true;
 
-        $value = ltrim(preg_replace('/(?<!@)@optimized/', '', $value));
-
-        return "<?php Flux::shouldOptimize(); ?>\n@uncached\n$value\n@enduncached";
+        return OptimizedComponentCompiler::compile($value);
     }
 
     protected function compileComponent($value)
     {
+        $value = $this->compileSetupComponent($value);
         $value = $this->compileSetupDirective($value);
         $value = $this->compileUncachedComponent($value);
         $value = $this->compileUncachedDirective($value);
@@ -58,7 +57,9 @@ class ComponentCompiler extends ComponentTagCompiler
             return $this->removeCacheFeatures($value);
         }
 
-        if (Str::startsWith(ltrim($value), '@optimized')) {
+        $value = ltrim($value);
+
+        if (Str::startsWith($value, '@optimized')) {
             $value = $this->compileOptimizedComponent($value);
         }
 
@@ -116,8 +117,23 @@ PHP;
 PHP;
     }
 
+    protected function compileSetupComponent($value)
+    {
+        if (! $this->outputOptimizations) {
+            return $value;
+        }
+
+        return preg_replace_callback('/<flux:setup(?:\s+([^>]+))?>(.*?)<\/flux:setup>/s', function ($matches) {
+            return $this->compileSetup(trim($matches[2]));
+        }, $value);
+    }
+
     protected function compileUncachedComponent($value)
     {
+        if (! $this->outputOptimizations) {
+            return $value;
+        }
+
         return preg_replace_callback('/<flux:uncached(?:\s+([^>]+))?>(.*?)<\/flux:uncached>/s', function ($matches) {
             $excludeExpression = '';
 
@@ -133,7 +149,7 @@ PHP;
                 }
             }
 
-            return $this->compileUncached($matches[2], $excludeExpression);
+            return $this->compileUncached(trim($matches[2]), $excludeExpression);
         }, $value);
     }
 
