@@ -78,3 +78,16 @@ HTML;
 
     $this->assertSame($expected, $this->render($flux, ['title' => 'The Title']));
 });
+
+test('optimized components do not add extra newlines at the end', function () {
+    $flux = <<<'BLADE'
+<flux:tests.optimized_props title="The Title" class="mt-4" />
+BLADE;
+
+    $expected = <<<'HTML'
+Title: The Title
+Attributes: class="mt-4"
+HTML;
+
+    $this->assertSame($expected, $this->render($flux));
+});
