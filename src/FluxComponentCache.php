@@ -148,6 +148,10 @@ class FluxComponentCache
 
     public function currentComponent()
     {
+        if (count($this->observingStack) === 0) {
+            return null;
+        }
+
         return $this->observingStack[array_key_last($this->observingStack)]['component'];
     }
 
@@ -165,9 +169,13 @@ class FluxComponentCache
 
     public function isOptimized()
     {
+        if (! $component = $this->currentComponent()) {
+            return;
+        }
+
         $this->isCacheable();
 
-        $this->optimizedComponents[$this->currentComponent()] = true;
+        $this->optimizedComponents[$component] = true;
     }
 
     public function isCacheable()
