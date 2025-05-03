@@ -21,6 +21,27 @@ HTML;
     $this->assertSame(1, $counter->count);
 });
 
+test('multiple attributes can be ignored', function () {
+    $flux = <<<'BLADE'
+<flux:tests.multiple_ignored_attributes :$counter />
+<flux:tests.multiple_ignored_attributes :$counter :wire:key="true" key="two" />
+<flux:tests.multiple_ignored_attributes :$counter wire:key="true" />
+<flux:tests.multiple_ignored_attributes :$counter wire:key="one" key="four" />
+<flux:tests.multiple_ignored_attributes :$counter wire:key="two" />
+BLADE;
+
+
+    $counter = new \Flux\Tests\TestCounter;
+
+    $expected = <<<'HTML'
+<div></div><div wire:key="" key="two"></div><div wire:key="true"></div><div wire:key="one" key="four"></div><div wire:key="two"></div>
+HTML;
+
+    $this->assertSame($expected, $this->render($flux, ['counter' => $counter]));
+
+    $this->assertSame(1, $counter->count);
+})->only();
+
 test('attributes can be output in arbitrary places', function () {
     $flux = <<<'BLADE'
 @foreach ($values as $value)
