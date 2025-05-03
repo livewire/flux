@@ -75,7 +75,7 @@ class OptimizedComponentCompiler
         }
 
         if ($endingLineNumber === null) {
-            return $originalValue;
+            return mb_substr($originalValue, strlen($directive));
         }
 
         // Insert our endsetup and uncached directives.
