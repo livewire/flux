@@ -4,6 +4,7 @@ namespace Flux;
 
 use Flux\Compiler\ComponentCompiler;
 use Flux\Compiler\FluxComponentDirectives;
+use Flux\Compiler\LivewirePrecompiler;
 use Flux\Compiler\TagCompiler;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
@@ -37,6 +38,16 @@ class FluxServiceProvider extends ServiceProvider
         if ($this->useCachingCompiler) {
             $this->bootCacheCompilerDirectives();
             $this->bootCacheCompilerMacros();
+
+            app('livewire')->precompiler(function ($template) {
+                return LivewirePrecompiler::compile($template);
+            });
+
+            // We also need to register one with Blade to handle the
+            // times we are not inside the Livewire life-cycle.
+            app('blade.compiler')->precompiler(function ($template) {
+                return LivewirePrecompiler::compile($template);
+            });
         }
 
         app('livewire')->propertySynthesizer(DateRangeSynth::class);

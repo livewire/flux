@@ -13,6 +13,8 @@ class ComponentCompiler extends ComponentTagCompiler
 
     public $outputOptimizations = false;
 
+    protected $uncachedBuffer = [];
+
     public function isFluxComponent($value)
     {
         return Str::startsWith(ltrim($value), ['@cached', '@optimized']);
@@ -31,6 +33,10 @@ class ComponentCompiler extends ComponentTagCompiler
         $value = $this->compileSetupDirective($value);
         $value = $this->compileUncachedComponent($value);
         $value = $this->compileUncachedDirective($value);
+
+        $value .= implode("\n", $this->uncachedBuffer);
+
+        $this->uncachedBuffer = [];
 
         return $value;
     }
@@ -100,17 +106,23 @@ PHP;
             $compiledExclude = "\Flux\Flux::cache()->exclude({$excludeExpression});";
         }
 
-        return <<<PHP
+        $this->uncachedBuffer[] = <<<PHP
 <?php
     $compiledExclude
     \Flux\Flux::cache()->addSwap('$replacement', function (\$data) {
         extract(\$data);
         \$__env = \$__env ?? view();
         ob_start();
-?>$content<?php
+?>[FLUX_SWAP:COMPILED $replacement]<?php
         return ob_get_clean();
     });
-?>$replacement
+?>
+PHP;
+
+        return <<<PHP
+[FLUX_SWAP:BEGIN $replacement]
+$content
+[FLUX_SWAP:END]
 PHP;
     }
 
