@@ -117,7 +117,22 @@ PHP);
             $expression = trim(Str::substr($expression, 1, -1));
         }
 
-        return '<?php Flux::shouldCache(); ?>';
+        if (! $expression) {
+            return '<?php Flux::shouldCache(); ?>';
+        }
+
+        return <<<PHP
+<?php
+    Flux::shouldCache();
+    \$__fluxCacheOptions = $expression;
+    
+    if (isset(\$__fluxCacheOptions['except'])) {
+        \$attributes = Flux::cache()->ignoreAttributes(\$__fluxCacheOptions['except'], get_defined_vars());
+    }
+    
+    unset(\$__fluxCacheOptions);
+?>
+PHP;
     }
 
     public static function compileFluxAware($expression)

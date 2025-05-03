@@ -26,9 +26,18 @@ class FluxComponentCache
 
     protected $items = [];
 
+    protected $attributeSwaps = [];
+
     protected $swaps = [];
 
     protected $setupFunctions = [];
+
+    protected $attributeReplacementValue = '';
+
+    public function __construct()
+    {
+        $this->attributeReplacementValue = '__FLUX:ATTRIBUTE'.Str::random();
+    }
 
     protected function shouldSkipComponent($component)
     {
@@ -170,6 +179,34 @@ class FluxComponentCache
         $this->observingStack[$lastKey] = $lastObserved;
     }
 
+    public function ignoreAttributes($ignore, $data)
+    {
+        $ignore = Arr::wrap($ignore);
+        $attributes = clone ($data['attributes'] ?? new ComponentAttributeBag);
+        $excludeKeys = [];
+
+        foreach ($ignore as $key => $v) {
+            if (! is_string($key)) {
+                $replacement = '__FLUX:ATTRIBUTE_REPLACEMENT'.Str::random();
+                $excludeKeys[] = $v;
+                $attributes[$v] = $replacement;
+                $this->addAttributeSwap($replacement, $v, function ($attribute, $data) {
+                    $attributes = $data['attributes'] ?? null;
+
+                    if (! $attributes) {
+                        return $this->attributeReplacementValue;
+                    }
+
+                    return $attributes->get($attribute) ?? $this->attributeReplacementValue;
+                });
+            }
+        }
+
+        $this->exclude($excludeKeys);
+
+        return $attributes;
+    }
+
     public function has($key)
     {
         return array_key_exists($key, $this->items);
@@ -189,6 +226,17 @@ class FluxComponentCache
         return $this->items[$key];
     }
 
+    public function addAttributeSwap($replacement, $attribute, $callback)
+    {
+        $component = $this->currentComponent();
+
+        if (! array_key_exists($component, $this->attributeSwaps)) {
+            $this->attributeSwaps[$component] = [];
+        }
+
+        $this->attributeSwaps[$component][$replacement] = [$attribute, $callback];
+    }
+
     public function addSwap($replacement, $callback)
     {
         $component = $this->currentComponent();
@@ -202,13 +250,32 @@ class FluxComponentCache
 
     public function swap($component, $value, $data)
     {
-        if (! isset($this->swaps[$component])) {
-            return $value;
+        if (isset($this->swaps[$component])) {
+            foreach ($this->swaps[$component] as $replacement => $callback) {
+                $value = str_replace($replacement, $callback($data), $value);
+            }
         }
 
-        foreach ($this->swaps[$component] as $replacement => $callback) {
-            $value = str_replace($replacement, $callback($data), $value);
+        if (isset($this->attributeSwaps[$component])) {
+            $emptyReplacements = [];
+
+            foreach ($this->attributeSwaps[$component] as $replacement => $attributeDetails) {
+                [$attribute, $callback] = $attributeDetails;
+                $result = call_user_func_array($callback, [$attribute, $data]);
+
+                if ($result === true) {
+                    $result = $attribute === 'x-data' || str_starts_with($attribute, 'wire:') ? '' : $attribute;
+                }
+
+                $value = str_replace('="'.$replacement, '="'.$result, $value);
+                $value = str_replace($replacement, e($result), $value);
+
+                $emptyReplacements[' '.$attribute.'="'.$this->attributeReplacementValue.'"'] = '';
+            }
+
+            $value = Str::swap($emptyReplacements, $value);
         }
+
 
         return $value;
     }
