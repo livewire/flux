@@ -34,7 +34,7 @@ class ComponentCompiler extends ComponentTagCompiler
         $value = $this->compileUncachedComponent($value);
         $value = $this->compileUncachedDirective($value);
 
-        $value .= implode("\n", $this->uncachedBuffer);
+        $value .= implode('', $this->uncachedBuffer);
 
         $this->uncachedBuffer = [];
 
@@ -104,24 +104,9 @@ PHP;
 
         $replacement = '__FLUX::SWAP_REPLACEMENT::'. Str::random();
 
-        $compiledExclude = '';
-
         if (strlen($excludeExpression) > 0) {
-            $compiledExclude = "\Flux\Flux::cache()->exclude({$excludeExpression});";
+            $this->uncachedBuffer[] = "<?php \Flux\Flux::cache()->exclude({$excludeExpression}); ?>";
         }
-
-        $this->uncachedBuffer[] = <<<PHP
-<?php
-    $compiledExclude
-    \Flux\Flux::cache()->addSwap('$replacement', function (\$data) {
-        extract(\$data);
-        \$__env = \$__env ?? view();
-        ob_start();
-?>[FLUX_SWAP:COMPILED $replacement]<?php
-        return ob_get_clean();
-    });
-?>
-PHP;
 
         return <<<PHP
 [FLUX_SWAP:BEGIN $replacement]

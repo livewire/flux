@@ -21,14 +21,23 @@ class LivewirePrecompiler
 
         foreach ($matches as $match) {
             $original = $match[0];
-            $replacementMarker = $match[1];
+            $replacement = $match[1];
             $compiled = trim($match[2]);
-            $compileMarker = "[FLUX_SWAP:COMPILED $replacementMarker]";
 
-            $template = Str::swap([
-                $original => $replacementMarker,
-                $compileMarker => $compiled,
-            ], $template);
+            // It's important that there is no whitespace between the replacement and the PHP tag.
+            $swap = <<<PHP
+$replacement<?php
+    \Flux\Flux::cache()->addSwap('$replacement', function (\$data) {
+        extract(\$data);
+        \$__env = \$__env ?? view();
+        ob_start();
+?>$compiled<?php
+        return ob_get_clean();
+    });
+?>
+PHP;
+
+            $template = str_replace($original, $swap, $template);
         }
 
         return $template;

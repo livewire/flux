@@ -35,16 +35,17 @@ test('uncached directive with variables can exclude items from the cache', funct
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 5; $i++)
 <flux:tests.uncached_directive :value="$i">{{ $i }}</flux:tests.uncached_directive>
+
 @endfor
 BLADE;
 
     $expected = <<<'EXP'
-The Value: 0
-Slot: 0The Value: 1
-Slot: 0The Value: 2
-Slot: 0The Value: 3
-Slot: 0The Value: 4
-Slot: 0
+The Value: 0Slot: 0
+The Value: 1Slot: 0
+The Value: 2Slot: 0
+The Value: 3Slot: 0
+The Value: 4Slot: 0
+
 EXP;
 
     $this->assertSame($expected, $this->render($flux));
@@ -54,16 +55,17 @@ test('uncached component with variables can exclude items from the cache', funct
     $flux = <<<'BLADE'
 @for ($i = 0; $i < 5; $i++)
 <flux:tests.uncached_component_exclude :value="$i">{{ $i }}</flux:tests.uncached_component_exclude>
+
 @endfor
 BLADE;
 
     $expected = <<<'EXP'
-The Value: 0
-Slot: 0The Value: 1
-Slot: 0The Value: 2
-Slot: 0The Value: 3
-Slot: 0The Value: 4
-Slot: 0
+The Value: 0Slot: 0
+The Value: 1Slot: 0
+The Value: 2Slot: 0
+The Value: 3Slot: 0
+The Value: 4Slot: 0
+
 EXP;
 
     $this->assertSame($expected, $this->render($flux));
@@ -122,23 +124,17 @@ BLADE;
     $expected = <<<'HTML'
 <option
     
-        
->Slot 1: 0</option><option
+        >Slot 1: 0</option><option
     
-     value="value-0"      wire:key="value-0" 
->Slot 2: 0</option><option
+     value="value-0"      wire:key="value-0" >Slot 2: 0</option><option
     
-        
->Slot 1: 1</option><option
+        >Slot 1: 1</option><option
     
-     value="value-1"      wire:key="value-1" 
->Slot 2: 1</option><option
+     value="value-1"      wire:key="value-1" >Slot 2: 1</option><option
     
-        
->Slot 1: 2</option><option
+        >Slot 1: 2</option><option
     
-     value="value-2"      wire:key="value-2" 
->Slot 2: 2</option>
+     value="value-2"      wire:key="value-2" >Slot 2: 2</option>
 HTML;
 
     $this->assertSame($expected, $result);
