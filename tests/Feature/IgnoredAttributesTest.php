@@ -1,6 +1,6 @@
 <?php
 
-test('test attributes can be ignored', function () {
+test('attributes can be ignored', function () {
     $flux = <<<'BLADE'
 <flux:tests.ignored_attributes :$counter />
 <flux:tests.ignored_attributes :$counter :wire:key="true" />
