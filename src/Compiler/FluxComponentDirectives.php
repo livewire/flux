@@ -71,10 +71,9 @@ class FluxComponentDirectives
     
     else: /* ELSE: CACHE BLOCK */
         \$__env->popFluxComponent();
-        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->get(\$__fluxCacheKey{$hash});
         \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(
             \$component->componentName,
-            \$__fluxTmpOutput{$hash},
+            \Flux\Flux::cache()->get(\$__fluxCacheKey{$hash}),
             \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash})
         );
         echo \$__fluxTmpOutput{$hash};
