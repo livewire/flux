@@ -63,7 +63,7 @@ EXPECTED;
     $this->assertSame($expected, $this->render($flux));
 });
 
-test('test custom setup block can be used on optimized instances', function () {
+test('custom setup block can be used on optimized instances', function () {
     $flux = <<<'BLADE'
 <flux:tests.optimized_props_custom_setup title="Title 1" class="mt-1 mt-2"></flux:tests.optimized_props_custom_setup>
 
