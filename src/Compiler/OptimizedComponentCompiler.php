@@ -46,7 +46,7 @@ class OptimizedComponentCompiler
             ->substr(strlen($directive));
 
         preg_match_all(
-            '/(?<!@)@(props|aware)\(/',
+            '/(?<![@`])@(props|aware)\(/',
             (string) $value,
             $allMatches,
             PREG_OFFSET_CAPTURE
@@ -64,7 +64,8 @@ class OptimizedComponentCompiler
         // Find ending line number.
         $endingLineNumber = null;
 
-        $lines = $value->split('/\r\n|\r|\n/')->all();
+        $lines = $value->split('/\n/')->all();
+
         for ($i = $startingLineNumber; $i < count($lines); $i++) {
             $line = Str::squish($lines[$i]);
 
