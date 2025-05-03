@@ -78,6 +78,10 @@ class ComponentCompiler extends ComponentTagCompiler
 
     protected function compileSetup($content)
     {
+        if (! $this->outputOptimizations) {
+            return $content;
+        }
+
         return <<<PHP
 <?php
     \Flux\Flux::cache()->registerSetup(function (\$__tmpComponentData) {
@@ -128,10 +132,6 @@ PHP;
 
     protected function compileSetupComponent($value)
     {
-        if (! $this->outputOptimizations) {
-            return $value;
-        }
-
         return preg_replace_callback('/<flux:setup(?:\s+([^>]+))?>(.*?)<\/flux:setup>/s', function ($matches) {
             return $this->compileSetup(trim($matches[2]));
         }, $value);
@@ -139,10 +139,6 @@ PHP;
 
     protected function compileUncachedComponent($value)
     {
-        if (! $this->outputOptimizations) {
-            return $value;
-        }
-
         return preg_replace_callback('/<flux:uncached(?:\s+([^>]+))?>(.*?)<\/flux:uncached>/s', function ($matches) {
             $excludeExpression = '';
 
