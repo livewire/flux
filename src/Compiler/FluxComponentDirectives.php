@@ -34,9 +34,7 @@ class FluxComponentDirectives
         return implode("\n", [
             '<?php if (isset($component)) { $__componentOriginal'.$hash.' = $component; } ?>',
             '<?php if (isset($attributes)) { $__attributesOriginal'.$hash.' = $attributes; } ?>',
-            '<?php if (isset($__fluxHoistedComponentData)) { $__fluxHoistedComponentDataOriginal'.$hash.' = $__fluxHoistedComponentData; } ?>',
-            '<?php $__fluxHoistedComponentData = '.$componentData.'; ?>',
-            '<?php $component = '.$component.'::resolve($__fluxHoistedComponentData + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>',
+            '<?php $component = '.$component.'::resolve('.$data.' ?? [] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>',
             '<?php $component->withName('.$alias.'); ?>',
             '<?php if ($component->shouldRender()): ?>', /* START: RENDER */
             '<?php $__env->startComponent($component->resolveView(), $component->data()); ?>',
@@ -49,21 +47,23 @@ class FluxComponentDirectives
 
         return <<<PHP
 <?php
-    if (isset(\$__fluxHoistedComponentData)) { \$__fluxHoistedComponentDataOriginal{$hash} = \$__fluxHoistedComponentData; } /* Preserve data in the event someone is nesting the same component over, and over, and over. */
     if (isset(\$__fluxCacheKey{$hash})) { \$__fluxCacheKeyOriginal{$hash} = \$__fluxCacheKey{$hash}; }
-    \$__fluxCacheKey{$hash} = \Flux\Flux::cache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
     \$__componentRenderData{$hash} = \$__env->fluxComponentData();
+    \$__fluxCacheKey{$hash} = \Flux\Flux::cache()->key(\$component->componentName, \$__componentRenderData{$hash}, \$__env);
     if (\$__fluxCacheKey{$hash} === null || \Flux\Flux::cache()->has(\$__fluxCacheKey{$hash}) === false): /* START: CACHE BLOCK */
 
     \Flux\Flux::cache()->startObserving(\$component->componentName);
     \$__fluxTmpOutput{$hash} = \$__env->renderFluxComponent(\$__componentRenderData{$hash});
     \Flux\Flux::cache()->stopObserving(\$component->componentName);
-    \$__fluxCacheKey{$hash} = \Flux\Flux::cache()->key(\$component->componentName, \$__fluxHoistedComponentData['data'], \$__env);
+    \$__fluxCacheKey{$hash} = \Flux\Flux::cache()->key(\$component->componentName, \$__componentRenderData{$hash}, \$__env);
     
     if (\$__fluxCacheKey{$hash} !== null) {
         \Flux\Flux::cache()->put(\$component->componentName, \$__fluxCacheKey{$hash}, \$__fluxTmpOutput{$hash});
-        \$__componentRenderData{$hash} = \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash});
-        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
+        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(
+            \$component->componentName,
+            \$__fluxTmpOutput{$hash},
+            \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash})
+        );
     }
 
     echo \$__fluxTmpOutput{$hash};
@@ -72,8 +72,11 @@ class FluxComponentDirectives
     else: /* ELSE: CACHE BLOCK */
         \$__env->popFluxComponent();
         \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->get(\$__fluxCacheKey{$hash});
-        \$__componentRenderData{$hash} = \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash});
-        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(\$component->componentName, \$__fluxTmpOutput{$hash}, \$__componentRenderData{$hash});
+        \$__fluxTmpOutput{$hash} = \Flux\Flux::cache()->swap(
+            \$component->componentName,
+            \$__fluxTmpOutput{$hash},
+            \Flux\Flux::cache()->runComponentSetup(\$component->componentName, \$__componentRenderData{$hash})
+        );
         echo \$__fluxTmpOutput{$hash};
         
         unset(\$__fluxTmpOutput{$hash});
@@ -88,17 +91,12 @@ class FluxComponentDirectives
         unset(\$__fluxCacheKeyOriginal{$hash});
     }
     if (isset(\$__componentRenderData{$hash})) { unset(\$__componentRenderData{$hash}); }
-    if (isset(\$__fluxHoistedComponentData)) { unset(\$__fluxHoistedComponentData); }
     if (isset(\$__attributesOriginal{$hash})) {
         \$attributes = \$__attributesOriginal{$hash}; unset(\$__attributesOriginal{$hash});
     }
     
     if (isset(\$__componentOriginal{$hash})) {
         \$component = \$__componentOriginal{$hash}; unset(\$__componentOriginal{$hash});
-    }
-    
-    if (isset(\$__fluxHoistedComponentDataOriginal{$hash})) {
-        \$__fluxHoistedComponentData = \$__fluxHoistedComponentDataOriginal{$hash}; unset(\$__fluxHoistedComponentDataOriginal{$hash});
     }
 ?>
 PHP;

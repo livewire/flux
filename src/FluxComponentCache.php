@@ -5,6 +5,7 @@ namespace Flux;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
+use Illuminate\View\ComponentSlot;
 
 class FluxComponentCache
 {
@@ -68,6 +69,10 @@ class FluxComponentCache
         $cacheData = [];
 
         foreach ($data as $k => $v) {
+            if ($v instanceof ComponentSlot) {
+                continue;
+            }
+
             // Ignore data that is likely internal state.
             if (Str::startsWith($k, '__')) {
                 continue;
