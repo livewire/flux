@@ -8,11 +8,6 @@ use Illuminate\View\AnonymousComponent;
 
 class FluxComponentDirectives
 {
-    public static function normalizeLineEndings($value)
-    {
-        return str_replace(["\r\n", "\r"], "\n", $value);
-    }
-
     public static function compileFluxComponentClass($expression)
     {
         [$component, $alias, $data] = str_contains($expression, ',')
@@ -52,7 +47,7 @@ class FluxComponentDirectives
     {
         $hash = ComponentHashes::popHash();
 
-        return static::normalizeLineEndings(<<<PHP
+        return <<<PHP
 <?php
     if (isset(\$__fluxHoistedComponentData)) { \$__fluxHoistedComponentDataOriginal{$hash} = \$__fluxHoistedComponentData; } /* Preserve data in the event someone is nesting the same component over, and over, and over. */
     if (isset(\$__fluxCacheKey{$hash})) { \$__fluxCacheKeyOriginal{$hash} = \$__fluxCacheKey{$hash}; }
@@ -106,7 +101,7 @@ class FluxComponentDirectives
         \$__fluxHoistedComponentData = \$__fluxHoistedComponentDataOriginal{$hash}; unset(\$__fluxHoistedComponentDataOriginal{$hash});
     }
 ?>
-PHP);
+PHP;
     }
 
     public static function compileCached($expression)
@@ -137,7 +132,7 @@ PHP;
 
     public static function compileFluxAware($expression)
     {
-        return static::normalizeLineEndings("<?php foreach ({$expression} as \$__key => \$__value) {
+        return "<?php foreach ({$expression} as \$__key => \$__value) {
     \$__consumeVariable = is_string(\$__key) ? \$__key : \$__value;
     if (is_string (\$__key)) {
         \$\$__consumeVariable = \$__env->getConsumableComponentData(\$__key, \$__value);
@@ -146,6 +141,6 @@ PHP;
         \$\$__consumeVariable = \$__env->getConsumableComponentData(\$__value);
         \Flux\Flux::cache()->usesVariable(\$__value, \$\$__consumeVariable);
     }
-} ?>");
+} ?>";
     }
 }
