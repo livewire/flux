@@ -17,8 +17,8 @@ $classes = Flux::classes()
         'xs' => 'h-6 text-xs leading-[1.125rem] rounded-md',
     })
     ->add('shadow-xs border')
-    ->add('bg-white dark:bg-white/10 dark:disabled:bg-white/[9%]')
-    ->add('text-zinc-700 dark:text-zinc-300')
+    ->add('bg-white dark:bg-white/10 dark:disabled:bg-white/[7%]')
+    ->add('text-zinc-700 dark:text-zinc-300 disabled:text-zinc-500 dark:disabled:text-zinc-400')
     // Make the placeholder match the text color of standard input placeholders...
     ->add('has-[option.placeholder:checked]:text-zinc-400 dark:has-[option.placeholder:checked]:text-zinc-400')
     // Options on Windows don't inherit dark mode styles, so we need to force them...
