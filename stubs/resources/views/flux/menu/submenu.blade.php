@@ -6,6 +6,7 @@
     'iconTrailing' => null,
     'heading' => '',
     'icon' => null,
+    'keepOpen' => false,
 ])
 
 @php
@@ -31,7 +32,7 @@ $iconClasses = Flux::classes()
         </x-slot:suffix>
     </flux:menu.item>
 
-    <flux:menu>
+    <flux:menu :keep-open="$keepOpen">
         {{ $slot }}
     </flux:menu>
 </ui-submenu>
