@@ -19,7 +19,7 @@ if ($stashable) {
     $attributes = $attributes->merge([
         'x-bind:data-stashed' => '! screenLg',
         'x-resize.document' => 'screenLg = window.innerWidth >= 1024',
-        'x-init' => '$el.classList.add(\'-translate-x-full\', \'rtl:translate-x-full\'); $el.removeAttribute(\'data-mobile-cloak\'); $el.classList.add(\'transition-transform\')',
+        'x-init' => "const isRtl = document.documentElement.dir === 'rtl';if (isRtl) {\$el.classList.add('translate-x-full');} else {\$el.classList.add('-translate-x-full');}\$el.removeAttribute('data-mobile-cloak');\$el.classList.add('transition-transform');",
     ])->class([
         'max-lg:data-mobile-cloak:hidden',
         '[[data-show-stashed-sidebar]_&]:translate-x-0! lg:translate-x-0!',
