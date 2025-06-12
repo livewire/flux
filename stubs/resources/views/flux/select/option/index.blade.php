@@ -11,6 +11,4 @@ $variant = $variant !== 'default' && Flux::componentExists('select.variants.' . 
     : 'default';
 @endphp
 
-<flux:with-field :$attributes>
-    <flux:delegate-component :component="'select.option.variants.' . $variant">{{ $slot }}</flux:delegate-component>
-</flux:with-field>
+<flux:delegate-component :component="'select.option.variants.' . $variant">{{ $slot }}</flux:delegate-component>
