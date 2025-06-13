@@ -54,7 +54,7 @@ $classes = Flux::classes()
     ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
     ->add(match ($size) { // Size...
-        'base' => 'h-10 text-sm rounded-lg' . ' ' . ($square ? 'w-10' : 'px-4'),
+        'base' => 'h-10 text-sm rounded-lg' . ' ' . ($square ? 'w-10' : 'px-4 [&:has(>:not(span):first-child)]:ps-3 [&:has(>:not(span):last-child)]:pe-3'),
         'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
         'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
     })
@@ -84,7 +84,7 @@ $classes = Flux::classes()
         'outline' => 'text-zinc-800 dark:text-white',
         'danger' => 'text-white',
         'ghost' => 'text-zinc-800 dark:text-white',
-        'subtle' => 'text-zinc-400 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+        'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
     })
     ->add(match ($variant) { // Border color...
         'primary' => 'border border-black/10 dark:border-0',
@@ -162,8 +162,9 @@ $classes = Flux::classes()
             {{ $iconLeading }}
         <?php endif; ?>
 
-        <?php if ($loading && ! $slot->isEmpty()): ?>
+        <?php if (($loading || $iconLeading || $iconTrailing) && ! $slot->isEmpty()): ?>
             {{-- If we have a loading indicator, we need to wrap it in a span so it can be a target of *:opacity-0... --}}
+            {{-- Also, if we have an icon, we need to wrap it in a span so it can be recognized as a child of the button for :first-child selectors... --}}
             <span>{{ $slot }}</span>
         <?php else: ?>
             {{ $slot }}
