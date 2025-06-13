@@ -6,6 +6,9 @@ use Illuminate\View\Compilers\ComponentTagCompiler;
 
 class FluxTagCompiler extends ComponentTagCompiler
 {
+    protected $componentDirective = 'component';
+    protected $endComponentDirective = 'endComponentClass';
+
     public function componentString(string $component, array $attributes)
     {
         // A component that forwards all data, attributes, and named slots to another component...
@@ -15,14 +18,18 @@ class FluxTagCompiler extends ComponentTagCompiler
             $class = \Illuminate\View\AnonymousComponent::class;
 
             // Laravel 12+ uses xxh128 hashing for views https://github.com/laravel/framework/pull/52301...
-            return "<?php if (!Flux::componentExists(\$name = {$component})) throw new \Exception(\"Flux component [{\$name}] does not exist.\"); ?>##BEGIN-COMPONENT-CLASS##@component('{$class}', 'flux::' . {$component}, [
+            return "<?php if (!Flux::componentExists(\$name = {$component})) throw new \Exception(\"Flux component [{\$name}] does not exist.\"); ?>##BEGIN-COMPONENT-CLASS##@{$this->componentDirective}('{$class}', 'flux::' . {$component}, [
     'view' => (app()->version() >= 12 ? hash('xxh128', 'flux') : md5('flux')) . '::' . {$component},
     'data' => \$__env->getCurrentComponentData(),
 ])
 <?php \$component->withAttributes(\$attributes->getAttributes()); ?>";
         }
 
-        return parent::componentString($component, $attributes);
+        return str_replace(
+            '##BEGIN-COMPONENT-CLASS##@component(',
+            '##BEGIN-COMPONENT-CLASS##@'.$this->componentDirective.'(',
+            parent::componentString($component, $attributes)
+        );
     }
 
     /**
@@ -155,10 +162,10 @@ class FluxTagCompiler extends ComponentTagCompiler
 
                 unset($attributes['slot']);
 
-                return '@slot('.$slot.') ' . $this->componentString('flux::'.$matches[1], $attributes)."\n@endComponentClass##END-COMPONENT-CLASS##" . ' @endslot';
+                return '@slot('.$slot.') ' . $this->componentString('flux::'.$matches[1], $attributes)."\n@{$this->endComponentDirective}##END-COMPONENT-CLASS##" . ' @endslot';
             }
 
-            return $this->componentString('flux::'.$matches[1], $attributes)."\n@endComponentClass##END-COMPONENT-CLASS##";
+            return $this->componentString('flux::'.$matches[1], $attributes)."\n@{$this->endComponentDirective}##END-COMPONENT-CLASS##";
         }, $value);
     }
 
@@ -170,6 +177,6 @@ class FluxTagCompiler extends ComponentTagCompiler
      */
     protected function compileClosingTags(string $value)
     {
-        return preg_replace("/<\/\s*flux[\:][\w\-\:\.]*\s*>/", ' @endComponentClass##END-COMPONENT-CLASS##', $value);
+        return preg_replace("/<\/\s*flux[\:][\w\-\:\.]*\s*>/", ' @'.$this->endComponentDirective.'##END-COMPONENT-CLASS##', $value);
     }
 }
