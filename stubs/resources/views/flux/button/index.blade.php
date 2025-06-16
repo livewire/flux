@@ -28,9 +28,17 @@ $iconVariant ??= ($size === 'xs')
     ? ($square ? 'micro' : 'micro')
     : ($square ? 'mini' : 'micro');
 
+$iconTrailingVariant ??= $attributes->pluck('icon-trailing:variant', $iconVariant);
+
 // When using the outline icon variant, we need to size it down to match the default icon sizes...
 $iconClasses = Flux::classes()
     ->add($iconVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5' : 'size-4') : '')
+    ->add($attributes->pluck('icon:class'))
+    ;
+
+$iconTrailingClasses = Flux::classes()
+    ->add($iconTrailingVariant === 'outline' ? ($square && $size !== 'xs' ? 'size-5' : 'size-4') : '')
+    ->add($attributes->pluck('icon-trailing:class'))
     ;
 
 $isTypeSubmitAndNotDisabledOnRender = $type === 'submit' && ! $attributes->has('disabled');
@@ -171,13 +179,13 @@ $classes = Flux::classes()
         <?php endif; ?>
 
         <?php if ($kbd): ?>
-            <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ $kbd }}</div>
+            <div class="text-xs text-zinc-400 dark:text-zinc-400">{{ $kbd }}</div>
         <?php endif; ?>
 
         <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
             {{-- Adding the extra margin class inline on the icon component below was causing a double up, so it needs to be added here first... --}}
             <?php $iconClasses->add($square ? '' : '-ms-1'); ?>
-            <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
+            <flux:icon :icon="$iconTrailing" :variant="$iconTrailingVariant" :class="$iconTrailingClasses" />
         <?php elseif ($iconTrailing): ?>
             {{ $iconTrailing }}
         <?php endif; ?>
