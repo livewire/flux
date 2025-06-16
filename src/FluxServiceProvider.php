@@ -64,12 +64,12 @@ class FluxServiceProvider extends ServiceProvider
             return $this->currentComponentData;
         });
 
-        ComponentAttributeBag::macro('pluck', function ($key) {
+        ComponentAttributeBag::macro('pluck', function ($key, $default = null) {
             $result = $this->get($key);
 
             unset($this->attributes[$key]);
 
-            return $result;
+            return $result ?? $default;
         });
     }
 
