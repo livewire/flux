@@ -61,8 +61,13 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 $classes = Flux::classes()
     ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
-    ->add(match ($size) { // Size...
-        'base' => 'h-10 text-sm rounded-lg' . ' ' . ($square ? 'w-10' : 'px-4 [&:has(>:not(span):not([data-flux-loading-indicator]):first-child)]:ps-3 [&:has(>:not(span):not([data-flux-loading-indicator]):last-child)]:pe-3'),
+    ->add(match ($size) { // Size...    
+        'base' => 'h-10 text-sm rounded-lg' . ' ' . (
+            $square 
+                ? 'w-10' 
+                // If we have an icon, we want to reduce the padding on the side that has the icon...
+                : ($iconLeading && $iconLeading !== '' ? 'ps-3' : 'ps-4') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-3' : 'pe-4')
+        ),
         'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
         'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
     })
