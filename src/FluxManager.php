@@ -15,13 +15,33 @@ class FluxManager
 
     public $hasRenderedAssets = false;
 
+    /** @var FluxComponentCache */
+    protected $cache = null;
+
     public function boot()
     {
+        $this->cache = new FluxComponentCache;
+
         on('flush-state', function () {
             $this->hasRenderedAssets = false;
         });
 
         $this->bootComponents();
+    }
+
+    public function cache()
+    {
+        return $this->cache;
+    }
+
+    public function shouldCache()
+    {
+        $this->cache()->isCacheable();
+    }
+
+    public function shouldOptimize()
+    {
+        $this->cache()->isOptimized();
     }
 
     public function ensurePro()
