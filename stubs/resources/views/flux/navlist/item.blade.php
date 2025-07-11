@@ -83,7 +83,7 @@ $classes = Flux::classes()
         {{ $iconTrailing }}
     <?php endif; ?>
 
-    <?php if ($badge): ?>
+    <?php if (isset($badge) && $badge !== ''): ?>
         <flux:navlist.badge :color="$badgeColor">{{ $badge }}</flux:navlist.badge>
     <?php endif; ?>
 </flux:button-or-link>
