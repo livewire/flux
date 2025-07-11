@@ -58,13 +58,13 @@ body:
   - type: textarea
     attributes:
       label: What is the problem?
-      description: Please provide a clear and concise description of what the problem is and include screenshots.
+      description: Please provide a clear and concise description of what the problem is.
     validations:
       required: true
 
   - type: textarea
     attributes:
-      label: Code snippets
+      label: Code snippets to replicate the problem
       description: Please include a code snippet (ideally a Volt component) we can copy and paste into our own apps with steps to reproduce. Be sure to **include any Blade variable definitions** that are used and use as little code as possible to reproduce the issue.
     validations:
       required: true
@@ -77,6 +77,13 @@ body:
         \```blade
         // Your code here
         \```
+
+  - type: textarea
+    attributes:
+      label: Screenshots/ screen recordings of the problem
+      description: Please provide screenshots or screen recordings of the issue so we can see what's happening.
+    validations:
+      required: true
 
   - type: textarea
     attributes:
