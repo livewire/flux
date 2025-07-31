@@ -77,6 +77,7 @@ class DateRange extends CarbonPeriod
     public static function last30Days() { return static::fromPreset(DateRangePreset::Last30Days); }
     public static function last3Months() { return static::fromPreset(DateRangePreset::Last3Months); }
     public static function last6Months() { return static::fromPreset(DateRangePreset::Last6Months); }
+    public static function last12Months() { return static::fromPreset(DateRangePreset::Last12Months); }
     public static function yearToDate() { return static::fromPreset(DateRangePreset::YearToDate); }
     public static function allTime($start) {
         $instance = new static(Carbon::parse($start), Carbon::now());
