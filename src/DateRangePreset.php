@@ -21,6 +21,7 @@ enum DateRangePreset: string
     case Last30Days = 'last30Days';
     case Last3Months = 'last3Months';
     case Last6Months = 'last6Months';
+    case Last12Months = 'last12Months';
     case YearToDate = 'yearToDate';
     case AllTime = 'allTime';
     case Custom = 'custom';
@@ -43,6 +44,7 @@ enum DateRangePreset: string
             static::Last30Days => [ Carbon::now()->subDays(30)->addDay()->startOfDay(), Carbon::now()->endOfDay() ],
             static::Last3Months => [ Carbon::now()->subMonths(3)->addDay()->startOfDay(), Carbon::now()->endOfDay() ],
             static::Last6Months => [ Carbon::now()->subMonths(6)->addDay()->startOfDay(), Carbon::now()->endOfDay() ],
+            static::Last12Months => [ Carbon::now()->subMonths(12)->addDay()->startOfDay(), Carbon::now()->endOfDay() ],
             static::YearToDate => [ Carbon::now()->startOfYear(), Carbon::now()->endOfDay() ],
             static::AllTime => [ $start, Carbon::now()->endOfDay() ],
         };
@@ -66,6 +68,7 @@ enum DateRangePreset: string
             static::Last30Days => __('Last 30 Days'),
             static::Last3Months => __('Last 3 Months'),
             static::Last6Months => __('Last 6 Months'),
+            static::Last12Months => __('Last 12 Months'),
             static::YearToDate => __('Year to Date'),
             static::AllTime => __('All Time'),
             static::Custom => __('Custom'),
