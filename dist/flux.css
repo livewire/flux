@@ -101,7 +101,7 @@ select[data-flux-select-native]:hover:not(:disabled) {
 Toast styles...
 */
 ui-toast {
-    @apply m-6 bg-transparent;
+    @apply m-6 max-w-sm overflow-visible bg-transparent;
 
     &[position*="top"] {
         @apply mb-auto;
@@ -134,12 +134,12 @@ ui-toast {
     [data-flux-toast-dialog] {
         opacity: 0;
         transform: translate(0);
-        transition: all 0.2s allow-discrete;
+        transition: all 0.35s allow-discrete;
 
         &.showing {
             opacity: 1;
             transform: translate(0);
-            transition: all 0.35s allow-discrete;
+            transition: all 0.2s allow-discrete;
         }
     }
 
@@ -198,5 +198,25 @@ ui-toast-group {
 
     &[position*="right"], &[position*="end"] {
         @apply ms-auto justify-end;
+    }
+
+    [data-flux-toast-dialog] {
+        position: absolute;
+        transform: translate(0);
+        transition: all 0.35s allow-discrete;
+
+        [position*="top"] & {
+            top: 0;
+            padding-bottom: 0.75rem;
+        }
+
+        [position*="bottom"] & {
+            bottom: 0;
+            padding-top: 0.75rem;
+        }
+
+        & > * {
+            transition: all 0.35s allow-discrete;
+        }
     }
 }
