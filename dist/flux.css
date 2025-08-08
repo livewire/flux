@@ -101,34 +101,32 @@ select[data-flux-select-native]:hover:not(:disabled) {
 Toast styles...
 */
 ui-toast {
-    @apply m-6 max-w-sm overflow-visible bg-transparent;
+    margin: 1.5rem;
+    max-width: 24rem;
+    overflow: visible;
+    background-color: transparent;
 
     &[position*="top"] {
-        @apply mb-auto;
+        margin-bottom: auto;
     }
 
     &[position*="bottom"] {
-        @apply mt-auto;
+        margin-top: auto;
     }
 
-    &[position*="left"] {
-        @apply mr-auto;
-    }
-
-    [dir="rtl"] &[position*="left"] {
-        @apply ml-auto mr-0;
-    }
-
-    &[position*="right"] {
-        @apply ml-auto;
-    }
-
-    [dir="rtl"] &[position*="right"] {
-        @apply mr-auto ml-0;
+    &[position*="left"],
+    &[position*="start"] {
+        margin-inline-end: auto;
     }
 
     &[position*="center"] {
-        @apply mx-auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &[position*="right"],
+    &[position*="end"] {
+        margin-inline-start: auto;
     }
 
     [data-flux-toast-dialog] {
@@ -178,26 +176,36 @@ ui-toast {
 }
 
 ui-toast-group {
-    @apply m-6 w-sm overflow-visible bg-transparent flex;
+    margin: 1.5rem;
+    width: 24rem;
+    overflow: visible;
+    background-color: transparent;
+    display: flex;
 
     &[position*="top"] {
-        @apply mb-auto;
+        margin-bottom: auto;
     }
 
     &[position*="bottom"] {
-        @apply mt-auto;
+        margin-top: auto;
     }
 
-    &[position*="left"], &[position*="start"] {
-        @apply me-auto justify-start;
+    &[position*="left"],
+    &[position*="start"] {
+        margin-inline-end: auto;
+        justify-content: flex-start;
     }
 
     &[position*="center"] {
-        @apply mx-auto justify-center;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
     }
 
-    &[position*="right"], &[position*="end"] {
-        @apply ms-auto justify-end;
+    &[position*="right"],
+    &[position*="end"] {
+        margin-inline-start: auto;
+        justify-content: flex-end;
     }
 
     [data-flux-toast-dialog] {
