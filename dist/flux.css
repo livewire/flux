@@ -193,7 +193,7 @@ ui-toast-group {
     }
 
     &[position*="center"] {
-        @apply mx-auto;
+        @apply mx-auto justify-center;
     }
 
     &[position*="right"], &[position*="end"] {
