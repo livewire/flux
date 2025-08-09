@@ -18,9 +18,18 @@
         "livewire/livewire": "^3.5.19",
         "laravel/prompts": "^0.1|^0.2|^0.3"
     },
+    "require-dev": {
+        "orchestra/testbench": "^9.2 || ^10.0",
+        "pestphp/pest": "^2"
+    },
     "autoload": {
         "psr-4": {
             "Flux\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Flux\\Tests\\": "tests"
         }
     },
     "extra": {
@@ -31,6 +40,11 @@
             "aliases": {
                 "Flux": "Flux\\Flux"
             }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }
