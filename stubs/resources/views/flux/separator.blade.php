@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'orientation' => null,
     'vertical' => false,

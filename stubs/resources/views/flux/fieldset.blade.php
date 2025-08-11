@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'legend' => null,
     'description' => null,
