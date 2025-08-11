@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'external' => null,
 ])

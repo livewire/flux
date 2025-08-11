@@ -1,3 +1,4 @@
+@pure
 
 @php
 $classes = Flux::classes()

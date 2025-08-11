@@ -1,3 +1,5 @@
+@pure
+
 @php
 $classes = Flux::classes()
     ->add('flex group/button')
