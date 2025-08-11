@@ -75,7 +75,7 @@ $classes = Flux::classes()
         {{ $iconTrailing }}
     <?php endif; ?>
 
-    <?php if ($badge): ?>
-        <flux:navbar.badge :color="$badgeColor" class="ms-2">{{ $badge }}</flux:navbar.badge>
+    <?php if (isset($badge) && $badge !== ''): ?>
+        <flux:navbar.badge :attributes="Flux::attributesAfter('badge:', $attributes, ['color' => $badgeColor, 'class' => 'ms-2'])">{{ $badge }}</flux:navbar.badge>
     <?php endif; ?>
 </flux:button-or-link>
