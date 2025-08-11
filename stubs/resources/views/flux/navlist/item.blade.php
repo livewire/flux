@@ -6,7 +6,6 @@
 @props([
     'iconVariant' => 'outline',
     'iconTrailing' => null,
-    'badgeVariant' => null,
     'badgeColor' => null,
     'variant' => null,
     'iconDot' => null,
@@ -84,7 +83,7 @@ $classes = Flux::classes()
         {{ $iconTrailing }}
     <?php endif; ?>
 
-    <?php if ($badge): ?>
-        <flux:navlist.badge :color="$badgeColor" :variant="$badgeVariant">{{ $badge }}</flux:navlist.badge>
+    <?php if (isset($badge) && $badge !== ''): ?>
+        <flux:navlist.badge :attributes="Flux::attributesAfter('badge:', $attributes, ['color' => $badgeColor])">{{ $badge }}</flux:navlist.badge>
     <?php endif; ?>
 </flux:button-or-link>
