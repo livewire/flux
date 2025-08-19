@@ -101,44 +101,130 @@ select[data-flux-select-native]:hover:not(:disabled) {
 Toast styles...
 */
 ui-toast {
-    [popover] {
-        opacity: 0;
-        transition: all 0.2s allow-discrete;
+    margin: 1.5rem;
+    max-width: 24rem;
+    overflow: visible;
+    background-color: transparent;
 
-        & {
+    &[position*="top"] {
+        margin-bottom: auto;
+    }
+
+    &[position*="bottom"] {
+        margin-top: auto;
+    }
+
+    &[position*="left"],
+    &[position*="start"] {
+        margin-inline-end: auto;
+    }
+
+    &[position*="center"] {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    &[position*="right"],
+    &[position*="end"] {
+        margin-inline-start: auto;
+    }
+
+    [data-flux-toast-dialog] {
+        opacity: 0;
+        transform: translate(0);
+        transition: all 0.35s allow-discrete;
+
+        &.showing {
+            opacity: 1;
             transform: translate(0);
+            transition: all 0.2s allow-discrete;
         }
     }
 
-    [popover]:popover-open {
-        opacity: 1;
-        transform: translate(0);
-        transition: all 0.35s allow-discrete;
-    }
-
     @starting-style {
-        [popover]:popover-open {
-            opacity: 0;
+        & {
+            [data-flux-toast-dialog] {
+                opacity: 0;
+                transform: translate(0);
+            }
 
-            &[data-position*="top"][data-position*="left"] {
+            &[position*="top"] > [data-flux-toast-dialog] {
+                transform: translateY(-0.5rem);
+            }
+
+            &[position*="top"][position*="left"] > [data-flux-toast-dialog] {
                 transform: translateX(-0.5rem);
             }
 
-            &[data-position*="top"][data-position*="right"] {
+            &[position*="top"][position*="right"] > [data-flux-toast-dialog] {
                 transform: translateX(0.5rem);
             }
 
-            [dir="rtl"] &[data-position*="top"][data-position*="left"] {
+            [dir="rtl"] &[position*="top"][position*="left"] > [data-flux-toast-dialog] {
                 transform: translateX(0.5rem);
             }
 
-            [dir="rtl"] &[data-position*="top"][data-position*="right"] {
+            [dir="rtl"] &[position*="top"][position*="right"] > [data-flux-toast-dialog] {
                 transform: translateX(-0.5rem);
             }
 
-            &[data-position*="bottom"] {
+            &[position*="bottom"] > [data-flux-toast-dialog] {
                 transform: translateY(0.5rem);
             }
+        }
+    }
+}
+
+ui-toast-group {
+    margin: 1.5rem;
+    width: 24rem;
+    overflow: visible;
+    background-color: transparent;
+    display: flex;
+
+    &[position*="top"] {
+        margin-bottom: auto;
+    }
+
+    &[position*="bottom"] {
+        margin-top: auto;
+    }
+
+    &[position*="left"],
+    &[position*="start"] {
+        margin-inline-end: auto;
+        justify-content: flex-start;
+    }
+
+    &[position*="center"] {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+    }
+
+    &[position*="right"],
+    &[position*="end"] {
+        margin-inline-start: auto;
+        justify-content: flex-end;
+    }
+
+    [data-flux-toast-dialog] {
+        position: absolute;
+        transform: translate(0);
+        transition: all 0.35s allow-discrete;
+
+        [position*="top"] & {
+            top: 0;
+            padding-bottom: 0.75rem;
+        }
+
+        [position*="bottom"] & {
+            bottom: 0;
+            padding-top: 0.75rem;
+        }
+
+        & > * {
+            transition: all 0.35s allow-discrete;
         }
     }
 }
