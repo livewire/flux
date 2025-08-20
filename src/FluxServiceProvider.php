@@ -2,15 +2,25 @@
 
 namespace Flux;
 
+use Flux\Compiler\ComponentCompiler;
+use Flux\Compiler\FluxComponentDirectives;
+use Flux\Compiler\LivewirePrecompiler;
+use Flux\Compiler\TagCompiler;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Contracts\View\View;
 use Illuminate\View\ComponentAttributeBag;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Arr;
+use Illuminate\View\ComponentSlot;
 
 class FluxServiceProvider extends ServiceProvider
 {
+    protected $useCachingCompiler = true;
+
     public function register(): void
     {
+
         $this->app->alias(FluxManager::class, 'flux');
 
         $this->app->singleton(FluxManager::class);
@@ -24,6 +34,21 @@ class FluxServiceProvider extends ServiceProvider
         $this->bootComponentPath();
         $this->bootTagCompiler();
         $this->bootMacros();
+
+        if ($this->useCachingCompiler) {
+            $this->bootCacheCompilerDirectives();
+            $this->bootCacheCompilerMacros();
+
+            app('livewire')->precompiler(function ($template) {
+                return LivewirePrecompiler::compile($template);
+            });
+
+            // We also need to register one with Blade to handle the
+            // times we are not inside the Livewire life-cycle.
+            app('blade.compiler')->precompiler(function ($template) {
+                return LivewirePrecompiler::compile($template);
+            });
+        }
 
         app('livewire')->propertySynthesizer(DateRangeSynth::class);
 
@@ -45,17 +70,38 @@ class FluxServiceProvider extends ServiceProvider
 
     public function bootTagCompiler()
     {
-        $compiler = new FluxTagCompiler(
+        $compilerClass = FluxTagCompiler::class;
+
+        if ($this->useCachingCompiler) {
+            $compilerClass = TagCompiler::class;
+        }
+
+        $compiler = new $compilerClass(
             app('blade.compiler')->getClassComponentAliases(),
             app('blade.compiler')->getClassComponentNamespaces(),
             app('blade.compiler')
         );
 
+        $componentCompiler = new ComponentCompiler;
+        $componentCompiler->outputOptimizations = $this->useCachingCompiler;
+
         app()->bind('flux.compiler', fn () => $compiler);
+
+        app('blade.compiler')->prepareStringsForCompilationUsing(function ($in) use ($componentCompiler) {
+            return $componentCompiler->compile($in);
+        });
 
         app('blade.compiler')->precompiler(function ($in) use ($compiler) {
             return $compiler->compile($in);
         });
+    }
+
+    protected function bootCacheCompilerDirectives()
+    {
+        app('blade.compiler')->directive('fluxComponent', fn ($expression) => FluxComponentDirectives::compileFluxComponentClass($expression));
+        app('blade.compiler')->directive('endFluxComponentClass', fn () => FluxComponentDirectives::compileEndFluxComponentClass());
+        app('blade.compiler')->directive('fluxAware', fn ($expression) => FluxComponentDirectives::compileFluxAware($expression));
+        app('blade.compiler')->directive('cached', fn ($expression) => FluxComponentDirectives::compileCached($expression));
     }
 
     public function bootMacros()
@@ -70,6 +116,59 @@ class FluxServiceProvider extends ServiceProvider
             unset($this->attributes[$key]);
 
             return $result ?? $default;
+        });
+    }
+
+    protected function bootCacheCompilerMacros()
+    {
+        app('view')::macro('startFluxComponent', function ($view, array $data = []) {
+            $this->componentStack[] = $view;
+
+            $this->componentData[$this->currentComponent()] = $data;
+            $this->slots[$this->currentComponent()] = [];
+        });
+
+        app('view')::macro('fluxComponentData', function () {
+
+            $defaultSlot = new ComponentSlot(trim(ob_get_clean()));
+
+            $slots = array_merge([
+                '__default' => $defaultSlot,
+            ], $this->slots[count($this->componentStack) - 1]);
+
+            return array_merge(
+                $this->componentData[count($this->componentStack) - 1],
+                ['slot' => $defaultSlot],
+                $this->slots[count($this->componentStack) - 1],
+                ['__laravel_slots' => $slots]
+            );
+        });
+
+        app('view')::macro('popFluxComponent', function () {
+            array_pop($this->componentStack);
+        });
+
+        app('view')::macro('renderFluxComponent', function ($data) {
+            $view = array_pop($this->componentStack);
+
+            $this->currentComponentData = array_merge(
+                $previousComponentData = $this->currentComponentData,
+                $data
+            );
+
+            try {
+                $view = value($view, $data);
+
+                if ($view instanceof View) {
+                    return $view->with($data)->render();
+                } elseif ($view instanceof Htmlable) {
+                    return $view->toHtml();
+                } else {
+                    return $this->make($view, $data)->render();
+                }
+            } finally {
+                $this->currentComponentData = $previousComponentData;
+            }
         });
     }
 
