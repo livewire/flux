@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'inline' => false,
     'variant' => null,

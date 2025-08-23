@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'expandable' => false,
     'expanded' => true,

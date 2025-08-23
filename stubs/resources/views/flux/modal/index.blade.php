@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'dismissible' => null,
     'position' => null,

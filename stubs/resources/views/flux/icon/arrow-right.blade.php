@@ -1,3 +1,5 @@
+@pure
+
 {{-- Credit: Heroicons (https://heroicons.com) --}}
 
 @props([

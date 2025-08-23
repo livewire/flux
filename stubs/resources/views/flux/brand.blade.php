@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'name' => null,
     'logo' => null,

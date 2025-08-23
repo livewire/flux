@@ -1,3 +1,5 @@
+@pure
+
 @php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 @php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 

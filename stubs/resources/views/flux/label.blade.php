@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'badge' => null,
     'aside' => null,
