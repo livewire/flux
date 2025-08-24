@@ -1,6 +1,6 @@
 @pure
 
-@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading = $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
