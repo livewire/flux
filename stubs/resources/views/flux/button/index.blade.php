@@ -1,8 +1,8 @@
 @pure
 
-@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
-@php $iconLeading = $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
-@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+@php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
+@php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
 @props([
     'iconTrailing' => null,
