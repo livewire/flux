@@ -132,12 +132,12 @@ ui-toast {
     [data-flux-toast-dialog] {
         opacity: 0;
         transform: translate(0);
-        transition: all 0.35s allow-discrete;
+        transition: opacity 0.35s allow-discrete, transform 0.35s allow-discrete, height 0.35s allow-discrete;
 
         &.showing {
             opacity: 1;
             transform: translate(0);
-            transition: all 0.2s allow-discrete;
+            transition: opacity 0.2s allow-discrete, transform 0.2s allow-discrete, height 0.2s allow-discrete;
         }
     }
 
