@@ -19,10 +19,11 @@
 }
 
 *:has(>[data-flux-main]) {
+    min-height: 100dvh;
     display: grid;
     grid-area: body;
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: min-content minmax(0, 1fr) min-content;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas:
         "header  header  header"
         "sidebar main    aside"
@@ -33,8 +34,19 @@
     transition: all 0.3s ease-in-out;
 }
 
-*:has(>[data-flux-sidebar]) {
+/* *:has(>[data-flux-sidebar]) {
     grid-template-columns: var(--sidebar-width) minmax(0, 1fr) min-content;
+} */
+
+[data-flux-header][data-flux-sticky] {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+[data-flux-header][data-flux-sticky] ~ [data-flux-main] {
+    overflow: auto;
+    min-height: 0;
 }
 
 [data-flux-sidebar] {
@@ -48,11 +60,11 @@
 }
 
 @media (max-width: calc(1024px - 1px)) {
-    *:has(>[data-flux-sidebar][stashable]) {
+    *:has(>[data-flux-sidebar]:not([collapsible="false"])) {
         grid-template-columns: 0 minmax(0, 1fr) min-content;
     }
 
-    [data-flux-sidebar][stashable] {
+    [data-flux-sidebar]:not([collapsible="false"]) {
         transition: translate 0.3s ease-in-out;
         position: fixed;
         top: 0;
@@ -61,18 +73,18 @@
         z-index: 20;
     }
 
-    [data-flux-sidebar][stashable][stashed] {
+    [data-flux-sidebar]:not([collapsible="false"])[stashed] {
         translate: -100%;
     }
 }
 
 @media (min-width: 1024px) {
     *:has(>[data-flux-sidebar][collapsible="icon"][state="collapsed"]) {
-        grid-template-columns: var(--sidebar-icon-width) minmax(0, 1fr) min-content;
+        grid-template-columns: var(--sidebar-icon-width) minmax(0, 1fr) auto;
     }
     
-    *:has(>[data-flux-sidebar][collapsible="hidden"][state="collapsed"]) {
-        grid-template-columns: 0 minmax(0, 1fr) min-content;
+    *:has(>[data-flux-sidebar][collapsible="true"][state="collapsed"]) {
+        grid-template-columns: 0 minmax(0, 1fr) auto;
     }
 
     [data-flux-sidebar][sticky] {
@@ -85,7 +97,7 @@
         padding: calc(var(--spacing) * 1);
     }
 
-    [data-flux-sidebar][collapsible="hidden"][state="collapsed"] [data-flux-sidebar-content] {
+    [data-flux-sidebar][collapsible="true"][state="collapsed"] [data-flux-sidebar-content] {
         translate: -100%;
     }
 
