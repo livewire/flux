@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'stashable' => null,
     'sticky' => null,

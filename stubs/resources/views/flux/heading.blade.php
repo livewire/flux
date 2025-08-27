@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'size' => 'base',
     'accent' => false,

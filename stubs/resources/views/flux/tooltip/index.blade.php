@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'interactive' => null,
     'position' => 'top',

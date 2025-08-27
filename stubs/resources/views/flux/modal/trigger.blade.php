@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'shortcut' => null,
     'name' => null,

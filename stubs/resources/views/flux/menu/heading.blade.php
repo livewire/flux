@@ -1,3 +1,5 @@
+@pure
+
 @php
 $classes = Flux::classes([
     'p-2 pb-1 w-full',

@@ -1,4 +1,6 @@
-@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+@pure
+
+@php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
 @props([
     'separator' => null,

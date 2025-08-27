@@ -1,3 +1,4 @@
+@pure
 
 <flux:button
     :attributes="$attributes->merge([

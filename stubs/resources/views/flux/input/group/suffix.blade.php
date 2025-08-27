@@ -1,3 +1,5 @@
+@pure
+
 @php
 $classes = Flux::classes([
     'flex items-center px-4 text-sm whitespace-nowrap',

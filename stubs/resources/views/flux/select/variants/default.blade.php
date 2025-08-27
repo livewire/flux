@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
     'placeholder' => null,

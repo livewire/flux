@@ -1,6 +1,8 @@
-@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
-@php $iconLeading = $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
-@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+@pure
+
+@php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
+@php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
 @props([
     'iconTrailing' => null,
@@ -61,10 +63,10 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 $classes = Flux::classes()
     ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
-    ->add(match ($size) { // Size...    
+    ->add(match ($size) { // Size...
         'base' => 'h-10 text-sm rounded-lg' . ' ' . (
-            $square 
-                ? 'w-10' 
+            $square
+                ? 'w-10'
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
                 : ($iconLeading && $iconLeading !== '' ? 'ps-3' : 'ps-4') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-3' : 'pe-4')
         ),

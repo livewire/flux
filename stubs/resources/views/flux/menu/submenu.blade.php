@@ -1,5 +1,7 @@
-@php $iconTrailing = $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
-@php $iconVariant = $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+@pure
+
+@php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
+@php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
 @props([
     'iconVariant' => 'mini',

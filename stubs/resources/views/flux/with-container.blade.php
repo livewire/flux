@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'container' => null,
 ])
@@ -9,4 +11,3 @@
 <?php else: ?>
     {{ $slot }}
 <?php endif; ?>
-

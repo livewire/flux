@@ -1,3 +1,5 @@
+@pure
+
 @props([
     'position' => 'bottom',
     'align' => 'start',
