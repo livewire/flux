@@ -146,7 +146,7 @@ $classes = Flux::classes()
                 @if ($loading && $wireTarget) wire:target="{{ $wireTarget }}" @endif
             >
 
-            <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400">
+            <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400" data-content-trailing>
                 {{-- Icon should be text-zinc-400/75 --}}
                 <?php if ($loading): ?>
                     <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading :wire:target="$wireTarget" />
@@ -185,39 +185,39 @@ $classes = Flux::classes()
         </div>
     </flux:with-field>
 <?php else: ?>
-    <button {{ $attributes->merge(['type' => 'button'])->class([$classes, 'w-full relative flex']) }}>
+    <button {{ $attributes->merge(['type' => 'button'])->class([$classes, 'w-full relative flex']) }} data-flux-input-button>
         <?php if (is_string($iconLeading)): ?>
-            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 start-0">
+            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 start-0" data-icon>
                 <flux:icon :icon="$iconLeading" :variant="$iconVariant" :class="$iconClasses" />
             </div>
         <?php elseif ($iconLeading): ?>
-            <div {{ $iconLeading->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 start-0') }}>
+            <div {{ $iconLeading->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 start-0') }} data-icon>
                 {{ $iconLeading }}
             </div>
         <?php endif; ?>
 
         <?php if ($attributes->has('placeholder')): ?>
-            <div class="block self-center text-start flex-1 font-medium text-zinc-400 dark:text-white/40">
+            <div class="block self-center text-start flex-1 font-medium text-zinc-400 dark:text-white/40" data-placeholder>
                 {{ $attributes->get('placeholder') }}
             </div>
         <?php else: ?>
-            <div class="text-start self-center flex-1 font-medium text-zinc-800 dark:text-white">
+            <div class="text-start self-center flex-1 font-medium text-zinc-800 dark:text-white" data-content>
                 {{ $slot }}
             </div>
         <?php endif; ?>
 
         <?php if ($kbd): ?>
-            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-4 end-0">
+            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-4 end-0" data-content-trailing>
                 {{ $kbd }}
             </div>
         <?php endif; ?>
 
         <?php if (is_string($iconTrailing)): ?>
-            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-3 end-0">
+            <div class="absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-3 end-0" data-icon-trailing>
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
             </div>
         <?php elseif  ($iconTrailing): ?>
-            <div {{ $iconTrailing->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-2 end-0') }}>
+            <div {{ $iconTrailing->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-2 end-0') }} data-icon-trailing>
                 {{ $iconTrailing }}
             </div>
         <?php endif; ?>

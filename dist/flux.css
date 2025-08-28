@@ -130,9 +130,20 @@
 
     [data-flux-sidebar][collapsible="icon"][state="collapsed"] {
         & [data-content],
+        & [data-placeholder],
+        & [data-content-trailing],
         & [data-icon-trailing],
         & [data-badge] {
             display: none;
+        }
+
+        & [data-flux-input-button],
+        & [data-flux-input] > input {
+            overflow: hidden;
+            padding: calc(var(--spacing) * 3) calc(var(--spacing) * 2);
+            &::placeholder {
+                color: transparent;
+            }
         }
 
         & [data-group-content][data-open] {
