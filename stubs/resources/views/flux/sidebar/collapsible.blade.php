@@ -7,17 +7,22 @@
 @php
 $classes = Flux::classes('[grid-area:sidebar]');
 
-/*if ($sticky) {
+if ($sticky) {
     $attributes = $attributes->merge([
         'x-data' => '',
-        'x-bind:style' => '{ position: \'sticky\', top: $el.offsetTop + \'px\', \'max-height\': \'calc(100dvh - \' + $el.offsetTop + \'px)\' }',
-        'class' => 'max-h-dvh',
+        'x-bind:style' => '{
+            position: \'sticky\',
+            top: $el.offsetTop + \'px\',
+            \'max-height\': \'calc(100dvh - \' + $el.offsetTop + \'px)\'
+        }',
     ]);
-}*/
+}
 
 $stashable = match($stashable) {
-    'false' => 'false',
-    false => 'false',
+    'true' => 'true',
+    true => 'true',
+    'false' => null,
+    false => null,
     default => null,
 };
 
@@ -25,8 +30,9 @@ $collapsible = match($collapsible) {
     'true' => 'true',
     true => 'true',
     'icon' => 'icon',
-    'false' => 'false',
-    false => 'false',
+    'mobile' => 'mobile',
+    'false' => null,
+    false => null,
     default => null,
 };
 
@@ -42,6 +48,7 @@ if (is_null($collapsible)) {
 
 <ui-sidebar
     state="expanded"
+    mobile-state="collapsed"
     stashed
     {{ $attributes->class($classes) }}
     @if (isset($collapsible)) collapsible="{{ $collapsible }}" @endif

@@ -42,10 +42,12 @@
             @endif
         </button>
 
-        <div class="relative hidden data-open:block space-y-[2px] ps-7" @if ($expanded === true) data-open @endif data-group-content>
-            <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-5"></div>
+        <div class="hidden data-open:block" @if ($expanded === true) data-open @endif data-group-content>
+            <div class="relative space-y-[2px] ps-7">
+                <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-5"></div>
 
-            {{ $slot }}
+                {{ $slot }}
+            </div>
         </div>
     </ui-disclosure>
 <?php elseif ($heading): ?>
