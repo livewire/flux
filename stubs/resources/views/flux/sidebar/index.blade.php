@@ -1,39 +1,47 @@
-@pure
-
 @props([
+    'collapsible' => null,
     'stashable' => null,
     'sticky' => null,
 ])
 
 @php
-$classes = Flux::classes('[grid-area:sidebar]')
-    ->add('z-1 flex flex-col gap-4 [:where(&)]:w-64 p-4')
-    ;
+$classes = Flux::classes('[grid-area:sidebar]');
 
-if ($sticky) {
-    $attributes = $attributes->merge([
-        'x-bind:style' => '{ position: \'sticky\', top: $el.offsetTop + \'px\', \'max-height\': \'calc(100dvh - \' + $el.offsetTop + \'px)\' }',
-        'class' => 'max-h-dvh overflow-y-auto overscroll-contain',
-    ]);
-}
+$collapsible = match($collapsible) {
+    'true' => 'true',
+    true => 'true',
+    'icon' => 'icon',
+    'mobile' => 'mobile',
+    'false' => null,
+    false => null,
+    default => null,
+};
 
-if ($stashable) {
-    $attributes = $attributes->merge([
-        'x-bind:data-stashed' => '! screenLg',
-        'x-resize.document' => 'screenLg = window.innerWidth >= 1024',
-        'x-init' => '$el.classList.add(\'-translate-x-full\', \'rtl:translate-x-full\'); $el.removeAttribute(\'data-mobile-cloak\'); $el.classList.add(\'transition-transform\')',
-    ])->class([
-        'max-lg:data-mobile-cloak:hidden',
-        '[[data-show-stashed-sidebar]_&]:translate-x-0! lg:translate-x-0!',
-        'z-20! data-stashed:start-0! data-stashed:fixed! data-stashed:top-0! data-stashed:min-h-dvh! data-stashed:max-h-dvh!'
-    ]);
+// If collapsible is not set, try stashable for backwards compatibility...
+if (is_null($collapsible)) {
+    $collapsible = match($stashable) {
+        'true' => 'true',
+        true => 'true',
+        'false' => null,
+        false => null,
+        default => null,
+    };
 }
 @endphp
 
-@if ($stashable)
+@if (isset($collapsible) && $collapsible !== 'false')
     <flux:sidebar.backdrop />
 @endif
 
-<div {{ $attributes->class($classes) }} x-data="{ screenLg: window.innerWidth >= 1024 }" data-mobile-cloak data-flux-sidebar>
-    {{ $slot }}
-</div>
+<ui-sidebar
+    state="expanded"
+    mobile-state="collapsed"
+    {{ $attributes->except('class') }}
+    class="[grid-area:sidebar]"
+    @if (isset($collapsible)) collapsible="{{ $collapsible }}" @endif
+    @if (isset($sticky)) sticky @endif
+    data-flux-sidebar>
+    <div {{ $attributes->class(['h-full flex flex-col gap-4 overflow-y-auto overscroll-contain'])->only('class') }} data-flux-sidebar-content>
+        {{ $slot }}
+    </div>
+</ui-sidebar>

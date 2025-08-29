@@ -27,8 +27,8 @@
                 </div>
             @else
                 <div class="px-0.5" data-icon>
-                    <flux:icon.chevron-down class="size-3! hidden group-data-open/disclosure-button:block" />
-                    <flux:icon.chevron-right class="size-3! block group-data-open/disclosure-button:hidden rtl:rotate-180" />
+                    <flux:icon.chevron-down class="size-3! hidden group-data-open/disclosure-button:block [[data-flux-sidebar][collapsible=icon][state=collapsed]_&]:hidden" />
+                    <flux:icon.chevron-right class="size-3! block group-data-open/disclosure-button:hidden [[data-flux-sidebar][collapsible=icon][state=collapsed]_&]:block rtl:rotate-180" />
                 </div>
             @endif
 
