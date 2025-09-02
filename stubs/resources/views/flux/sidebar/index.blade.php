@@ -1,39 +1,55 @@
 @pure
 
 @props([
-    'stashable' => null,
+    'collapsible' => null,
+    'stashable' => null, // @deprecated
     'sticky' => null,
 ])
 
 @php
+$collapsibleOnMobile = $stashable || $collapsible === 'mobile' || $collapsible === true;
+
+if ($stashable && $collapsible === null) {
+    $collapsible = 'mobile';
+}
+
 $classes = Flux::classes('[grid-area:sidebar]')
     ->add('z-1 flex flex-col gap-4 [:where(&)]:w-64 p-4')
+    ->add('data-flux-sidebar-collapsed-desktop:w-14 data-flux-sidebar-collapsed-desktop:px-2')
+    ->add('data-flux-sidebar-collapsed-desktop:cursor-e-resize rtl:data-flux-sidebar-collapsed-desktop:cursor-w-resize')
     ;
 
 if ($sticky) {
     $attributes = $attributes->merge([
-        'x-bind:style' => '{ position: \'sticky\', top: $el.offsetTop + \'px\', \'max-height\': \'calc(100dvh - \' + $el.offsetTop + \'px)\' }',
         'class' => 'max-h-dvh overflow-y-auto overscroll-contain',
     ]);
 }
 
-if ($stashable) {
+if ($collapsibleOnMobile) {
     $attributes = $attributes->merge([
-        'x-bind:data-stashed' => '! screenLg',
-        'x-resize.document' => 'screenLg = window.innerWidth >= 1024',
-        'x-init' => '$el.classList.add(\'-translate-x-full\', \'rtl:translate-x-full\'); $el.removeAttribute(\'data-mobile-cloak\'); $el.classList.add(\'transition-transform\')',
+        // Prevent mobile sidebar from transitioning out on load...
+        'x-init' => '$el.classList.add(\'transition-transform\')',
     ])->class([
-        'max-lg:data-mobile-cloak:hidden',
-        '[[data-show-stashed-sidebar]_&]:translate-x-0! lg:translate-x-0!',
-        'z-20! data-stashed:start-0! data-stashed:fixed! data-stashed:top-0! data-stashed:min-h-dvh! data-stashed:max-h-dvh!'
+        // Prevent mobile sidebar from flashing on-load...
+        'max-lg:data-flux-sidebar-cloak:hidden',
+        'data-flux-sidebar-on-mobile:data-flux-sidebar-collapsed-mobile:-translate-x-full data-flux-sidebar-on-mobile:data-flux-sidebar-collapsed-mobile:rtl:-translate-x-full',
+        'z-20! data-flux-sidebar-on-mobile:start-0! data-flux-sidebar-on-mobile:fixed! data-flux-sidebar-on-mobile:top-0! data-flux-sidebar-on-mobile:min-h-dvh! data-flux-sidebar-on-mobile:max-h-dvh!'
     ]);
 }
 @endphp
 
-@if ($stashable)
+@if ($collapsibleOnMobile)
     <flux:sidebar.backdrop />
 @endif
 
-<div {{ $attributes->class($classes) }} x-data="{ screenLg: window.innerWidth >= 1024 }" data-mobile-cloak data-flux-sidebar>
+<ui-sidebar
+    {{ $attributes->class($classes) }}
+    @if ($collapsible) collapsible="{{ $collapsible === 'mobile' ? 'mobile' : 'true' }}" @endif
+    @if ($stashable) stashable @endif
+    @if ($sticky) sticky @endif
+    x-data
+    data-flux-sidebar-cloak
+    data-flux-sidebar
+>
     {{ $slot }}
-</div>
+</ui-sidebar>
