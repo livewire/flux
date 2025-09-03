@@ -10,61 +10,61 @@
 ])
 
 @php
-    // We only want to show the name attribute it has been set manually
-    // but not if it has been set from the `wire:model` attribute...
-    $showName = isset($name);
-    if (! isset($name)) {
-        $name = $attributes->whereStartsWith('wire:model')->first();
-    }
+// We only want to show the name attribute it has been set manually
+// but not if it has been set from the `wire:model` attribute...
+$showName = isset($name);
+if (! isset($name)) {
+    $name = $attributes->whereStartsWith('wire:model')->first();
+}
 
-    // Icons: show ONLY if `icons` attribute is present.
-    if ($icons) {
-        $hasIconOnAttr = $attributes->has('icon:on');
-        $hasIconOffAttr = $attributes->has('icon:off');
+// Icons: show ONLY if `icons` attribute is present.
+if ($icons) {
+    $hasIconOnAttr = $attributes->has('icon:on');
+    $hasIconOffAttr = $attributes->has('icon:off');
 
-        if ($hasIconOnAttr && $hasIconOffAttr) {
-            $iconOn = $attributes->pluck('icon:on');
-            $iconOff = $attributes->pluck('icon:off');
-        } elseif ($hasIconOnAttr) {
-            $iconOn = $attributes->pluck('icon:on');
-            $iconOff = null;
-        } elseif ($hasIconOffAttr) {
-            $iconOn = null;
-            $iconOff = $attributes->pluck('icon:off');
-        } else {
-            $iconOn = is_object($iconOn) ? $iconOn?->attributes?->pluck('on') : $iconOn;
-            $iconOff = is_object($iconOff) ? $iconOff?->attributes?->pluck('off') : $iconOff;
-        }
-    } else {
-        $iconOn = null;
+    if ($hasIconOnAttr && $hasIconOffAttr) {
+        $iconOn = $attributes->pluck('icon:on');
+        $iconOff = $attributes->pluck('icon:off');
+    } elseif ($hasIconOnAttr) {
+        $iconOn = $attributes->pluck('icon:on');
         $iconOff = null;
+    } elseif ($hasIconOffAttr) {
+        $iconOn = null;
+        $iconOff = $attributes->pluck('icon:off');
+    } else {
+        $iconOn = is_object($iconOn) ? $iconOn?->attributes?->pluck('on') : $iconOn;
+        $iconOff = is_object($iconOff) ? $iconOff?->attributes?->pluck('off') : $iconOff;
     }
+} else {
+    $iconOn = null;
+    $iconOff = null;
+}
 
-    $classes = Flux::classes()
-        ->add('group h-5 w-8 min-w-8 relative inline-flex items-center outline-offset-2')
-        ->add('rounded-full')
-        ->add('transition')
-        ->add('bg-zinc-800/15 [&[disabled]]:opacity-50 dark:bg-transparent dark:border dark:border-white/20 dark:[&[disabled]]:border-white/10')
-        ->add('[print-color-adjust:exact]')
-        ->add([
-            'data-checked:bg-(--color-accent)',
-            'data-checked:border-0',
-        ])
-        ;
+$classes = Flux::classes()
+    ->add('group h-5 w-8 min-w-8 relative inline-flex items-center outline-offset-2')
+    ->add('rounded-full')
+    ->add('transition')
+    ->add('bg-zinc-800/15 [&[disabled]]:opacity-50 dark:bg-transparent dark:border dark:border-white/20 dark:[&[disabled]]:border-white/10')
+    ->add('[print-color-adjust:exact]')
+    ->add([
+        'data-checked:bg-(--color-accent)',
+        'data-checked:border-0',
+    ])
+    ;
 
-    $indicatorClasses = Flux::classes()
-        ->add('grid place-items-center')
-        ->add('size-3.5')
-        ->add('rounded-full')
-        ->add('transition translate-x-[3px] dark:translate-x-[2px] rtl:-translate-x-[3px] dark:rtl:-translate-x-[2px]')
-        ->add('bg-white')
-        ->add([
-            'group-data-checked:translate-x-[15px] rtl:group-data-checked:-translate-x-[15px]',
-            'group-data-checked:bg-(--color-accent-foreground)',
-        ]);
+$indicatorClasses = Flux::classes()
+    ->add('grid place-items-center')
+    ->add('size-3.5')
+    ->add('rounded-full')
+    ->add('transition translate-x-[3px] dark:translate-x-[2px] rtl:-translate-x-[3px] dark:rtl:-translate-x-[2px]')
+    ->add('bg-white')
+    ->add([
+        'group-data-checked:translate-x-[15px] rtl:group-data-checked:-translate-x-[15px]',
+        'group-data-checked:bg-(--color-accent-foreground)',
+    ]);
 
-    $iconClasses = Flux::classes()
-        ->add('size-2.5');
+$iconClasses = Flux::classes()
+    ->add('size-2.5');
 @endphp
 
 @if ($align === 'left' || $align === 'start')

@@ -4,4 +4,3 @@ composer.lock
 .phpunit.result.cache
 node_modules/**
 test-results/**
-.idea
