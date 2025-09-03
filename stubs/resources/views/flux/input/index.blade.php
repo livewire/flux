@@ -16,7 +16,6 @@
     'invalid' => null,
     'loading' => null,
     'type' => 'text',
-    'maskDynamic' => null,
     'mask' => null,
     'size' => null,
     'icon' => null,
