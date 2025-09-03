@@ -53,4 +53,4 @@ $class = Flux::classes()
     });
 @endphp
 
-<span {{ $attributes->class($class) }}>{{ $slot }}</span>
+<span {{ $attributes->class($class) }} data-flux-navlist-badge>{{ $slot }}</span>
