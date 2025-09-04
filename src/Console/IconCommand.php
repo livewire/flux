@@ -95,6 +95,8 @@ class IconCommand extends Command
             SVG)->toString();
 
         $stub = <<<'HTML'
+        @pure
+
         {{-- Credit: Lucide (https://lucide.dev) --}}
 
         @props([
