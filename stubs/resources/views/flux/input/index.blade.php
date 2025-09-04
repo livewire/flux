@@ -9,6 +9,7 @@
     'variant' => 'outline',
     'iconTrailing' => null,
     'iconLeading' => null,
+    'maskDynamic' => null,
     'expandable' => null,
     'clearable' => null,
     'copyable' => null,
