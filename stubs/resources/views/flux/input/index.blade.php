@@ -1,6 +1,7 @@
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
+@php $maskDynamic ??= $attributes->pluck('mask:dynamic'); @endphp
 
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
@@ -8,6 +9,7 @@
     'variant' => 'outline',
     'iconTrailing' => null,
     'iconLeading' => null,
+    'maskDynamic' => null,
     'expandable' => null,
     'clearable' => null,
     'copyable' => null,
@@ -137,7 +139,7 @@ $classes = Flux::classes()
                 {{-- Leave file inputs unstyled... --}}
                 {{ $attributes->except('class')->class($type === 'file' ? '' : $classes) }}
                 @isset ($name) name="{{ $name }}" @endisset
-                @if ($mask) x-mask="{{ $mask }}" @endif
+                @if ($maskDynamic) x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" @endif
                 @if ($invalid) aria-invalid="true" data-invalid @endif
                 @if (is_numeric($size)) size="{{ $size }}" @endif
                 data-flux-control
