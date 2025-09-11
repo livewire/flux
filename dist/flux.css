@@ -98,6 +98,18 @@ select[data-flux-select-native]:hover:not(:disabled) {
 }
 
 /**
+Tab styles
+*/
+[data-flux-tabs][data-scrollable] {
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+[data-flux-tabs][data-scrollable]::-webkit-scrollbar{
+    display:none
+}
+
+/**
 Toast styles...
 */
 ui-toast {
