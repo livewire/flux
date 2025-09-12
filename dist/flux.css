@@ -100,12 +100,12 @@ select[data-flux-select-native]:hover:not(:disabled) {
 /**
 Tab styles
 */
-[data-flux-tabs][data-scrollable] {
+[data-flux-tabs-scroll-area] {
     scrollbar-width:none;
     -ms-overflow-style:none;
 }
 
-[data-flux-tabs][data-scrollable]::-webkit-scrollbar{
+[data-flux-tabs-scroll-area]::-webkit-scrollbar{
     display:none
 }
 
