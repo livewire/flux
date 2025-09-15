@@ -9,10 +9,13 @@
     'placeholder' => __('Search...'),
     'tooltipKbd' => null,
     'tooltip' => null,
+    'kbd' => null,
 ])
 
 @php
 $tooltip = $tooltip ?? $placeholder;
+
+$tooltipKbd ??= $kbd;
 
 $tooltipClasses = Flux::classes()
     ->add('w-full')
@@ -39,6 +42,12 @@ $classes = Flux::classes()
         <div class="in-data-flux-sidebar-collapsed-desktop:hidden block self-center text-start flex-1 font-medium text-zinc-400 dark:text-white/40">
             {{ $placeholder }}
         </div>
+
+        <?php if ($kbd): ?>
+            <div class="in-data-flux-sidebar-collapsed-desktop:hidden absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 pe-4 end-0">
+                {{ $kbd }}
+            </div>
+        <?php endif; ?>
     </button>
 
     <flux:tooltip.content :kbd="$tooltipKbd" class="not-in-data-flux-sidebar-collapsed-desktop:hidden cursor-default">
