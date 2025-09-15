@@ -98,18 +98,6 @@ select[data-flux-select-native]:hover:not(:disabled) {
 }
 
 /**
-Tab styles
-*/
-[data-flux-tabs-scroll-area] {
-    scrollbar-width:none;
-    -ms-overflow-style:none;
-}
-
-[data-flux-tabs-scroll-area]::-webkit-scrollbar{
-    display:none
-}
-
-/**
 Toast styles...
 */
 ui-toast {
@@ -239,4 +227,16 @@ ui-toast-group {
             transition: opacity 0.35s allow-discrete, transform 0.35s allow-discrete, height 0.35s allow-discrete;
         }
     }
+}
+
+/**
+Utilties
+*/
+.flux-hide-scrollbar {
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+.flux-hide-scrollbar::-webkit-scrollbar{
+    display:none
 }
