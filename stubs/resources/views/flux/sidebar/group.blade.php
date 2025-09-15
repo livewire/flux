@@ -80,7 +80,9 @@
         <div class="px-3 py-2 in-data-flux-sidebar-collapsed-desktop:hidden">
             <div class="text-sm text-zinc-400 font-medium leading-none">{{ $heading }}</div>
         </div>
+
         <flux:separator class="not-in-data-flux-sidebar-collapsed-desktop:hidden" />
+
         <div>
             {{ $slot }}
         </div>
