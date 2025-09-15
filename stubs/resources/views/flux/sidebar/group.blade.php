@@ -40,14 +40,16 @@
         </ui-disclosure>
 
         <flux:dropdown hover class="in-data-flux-sidebar-on-mobile:hidden not-in-data-flux-sidebar-collapsed-desktop:hidden" position="right" align="start" data-flux-sidebar-group-dropdown>
-            <button type="button" class="border-1 border-transparent w-full px-3 h-8 flex items-center group/disclosure-button mb-[2px] rounded-lg in-data-flux-sidebar-collapsed-desktop:w-10 in-data-flux-sidebar-collapsed-desktop:justify-center hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
-                <div class="relative">
+            <button type="button" class="border-1 border-transparent w-full px-3 in-data-flux-menu:px-2 h-8 flex items-center group/disclosure-button mb-[2px] rounded-lg in-data-flux-sidebar-collapsed-desktop:not-in-data-flux-menu:w-10 in-data-flux-sidebar-collapsed-desktop:not-in-data-flux-menu:justify-center hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
+                <div class="relative in-data-flux-sidebar-group-dropdown:in-data-flux-menu:hidden">
                     <?php if (is_string($icon) && $icon !== ''): ?>
                         <flux:icon :icon="$icon" :variant="$iconVariant" class="size-4" />
                     <?php else: ?>
                         {{ $icon }}
                     <?php endif; ?>
                 </div>
+
+                <span class="hidden in-data-flux-sidebar-group-dropdown:in-data-flux-menu:block in-data-flux-sidebar-group-dropdown:in-data-flux-menu:blockflex-1 text-sm font-medium leading-none text-zinc-800 dark:text-white">{{ $heading }}</span>
             </button>
 
             <flux:menu>
