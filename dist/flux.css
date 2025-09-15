@@ -232,11 +232,11 @@ ui-toast-group {
 /**
 Utilties
 */
-.flux-hide-scrollbar {
+.flux-no-scrollbar {
     scrollbar-width:none;
     -ms-overflow-style:none;
 }
 
-.flux-hide-scrollbar::-webkit-scrollbar{
+.flux-no-scrollbar::-webkit-scrollbar{
     display:none
 }
