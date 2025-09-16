@@ -127,6 +127,9 @@ class FluxManager
         foreach ($attributes->getAttributes() as $key => $value) {
             if (str_starts_with($key, $prefix)) {
                 $newAttributes[substr($key, strlen($prefix))] = $value;
+                // If a prop is passed in as `kebab-case`, we need to convert it to `camelCase` so that when Blade separates
+                // the prop values from the attributes, it matches the prop value correctly, if it's a multi-word prop...
+                $newAttributes[Str::camel(substr($key, strlen($prefix)))] = $value;
             }
         }
 
