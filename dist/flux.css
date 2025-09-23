@@ -228,3 +228,15 @@ ui-toast-group {
         }
     }
 }
+
+/**
+Utilties
+*/
+.flux-no-scrollbar {
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+}
+
+.flux-no-scrollbar::-webkit-scrollbar{
+    display:none
+}
