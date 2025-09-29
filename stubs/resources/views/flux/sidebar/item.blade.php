@@ -21,7 +21,9 @@
 $tooltip ??= $slot->isNotEmpty() ? (string) $slot : null;
 
 // Size-up icons in square/icon-only buttons...
-$iconClasses = Flux::classes('size-4');
+$iconClasses = Flux::classes('size-4')
+    ->add('in-data-flux-sidebar-group-dropdown:text-zinc-400! dark:in-data-flux-sidebar-group-dropdown:text-white/80!')
+    ->add('[[data-flux-sidebar-item]:hover_&]:text-current!');
 
 $classes = Flux::classes()
     ->add('h-8 in-data-flux-sidebar-on-mobile:h-10 relative flex items-center gap-3 rounded-lg')
