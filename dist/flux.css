@@ -240,3 +240,21 @@ Utilties
 .flux-no-scrollbar::-webkit-scrollbar{
     display:none
 }
+
+/* Show and center the Flux loading spinner inside disabled buttons */
+button[disabled] [data-flux-loading-indicator] {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle;
+    transform: translateY(1px);
+}
+
+/* Keep label text visible and collapse gap while loading (when button is disabled) */
+button[disabled] > span {
+    opacity: 1 !important;
+    gap: 0 !important;
+}
