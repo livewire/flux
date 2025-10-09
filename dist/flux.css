@@ -240,3 +240,15 @@ Utilties
 .flux-no-scrollbar::-webkit-scrollbar{
     display:none
 }
+
+/* Ensure Flux dropdowns are not clipped by page container scroll */
+html,
+body,
+[data-flux-page-container] {
+    overflow: visible !important;
+}
+
+/* Prevent layout shift when Flux unlocks body scroll (avoid padding compensation) */
+html[data-flux-scroll-unlock] {
+    padding-right: 0 !important;
+}
