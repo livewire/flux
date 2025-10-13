@@ -123,11 +123,18 @@ class FluxManager
     public function attributesAfter($prefix, $attributes, $default = [])
     {
         $newAttributes = new \Illuminate\View\ComponentAttributeBag($default);
+        $keysToRemove = [];
 
         foreach ($attributes->getAttributes() as $key => $value) {
             if (str_starts_with($key, $prefix)) {
                 $newAttributes[substr($key, strlen($prefix))] = $value;
+                $keysToRemove[] = $key;
             }
+        }
+
+        // Remove the transferred attributes from the original bag
+        foreach ($keysToRemove as $key) {
+            unset($attributes[$key]);
         }
 
         return $newAttributes;
