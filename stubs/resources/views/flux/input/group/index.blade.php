@@ -18,9 +18,9 @@ $classes = Flux::classes()
         '[&>[data-flux-input]:has(+[data-flux-input-group-suffix])>[data-flux-group-target]:not([data-invalid])]:border-e-0',
 
         // Selects and date pickers borders...
-        '[&>*:last-child:not(:first-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
-        '[&>*:not(:first-child):not(:last-child)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
-        '[&>*:has(+[data-flux-input-group-suffix])>[data-flux-group-target]:not([data-invalid])]:border-e-0',
+        '[&>*:last-child:not(:first-child)_[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>*:not(:first-child):not(:last-child)_[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>*:has(+[data-flux-input-group-suffix])_[data-flux-group-target]:not([data-invalid])]:border-e-0',
 
         // Buttons borders...
         '[&>[data-flux-group-target]:last-child:not(:first-child)]:border-s-0',
@@ -33,14 +33,9 @@ $classes = Flux::classes()
         '[&>[data-flux-group-target]:last-child:not(:first-child)]:rounded-s-none',
 
         // "Weld" borders for sub-children of group targets (button element inside ui-select element, etc.)...
-        '[&>*:not(:first-child):not(:last-child):not(:only-child)>[data-flux-group-target]]:rounded-none',
-        '[&>*:first-child:not(:last-child)>[data-flux-group-target]]:rounded-e-none',
-        '[&>*:last-child:not(:first-child)>[data-flux-group-target]]:rounded-s-none',
-
-        // "Weld" borders for sub-sub-children of group targets (input element inside div inside ui-select element (combobox))...
-        '[&>*:not(:first-child):not(:last-child):not(:only-child)>[data-flux-input]>[data-flux-group-target]]:rounded-none',
-        '[&>*:first-child:not(:last-child)>[data-flux-input]>[data-flux-group-target]]:rounded-e-none',
-        '[&>*:last-child:not(:first-child)>[data-flux-input]>[data-flux-group-target]]:rounded-s-none',
+        '[&>*:not(:first-child):not(:last-child):not(:only-child)_[data-flux-group-target]]:rounded-none',
+        '[&>*:first-child:not(:last-child)_[data-flux-group-target]]:rounded-e-none',
+        '[&>*:last-child:not(:first-child)_[data-flux-group-target]]:rounded-s-none',
     ])
     ;
 @endphp
