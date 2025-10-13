@@ -58,6 +58,8 @@ class PublishCommand extends Command
             'Context' => ['context'],
             'Date picker' => ['date-picker'],
             'Editor' => ['editor'],
+            'File upload' => ['file-upload', 'file-item'],
+            'Pillbox' => ['pillbox'],
             'Radio' => ['radio'],
             'Select' => ['select'],
             'Tabs' => ['tabs','tab'],
