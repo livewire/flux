@@ -11,6 +11,7 @@
     'iconLeading' => null,
     'type' => 'button',
     'loading' => null,
+    'align' => 'center',
     'size' => 'base',
     'square' => null,
     'color' => null,
@@ -63,6 +64,11 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 $classes = Flux::classes()
     ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
+    ->add(match ($align) {
+        'start' => 'justify-start',
+        'center' => 'justify-center',
+        'end' => 'justify-end',
+    })
     ->add(match ($size) { // Size...
         'base' => 'h-10 text-sm rounded-lg' . ' ' . (
             $square
