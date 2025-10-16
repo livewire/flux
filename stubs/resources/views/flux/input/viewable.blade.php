@@ -13,7 +13,7 @@ $attributes = $attributes->merge([
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
     x-data="{ open: false }"
-    x-on:click="open = ! open; $el.closest('[data-flux-input]').querySelector('input').setAttribute('type', open ? 'text' : 'password')"
+    x-on:click="open = ! open; $el.closest('[data-flux-input]').querySelector('input').setAttribute('type', open ? 'text' : 'password') input.dispatchEvent(new Event('viewed', { bubbles: false }));"
     x-bind:data-viewable-open="open"
     aria-label="{{ __('Toggle password visibility') }}"
 
