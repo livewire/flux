@@ -2,6 +2,7 @@
 
 namespace Flux;
 
+use Carbon\Carbon;
 use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 
 class DateRangeSynth extends Synth
@@ -79,7 +80,7 @@ class DateRangeSynth extends Synth
     function set(&$target, $key, $value) {
         $target = match ($key) {
             'start' => new DateRange($value, $target->end()),
-            'end' => new DateRange($target->start(), $value),
+            'end' => new DateRange($target->start(), Carbon::parse($value)->endOfDay()),
             'preset' => $value === DateRangePreset::AllTime->value
                 ? DateRange::allTime($target->start())
                 : DateRange::fromPreset(DateRangePreset::from($value)),
