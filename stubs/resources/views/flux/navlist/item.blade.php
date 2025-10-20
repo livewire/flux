@@ -1,5 +1,3 @@
-@pure
-
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
@@ -58,7 +56,7 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<flux:button-or-link-pure :attributes="$attributes->class($classes)" data-flux-navlist-item>
+<flux:button-or-link :attributes="$attributes->class($classes)" data-flux-navlist-item>
     <?php if ($icon): ?>
         <div class="relative">
             <?php if (is_string($icon) && $icon !== ''): ?>
@@ -88,4 +86,4 @@ $classes = Flux::classes()
     <?php if (isset($badge) && $badge !== ''): ?>
         <flux:navlist.badge :attributes="Flux::attributesAfter('badge:', $attributes, ['color' => $badgeColor])">{{ $badge }}</flux:navlist.badge>
     <?php endif; ?>
-</flux:button-or-link-pure>
+</flux:button-or-link>
