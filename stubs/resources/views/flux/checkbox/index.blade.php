@@ -1,3 +1,5 @@
+@pure
+
 @aware([ 'variant' ])
 
 @props([
