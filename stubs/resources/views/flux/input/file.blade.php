@@ -1,5 +1,3 @@
-@pure
-
 @php
 extract(Flux::forwardedAttributes($attributes, [
     'name',
