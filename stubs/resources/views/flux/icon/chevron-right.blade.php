@@ -1,4 +1,4 @@
-@pure
+@blaze
 
 {{-- Credit: Heroicons (https://heroicons.com) --}}
 
