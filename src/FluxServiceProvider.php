@@ -22,7 +22,7 @@ class FluxServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->bootComponentPath();
-        $this->bootPureDirective();
+        $this->bootBlazeDirective();
         $this->bootTagCompiler();
         $this->bootMacros();
 
@@ -44,9 +44,9 @@ class FluxServiceProvider extends ServiceProvider
         Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/flux', 'flux');
     }
 
-    public function bootPureDirective()
+    public function bootBlazeDirective()
     {
-        Blade::directive('pure', fn () => '');
+        Blade::directive('blaze', fn () => '');
     }
 
     public function bootTagCompiler()

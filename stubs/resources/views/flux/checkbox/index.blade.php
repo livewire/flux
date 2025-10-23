@@ -1,4 +1,4 @@
-@pure
+@blaze
 
 @aware([ 'variant' ])
 

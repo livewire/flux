@@ -1,4 +1,4 @@
-@pure
+@blaze
 
 @php
 $classes = Flux::classes([
