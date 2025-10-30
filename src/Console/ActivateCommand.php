@@ -9,10 +9,11 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+
 #[AsCommand(name: 'flux:activate')]
 class ActivateCommand extends Command
 {
-    protected $signature = 'flux:activate {email?} {key?} {--private : Whether the input fields should be masked}';
+    protected $signature = 'flux:activate {email?} {key?}';
 
     protected $description = 'Activate Flux, the official UI component library for Livewire';
 
@@ -20,26 +21,21 @@ class ActivateCommand extends Command
     {
         $email = $this->argument('email');
         $key = $this->argument('key');
-        $private = $this->option('private');
 
-        $email_args = [
-            'label' => 'Enter the email address associated with your license',
-            'hint' => 'Purchase a license key: https://fluxui.dev/pricing',
-            'required' => true,
-        ];
-
-        $key_args = [
-            'label' => 'Enter your license key',
-            'hint' => 'Purchase a key: https://fluxui.dev/pricing',
-            'required' => true,
-        ];
-
-        if(! $email) {
-            $email = ($private) ? password(...$email_args) : text(...$email_args);
+        if (! $email) {
+            $email = text(
+                label: 'Enter the email address associated with your license',
+                hint: 'Purchase a license key: https://fluxui.dev/pricing',
+                required: true,
+            );
         }
 
         if (! $key) {
-            $key = ($private) ? password(...$key_args) : text(...$key_args);
+            $key = password(
+                label: 'Enter your license key',
+                hint: 'Purchase a license key: https://fluxui.dev/pricing',
+                required: true,
+            );
         }
 
         $this->installFluxPro($email, $key);
