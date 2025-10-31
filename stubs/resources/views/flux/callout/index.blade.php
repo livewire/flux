@@ -1,4 +1,4 @@
-@pure
+@blaze
 
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 

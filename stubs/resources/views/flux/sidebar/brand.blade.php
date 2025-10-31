@@ -1,4 +1,4 @@
-@pure
+@blaze
 
 @php $logoDark ??= $attributes->pluck('logo:dark'); @endphp
 

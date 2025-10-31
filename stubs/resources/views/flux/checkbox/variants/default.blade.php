@@ -1,3 +1,5 @@
+@blaze
+
 @props([
     'name' => null,
 ])
