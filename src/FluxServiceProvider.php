@@ -48,6 +48,10 @@ class FluxServiceProvider extends ServiceProvider
     {
         Blade::directive('blaze', fn () => '');
 
+        // `@pure` directive has been replaced with `@blaze` in Blaze v1.0, but we need to keep it here for
+        // backwards compatibility as people could have published components or custom icons using it...
+        Blade::directive('pure', fn () => '');
+
         Blade::directive('unblaze', function ($expression) {
             return ''
                 . '<'.'?php $__getScope = fn($scope = []) => $scope; ?>'
