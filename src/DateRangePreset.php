@@ -25,7 +25,7 @@ enum DateRangePreset: string
     case AllTime = 'allTime';
     case Custom = 'custom';
 
-    public function dates(Carbon $start = null)
+    public function dates(?Carbon $start = null)
     {
         return match ($this) {
             static::Today => [ Carbon::now()->startOfDay(), Carbon::now()->endOfDay() ],
