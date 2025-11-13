@@ -73,7 +73,7 @@ Transition dialogs with fade a slight scale effect...
 }
 
 [data-flux-modal] > dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.10);
 }
 
 /**
