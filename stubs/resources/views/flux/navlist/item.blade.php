@@ -84,6 +84,7 @@ $classes = Flux::classes()
     <?php endif; ?>
 
     <?php if (isset($badge) && $badge !== ''): ?>
-        <flux:navlist.badge :attributes="Flux::attributesAfter('badge:', $attributes, ['color' => $badgeColor])">{{ $badge }}</flux:navlist.badge>
+        <?php $badgeAttributes = Flux::attributesAfter('badge:', $attributes, ['color' => $badgeColor]); ?>
+        <flux:navlist.badge :attributes="$badgeAttributes">{{ $badge }}</flux:navlist.badge>
     <?php endif; ?>
 </flux:button-or-link>
