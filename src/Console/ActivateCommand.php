@@ -3,7 +3,7 @@
 namespace Flux\Console;
 
 use RuntimeException;
-use function Laravel\Prompts\{ info, text, note, spin, warning, error, alert, intro, outro, suggest };
+use function Laravel\Prompts\{ info, text, note, spin, warning, error, alert, intro, outro, password, suggest };
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Http;
@@ -31,7 +31,7 @@ class ActivateCommand extends Command
         }
 
         if (! $key) {
-            $key = text(
+            $key = password(
                 label: 'Enter your license key',
                 hint: 'Purchase a license key: https://fluxui.dev/pricing',
                 required: true,
