@@ -1,8 +1,9 @@
 @props([
-    'name' => null,
+    'icon' => 'exclamation-triangle',
+    'bag' => 'default',
     'message' => null,
     'nested' => true,
-    'bag' => 'default',
+    'name' => null,
 ])
 
 @php
@@ -19,7 +20,9 @@ $classes = Flux::classes('mt-3 text-sm font-medium text-red-500 dark:text-red-40
 
 <div role="alert" aria-live="polite" aria-atomic="true" {{ $attributes->class($classes) }} data-flux-error>
     <?php if ($message) : ?>
-        <flux:icon icon="exclamation-triangle" variant="mini" class="inline" />
+        <?php if ($icon) : ?>
+            <flux:icon :name="$icon" variant="mini" class="inline" />
+        <?php endif; ?>
 
         {{ $message }}
     <?php endif; ?>
