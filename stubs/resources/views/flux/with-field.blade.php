@@ -20,7 +20,7 @@ extract(Flux::forwardedAttributes($attributes, [
 
 <?php if (isset($label) || isset($description)): ?>
     <?php
-    
+
         $fieldAttributes = Flux::attributesAfter('field:', $attributes, []);
         $labelAttributes = Flux::attributesAfter('label:', $attributes, ['badge' => $badge]);
         $descriptionAttributes = Flux::attributesAfter('description:', $attributes, []);
