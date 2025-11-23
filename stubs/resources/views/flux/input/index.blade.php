@@ -148,42 +148,44 @@ $classes = Flux::classes()
                 @if ($loading && $wireTarget) wire:target="{{ $wireTarget }}" @endif
             >
 
-            <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400 pointer-events-none">
-                {{-- Icon should be text-zinc-400/75 --}}
-                <?php if ($loading): ?>
-                    <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading :wire:target="$wireTarget" />
-                <?php endif; ?>
+            <?php if ($loading || $countOfTrailingIcons > 0): ?>
+                <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400">
+                    {{-- Icon should be text-zinc-400/75 --}}
+                    <?php if ($loading): ?>
+                        <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading :wire:target="$wireTarget" />
+                    <?php endif; ?>
 
-                <?php if ($clearable): ?>
-                    <flux:input.clearable class="pointer-events-auto" inset="left right" :$size />
-                <?php endif; ?>
+                    <?php if ($clearable): ?>
+                        <flux:input.clearable inset="left right" :$size />
+                    <?php endif; ?>
 
-                <?php if ($kbd): ?>
-                    <span class="pointer-events-none">{{ $kbd }}</span>
-                <?php endif; ?>
+                    <?php if ($kbd): ?>
+                        <span class="pointer-events-none">{{ $kbd }}</span>
+                    <?php endif; ?>
 
-                <?php if ($expandable): ?>
-                    <flux:input.expandable class="pointer-events-auto" inset="left right" :$size />
-                <?php endif; ?>
+                    <?php if ($expandable): ?>
+                        <flux:input.expandable inset="left right" :$size />
+                    <?php endif; ?>
 
-                <?php if ($copyable): ?>
-                    <flux:input.copyable class="pointer-events-auto" inset="left right" :$size />
-                <?php endif; ?>
+                    <?php if ($copyable): ?>
+                        <flux:input.copyable inset="left right" :$size />
+                    <?php endif; ?>
 
-                <?php if ($viewable): ?>
-                    <flux:input.viewable class="pointer-events-auto" inset="left right" :$size />
-                <?php endif; ?>
+                    <?php if ($viewable): ?>
+                        <flux:input.viewable inset="left right" :$size />
+                    <?php endif; ?>
 
-                <?php if (is_string($iconTrailing)): ?>
-                    <?php
-                        $trailingIconClasses = clone $iconClasses;
-                        $trailingIconClasses->add('text-zinc-400/75');
-                    ?>
-                    <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" />
-                <?php elseif ($iconTrailing): ?>
-                    {{ $iconTrailing }}
-                <?php endif; ?>
-            </div>
+                    <?php if (is_string($iconTrailing)): ?>
+                        <?php
+                            $trailingIconClasses = clone $iconClasses;
+                            $trailingIconClasses->add('text-zinc-400/75 pointer-events-none');
+                        ?>
+                        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" />
+                    <?php elseif ($iconTrailing): ?>
+                        {{ $iconTrailing }}
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
     </flux:with-field>
 <?php else: ?>
