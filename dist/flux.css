@@ -245,6 +245,15 @@ ui-toast-group {
 }
 
 /**
+File upload styles...
+*/
+ui-file-upload {
+    & > * {
+        transition: opacity 0.35s allow-discrete, transform 0.35s allow-discrete, height 0.35s allow-discrete;
+    }
+}
+
+/**
 Utilties
 */
 .flux-no-scrollbar {
