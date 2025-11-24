@@ -125,11 +125,11 @@ $classes = Flux::classes()
     <flux:with-field :$attributes :$name>
         <div {{ $attributes->only('class')->class('w-full relative block group/input') }} data-flux-input>
             <?php if (is_string($iconLeading)): ?>
-                <div class="pointer-events-none absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 start-0">
+                <div class="pointer-events-none absolute top-0 bottom-0 border-s border-transparent flex items-center justify-center text-xs text-zinc-400/75 dark:text-white/60 ps-3 start-0">
                     <flux:icon :icon="$iconLeading" :variant="$iconVariant" :class="$iconClasses" />
                 </div>
             <?php elseif ($iconLeading): ?>
-                <div {{ $iconLeading->attributes->class('absolute top-0 bottom-0 flex items-center justify-center text-xs text-zinc-400/75 ps-3 start-0') }}>
+                <div {{ $iconLeading->attributes->class('absolute top-0 bottom-0 border-s border-transparent flex items-center justify-center text-xs text-zinc-400/75 dark:text-white/60 ps-3 start-0') }}>
                     {{ $iconLeading }}
                 </div>
             <?php endif; ?>
@@ -149,7 +149,7 @@ $classes = Flux::classes()
             >
 
             <?php if ($loading || $countOfTrailingIcons > 0): ?>
-                <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 end-0 text-xs text-zinc-400">
+                <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 -me-1 border-e border-transparent end-0 text-xs text-zinc-400">
                     {{-- Icon should be text-zinc-400/75 --}}
                     <?php if ($loading): ?>
                         <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading :wire:target="$wireTarget" />
@@ -178,7 +178,7 @@ $classes = Flux::classes()
                     <?php if (is_string($iconTrailing)): ?>
                         <?php
                             $trailingIconClasses = clone $iconClasses;
-                            $trailingIconClasses->add('text-zinc-400/75 pointer-events-none');
+                            $trailingIconClasses->add('text-zinc-400/75 dark:text-white/60 pointer-events-none');
                         ?>
                         <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" />
                     <?php elseif ($iconTrailing): ?>
