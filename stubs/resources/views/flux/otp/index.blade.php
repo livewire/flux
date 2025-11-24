@@ -1,6 +1,6 @@
 @props([
     'length' => null,
-    'sensitive' => false,
+    'private' => false,
 ])
 
 @php
@@ -19,7 +19,7 @@
     >
         <?php if($slot->isEmpty() && $length): ?>
             <?php for($i = 0; $i < $length; $i++): ?>
-                <flux:otp.input type="{{ $sensitive ? 'password' : 'text' }}" />
+                <flux:otp.input type="{{ $private ? 'password' : 'text' }}" />
             <?php endfor; ?>
         <?php else: ?>
             {{ $slot }}
