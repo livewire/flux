@@ -1,15 +1,19 @@
 @blaze
 
+@php $srOnly = $srOnly ??= $attributes->pluck('sr-only'); @endphp
+
 @props([
     'badge' => null,
     'aside' => null,
     'trailing' => null,
+    'srOnly' => null,
 ])
 
 @php
     $classes = Flux::classes()
         ->add('inline-flex items-center')
         ->add('text-sm font-medium')
+        ->add($srOnly ? 'sr-only' : '')
         ->add('[:where(&)]:text-zinc-800 [:where(&)]:dark:text-white')
         ->add('[&:has([data-flux-label-trailing])]:flex')
         ;

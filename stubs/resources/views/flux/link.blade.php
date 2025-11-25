@@ -1,6 +1,7 @@
 @blaze
 
 @props([
+    'as' => null,
     'external' => null,
     'accent' => true,
     'variant' => null,
@@ -27,4 +28,4 @@ $classes = Flux::classes()
     ;
 @endphp
 {{-- NOTE: It's important that this file has NO newline at the end of the file. --}}
-<a {{ $attributes->class($classes) }} data-flux-link <?php if ($external) : ?>target="_blank"<?php endif; ?>>{{ $slot }}</a>
+<?php if ($as !== 'button') : ?><a {{ $attributes->class($classes) }} data-flux-link <?php if ($external) : ?>target="_blank"<?php endif; ?>>{{ $slot }}</a><?php else : ?><button {{ $attributes->merge(['class' => $classes, 'type' => 'button']) }} data-flux-link>{{ $slot }}</button><?php endif; ?>

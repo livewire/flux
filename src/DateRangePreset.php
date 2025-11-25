@@ -25,7 +25,7 @@ enum DateRangePreset: string
     case AllTime = 'allTime';
     case Custom = 'custom';
 
-    public function dates(Carbon $start = null)
+    public function dates(?Carbon $start = null)
     {
         return match ($this) {
             static::Today => [ Carbon::now()->startOfDay(), Carbon::now()->endOfDay() ],
@@ -34,7 +34,9 @@ enum DateRangePreset: string
             static::LastWeek => [ Carbon::now()->subWeek()->startOfWeek(), Carbon::now()->subWeek()->endOfWeek() ],
             static::Last7Days => [ Carbon::now()->subDays(7)->addDay()->startOfDay(), Carbon::now()->endOfDay() ],
             static::ThisMonth => [ Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth() ],
-            static::LastMonth => [ Carbon::now()->subMonth()->startOfMonth(), Carbon::now()->subMonth()->endOfMonth() ],
+            // If it is currently the 31st of the month, and we do `subMonth()`, if the previous month has 30 days, it will return the 1st of
+            // the current month, not the 30th of the previous month. So we need to use `startOfMonth()` first before doing `subMonth()`...
+            static::LastMonth => [ Carbon::now()->startOfMonth()->subMonth(), Carbon::now()->startOfMonth()->subMonth()->endOfMonth() ],
             static::ThisQuarter => [ Carbon::now()->startOfQuarter(), Carbon::now()->endOfQuarter() ],
             static::LastQuarter => [ Carbon::now()->subQuarter()->startOfQuarter(), Carbon::now()->subQuarter()->endOfQuarter() ],
             static::ThisYear => [ Carbon::now()->startOfYear(), Carbon::now()->endOfYear() ],
