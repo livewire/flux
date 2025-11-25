@@ -33,7 +33,8 @@ $classes = Flux::classes()
         <?php if ($avatar instanceof \Illuminate\View\ComponentSlot): ?>
             {{ $avatar }}
         <?php else: ?>
-            <flux:avatar :attributes="Flux::attributesAfter('avatar:', $attributes, ['src' => $avatar, 'size' => 'sm', 'circle' => $circle, 'name' => $name, 'initials' => $initials])" />
+            <?php $avatarAttributes = Flux::attributesAfter('avatar:', $attributes, ['src' => $avatar, 'size' => 'sm', 'circle' => $circle, 'name' => $name, 'initials' => $initials]); ?>
+            <flux:avatar :attributes="$avatarAttributes" />
         <?php endif; ?>
     </div>
 
