@@ -14,11 +14,18 @@ $classes = Flux::classes()
         default => 'block',
         'inline' => [
             'grid gap-x-3 gap-y-1.5',
+            // Support for inline controls...
             'has-[[data-flux-label]~[data-flux-control]]:grid-cols-[1fr_auto]',
             'has-[[data-flux-control]~[data-flux-label]]:grid-cols-[auto_1fr]',
             '[&>[data-flux-control]~[data-flux-description]]:row-start-2 [&>[data-flux-control]~[data-flux-description]]:col-start-2',
             '[&>[data-flux-control]~[data-flux-error]]:col-span-2 [&>[data-flux-control]~[data-flux-error]]:mt-1', // Position error messages...
             '[&>[data-flux-label]~[data-flux-control]]:row-start-1 [&>[data-flux-label]~[data-flux-control]]:col-start-2',
+            // Support for inline inputs...
+            'has-[[data-flux-label]~[data-flux-input]]:grid-cols-[auto_1fr]',
+            'has-[[data-flux-input]~[data-flux-label]]:grid-cols-[1fr_auto]',
+            '[&>[data-flux-input]~[data-flux-description]]:row-start-2 [&>[data-flux-input]~[data-flux-description]]:col-start-2',
+            '[&>[data-flux-input]~[data-flux-error]]:col-span-2 [&>[data-flux-input]~[data-flux-error]]:mt-1', // Position error messages...
+            '[&>[data-flux-label]~[data-flux-input]]:row-start-1 [&>[data-flux-label]~[data-flux-input]]:col-start-2',
         ],
     })
     ->add(match ($variant) {
