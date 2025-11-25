@@ -30,6 +30,9 @@ $indicatorClasses = Flux::classes()
     ->add('bg-white')
     ->add([
         'group-data-checked:translate-x-[15px] rtl:group-data-checked:-translate-x-[15px]',
+        // We have to add the dark variant of the `translate-x-[15px]` to ensure that if `.dark` is added to an element mid way 
+        // down the DOM instead of on the root HTML element, that the above `dark:translate-x-[2px]` doesn't over ride it...
+        'dark:group-data-checked:translate-x-[15px] dark:rtl:group-data-checked:-translate-x-[15px]',
         'group-data-checked:bg-(--color-accent-foreground)',
     ]);
 @endphp
