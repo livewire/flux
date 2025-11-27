@@ -82,9 +82,9 @@ class AssetManager
         $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
 
         if (config('app.debug')) {
-            return '<script src="/flux/flux.js?id='. $versionHash . '" data-navigate-once' . $nonce . '></script>';
+            return '<script src="'. url('/flux/flux.js?id='. $versionHash) . '" data-navigate-once' . $nonce . '></script>';
         } else {
-            return '<script src="/flux/flux.min.js?id='. $versionHash . '" data-navigate-once' . $nonce . '></script>';
+            return '<script src="'. url('/flux/flux.min.js?id='. $versionHash) . '" data-navigate-once' . $nonce . '></script>';
         }
     }
 
@@ -135,9 +135,9 @@ HTML;
         $versionHash = $manifest['/editor.js'];
 
         if (config('app.debug')) {
-            return '<script src="/flux/editor.js?id='. $versionHash . '" defer></script>';
+            return '<script src="'. url('/flux/editor.js?id='. $versionHash) . '" defer></script>';
         } else {
-            return '<script src="/flux/editor.min.js?id='. $versionHash . '" defer></script>';
+            return '<script src="'. url('/flux/editor.min.js?id='. $versionHash) . '" defer></script>';
         }
     }
 
@@ -147,7 +147,7 @@ HTML;
 
         $versionHash = $manifest['/editor.css'];
 
-        return '<link rel="stylesheet" href="/flux/editor.css?id='. $versionHash . '">';
+        return '<link rel="stylesheet" href="'. url('/flux/editor.css?id='. $versionHash) . '">';
     }
 
     public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8')
