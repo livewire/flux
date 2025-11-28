@@ -245,6 +245,15 @@ ui-toast-group {
 }
 
 /**
+File upload styles...
+*/
+ui-file-upload {
+    & > * {
+        transition: none;
+    }
+}
+
+/**
 Utilties
 */
 .flux-no-scrollbar {
