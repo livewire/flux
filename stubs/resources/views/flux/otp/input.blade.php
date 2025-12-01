@@ -1,4 +1,4 @@
-@aware(['mode' => 'numeric'])
+@aware(['mode' => 'numeric', 'private' => false])
 
 @php
     $attributes = $attributes
@@ -11,6 +11,10 @@
 
     if ($mode == 'numeric') {
         $attributes = $attributes->merge(['inputmode' => 'numeric']);
+    }
+
+    if ($private) {
+        $attributes = $attributes->merge(['type' => 'password']);
     }
 @endphp
 
