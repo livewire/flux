@@ -625,8 +625,29 @@ Timeline
 }
 
 [data-flux-timeline-item] [data-flux-timeline-block] {
+    display: grid;
+    grid-template-columns: subgrid;
     grid-column: 1 / -1;
     grid-row: 2 / 5;
+
+    [data-flux-timeline-subgrid] {
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: 1 / -1;
+
+        & > :nth-child(1) {
+            grid-column: 2;
+            justify-self: center;
+        }
+
+        & > :nth-child(2) {
+            grid-column: 4;
+        }
+    }
+
+    & > :not([data-flux-timeline-subgrid]) {
+        grid-column: 1 / -1;
+    }
 }
 
 [data-flux-timeline-item] [data-flux-timeline-line-leading]:has(~[data-flux-timeline-block]) {
