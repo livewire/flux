@@ -13,7 +13,7 @@ $attributes = $attributes->merge([
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
     x-data="{ copied: false }"
-    x-on:click="copied = ! copied; navigator.clipboard && navigator.clipboard.writeText($el.closest('[data-flux-input]').querySelector('input').value); setTimeout(() => copied = false, 2000)"
+    x-on:click="copied = ! copied; navigator.clipboard && navigator.clipboard.writeText($el.closest('[data-flux-input]').querySelector('input').value); input.dispatchEvent(new Event('copied', { bubbles: false })); setTimeout(() => copied = false, 2000)"
     x-bind:data-copyable-copied="copied"
     aria-label="{{ __('Copy to clipboard') }}"
 >
