@@ -63,6 +63,7 @@ $countOfTrailingIcons = collect([
 
 $iconClasses = Flux::classes()
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
+    ->add('hidden')
     ->add($iconVariant === 'outline' ? 'size-5' : '')
     ;
 
@@ -152,7 +153,7 @@ $classes = Flux::classes()
                 <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 -me-1 border-e border-transparent end-0 text-xs text-zinc-400">
                     {{-- Icon should be text-zinc-400/75 --}}
                     <?php if ($loading): ?>
-                        <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading :wire:target="$wireTarget" />
+                        <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading.class.remove="hidden" :wire:target="$wireTarget" />
                     <?php endif; ?>
 
                     <?php if ($clearable): ?>
