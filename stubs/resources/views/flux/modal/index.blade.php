@@ -35,7 +35,7 @@ if ($flyout) {
         })
         ->add(match ($variant) {
             default => 'bg-white dark:bg-zinc-800 border-transparent dark:border-zinc-700',
-            'floating' => 'flex flex-col bg-white dark:bg-zinc-800 ring ring-black/5 dark:ring-zinc-700 shadow-lg rounded-xl',
+            'floating' => 'bg-white dark:bg-zinc-800 ring ring-black/5 dark:ring-zinc-700 shadow-lg rounded-xl',
             'bare' => 'bg-transparent',
         });
 } else {
