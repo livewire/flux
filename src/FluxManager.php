@@ -26,7 +26,7 @@ class FluxManager
 
     public function ensurePro()
     {
-        if (! InstalledVersions::isInstalled('livewire/flux-pro')) {
+        if (! $this->pro()) {
             throw new \Exception('Your install of Flux is not activated. Visit https://fluxui.dev/pricing to purchase a license key.');
         }
     }
