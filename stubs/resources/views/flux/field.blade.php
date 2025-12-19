@@ -12,6 +12,7 @@ $classes = Flux::classes()
     ->add('[&:has(>[data-flux-checkbox-group][disabled])>[data-flux-label]]:opacity-50') // Special case for checkbox groups because they are nested fields...
     ->add(match ($variant) {
         default => 'block',
+        'bare' => '[:where(&)]:block',
         'inline' => [
             'grid gap-x-3 gap-y-1.5',
             'has-[[data-flux-label]~[data-flux-control]]:grid-cols-[1fr_auto]',
@@ -25,6 +26,7 @@ $classes = Flux::classes()
         default => [ // Adjust spacing around label...
             '*:data-flux-label:mb-3 [&>[data-flux-label]:has(+[data-flux-description])]:mb-2',
         ],
+        'bare' => '',
         'inline' => '',
     })
     ->add(match ($variant) {
@@ -33,6 +35,7 @@ $classes = Flux::classes()
             '[&>[data-flux-label]+[data-flux-description]]:mb-3',
             '[&>*:not([data-flux-label])+[data-flux-description]]:mt-3',
         ],
+        'bare' => '',
         'inline' => '',
     });
 @endphp

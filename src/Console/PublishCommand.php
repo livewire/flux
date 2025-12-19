@@ -65,7 +65,6 @@ class PublishCommand extends Command
             'Kanban' => ['kanban'],
             'Pillbox' => ['pillbox'],
             'Popover' => ['popover'],
-            'Radio' => ['radio'],
             'Select' => ['select'],
             'Slider' => ['slider'],
             'Tabs' => ['tabs','tab'],
