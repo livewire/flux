@@ -7,6 +7,7 @@
     'iconVariant' => 'micro',
     'iconTrailing' => null,
     'variant' => null,
+    'rounded' => null,
     'color' => null,
     'inset' => null,
     'size' => null,
@@ -14,6 +15,12 @@
 ])
 
 @php
+// Backwards compatibility for 'pill' variant...
+if ($variant === 'pill') {
+    $rounded = true;
+    $variant = null;
+}
+
 $insetClasses = Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: '-ms-2');
 
 // When using the outline icon variant, we need to size it down to match the default icon sizes...
@@ -28,8 +35,8 @@ $classes = Flux::classes()
         default => 'text-sm py-1 **:data-flux-badge-icon:me-1.5',
         'sm' => 'text-xs py-1 **:data-flux-badge-icon:size-3 **:data-flux-badge-icon:me-1',
     })
-    ->add(match ($variant) {
-        'pill' => 'rounded-full px-3',
+    ->add(match ($rounded) {
+        true => 'rounded-full px-3',
         default => 'rounded-md px-2',
     })
     /**
