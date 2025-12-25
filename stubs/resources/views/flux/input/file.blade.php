@@ -32,7 +32,7 @@ $classes = Flux::classes()
     data-flux-input-file
     wire:ignore
     tabindex="0"
-    x-data="fileInput"
+    x-data="fluxInputFile"
     x-on:click.prevent.stop="openFileDialog"
     x-on:keydown.enter.prevent.stop="openFileDialog"
     x-on:keydown.space.prevent.stop
@@ -72,7 +72,7 @@ $classes = Flux::classes()
 @assets
 <script>
     window.addEventListener('alpine:init', () => {
-        Alpine.data('fileInput', () => ({
+        Alpine.data('fluxInputFile', () => ({
             openFileDialog() {
                 this.$refs.input.click();
             },

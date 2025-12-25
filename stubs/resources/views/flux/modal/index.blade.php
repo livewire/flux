@@ -90,7 +90,7 @@ if ($dismissible === false) {
         {{ $styleAttributes->class($classes) }}
         @if ($name) data-modal="{{ $name }}" @endif
         @if ($flyout) data-flux-flyout @endif
-        x-data="modal(@js($name), @isset($__livewire) @js($__livewire->getId()) @else null @endisset)"
+        x-data="fluxModal(@js($name), @isset($__livewire) @js($__livewire->getId()) @else null @endisset)"
         x-on:modal-show.document="handleShow"
         x-on:modal-close.document="handleClose"
     >
@@ -109,7 +109,7 @@ if ($dismissible === false) {
 @assets
 <script>
     window.addEventListener('alpine:init', () => {
-        Alpine.data('modal', (name, scope) => ({
+        Alpine.data('fluxModal', (name, scope) => ({
             handleShow(e) {
                 if (scope !== null) {
                     if (e.detail.name === name && e.detail.scope === scope) this.$el.showModal();

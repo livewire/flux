@@ -12,7 +12,7 @@ $attributes = $attributes->merge([
 <flux:button
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
-    x-data="clearable"
+    x-data="fluxInputClearable"
     x-on:click="clear"
     tabindex="-1"
     aria-label="Clear input"
@@ -24,7 +24,7 @@ $attributes = $attributes->merge([
 @assets
 <script>
     window.addEventListener('alpine:init', () => {
-        Alpine.data('clearable', () => ({
+        Alpine.data('fluxInputClearable', () => ({
             clear() {
                 let input = this.$el.closest('[data-flux-input]').querySelector('input')
 

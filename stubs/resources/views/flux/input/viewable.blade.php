@@ -12,7 +12,7 @@ $attributes = $attributes->merge([
 <flux:button
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
-    x-data="viewable"
+    x-data="fluxInputViewable"
     x-on:click="toggle"
     x-bind:data-viewable-open="open"
     aria-label="{{ __('Toggle password visibility') }}"
@@ -25,7 +25,7 @@ $attributes = $attributes->merge([
 @assets
 <script>
     window.addEventListener('alpine:init', () => {
-        Alpine.data('viewable', () => ({
+        Alpine.data('fluxInputViewable', () => ({
             open: false,
 
             toggle() {

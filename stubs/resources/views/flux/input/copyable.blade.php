@@ -12,7 +12,7 @@ $attributes = $attributes->merge([
 <flux:button
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
-    x-data="copyable"
+    x-data="fluxInputCopyable"
     x-on:click="copy"
     x-bind:data-copyable-copied="copied"
     aria-label="{{ __('Copy to clipboard') }}"
@@ -24,7 +24,7 @@ $attributes = $attributes->merge([
 @assets
 <script>
     window.addEventListener('alpine:init', () => {
-        Alpine.data('copyable', () => ({
+        Alpine.data('fluxInputCopyable', () => ({
             copied: false,
 
             copy() {
