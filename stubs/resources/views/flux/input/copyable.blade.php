@@ -12,11 +12,33 @@ $attributes = $attributes->merge([
 <flux:button
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
-    x-data="{ copied: false }"
-    x-on:click="copied = ! copied; navigator.clipboard && navigator.clipboard.writeText($el.closest('[data-flux-input]').querySelector('input').value); setTimeout(() => copied = false, 2000)"
+    x-data="copyable"
+    x-on:click="copy"
     x-bind:data-copyable-copied="copied"
     aria-label="{{ __('Copy to clipboard') }}"
 >
     <flux:icon.clipboard-document-check variant="mini" class="hidden [[data-copyable-copied]>&]:block" />
     <flux:icon.clipboard-document variant="mini" class="block [[data-copyable-copied]>&]:hidden" />
 </flux:button>
+
+@assets
+<script>
+    window.addEventListener('alpine:init', () => {
+        Alpine.data('copyable', () => ({
+            copied: false,
+
+            copy() {
+                this.copied = !this.copied;
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(
+                        this.$el.closest('[data-flux-input]').querySelector('input').value
+                    );
+                }
+                
+                setTimeout(() => this.copied = false, 2000);
+            }
+        }))
+    })
+</script>
+@endassets
