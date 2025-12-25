@@ -90,20 +90,9 @@ if ($dismissible === false) {
         {{ $styleAttributes->class($classes) }}
         @if ($name) data-modal="{{ $name }}" @endif
         @if ($flyout) data-flux-flyout @endif
-        x-data
-        @isset($__livewire)
-            x-on:modal-show.document="
-                if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.showModal();
-                if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal();
-            "
-            x-on:modal-close.document="
-                if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.close();
-                if (! $event.detail.name || ($event.detail.name === @js($name) && (! $event.detail.scope))) $el.close();
-            "
-        @else
-            x-on:modal-show.document="if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal()"
-            x-on:modal-close.document="if (! $event.detail.name || ($event.detail.name === @js($name) && (! $event.detail.scope))) $el.close()"
-        @endif
+        x-data="modal(@js($name), @isset($__livewire) @js($__livewire->getId()) @else null @endisset)"
+        x-on:modal-show.document="handleShow"
+        x-on:modal-close.document="handleClose"
     >
         {{ $slot }}
 
@@ -116,3 +105,29 @@ if ($dismissible === false) {
         <?php endif; ?>
     </dialog>
 </ui-modal>
+
+@assets
+<script>
+    window.addEventListener('alpine:init', () => {
+        Alpine.data('modal', (name, scope) => ({
+            handleShow(e) {
+                if (scope !== null) {
+                    if (e.detail.name === name && e.detail.scope === scope) this.$el.showModal();
+                    if (e.detail.name === name && ! e.detail.scope) this.$el.showModal();
+                } else {
+                    if (e.detail.name === name && ! e.detail.scope) this.$el.showModal();
+                }
+            },
+
+            handleClose(e) {
+                if (scope !== null) {
+                    if (e.detail.name === name && e.detail.scope === scope) this.$el.close();
+                    if (! e.detail.name || (e.detail.name === name && ! e.detail.scope)) this.$el.close();
+                } else {
+                    if (! e.detail.name || (e.detail.name === name && ! e.detail.scope)) this.$el.close();
+                }
+            }
+        }))
+    })
+</script>
+@endassets
