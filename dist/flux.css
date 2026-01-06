@@ -255,3 +255,11 @@ Utilties
 .flux-no-scrollbar::-webkit-scrollbar{
     display:none
 }
+
+.has-focus-visible\:outline-default {
+    &:has(*:focus-visible) {
+        outline: auto;
+        outline-color: Highlight;
+        outline-color: -webkit-focus-ring-color;
+    }
+}
