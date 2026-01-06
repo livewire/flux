@@ -12,7 +12,20 @@ $attributes = $attributes->merge([
 <flux:button
     :$attributes
     :size="$size === 'sm' || $size === 'xs' ? 'xs' : 'sm'"
-    x-on:click="$el.closest('[data-flux-input]').querySelector('input').value = ''"
+    x-data="fluxInputExpandable"
+    x-on:click="expand"
 >
     <flux:icon.chevron-down variant="micro" />
 </flux:button>
+
+@assets
+<script>
+    window.addEventListener('alpine:init', () => {
+        Alpine.data('fluxInputExpandable', () => ({
+            expand() {
+                this.$el.closest('[data-flux-input]').querySelector('input').value = '';
+            }
+        }))
+    })
+</script>
+@endassets
