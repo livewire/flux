@@ -1,4 +1,3 @@
-@blaze
 @php $tooltipPosition = $tooltipPosition ??= $attributes->pluck('tooltip:position'); @endphp
 @php $tooltipKbd = $tooltipKbd ??= $attributes->pluck('tooltip:kbd'); @endphp
 @php $tooltip = $tooltip ??= $attributes->pluck('tooltip'); @endphp

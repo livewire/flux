@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze
 
 {{-- Credit: Heroicons (https://heroicons.com) --}}
 

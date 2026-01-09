@@ -1,4 +1,3 @@
-@blaze
 @php
 $classes = Flux::classes()
     ->add('*:data-flux-field:mb-3')

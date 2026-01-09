@@ -1,2 +1,1 @@
-@blaze
 <flux:text class="px-2">&mdash;</flux:text>

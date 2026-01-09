@@ -1,4 +1,3 @@
-@blaze
 @aware(['mode' => 'numeric', 'private' => false])
 
 @php

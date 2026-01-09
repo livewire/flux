@@ -1,4 +1,3 @@
-@blaze
 @props([
     'name' => null,
     'variant' => null,

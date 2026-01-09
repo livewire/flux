@@ -1,3 +1,5 @@
+@blaze
+
 {{-- Credit: Heroicons (https://heroicons.com) --}}
 
 @props([

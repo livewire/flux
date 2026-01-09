@@ -1,4 +1,3 @@
-@blaze
 @props([
     'paginate' => null,
 ])
