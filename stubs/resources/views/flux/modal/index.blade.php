@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze
 
 @props([
     'dismissible' => null,
