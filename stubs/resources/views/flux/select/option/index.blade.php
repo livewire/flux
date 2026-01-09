@@ -1,3 +1,4 @@
+@blaze
 @aware([ 'variant' ])
 
 @props([

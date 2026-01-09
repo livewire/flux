@@ -1,3 +1,4 @@
+@blaze
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp

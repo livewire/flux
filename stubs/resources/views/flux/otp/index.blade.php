@@ -1,3 +1,4 @@
+@blaze
 @props([
     'length' => null,
     'private' => false,

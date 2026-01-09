@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true)
 
 @php $logoDark ??= $attributes->pluck('logo:dark'); @endphp
 

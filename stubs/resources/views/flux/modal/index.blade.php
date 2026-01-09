@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true)
 
 @props([
     'dismissible' => null,
@@ -59,14 +59,12 @@ if (($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wir
     $attributes = $attributes->merge([$wireModel->directive => $wireModel->value]);
 }
 
-// Support <flux:modal ... @close="?"> syntax...
 if ($attributes['@close'] ?? null) {
     $attributes['wire:close'] = $attributes['@close'];
 
     unset($attributes['@close']);
 }
 
-// Support <flux:modal ... @cancel="?"> syntax...
 if ($attributes['@cancel'] ?? null) {
     $attributes['wire:cancel'] = $attributes['@cancel'];
 

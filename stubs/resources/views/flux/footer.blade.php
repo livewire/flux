@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true)
 
 @php
 $classes = Flux::classes('[grid-area:footer]')

@@ -1,3 +1,4 @@
+@blaze
 @php
 extract(Flux::forwardedAttributes($attributes, [
     'name',

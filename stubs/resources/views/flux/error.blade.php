@@ -1,3 +1,4 @@
+@blaze
 @props([
     'icon' => 'exclamation-triangle',
     'bag' => 'default',
