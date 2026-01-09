@@ -1,3 +1,4 @@
+@blaze
 @props([
     'paginator' => null,
 ])

@@ -1,3 +1,4 @@
+@blaze
 @php
 extract(flux::forwardedattributes($attributes, [
     'name',
@@ -29,4 +30,3 @@ extract(flux::forwardedattributes($attributes, [
 <?php else: ?>
     {{ $slot }}
 <?php endif; ?>
-
