@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 {{-- Credit: Heroicons (https://heroicons.com) --}}
 
 @props([
