@@ -1,4 +1,5 @@
 @blaze
+
 @props([
     'variant' => null,
     'size' => null,
