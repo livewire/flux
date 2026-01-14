@@ -11,6 +11,9 @@
 ])
 
 @php
+// Blaze doesn't support View::share, this supplements it...
+$__livewire = $__env->shared('__livewire');
+
 if ($variant === 'flyout') {
     $flyout = true;
     $variant = null;
@@ -89,7 +92,7 @@ if ($dismissible === false) {
         @if ($name) data-modal="{{ $name }}" @endif
         @if ($flyout) data-flux-flyout @endif
         x-data
-        @isset($__livewire)
+        @if($__livewire)
             x-on:modal-show.document="
                 if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.showModal();
                 if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal();
