@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, memo: true)
 
 @php
 $attributes = $attributes->merge([

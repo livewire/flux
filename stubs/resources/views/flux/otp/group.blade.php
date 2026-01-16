@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true)
 
 <flux:input.group>
     {{ $slot }}
