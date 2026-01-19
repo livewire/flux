@@ -1,5 +1,5 @@
 @blaze
 
-<legend {{ $attributes->class('text-base font-medium text-zinc-800 dark:text-white') }} data-flux-legend>
+<ui-legend {{ $attributes->class('text-base font-medium text-zinc-800 dark:text-white') }} data-flux-legend>
     {{ $slot }}
-</legend>
+</ui-legend>
