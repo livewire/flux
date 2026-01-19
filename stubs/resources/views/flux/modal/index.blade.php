@@ -90,20 +90,9 @@ if ($dismissible === false) {
         {{ $styleAttributes->class($classes) }}
         @if ($name) data-modal="{{ $name }}" @endif
         @if ($flyout) data-flux-flyout @endif
-        x-data
-        @isset($__livewire)
-            x-on:modal-show.document="
-                if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.showModal();
-                if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal();
-            "
-            x-on:modal-close.document="
-                if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.close();
-                if (! $event.detail.name || ($event.detail.name === @js($name) && (! $event.detail.scope))) $el.close();
-            "
-        @else
-            x-on:modal-show.document="if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal()"
-            x-on:modal-close.document="if (! $event.detail.name || ($event.detail.name === @js($name) && (! $event.detail.scope))) $el.close()"
-        @endif
+        x-data="fluxModal(@js($name), @js($__livewire?->getId()))"
+        x-on:modal-show.document="handleShow($event)"
+        x-on:modal-close.document="handleClose($event)"
     >
         {{ $slot }}
 
