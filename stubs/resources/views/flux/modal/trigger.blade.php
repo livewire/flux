@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, safe: ['name'])
 
 @props([
     'shortcut' => null,
