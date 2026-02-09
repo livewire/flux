@@ -78,6 +78,16 @@ class DateRange extends CarbonPeriod
     public static function last3Months() { return static::fromPreset(DateRangePreset::Last3Months); }
     public static function last6Months() { return static::fromPreset(DateRangePreset::Last6Months); }
     public static function yearToDate() { return static::fromPreset(DateRangePreset::YearToDate); }
+    public static function tomorrow() { return static::fromPreset(DateRangePreset::Tomorrow); }
+    public static function nextWeek() { return static::fromPreset(DateRangePreset::NextWeek); }
+    public static function next7Days() { return static::fromPreset(DateRangePreset::Next7Days); }
+    public static function nextMonth() { return static::fromPreset(DateRangePreset::NextMonth); }
+    public static function nextQuarter() { return static::fromPreset(DateRangePreset::NextQuarter); }
+    public static function nextYear() { return static::fromPreset(DateRangePreset::NextYear); }
+    public static function next14Days() { return static::fromPreset(DateRangePreset::Next14Days); }
+    public static function next30Days() { return static::fromPreset(DateRangePreset::Next30Days); }
+    public static function next3Months() { return static::fromPreset(DateRangePreset::Next3Months); }
+    public static function next6Months() { return static::fromPreset(DateRangePreset::Next6Months); }
     public static function allTime($start) {
         $instance = new static(Carbon::parse($start), Carbon::now());
 
