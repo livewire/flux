@@ -7,7 +7,7 @@
 
 @php
 $classes = Flux::classes()
-    ->add('group/sortable flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 ')
+    ->add('flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 ')
     ->add('in-[.group\/end-align]:flex-row-reverse in-[.group\/end-align]:-me-2 in-[.group\/end-align]:-ms-8')
     ;
 @endphp
