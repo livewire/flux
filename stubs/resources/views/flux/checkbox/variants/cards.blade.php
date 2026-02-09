@@ -63,7 +63,7 @@ $classes = Flux::classes()
             <?php endif; ?>
 
             <div class="flex-1">
-                <flux:heading>{{ $label ?? $slot }}</flux:heading>
+                <flux:heading>{{ $slot->isNotEmpty() ? $slot : $label }}</flux:heading>
 
                 <?php if ($description): ?>
                     <flux:subheading size="sm">{{ $description }}</flux:subheading>
