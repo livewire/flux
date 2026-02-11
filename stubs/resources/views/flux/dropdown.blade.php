@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, safe: ['position', 'align'])
 
 @props([
     'position' => 'bottom',
