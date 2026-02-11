@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, unsafe: ['icon:trailing', 'icon:leading', 'icon:variant', 'mask:dynamic'])
 
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp

@@ -1,4 +1,4 @@
-@blaze(fold: true, unsafe: ['current', 'href'])
+@blaze(fold: true, unsafe: ['current', 'href', 'tooltip:position', 'tooltip:kbd', 'tooltip', 'icon:trailing', 'icon:variant'])
 
 @php $tooltipPosition = $tooltipPosition ??= $attributes->pluck('tooltip:position'); @endphp
 @php $tooltipKbd = $tooltipKbd ??= $attributes->pluck('tooltip:kbd'); @endphp

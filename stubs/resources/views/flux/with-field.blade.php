@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, unsafe: ['description:trailing'])
 
 @php
 extract(Flux::forwardedAttributes($attributes, [

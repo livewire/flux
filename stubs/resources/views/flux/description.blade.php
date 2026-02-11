@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, unsafe: ['sr-only'])
 
 @php $srOnly = $srOnly ??= $attributes->pluck('sr-only'); @endphp
 
