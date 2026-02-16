@@ -1,4 +1,4 @@
-@blaze(fold: true, unsafe: ['icon:trailing', 'icon:variant'])
+@blaze(fold: true, memo: true, unsafe: ['icon:trailing', 'icon:variant'])
 
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
@@ -12,6 +12,7 @@
     'inset' => null,
     'size' => null,
     'icon' => null,
+    'label' => null,
 ])
 
 @php
@@ -91,7 +92,7 @@ $classes = Flux::classes()
         {{ $icon }}
     <?php endif; ?>
 
-    {{ $slot }}
+    {{ $slot->isEmpty() ? $label : $slot }}
 
     <?php if ($iconTrailing): ?>
         <div class="ps-1 flex items-center" data-flux-badge-icon:trailing>

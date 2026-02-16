@@ -1,4 +1,4 @@
-@blaze(fold: true, memo: true, unsafe: ['icon:variant', 'initials:single', 'color:seed', 'badge:color', 'badge:circle', 'badge:position', 'badge:variant'])
+@blaze(memo: true)
 
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
