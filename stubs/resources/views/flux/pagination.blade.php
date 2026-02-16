@@ -1,9 +1,23 @@
+<?php
+// Workaround: when `scroll-to` is forwarded via `:attributes` (e.g. from the table component
+// using `attributesAfter`), Laravel doesn't convert the kebab-case `scroll-to` attribute to
+// the camelCase `scrollTo` prop. `forwardedAttributes` handles this conversion manually.
+extract(Flux::forwardedAttributes($attributes, ['scrollTo']));
+?>
+
 @props([
     'paginator' => null,
+    'scrollTo' => $scrollTo ?? null,
 ])
 
 @php
 $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+$scrollToSelector = $scrollTo === true ? 'body' : $scrollTo;
+
+$scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
+    ? "(\$el.closest('{$scrollToSelector}') || document.querySelector('{$scrollToSelector}')).scrollIntoView()"
+    : '';
 @endphp
 
 @if ($simple)
@@ -18,11 +32,11 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
                     </div>
                 @else
                     @if(method_exists($paginator,'getCursorName'))
-                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->previousCursor()->encode() }}" wire:click="setPage('{{$paginator->previousCursor()->encode()}}','{{ $paginator->getCursorName() }}')" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->previousCursor()->encode() }}" wire:click="setPage('{{$paginator->previousCursor()->encode()}}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                             <flux:icon.chevron-left variant="micro" />
                         </button>
                     @else
-                        <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                        <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                             <flux:icon.chevron-left variant="micro" />
                         </button>
                     @endif
@@ -30,11 +44,11 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
 
                 @if ($paginator->hasMorePages())
                     @if(method_exists($paginator,'getCursorName'))
-                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->nextCursor()->encode() }}" wire:click="setPage('{{$paginator->nextCursor()->encode()}}','{{ $paginator->getCursorName() }}')" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->nextCursor()->encode() }}" wire:click="setPage('{{$paginator->nextCursor()->encode()}}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                             <flux:icon.chevron-right variant="micro" />
                         </button>
                     @else
-                        <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                        <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                             <flux:icon.chevron-right variant="micro" />
                         </button>
                     @endif
@@ -64,13 +78,13 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
                         <flux:icon.chevron-left variant="micro" />
                     </div>
                 @else
-                    <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                    <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                         <flux:icon.chevron-left variant="micro" />
                     </button>
                 @endif
 
                 @if ($paginator->hasMorePages())
-                    <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                    <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                         <flux:icon.chevron-right variant="micro" />
                     </button>
                 @else
@@ -87,7 +101,7 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
                         <flux:icon.chevron-left variant="micro" />
                     </div>
                 @else
-                    <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                    <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                         <flux:icon.chevron-left variant="micro" />
                     </button>
                 @endif
@@ -114,6 +128,7 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
                                 <button
                                     wire:key="paginator-{{ $paginator->getPageName() }}-page{{ $page }}"
                                     wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
+                                    x-on:click="{{ $scrollIntoViewJsSnippet }}"
                                     type="button"
                                     class="text-xs h-6 px-2 rounded-[6px] text-zinc-400 font-medium dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white"
                                 >{{ $page }}</button>
@@ -123,7 +138,7 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
                 @endforeach
 
                 @if ($paginator->hasMorePages())
-                    <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                    <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                         <flux:icon.chevron-right variant="micro" />
                     </button>
                 @else
