@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 @props([
     'paginator' => null,
 ])

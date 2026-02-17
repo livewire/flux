@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, safe: ['key'])
 
 @props([
     'key' => null,

@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
 ])

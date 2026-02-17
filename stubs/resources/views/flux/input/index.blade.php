@@ -1,3 +1,5 @@
+@blaze(fold: true, unsafe: ['icon:trailing', 'icon:leading', 'icon:variant', 'mask:dynamic'])
+
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
@@ -46,8 +48,6 @@ if ($loading !== false) {
         $loading = (bool) $loading;
     }
 }
-
-$invalid ??= ($name && $errors->has($name));
 
 $iconLeading ??= $icon;
 
@@ -142,14 +142,18 @@ $classes = Flux::classes()
                 type="{{ $type }}"
                 {{-- Leave file inputs unstyled... --}}
                 {{ $attributes->except('class')->class($type === 'file' ? '' : $classes) }}
-                @isset ($name) name="{{ $name }}" @endisset
-                @if ($maskDynamic) x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" @endif
-                @if ($invalid) aria-invalid="true" data-invalid @endif
-                @if (is_numeric($size)) size="{{ $size }}" @endif
+                <?php if(isset($name)): ?> name="{{ $name }}" <?php endif; ?>
+                <?php if ($maskDynamic): ?> x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" <?php endif; ?>
+                <?php if (is_numeric($size)): ?> size="{{ $size }}" <?php endif; ?>
+                @unblaze(scope: ['name' => $name ?? null])
+                <?php if ($scope['name'] && $errors->has($scope['name'])): ?>
+                aria-invalid="true" data-invalid
+                <?php endif; ?>
+                @endunblaze
                 data-flux-control
                 data-flux-group-target
-                @if ($loading) wire:loading.class="{{ $inputLoadingClasses }}" @endif
-                @if ($loading && $wireTarget) wire:target="{{ $wireTarget }}" @endif
+                <?php if($loading): ?> wire:loading.class="{{ $inputLoadingClasses }}" <?php endif; ?>
+                <?php if($loading && $wireTarget): ?> wire:target="{{ $wireTarget }}" <?php endif; ?>
             >
 
             <?php if ($loading || $countOfTrailingIcons > 0): ?>

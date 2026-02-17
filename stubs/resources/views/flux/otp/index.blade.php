@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 @props([
     'length' => null,
     'private' => false,

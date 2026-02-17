@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 @php
 extract(flux::forwardedattributes($attributes, [
     'name',

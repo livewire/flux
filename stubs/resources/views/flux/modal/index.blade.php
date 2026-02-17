@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, safe: ['name'])
 
 @props([
     'dismissible' => null,
@@ -11,6 +11,9 @@
 ])
 
 @php
+// Blaze doesn't support View::share, this supplements it...
+$__livewire = $__env->shared('__livewire');
+
 if ($variant === 'flyout') {
     $flyout = true;
     $variant = null;
@@ -59,14 +62,12 @@ if (($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wir
     $attributes = $attributes->merge([$wireModel->directive => $wireModel->value]);
 }
 
-// Support <flux:modal ... @close="?"> syntax...
 if ($attributes['@close'] ?? null) {
     $attributes['wire:close'] = $attributes['@close'];
 
     unset($attributes['@close']);
 }
 
-// Support <flux:modal ... @cancel="?"> syntax...
 if ($attributes['@cancel'] ?? null) {
     $attributes['wire:cancel'] = $attributes['@cancel'];
 
