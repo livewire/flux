@@ -19,7 +19,7 @@
         "laravel/prompts": "^0.1|^0.2|^0.3"
     },
     "conflict": {
-        "livewire/blaze": "<1.0.0"
+        "livewire/blaze": "<1.0.0-beta.2"
     },
     "autoload": {
         "psr-4": {
