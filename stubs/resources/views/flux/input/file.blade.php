@@ -32,26 +32,16 @@ $classes = Flux::classes()
     data-flux-input-file
     wire:ignore
     tabindex="0"
-    x-data {{-- This is here to "scope" the x-ref references inside this component from interfering with others outside... --}}
+    x-data="fluxInputFile({ files: '{{ __('files') }}', noFile: '{{ __('No file chosen') }}' })"
     x-on:click.prevent.stop="$refs.input.click()"
     x-on:keydown.enter.prevent.stop="$refs.input.click()"
     x-on:keydown.space.prevent.stop
     x-on:keyup.space.prevent.stop="$refs.input.click()"
-    x-on:change="$refs.name.textContent = $event.target.files[1] ? ($event.target.files.length + ' {!! __('files') !!}') : ($event.target.files[0]?.name || '{!! __('No file chosen') !!}')"
+    x-on:change="updateLabel($event)"
 >
     <input
         x-ref="input"
         x-on:click.stop {{-- Without this, the parent element's click listener will ".prevent" the file input from being clicked... --}}
-        {{-- This is here because clearing the input via .value = "" doesn't trigger a change event... --}}
-        {{-- We need it to so that we can know to clear the selected file labels when the input is cleared... --}}
-        x-init="Object.defineProperty($el, 'value', {
-          ...Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value'),
-            set(value) {
-            Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(this, value);
-
-            if(! value) this.dispatchEvent(new Event('change', { bubbles: true }))
-          }
-        })"
         type="file"
         class="sr-only"
         tabindex="-1"

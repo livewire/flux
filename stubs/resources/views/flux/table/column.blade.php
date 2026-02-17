@@ -20,6 +20,7 @@ $classes = Flux::classes()
         'right' => 'group/end-align',
         default => '',
     })
+    ->add($sortable ? 'group/sortable' : '')
     ->add($sticky ? [
         'z-10',
         'first:sticky first:left-0',

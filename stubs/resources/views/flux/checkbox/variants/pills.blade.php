@@ -25,5 +25,5 @@ $classes = Flux::classes()
 {{-- even with durable attributes for some reason... --}}
 {{-- We have to put "data-flux-field" so that a single box can be disabled without "disabling" the group field label... --}}
 <ui-checkbox {{ $attributes->class($classes) }} data-flux-control data-flux-checkbox-pills tabindex="-1" data-flux-field>
-    {{ $label ?? $slot }}
+    {{ $slot->isNotEmpty() ? $slot : $label }}
 </ui-checkbox>

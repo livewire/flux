@@ -46,7 +46,7 @@ $classes = Flux::classes()
         </div>
     </div>
 
-    {{ $label ?? $slot }}
+    {{ $slot->isNotEmpty() ? $slot : $label }}
 
     <?php if ($suffix): ?>
         <div class="ms-auto opacity-50 text-xs">

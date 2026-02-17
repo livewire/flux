@@ -44,7 +44,7 @@ $iconClasses = Flux::classes('text-zinc-500 dark:text-zinc-400 [ui-radio[data-ch
         {{ $icon }}
     <?php endif; ?>
 
-    {{ $label ?? $slot }}
+    {{ $slot->isNotEmpty() ? $slot : $label }}
 
     <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
         <flux:icon :icon="$iconTrailing" variant="micro" />

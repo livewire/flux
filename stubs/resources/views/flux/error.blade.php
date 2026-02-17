@@ -4,6 +4,7 @@
     'icon' => 'exclamation-triangle',
     'bag' => 'default',
     'message' => null,
+    'deep' => true,
     'nested' => true,
     'name' => null,
 ])
@@ -12,7 +13,12 @@
 $errorBag = $errors->getBag($bag);
 $message ??= $name ? $errorBag->first($name) : null;
 
-if ($name && (is_null($message) || $message === '') && filter_var($nested, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== false) {
+// Backwards compatibility...
+if ($nested === false) {
+    $deep = false;
+}
+
+if ($name && (is_null($message) || $message === '') && filter_var($deep, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== false) {
     $message = $errorBag->first($name . '.*');
 }
 
