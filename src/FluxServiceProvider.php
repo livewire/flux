@@ -39,6 +39,10 @@ class FluxServiceProvider extends ServiceProvider
     {
         if (file_exists(resource_path('views/flux'))) {
             Blade::anonymousComponentPath(resource_path('views/flux'), 'flux');
+
+            if (class_exists(\Livewire\Blaze\Blaze::class)) {
+                \Livewire\Blaze\Blaze::optimize()->in(resource_path('views/flux'));
+            }
         }
 
         Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/flux', 'flux');
