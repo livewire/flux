@@ -142,7 +142,7 @@ $classes = Flux::classes()
                 type="{{ $type }}"
                 {{-- Leave file inputs unstyled... --}}
                 {{ $attributes->except('class')->class($type === 'file' ? '' : $classes) }}
-                <?php if(isset($name)): ?> name="{{ $name }}" <?php endif; ?>
+                <?php if (isset($name)): ?> name="{{ $name }}" <?php endif; ?>
                 <?php if ($maskDynamic): ?> x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" <?php endif; ?>
                 <?php if (is_numeric($size)): ?> size="{{ $size }}" <?php endif; ?>
                 @unblaze(scope: ['name' => $name ?? null])
