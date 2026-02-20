@@ -91,7 +91,9 @@ if ($dismissible === false) {
         {{ $styleAttributes->class($classes) }}
         @if ($name) data-modal="{{ $name }}" @endif
         @if ($flyout) data-flux-flyout @endif
-        x-data="fluxModal(@js($name), @js(isset($__livewire) ? $__livewire->getId() : null))"
+        @unblaze(scope: ['name' => $name])
+        x-data="fluxModal(@js($scope['name']), @js(isset($__livewire) ? $__livewire->getId() : null))"
+        @endunblaze
         x-on:modal-show.document="handleShow($event)"
         x-on:modal-close.document="handleClose($event)"
     >
