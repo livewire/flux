@@ -1,6 +1,5 @@
 {
     "name": "livewire/flux",
-    "version": "2.12.1",
     "description": "The official UI component library for Livewire.",
     "keywords": ["flux", "laravel", "livewire", "components", "ui"],
     "license": "proprietary",
