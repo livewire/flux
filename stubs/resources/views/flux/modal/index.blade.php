@@ -89,8 +89,8 @@ if ($dismissible === false) {
     <dialog
         wire:ignore.self {{-- This needs to be here because the dialog element adds a "close" attribute that isn't durable... --}}
         {{ $styleAttributes->class($classes) }}
-        @if ($name) data-modal="{{ $name }}" @endif
-        @if ($flyout) data-flux-flyout @endif
+        <?php if ($name): ?> data-modal="{{ $name }}" <?php endif; ?>
+        <?php if ($flyout): ?> data-flux-flyout <?php endif; ?>
         @unblaze(scope: ['name' => $name])
         x-data="fluxModal(@js($scope['name']), @js(isset($__livewire) ? $__livewire->getId() : null))"
         @endunblaze
