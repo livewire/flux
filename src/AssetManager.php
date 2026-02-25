@@ -16,7 +16,7 @@ class AssetManager
         $instance->registerAssetRoutes();
     }
 
-public function registerAssetDirective()
+    public function registerAssetDirective()
     {
         Blade::directive('fluxScripts', function ($expression) {
             return <<<PHP
