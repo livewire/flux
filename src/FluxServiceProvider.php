@@ -21,61 +21,91 @@ class FluxServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->bootComponentPath();
-        $this->bootFallbackBlazeDirectivesIfBlazeIsNotInstalled();
-        $this->bootTagCompiler();
-        $this->bootMacros();
+        $this->callAfterResolving('blade.compiler', function ($blade) {
+            $this->bootComponentPath($blade);
+            $this->bootFallbackBlazeDirectivesIfBlazeIsNotInstalled($blade);
+            $this->bootTagCompiler($blade);
+            $this->bootAssetDirectives($blade);
+        });
 
-        app('livewire')->propertySynthesizer(DateRangeSynth::class);
+        AssetManager::bootRoutes();
 
-        AssetManager::boot();
+        $this->app->booted(function () {
+            $this->bootMacros();
 
-        app('flux')->boot();
+            app('livewire')->propertySynthesizer(DateRangeSynth::class);
+
+            app('flux')->boot();
+        });
 
         $this->bootCommands();
     }
 
-    public function bootComponentPath()
+    public function bootComponentPath($blade)
     {
         if (file_exists(resource_path('views/flux'))) {
-            Blade::anonymousComponentPath(resource_path('views/flux'), 'flux');
+            $blade->anonymousComponentPath(resource_path('views/flux'), 'flux');
         }
 
-        Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/flux', 'flux');
+        $blade->anonymousComponentPath(__DIR__.'/../stubs/resources/views/flux', 'flux');
     }
 
-    public function bootFallbackBlazeDirectivesIfBlazeIsNotInstalled()
+    public function bootFallbackBlazeDirectivesIfBlazeIsNotInstalled($blade)
     {
-        Blade::directive('blaze', fn () => '');
+        $blade->directive('blaze', fn () => '');
 
         // `@pure` directive has been replaced with `@blaze` in Blaze v1.0, but we need to keep it here for
         // backwards compatibility as people could have published components or custom icons using it...
-        Blade::directive('pure', fn () => '');
+        $blade->directive('pure', fn () => '');
 
-        Blade::directive('unblaze', function ($expression) {
+        $blade->directive('unblaze', function ($expression) {
             return ''
                 . '<'.'?php $__getScope = fn($scope = []) => $scope; ?>'
                 . '<'.'?php if (isset($scope)) $__scope = $scope; ?>'
                 . '<'.'?php $scope = $__getScope('.$expression.'); ?>';
         });
 
-        Blade::directive('endunblaze', function () {
+        $blade->directive('endunblaze', function () {
             return '<'.'?php if (isset($__scope)) { $scope = $__scope; unset($__scope); } ?>';
         });
     }
 
-    public function bootTagCompiler()
+    public function bootTagCompiler($blade)
     {
-        $compiler = new FluxTagCompiler(
-            app('blade.compiler')->getClassComponentAliases(),
-            app('blade.compiler')->getClassComponentNamespaces(),
-            app('blade.compiler')
-        );
+        $compiler = null;
 
-        app()->bind('flux.compiler', fn () => $compiler);
+        $this->app->bind('flux.compiler', function () use (&$compiler, $blade) {
+            return $compiler ??= new FluxTagCompiler(
+                $blade->getClassComponentAliases(),
+                $blade->getClassComponentNamespaces(),
+                $blade
+            );
+        });
 
-        app('blade.compiler')->precompiler(function ($in) use ($compiler) {
+        $blade->precompiler(function ($in) use (&$compiler, $blade) {
+            $compiler ??= new FluxTagCompiler(
+                $blade->getClassComponentAliases(),
+                $blade->getClassComponentNamespaces(),
+                $blade
+            );
+
             return $compiler->compile($in);
+        });
+    }
+
+    public function bootAssetDirectives($blade)
+    {
+        $blade->directive('fluxScripts', function ($expression) {
+            return <<<PHP
+            <?php app('livewire')->forceAssetInjection(); ?>
+            {!! app('flux')->scripts($expression) !!}
+            PHP;
+        });
+
+        $blade->directive('fluxAppearance', function ($expression) {
+            return <<<PHP
+            {!! app('flux')->fluxAppearance($expression) !!}
+            PHP;
         });
     }
 
