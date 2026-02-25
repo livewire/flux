@@ -10,11 +10,12 @@ class AssetManager
 {
     static function boot()
     {
-        static::bootDirectives();
-        static::bootRoutes();
+        $instance = new static;
+
+        $instance->registerAssetRoutes();
     }
 
-    static function bootDirectives()
+    public static function registerAssetDirective()
     {
         Blade::directive('fluxScripts', function ($expression) {
             return <<<PHP
@@ -30,7 +31,7 @@ class AssetManager
         });
     }
 
-    static function bootRoutes()
+    public function registerAssetRoutes()
     {
         Route::get('/flux/flux.js', [static::class, 'fluxJs']);
         Route::get('/flux/flux.min.js', [static::class, 'fluxMinJs']);

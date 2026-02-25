@@ -26,10 +26,10 @@ class FluxServiceProvider extends ServiceProvider
             $this->bootFallbackBlazeDirectivesIfBlazeIsNotInstalled($blade);
             $this->bootTagCompiler($blade);
 
-            AssetManager::bootDirectives();
+            AssetManager::registerAssetDirective();
         });
 
-        AssetManager::bootRoutes();
+        AssetManager::boot();
 
         $this->app->booted(function () {
             $this->bootMacros();
