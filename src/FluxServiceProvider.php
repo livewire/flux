@@ -28,7 +28,7 @@ class FluxServiceProvider extends ServiceProvider
             $this->bootAssetDirectives($blade);
         });
 
-        AssetManager::bootRoutes();
+        (new AssetManager)->registerAssetRoutes();
 
         $this->app->booted(function () {
             $this->bootMacros();

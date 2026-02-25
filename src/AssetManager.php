@@ -16,16 +16,7 @@ class AssetManager
         $instance->registerAssetRoutes();
     }
 
-    static function bootRoutes()
-    {
-        Route::get('/flux/flux.js', [static::class, 'fluxJs']);
-        Route::get('/flux/flux.min.js', [static::class, 'fluxMinJs']);
-        Route::get('/flux/editor.css', [static::class, 'editorCss']);
-        Route::get('/flux/editor.js', [static::class, 'editorJs']);
-        Route::get('/flux/editor.min.js', [static::class, 'editorMinJs']);
-    }
-
-    public function registerAssetDirective()
+public function registerAssetDirective()
     {
         Blade::directive('fluxScripts', function ($expression) {
             return <<<PHP
