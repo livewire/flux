@@ -25,10 +25,11 @@ class FluxServiceProvider extends ServiceProvider
             $this->bootComponentPath($blade);
             $this->bootFallbackBlazeDirectivesIfBlazeIsNotInstalled($blade);
             $this->bootTagCompiler($blade);
-            $this->bootAssetDirectives($blade);
+
+            AssetManager::bootDirectives();
         });
 
-        (new AssetManager)->registerAssetRoutes();
+        AssetManager::bootRoutes();
 
         $this->app->booted(function () {
             $this->bootMacros();
@@ -90,22 +91,6 @@ class FluxServiceProvider extends ServiceProvider
             );
 
             return $compiler->compile($in);
-        });
-    }
-
-    public function bootAssetDirectives($blade)
-    {
-        $blade->directive('fluxScripts', function ($expression) {
-            return <<<PHP
-            <?php app('livewire')->forceAssetInjection(); ?>
-            {!! app('flux')->scripts($expression) !!}
-            PHP;
-        });
-
-        $blade->directive('fluxAppearance', function ($expression) {
-            return <<<PHP
-            {!! app('flux')->fluxAppearance($expression) !!}
-            PHP;
         });
     }
 
