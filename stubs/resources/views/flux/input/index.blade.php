@@ -28,6 +28,8 @@
 
 @php
 
+$inputAttributes = Flux::attributesAfter('input:', $attributes, []);
+
 // There are a few loading scenarios that this covers:
 // If `:loading="false"` then never show loading.
 // If `:loading="true"` then always show loading.
@@ -141,7 +143,7 @@ $classes = Flux::classes()
             <input
                 type="{{ $type }}"
                 {{-- Leave file inputs unstyled... --}}
-                {{ $attributes->except('class')->class($type === 'file' ? '' : $classes) }}
+                {{ $attributes->except('class')->class($type === 'file' ? '' : $classes)->merge($inputAttributes->getAttributes()) }}
                 <?php if (isset($name)): ?> name="{{ $name }}" <?php endif; ?>
                 <?php if ($maskDynamic): ?> x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" <?php endif; ?>
                 <?php if (is_numeric($size)): ?> size="{{ $size }}" <?php endif; ?>
