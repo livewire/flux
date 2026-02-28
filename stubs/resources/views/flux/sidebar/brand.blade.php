@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, unsafe: ['logo:dark'])
 
 @php $logoDark ??= $attributes->pluck('logo:dark'); @endphp
 
@@ -12,7 +12,7 @@
 
 @php
 $classes = Flux::classes()
-    ->add('h-10 flex items-center px-2 in-data-flux-sidebar-collapsed-desktop:w-10 in-data-flux-sidebar-collapsed-desktop:px-2')
+    ->add('h-10 flex items-center px-2 in-data-flux-sidebar-collapsed-desktop:w-10 in-data-flux-sidebar-collapsed-desktop:px-0 in-data-flux-sidebar-collapsed-desktop:justify-center')
     ->add('in-data-flux-sidebar-collapsed-desktop:in-data-flux-sidebar-active:absolute')
     ->add('in-data-flux-sidebar-collapsed-desktop:in-data-flux-sidebar-active:opacity-0')
     ;
@@ -51,7 +51,10 @@ $textClasses = Flux::classes()
             </div>
         <?php else: ?>
             <div class="flex items-center justify-center h-6 rounded-sm overflow-hidden shrink-0">
-                <?php if ($logo): ?>
+                <?php if ($logoDark): ?>
+                    <img src="{{ $logo }}" alt="{{ $alt }}" class="h-6 dark:hidden" />
+                    <img src="{{ $logoDark }}" alt="{{ $alt }}" class="h-6 hidden dark:block" />
+                <?php elseif ($logo): ?>
                     <img src="{{ $logo }}" alt="{{ $alt }}" class="h-6" />
                 <?php else: ?>
                     {{ $slot }}

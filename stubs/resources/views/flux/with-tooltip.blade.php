@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, unsafe: ['tooltip:position', 'tooltip:kbd', 'tooltip'])
 
 @php
 extract(Flux::forwardedAttributes($attributes, [

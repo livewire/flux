@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, unsafe: ['icon:trailing', 'icon:variant'])
 
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
@@ -46,7 +46,7 @@ $classes = Flux::classes()
         </div>
     </div>
 
-    {{ $label ?? $slot }}
+    {{ $slot->isNotEmpty() ? $slot : $label }}
 
     <?php if ($suffix): ?>
         <div class="ms-auto opacity-50 text-xs">

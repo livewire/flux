@@ -1,3 +1,5 @@
+@blaze(fold: true, unsafe: ['icon:trailing', 'icon:leading', 'icon:variant', 'mask:dynamic'])
+
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
@@ -46,8 +48,6 @@ if ($loading !== false) {
         $loading = (bool) $loading;
     }
 }
-
-$invalid ??= ($name && $errors->has($name));
 
 $iconLeading ??= $icon;
 
@@ -110,8 +110,12 @@ $classes = Flux::classes()
         'filled'  => 'text-zinc-700 placeholder-zinc-500 disabled:placeholder-zinc-400 dark:text-zinc-200 dark:placeholder-white/60 dark:disabled:placeholder-white/40',
     })
     ->add(match ($variant) { // Border...
-        'outline' => $invalid ? 'border-red-500' : 'shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5',
-        'filled'  => $invalid ? 'border-red-500' : 'border-0',
+        'outline' => 'shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5',
+        'filled'  => 'border-0',
+    })
+    ->add(match ($variant) { // Invalid...
+        'outline' => 'data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500',
+        'filled' => 'data-invalid:border-red-500'
     })
     ->add($attributes->pluck('class:input'))
     ;
@@ -138,18 +142,22 @@ $classes = Flux::classes()
                 type="{{ $type }}"
                 {{-- Leave file inputs unstyled... --}}
                 {{ $attributes->except('class')->class($type === 'file' ? '' : $classes) }}
-                @isset ($name) name="{{ $name }}" @endisset
-                @if ($maskDynamic) x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" @endif
-                @if ($invalid) aria-invalid="true" data-invalid @endif
-                @if (is_numeric($size)) size="{{ $size }}" @endif
+                <?php if (isset($name)): ?> name="{{ $name }}" <?php endif; ?>
+                <?php if ($maskDynamic): ?> x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" <?php endif; ?>
+                <?php if (is_numeric($size)): ?> size="{{ $size }}" <?php endif; ?>
+                @unblaze(scope: ['name' => $name ?? null])
+                <?php if ($scope['name'] && $errors->has($scope['name'])): ?>
+                aria-invalid="true" data-invalid
+                <?php endif; ?>
+                @endunblaze
                 data-flux-control
                 data-flux-group-target
-                @if ($loading) wire:loading.class="{{ $inputLoadingClasses }}" @endif
-                @if ($loading && $wireTarget) wire:target="{{ $wireTarget }}" @endif
+                <?php if($loading): ?> wire:loading.class="{{ $inputLoadingClasses }}" <?php endif; ?>
+                <?php if($loading && $wireTarget): ?> wire:target="{{ $wireTarget }}" <?php endif; ?>
             >
 
             <?php if ($loading || $countOfTrailingIcons > 0): ?>
-                <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-3 -me-1 border-e border-transparent end-0 text-xs text-zinc-400">
+                <div class="absolute top-0 bottom-0 flex items-center gap-x-1.5 pe-2 border-e border-transparent end-0 text-xs text-zinc-400">
                     {{-- Icon should be text-zinc-400/75 --}}
                     <?php if ($loading): ?>
                         <flux:icon name="loading" :variant="$iconVariant" :class="$iconClasses" wire:loading :wire:target="$wireTarget" />

@@ -256,6 +256,14 @@ Utilties
     display:none
 }
 
+.has-focus-visible\:outline-default {
+    &:has(*:focus-visible) {
+        outline: auto;
+        outline-color: Highlight;
+        outline-color: -webkit-focus-ring-color;
+    }
+}
+
 /**
 Timeline
 */

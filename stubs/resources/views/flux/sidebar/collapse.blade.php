@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, unsafe: ['tooltip:position', 'tooltip:kbd', 'tooltip'])
 
 @php $tooltipPosition = $tooltipPosition ??= $attributes->pluck('tooltip:position'); @endphp
 @php $tooltipKbd = $tooltipKbd ??= $attributes->pluck('tooltip:kbd'); @endphp

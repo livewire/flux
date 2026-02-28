@@ -1,4 +1,4 @@
-@blaze
+@blaze(fold: true, safe: ['name'])
 
 @props([
     'dismissible' => null,
@@ -11,6 +11,9 @@
 ])
 
 @php
+// Blaze doesn't support View::share, this supplements it...
+$__livewire = $__env->shared('__livewire');
+
 if ($variant === 'flyout') {
     $flyout = true;
     $variant = null;
@@ -59,14 +62,12 @@ if (($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wir
     $attributes = $attributes->merge([$wireModel->directive => $wireModel->value]);
 }
 
-// Support <flux:modal ... @close="?"> syntax...
 if ($attributes['@close'] ?? null) {
     $attributes['wire:close'] = $attributes['@close'];
 
     unset($attributes['@close']);
 }
 
-// Support <flux:modal ... @cancel="?"> syntax...
 if ($attributes['@cancel'] ?? null) {
     $attributes['wire:cancel'] = $attributes['@cancel'];
 
@@ -88,22 +89,13 @@ if ($dismissible === false) {
     <dialog
         wire:ignore.self {{-- This needs to be here because the dialog element adds a "close" attribute that isn't durable... --}}
         {{ $styleAttributes->class($classes) }}
-        @if ($name) data-modal="{{ $name }}" @endif
-        @if ($flyout) data-flux-flyout @endif
-        x-data
-        @isset($__livewire)
-            x-on:modal-show.document="
-                if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.showModal();
-                if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal();
-            "
-            x-on:modal-close.document="
-                if ($event.detail.name === @js($name) && ($event.detail.scope === @js($__livewire->getId()))) $el.close();
-                if (! $event.detail.name || ($event.detail.name === @js($name) && (! $event.detail.scope))) $el.close();
-            "
-        @else
-            x-on:modal-show.document="if ($event.detail.name === @js($name) && (! $event.detail.scope)) $el.showModal()"
-            x-on:modal-close.document="if (! $event.detail.name || ($event.detail.name === @js($name) && (! $event.detail.scope))) $el.close()"
-        @endif
+        <?php if ($name): ?> data-modal="{{ $name }}" <?php endif; ?>
+        <?php if ($flyout): ?> data-flux-flyout <?php endif; ?>
+        @unblaze(scope: ['name' => $name])
+        x-data="fluxModal(@js($scope['name']), @js(isset($__livewire) ? $__livewire->getId() : null))"
+        @endunblaze
+        x-on:modal-show.document="handleShow($event)"
+        x-on:modal-close.document="handleClose($event)"
     >
         {{ $slot }}
 
