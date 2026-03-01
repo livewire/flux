@@ -11,9 +11,11 @@ class ClassBuilder implements Stringable
 
     public function add($classes)
     {
-        $this->pending[] = Arr::toCssClasses($classes);
+        $clone = clone $this;
+        
+        $clone->pending[] = Arr::toCssClasses($classes);
 
-        return $this;
+        return $clone;
     }
 
     public function __toString()

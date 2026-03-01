@@ -1,3 +1,5 @@
+@blaze(fold: true, unsafe: ['description:trailing'])
+
 @php
 extract(Flux::forwardedAttributes($attributes, [
     'name',
@@ -37,7 +39,9 @@ extract(Flux::forwardedAttributes($attributes, [
 
         {{ $slot }}
 
-        <flux:error :attributes="$errorAttributes" />
+        @unblaze(scope: ['attributes' => $errorAttributes->all()])
+        <flux:error :attributes="new \Illuminate\View\ComponentAttributeBag($scope['attributes'])" />
+        @endunblaze
 
         <?php if (isset($descriptionTrailing)): ?>
             <flux:description :attributes="$descriptionAttributes">{{ $descriptionTrailing }}</flux:description>

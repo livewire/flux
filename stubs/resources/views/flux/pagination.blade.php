@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 <?php
 // Workaround: when `scroll-to` is forwarded via `:attributes` (e.g. from the table component
 // using `attributesAfter`), Laravel doesn't convert the kebab-case `scroll-to` attribute to

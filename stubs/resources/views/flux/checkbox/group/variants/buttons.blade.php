@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 @props([
     'variant' => null,
     'size' => null,

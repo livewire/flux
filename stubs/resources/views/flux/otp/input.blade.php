@@ -1,3 +1,5 @@
+@blaze(fold: true)
+
 @aware(['mode' => 'numeric', 'private' => false])
 
 @php

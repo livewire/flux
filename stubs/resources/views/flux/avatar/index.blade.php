@@ -1,3 +1,5 @@
+@blaze(memo: true)
+
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
 @props([
