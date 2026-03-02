@@ -29,13 +29,13 @@ $classes = Flux::classes()
 $indicatorClasses = Flux::classes()
     ->add('size-3.5')
     ->add('rounded-full')
-    ->add('transition translate-x-[3px] dark:translate-x-[2px] rtl:-translate-x-[3px] dark:rtl:-translate-x-[2px]')
+    ->add('transition translate-x-[0.1875rem] dark:translate-x-[0.125rem] rtl:-translate-x-[0.1875rem] dark:rtl:-translate-x-[0.125rem]')
     ->add('bg-white')
     ->add([
-        'group-data-checked:translate-x-[15px] rtl:group-data-checked:-translate-x-[15px]',
-        // We have to add the dark variant of the `translate-x-[15px]` to ensure that if `.dark` is added to an element mid way 
-        // down the DOM instead of on the root HTML element, that the above `dark:translate-x-[2px]` doesn't over ride it...
-        'dark:group-data-checked:translate-x-[15px] dark:rtl:group-data-checked:-translate-x-[15px]',
+        'group-data-checked:translate-x-[0.9375rem] rtl:group-data-checked:-translate-x-[0.9375rem]',
+        // We have to add the dark variant of the `translate-x-[0.9375rem]` to ensure that if `.dark` is added to an element mid way
+        // down the DOM instead of on the root HTML element, that the above `dark:translate-x-[0.125rem]` doesn't over ride it...
+        'dark:group-data-checked:translate-x-[0.9375rem] dark:rtl:group-data-checked:-translate-x-[0.9375rem]',
         'group-data-checked:bg-(--color-accent-foreground)',
     ]);
 @endphp
