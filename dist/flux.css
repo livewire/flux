@@ -275,36 +275,27 @@ Timeline
         --flux-timeline-item-gap: calc(var(--spacing) * 4);
         --flux-timeline-item-offset: 0px;
         --flux-timeline-content-gap: calc(var(--spacing) * 3);
-        --flux-timeline-line-gap: calc(var(--spacing) * 1);
+        --flux-timeline-line-gap: var(--spacing);
         --flux-timeline-line-width: 1px;
         --flux-timeline-indicator-size: calc(var(--spacing) * 8);
     }
 
     :where([data-flux-timeline-horizontal]) {
-        --flux-timeline-item-gap: calc(var(--spacing) * 4);
-        --flux-timeline-item-offset: 0px;
         --flux-timeline-content-gap: calc(var(--spacing) * 2);
-        --flux-timeline-line-gap: calc(var(--spacing) * 1);
-        --flux-timeline-line-width: 1px;
-        --flux-timeline-indicator-size: calc(var(--spacing) * 8);
     }
 
     :where([data-flux-timeline-size="lg"]) {
         --flux-timeline-item-gap: calc(var(--spacing) * 8);
-        --flux-timeline-item-offset: 0px;
         --flux-timeline-content-gap: calc(var(--spacing) * 4);
-        --flux-timeline-line-gap: calc(var(--spacing) * 0);
+        --flux-timeline-line-gap: 0px;
         --flux-timeline-line-width: 2px;
         --flux-timeline-indicator-size: calc(var(--spacing) * 12);
     }
 
-    :where([data-flux-timeline-horizontal][data-flux-timeline-size="lg"]), :where([data-flux-timeline-horizontal] [data-flux-timeline-size="lg"]) {
+    :where([data-flux-timeline-horizontal][data-flux-timeline-size="lg"]),
+    :where([data-flux-timeline-horizontal] [data-flux-timeline-size="lg"]) {
         --flux-timeline-item-gap: calc(var(--spacing) * 4);
-        --flux-timeline-item-offset: 0px;
         --flux-timeline-content-gap: calc(var(--spacing) * 3);
-        --flux-timeline-line-gap: calc(var(--spacing) * 0);
-        --flux-timeline-line-width: 2px;
-        --flux-timeline-indicator-size: calc(var(--spacing) * 12);
     }
 }
 
@@ -313,8 +304,6 @@ Timeline
 [data-flux-timeline] {
     display: grid;
     grid-template-columns: var(--flux-timeline-item-offset) auto var(--flux-timeline-content-gap) 1fr;
-    row-gap: initial;
-    column-gap: initial;
 
     [data-flux-timeline-item] {
         display: grid;
@@ -377,13 +366,10 @@ Timeline
 }
 
 [data-flux-timeline][data-flux-timeline-horizontal] {
-    display: grid;
     grid-template-columns: initial;
     grid-template-rows: auto var(--flux-timeline-content-gap) 1fr;
-    column-gap: initial;
 
     [data-flux-timeline-item] {
-        display: grid;
         grid-template-rows: subgrid;
         grid-row: 1 / -1;
         grid-column: initial;
@@ -438,16 +424,13 @@ Timeline
 [data-flux-timeline][data-flux-timeline-horizontal="inline"] {
     grid-template-rows: auto;
 
-    [data-flux-timeline-content] {
-        padding-left: var(--flux-timeline-content-gap);
-        padding-right: var(--flux-timeline-content-gap);
-    }
-
     [data-flux-timeline-item] {
         grid-template-columns: auto auto auto auto 1fr;
     }
 
     [data-flux-timeline-content] {
+        padding-left: var(--flux-timeline-content-gap);
+        padding-right: var(--flux-timeline-content-gap);
         grid-row: 1;
         grid-column: 4;
     }
@@ -473,12 +456,12 @@ Timeline
     }
 }
 
-/** Lines...
+/** Lines
 /* ------------------------------------------------------------ */
-[data-flux-timeline-item]:not(:first-child) [data-flux-timeline-line-leading] {
+[data-flux-timeline-item]:not(:first-child) [data-flux-timeline-line-leading],
+[data-flux-timeline-item] [data-flux-timeline-line-trailing] {
     display: flex;
     flex-direction: column;
-    justify-content: start;
     align-items: center;
 
     * {
@@ -487,46 +470,37 @@ Timeline
     }
 }
 
+[data-flux-timeline-item]:not(:first-child) [data-flux-timeline-line-leading] {
+    justify-content: start;
+}
+
 [data-flux-timeline-item] [data-flux-timeline-line-trailing] {
-    display: flex;
-    flex-direction: column;
     justify-content: end;
-    align-items: center;
+}
+
+[data-flux-timeline-horizontal] [data-flux-timeline-item] :is([data-flux-timeline-line-leading], [data-flux-timeline-line-trailing]) {
+    justify-content: center;
+    align-items: initial;
 
     * {
-        width: var(--flux-timeline-line-width);
-        height: calc(100% - var(--flux-timeline-line-gap));
+        height: var(--flux-timeline-line-width);
+        width: calc(100% - var(--flux-timeline-line-gap));
     }
 }
 
 [data-flux-timeline-horizontal] [data-flux-timeline-item] [data-flux-timeline-line-leading] {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: start;
-
-    * {
-        height: var(--flux-timeline-line-width);
-        width: calc(100% - var(--flux-timeline-line-gap));
-    }
 }
 
 [data-flux-timeline-horizontal] [data-flux-timeline-item] [data-flux-timeline-line-trailing] {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: end;
-
-    * {
-        height: var(--flux-timeline-line-width);
-        width: calc(100% - var(--flux-timeline-line-gap));
-    }
 }
 
 /* Alignment:
 /* ------------------------------------------------------------ */
 
-[data-flux-timeline]:not(:has([data-flux-timeline-horizontal]))[data-flux-timeline-align="start"] {
+/* Vertical alignment */
+[data-flux-timeline]:not([data-flux-timeline-horizontal])[data-flux-timeline-align="start"] {
     [data-flux-timeline-item] {
         grid-template-rows: auto auto auto 1fr auto;
     }
@@ -590,7 +564,9 @@ Timeline
     }
 }
 
-[data-flux-timeline][data-flux-timeline-horizontal][data-flux-timeline-align="start"], [data-flux-timeline][data-flux-timeline-horizontal][data-flux-timeline-align="baseline"] {
+/* Horizontal alignment */
+[data-flux-timeline][data-flux-timeline-horizontal][data-flux-timeline-align="start"],
+[data-flux-timeline][data-flux-timeline-horizontal][data-flux-timeline-align="baseline"] {
     [data-flux-timeline-item] {
         grid-template-columns: auto auto auto 1fr auto;
     }
@@ -600,7 +576,7 @@ Timeline
     }
 }
 
-[data-flux-timeline][data-flux-timeline-horizontal] [data-flux-timeline-item][data-flux-timeline-align="start"], [data-flux-timeline][data-flux-timeline-horizontal] [data-flux-timeline-item][data-flux-timeline-align="baseline"] {
+[data-flux-timeline][data-flux-timeline-horizontal] [data-flux-timeline-item]:is([data-flux-timeline-align="start"], [data-flux-timeline-align="baseline"]) {
     grid-template-columns: auto auto auto 1fr auto;
 
     [data-flux-timeline-content] {
