@@ -32,8 +32,8 @@ $resizeStyle = match ($resize) {
         rows="{{ $rows }}"
         style="{{ $resizeStyle }}; {{ $rows === 'auto' ? 'field-sizing: content' : '' }}"
         @isset ($name) name="{{ $name }}" @endisset
-        @unblaze(scope: ['name' => $name ?? null])
-        <?php if ($invalid || ($scope['name'] && $errors->has($scope['name']))): ?>
+        @unblaze(scope: ['name' => $name ?? null, 'invalid' => $invalid ?? false])
+        <?php if ($scope['invalid'] || ($scope['name'] && $errors->has($scope['name']))): ?>
         aria-invalid="true" data-invalid
         <?php endif; ?>
         @endunblaze

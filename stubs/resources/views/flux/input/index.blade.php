@@ -147,8 +147,8 @@ $classes = Flux::classes()
                 <?php if (isset($name)): ?> name="{{ $name }}" <?php endif; ?>
                 <?php if ($maskDynamic): ?> x-mask:dynamic="{{ $maskDynamic }}" @elseif ($mask) x-mask="{{ $mask }}" <?php endif; ?>
                 <?php if (is_numeric($size)): ?> size="{{ $size }}" <?php endif; ?>
-                @unblaze(scope: ['name' => $name ?? null])
-                <?php if ($invalid || ($scope['name'] && $errors->has($scope['name']))): ?>
+                @unblaze(scope: ['name' => $name ?? null, 'invalid' => $invalid ?? false])
+                <?php if ($scope['invalid'] || ($scope['name'] && $errors->has($scope['name']))): ?>
                 aria-invalid="true" data-invalid
                 <?php endif; ?>
                 @endunblaze
