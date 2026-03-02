@@ -9,6 +9,7 @@
 
 @php
 $classes = Flux::classes()
+    ->add('[:where(&)]:font-normal')
     ->add(match ($size) {
         'xl' => 'text-lg',
         'lg' => 'text-base',
