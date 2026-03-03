@@ -138,6 +138,7 @@ Custom element display rules...
     ui-composer { display: block; }
     ui-editor { display: block; }
     ui-editor-content { display: block; }
+    ui-progress { display: block; }
 }
 
 /**
