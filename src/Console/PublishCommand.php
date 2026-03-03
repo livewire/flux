@@ -40,6 +40,7 @@ class PublishCommand extends Command
             'Layout' => ['header', 'sidebar', 'aside', 'main', 'footer', 'container', 'brand', 'profile', 'spacer'],
             'Modal' => ['modal'],
             'Navbar' => ['navbar', 'navlist'],
+            'Progress' => ['progress'],
             'Otp' => ['otp'],
             'Radio' => ['radio'],
             'Separator' => ['separator'],
