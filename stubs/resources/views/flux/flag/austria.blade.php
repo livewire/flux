@@ -6,7 +6,7 @@
 
 @php
 $classes = Flux::classes('shrink-0')
-    ->add(match($variant) {
+    ->add(match($size) {
         'xl' => '[:where(&)]:size-16',
         'lg' => '[:where(&)]:size-12',
         'base' => '[:where(&)]:size-8',
