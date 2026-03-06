@@ -41,7 +41,6 @@ class PublishCommand extends Command
             'Modal' => ['modal'],
             'Navbar' => ['navbar', 'navlist'],
             'Otp' => ['otp'],
-            'Progress' => ['progress'],
             'Radio' => ['radio'],
             'Separator' => ['separator'],
             'Select' => ['select'],
