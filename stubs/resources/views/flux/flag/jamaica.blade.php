@@ -1,18 +1,41 @@
 @blaze(fold: true)
 
+{{-- Credit: Nucleo App (https://nucleoapp.com/svg-flag-icons) --}}
+
 @props([
-    'size' => 'base'
+    'size' => 'base',
 ])
 
 @php
-$classes = Flux::classes('shrink-0')
-    ->add(match($size) {
-        'xl' => '[:where(&)]:size-16',
-        'lg' => '[:where(&)]:size-12',
-        'base' => '[:where(&)]:size-8',
-    });
+    $classes = Flux::classes('shrink-0')->add(
+        match ($size) {
+            'xl' => '[:where(&)]:size-16',
+            'lg' => '[:where(&)]:size-12',
+            'base' => '[:where(&)]:size-8',
+        },
+    );
 @endphp
 
-<svg {{ $attributes->class($classes) }} data-flux-flag xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" data-slot="flag">
-    <!-- SVG for Jamaica -->
+<svg {{ $attributes->class($classes) }}
+     data-flux-flag
+     data-slot="flag"
+     viewBox="0 0 32 32"
+     xmlns="http://www.w3.org/2000/svg">
+    <rect height="24"
+          rx="4"
+          ry="4"
+          width="30"
+          x="1"
+          y="4"></rect>
+    <path d="M16,16L29.684,5.053c-.711-.648-1.647-1.053-2.684-1.053H5c-1.037,0-1.974,.405-2.684,1.053l13.684,10.947Z"
+          fill="#33764c"></path>
+    <path d="M16,16l13.684,10.947c-.711,.648-1.647,1.053-2.684,1.053H5c-1.037,0-1.974-.405-2.684-1.053l13.684-10.947Z"
+          fill="#33764c"></path>
+    <path d="M28.304,4.236l-12.304,9.843L3.696,4.236c-1.003,.348-1.818,1.075-2.279,2.019l12.182,9.746L1.417,25.746c.461,.944,1.277,1.671,2.279,2.019l12.304-9.843,12.304,9.843c1.003-.348,1.818-1.075,2.279-2.019l-12.182-9.746L30.583,6.254c-.461-.944-1.277-1.671-2.279-2.019Z"
+          fill="#f5bd45"></path>
+    <path d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z"
+          opacity=".15"></path>
+    <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z"
+          fill="#fff"
+          opacity=".2"></path>
 </svg>

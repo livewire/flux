@@ -1,18 +1,44 @@
 @blaze(fold: true)
 
+{{-- Credit: Nucleo App (https://nucleoapp.com/svg-flag-icons) --}}
+
 @props([
-    'size' => 'base'
+    'size' => 'base',
 ])
 
 @php
-$classes = Flux::classes('shrink-0')
-    ->add(match($size) {
-        'xl' => '[:where(&)]:size-16',
-        'lg' => '[:where(&)]:size-12',
-        'base' => '[:where(&)]:size-8',
-    });
+    $classes = Flux::classes('shrink-0')->add(
+        match ($size) {
+            'xl' => '[:where(&)]:size-16',
+            'lg' => '[:where(&)]:size-12',
+            'base' => '[:where(&)]:size-8',
+        },
+    );
 @endphp
 
-<svg {{ $attributes->class($classes) }} data-flux-flag xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" data-slot="flag">
-    <!-- SVG for Honduras -->
+<svg {{ $attributes->class($classes) }}
+     data-flux-flag
+     data-slot="flag"
+     viewBox="0 0 32 32"
+     xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 11H31V21H1z" fill="#fff"></path>
+    <path d="M5,4H27c2.208,0,4,1.792,4,4v4H1v-4c0-2.208,1.792-4,4-4Z" fill="#55bbe0"></path>
+    <path d="M5,20H27c2.208,0,4,1.792,4,4v4H1v-4c0-2.208,1.792-4,4-4Z"
+          fill="#55bbe0"
+          transform="rotate(180 16 24)"></path>
+    <path d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z"
+          opacity=".15"></path>
+    <path d="M9.28 12.768L8.978 13.697 8.001 13.697 8.791 14.271 8.49 15.2 9.28 14.626 10.07 15.2 9.768 14.271 10.558 13.697 9.581 13.697 9.28 12.768z"
+          fill="#55bbe0"></path>
+    <path d="M9.581 17.729L9.28 16.8 8.978 17.729 8.001 17.729 8.791 18.303 8.49 19.232 9.28 18.658 10.07 19.232 9.768 18.303 10.558 17.729 9.581 17.729z"
+          fill="#55bbe0"></path>
+    <path d="M16.302 15.713L16 14.784 15.698 15.713 14.722 15.713 15.512 16.287 15.21 17.216 16 16.642 16.79 17.216 16.488 16.287 17.278 15.713 16.302 15.713z"
+          fill="#55bbe0"></path>
+    <path d="M22.232 14.271L21.93 15.2 22.72 14.626 23.51 15.2 23.209 14.271 23.999 13.697 23.022 13.697 22.72 12.768 22.419 13.697 21.442 13.697 22.232 14.271z"
+          fill="#55bbe0"></path>
+    <path d="M23.022 17.729L22.72 16.8 22.419 17.729 21.442 17.729 22.232 18.303 21.93 19.232 22.72 18.658 23.51 19.232 23.209 18.303 23.999 17.729 23.022 17.729z"
+          fill="#55bbe0"></path>
+    <path d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z"
+          fill="#fff"
+          opacity=".2"></path>
 </svg>

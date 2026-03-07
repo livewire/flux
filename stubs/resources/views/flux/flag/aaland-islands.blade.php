@@ -1,5 +1,7 @@
 @blaze(fold: true)
 
+{{-- Credit: Nucleo App (https://nucleoapp.com/svg-flag-icons) --}}
+
 @props([
     'size' => 'base'
 ])

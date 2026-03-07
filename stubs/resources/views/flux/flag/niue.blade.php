@@ -1,18 +1,80 @@
 @blaze(fold: true)
 
+{{-- Credit: Nucleo App (https://nucleoapp.com/svg-flag-icons) --}}
+
 @props([
-    'size' => 'base'
+    'size' => 'base',
 ])
 
 @php
-$classes = Flux::classes('shrink-0')
-    ->add(match($size) {
-        'xl' => '[:where(&)]:size-16',
-        'lg' => '[:where(&)]:size-12',
-        'base' => '[:where(&)]:size-8',
-    });
+    $classes = Flux::classes('shrink-0')->add(
+        match ($size) {
+            'xl' => '[:where(&)]:size-16',
+            'lg' => '[:where(&)]:size-12',
+            'base' => '[:where(&)]:size-8',
+        },
+    );
 @endphp
 
-<svg {{ $attributes->class($classes) }} data-flux-flag xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" data-slot="flag">
-    <!-- SVG for Niue -->
+<svg {{ $attributes->class($classes) }}
+     data-flux-flag
+     data-slot="flag"
+     viewBox="0 0 32 32"
+     xmlns="http://www.w3.org/2000/svg">
+    <rect fill="#fede02"
+          height="24"
+          rx="4"
+          ry="4"
+          stroke-width="0"
+          width="30"
+          x="1.0002"
+          y="4"></rect>
+    <path d="m5,4h11v12H1v-8c0-2.2077,1.7923-4,4-4Z"
+          fill="#001b69"
+          stroke-width="0"></path>
+    <path d="m6.5002,13.7737v2.2263h4v-2.2272l3.0371,2.2272h2.4629v-1.2411l-3.7619-2.7589h3.7619v-4h-2.74l2.74-2.0093v-1.9907h-1.441l-4.059,2.9769v-2.9769h-4v2.7935l-3.2566-2.3892c-.7675.3741-1.3895.9834-1.7856,1.7379l2.5321,1.8578H1.0002s0,0,0,0v4h3.7632l-3.7632,2.7599v1.2401h2.4642l3.0358-2.2263Z"
+          fill="#fff"
+          stroke-width="0"></path>
+    <path d="m1.8057,5.5891l3.2854,2.4109h1.3636l-4.0952-3.0047c-.2043.1795-.3897.3765-.5539.5938Z"
+          fill="#ca0a2b"
+          stroke-width="0"></path>
+    <polygon fill="#ca0a2b"
+             points=".9998 16 6.4544 12 6.4544 13 2.3635 16 .9998 16"
+             stroke-width="0"></polygon>
+    <polygon fill="#ca0a2b"
+             points="9.5002 16 7.5002 16 7.5002 11 1.0002 11 1.0002 9 7.5002 9 7.5002 4 9.5002 4 9.5002 9 16.0002 9 16.0002 11 9.5002 11 9.5002 16"
+             stroke-width="0"></polygon>
+    <polygon fill="#fede02"
+             points="4.5025 10.2188 5.1049 9.7812 4.3603 9.7812 4.1302 9.0729 3.9001 9.7812 3.1554 9.7812 3.7579 10.2188 3.5277 10.9271 4.1302 10.4894 4.7326 10.9271 4.5025 10.2188"
+             stroke-width="0"></polygon>
+    <polygon fill="#fede02"
+             points="12.9713 10.2188 13.5737 9.7812 12.829 9.7812 12.5989 9.0729 12.3688 9.7812 11.6242 9.7812 12.2266 10.2188 11.9965 10.9271 12.5989 10.4894 13.2014 10.9271 12.9713 10.2188"
+             stroke-width="0"></polygon>
+    <polygon fill="#fede02"
+             points="8.8723 6.9482 9.4748 6.5105 8.7301 6.5105 8.5 5.8023 8.2699 6.5105 7.5252 6.5105 8.1277 6.9482 7.8976 7.6564 8.5 7.2188 9.1024 7.6564 8.8723 6.9482"
+             stroke-width="0"></polygon>
+    <polygon fill="#fede02"
+             points="8.8723 13.3545 9.4748 12.9168 8.7301 12.9168 8.5 12.2086 8.2699 12.9168 7.5252 12.9168 8.1277 13.3545 7.8976 14.0627 8.5 13.625 9.1024 14.0627 8.8723 13.3545"
+             stroke-width="0"></polygon>
+    <circle cx="8.5"
+            cy="10"
+            fill="#001b69"
+            r="1.5705"
+            stroke-width="0"></circle>
+    <polygon fill="#fede02"
+             points="9.0685 10.1886 9.9884 9.5203 8.8514 9.5203 8.5 8.4389 8.1486 9.5203 7.0116 9.5203 7.9315 10.1886 7.5801 11.2699 8.5 10.6016 9.4199 11.2699 9.0685 10.1886"
+             stroke-width="0"></polygon>
+    <polygon fill="#ca0a2b"
+             points="16.0002 15.6667 11.0002 12 11.0002 13 15.0911 16 16.0002 16 16.0002 15.6667"
+             stroke-width="0"></polygon>
+    <polygon fill="#ca0a2b"
+             points="16.0002 4 15.7518 4 10.2913 8.0044 11.6549 8.0044 16.0002 4.8179 16.0002 4"
+             stroke-width="0"></polygon>
+    <path d="m27.0002,4H5.0002c-2.2091,0-4,1.7908-4,4v16c0,2.2092,1.7909,4,4,4h22c2.2092,0,4-1.7908,4-4V8c0-2.2092-1.7908-4-4-4Zm3,20c0,1.6543-1.3457,3-3,3H5.0002c-1.6543,0-3-1.3457-3-3V8c0-1.6543,1.3457-3,3-3h22c1.6543,0,3,1.3457,3,3v16Z"
+          opacity=".15"
+          stroke-width="0"></path>
+    <path d="m27,5H5c-1.6569,0-3,1.3431-3,3v1c0-1.6569,1.3431-3,3-3h22c1.6569,0,3,1.3431,3,3v-1c0-1.6569-1.3431-3-3-3Z"
+          fill="#fff"
+          opacity=".2"
+          stroke-width="0"></path>
 </svg>
