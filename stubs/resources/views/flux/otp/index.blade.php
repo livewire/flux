@@ -18,6 +18,7 @@
         data-flux-control
         role="group"
         data-flux-input-aria-label="{{ __('Character {current} of {total}') }}"
+        dir="ltr"
     >
         <?php if($slot->isEmpty() && $length): ?>
             <?php for($i = 0; $i < $length; $i++): ?>
