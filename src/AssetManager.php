@@ -71,7 +71,7 @@ class AssetManager
         return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.min.js', 'text/javascript');
     }
 
-    public static function scripts($options = [])
+    public static function scripts()
     {
         $manifest = Flux::pro()
             ? json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true)
@@ -79,7 +79,8 @@ class AssetManager
 
         $versionHash = $manifest['/flux.js'];
 
-        $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
+        $nonce = app('flux')->nonce();
+        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
 
         if (config('app.debug')) {
             return '<script src="'. url('/flux/flux.js?id='. $versionHash) . '" data-navigate-once' . $nonce . '></script>';
@@ -88,9 +89,10 @@ class AssetManager
         }
     }
 
-    public static function fluxAppearance($options = [])
+    public static function fluxAppearance()
     {
-        $nonce = isset($options) && isset($options['nonce']) ? ' nonce="' . $options['nonce'] . '"' : '';
+        $nonce = app('flux')->nonce();
+        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
 
         // Make scrollbars dark in dark mode...
         return <<<HTML
@@ -134,10 +136,13 @@ HTML;
 
         $versionHash = $manifest['/editor.js'];
 
+        $nonce = app('flux')->nonce();
+        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
+
         if (config('app.debug')) {
-            return '<script src="'. url('/flux/editor.js?id='. $versionHash) . '" defer></script>';
+            return '<script src="'. url('/flux/editor.js?id='. $versionHash) . '" defer' . $nonce . '></script>';
         } else {
-            return '<script src="'. url('/flux/editor.min.js?id='. $versionHash) . '" defer></script>';
+            return '<script src="'. url('/flux/editor.min.js?id='. $versionHash) . '" defer' . $nonce . '></script>';
         }
     }
 
@@ -147,7 +152,10 @@ HTML;
 
         $versionHash = $manifest['/editor.css'];
 
-        return '<link rel="stylesheet" href="'. url('/flux/editor.css?id='. $versionHash) . '">';
+        $nonce = app('flux')->nonce();
+        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
+
+        return '<link rel="stylesheet" href="'. url('/flux/editor.css?id='. $versionHash) . '"' . $nonce . '>';
     }
 
     public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8')

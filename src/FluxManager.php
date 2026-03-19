@@ -4,6 +4,7 @@ namespace Flux;
 
 use Flux\Concerns\InteractsWithComponents;
 use Composer\InstalledVersions;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Str;
 use Flux\ClassBuilder;
 
@@ -15,10 +16,13 @@ class FluxManager
 
     public $hasRenderedAssets = false;
 
+    public $nonce = null;
+
     public function boot()
     {
         on('flush-state', function () {
             $this->hasRenderedAssets = false;
+            $this->nonce = null;
         });
 
         $this->bootComponents();
@@ -45,14 +49,27 @@ class FluxManager
     {
         $this->markAssetsRendered();
 
-        return AssetManager::scripts($options);
+        if (isset($options['nonce'])) {
+            $this->nonce = $options['nonce'];
+        }
+
+        return AssetManager::scripts();
     }
 
     public function fluxAppearance($options = [])
     {
         $this->markAssetsRendered();
 
-        return AssetManager::fluxAppearance($options);
+        if (isset($options['nonce'])) {
+            $this->nonce = $options['nonce'];
+        }
+
+        return AssetManager::fluxAppearance();
+    }
+
+    public function nonce()
+    {
+        return $this->nonce ?? Vite::cspNonce();
     }
 
     public function editorStyles()
