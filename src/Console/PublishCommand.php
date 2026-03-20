@@ -47,6 +47,7 @@ class PublishCommand extends Command
             'Skeleton' => ['skeleton'],
             'Switch' => ['switch'],
             'Textarea' => ['textarea'],
+            'Toast' => ['toast'],
             'Tooltip' => ['tooltip'],
             'Typography' => ['heading', 'subheading', 'text', 'link'],
         ],
@@ -70,7 +71,6 @@ class PublishCommand extends Command
             'Tabs' => ['tabs','tab'],
             'Table' => ['table', 'pagination'],
             'Time picker' => ['time-picker'],
-            'Toast' => ['toast'],
         ],
     ];
 
