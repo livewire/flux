@@ -18,12 +18,12 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
 $scrollToSelector = $scrollTo === true ? 'body' : $scrollTo;
 
 $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
-    ? "(\$el.closest('{$scrollToSelector}') || document.querySelector('{$scrollToSelector}')).scrollIntoView()"
+    ? "scrollTo('{$scrollToSelector}')"
     : '';
 @endphp
 
 @if ($simple)
-    <div {{ $attributes->class('pt-3 border-t border-zinc-100 dark:border-zinc-700 flex justify-between items-center') }} data-flux-pagination>
+    <div {{ $attributes->class('pt-3 border-t border-zinc-100 dark:border-zinc-700 flex justify-between items-center') }} x-data="fluxPagination" data-flux-pagination>
         <div></div>
 
         @if ($paginator->hasPages())
@@ -63,7 +63,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
         @endif
     </div>
 @else
-    <div {{ $attributes->class('@container pt-3 border-t border-zinc-100 dark:border-zinc-700 flex justify-between items-center gap-3') }} data-flux-pagination>
+    <div {{ $attributes->class('@container pt-3 border-t border-zinc-100 dark:border-zinc-700 flex justify-between items-center gap-3') }} x-data="fluxPagination" data-flux-pagination>
         @if ($paginator->total() > 0)
             <div class="text-zinc-500 dark:text-zinc-400 text-xs font-medium whitespace-nowrap">
                 {!! __('Showing') !!} {{ $paginator->firstItem() }} {!! __('to') !!} {{ $paginator->lastItem() }} {!! __('of') !!} {{ $paginator->total() }} {!! __('results') !!}
