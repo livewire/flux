@@ -9,30 +9,31 @@ $trackClasses = Flux::classes()
     ->add('h-1.5 relative w-full overflow-hidden bg-zinc-200 dark:bg-white/10')
     ->add('[print-color-adjust:exact]')
     ->add('rounded-full')
+    ->add(match ($color) {
+        'red'     => '[--flux-progress-color:var(--color-red-600)] dark:[--flux-progress-color:var(--color-red-400)]',
+        'orange'  => '[--flux-progress-color:var(--color-orange-600)] dark:[--flux-progress-color:var(--color-orange-400)]',
+        'amber'   => '[--flux-progress-color:var(--color-amber-600)] dark:[--flux-progress-color:var(--color-amber-400)]',
+        'yellow'  => '[--flux-progress-color:var(--color-yellow-600)] dark:[--flux-progress-color:var(--color-yellow-400)]',
+        'lime'    => '[--flux-progress-color:var(--color-lime-600)] dark:[--flux-progress-color:var(--color-lime-400)]',
+        'green'   => '[--flux-progress-color:var(--color-green-600)] dark:[--flux-progress-color:var(--color-green-400)]',
+        'emerald' => '[--flux-progress-color:var(--color-emerald-600)] dark:[--flux-progress-color:var(--color-emerald-400)]',
+        'teal'    => '[--flux-progress-color:var(--color-teal-600)] dark:[--flux-progress-color:var(--color-teal-400)]',
+        'cyan'    => '[--flux-progress-color:var(--color-cyan-600)] dark:[--flux-progress-color:var(--color-cyan-400)]',
+        'sky'     => '[--flux-progress-color:var(--color-sky-600)] dark:[--flux-progress-color:var(--color-sky-400)]',
+        'blue'    => '[--flux-progress-color:var(--color-blue-600)] dark:[--flux-progress-color:var(--color-blue-400)]',
+        'indigo'  => '[--flux-progress-color:var(--color-indigo-600)] dark:[--flux-progress-color:var(--color-indigo-400)]',
+        'violet'  => '[--flux-progress-color:var(--color-violet-600)] dark:[--flux-progress-color:var(--color-violet-400)]',
+        'purple'  => '[--flux-progress-color:var(--color-purple-600)] dark:[--flux-progress-color:var(--color-purple-400)]',
+        'fuchsia' => '[--flux-progress-color:var(--color-fuchsia-600)] dark:[--flux-progress-color:var(--color-fuchsia-400)]',
+        'pink'    => '[--flux-progress-color:var(--color-pink-600)] dark:[--flux-progress-color:var(--color-pink-400)]',
+        'rose'    => '[--flux-progress-color:var(--color-rose-600)] dark:[--flux-progress-color:var(--color-rose-400)]',
+        default   => '[--flux-progress-color:var(--color-accent)]',
+    })
     ;
 
 $barClasses = Flux::classes()
     ->add('h-full rounded-full transition-[width] duration-300 ease-out')
-    ->add(match ($color) {
-        'red'     => 'bg-red-600 dark:bg-red-400',
-        'orange'  => 'bg-orange-600 dark:bg-orange-400',
-        'amber'   => 'bg-amber-600 dark:bg-amber-400',
-        'yellow'  => 'bg-yellow-600 dark:bg-yellow-400',
-        'lime'    => 'bg-lime-600 dark:bg-lime-400',
-        'green'   => 'bg-green-600 dark:bg-green-400',
-        'emerald' => 'bg-emerald-600 dark:bg-emerald-400',
-        'teal'    => 'bg-teal-600 dark:bg-teal-400',
-        'cyan'    => 'bg-cyan-600 dark:bg-cyan-400',
-        'sky'     => 'bg-sky-600 dark:bg-sky-400',
-        'blue'    => 'bg-blue-600 dark:bg-blue-400',
-        'indigo'  => 'bg-indigo-600 dark:bg-indigo-400',
-        'violet'  => 'bg-violet-600 dark:bg-violet-400',
-        'purple'  => 'bg-purple-600 dark:bg-purple-400',
-        'fuchsia' => 'bg-fuchsia-600 dark:bg-fuchsia-400',
-        'pink'    => 'bg-pink-600 dark:bg-pink-400',
-        'rose'    => 'bg-rose-600 dark:bg-rose-400',
-        default   => 'bg-accent',
-    })
+    ->add('bg-[var(--flux-progress-color)]')
     ;
 @endphp
 
