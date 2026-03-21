@@ -1,4 +1,7 @@
-@blaze(fold: true)
+@blaze(fold: true, unsafe: [
+    // flux:with-inline-field props
+    'name', 'label', 'description',
+])
 
 @props([
     'name' => null,
