@@ -18,7 +18,7 @@ $simple = ! $paginator instanceof \Illuminate\Contracts\Pagination\LengthAwarePa
 $scrollToSelector = $scrollTo === true ? 'body' : $scrollTo;
 
 $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
-    ? "(\$el.closest('{$scrollToSelector}') || document.querySelector('{$scrollToSelector}')).scrollIntoView()"
+    ? "\$el.closest('{$scrollToSelector}').scrollIntoView()"
     : '';
 @endphp
 
