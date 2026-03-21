@@ -15,10 +15,13 @@ class FluxManager
 
     public $hasRenderedAssets = false;
 
+    protected $nonce = null;
+
     public function boot()
     {
         on('flush-state', function () {
             $this->hasRenderedAssets = false;
+            $this->nonce = null;
         });
 
         $this->bootComponents();
@@ -41,9 +44,18 @@ class FluxManager
         $this->hasRenderedAssets = true;
     }
 
+    public function nonce()
+    {
+        return $this->nonce ?? \Illuminate\Support\Facades\Vite::cspNonce();
+    }
+
     public function scripts($options = [])
     {
         $this->markAssetsRendered();
+
+        if (isset($options['nonce'])) {
+            $this->nonce = $options['nonce'];
+        }
 
         return AssetManager::scripts($options);
     }
@@ -52,17 +64,21 @@ class FluxManager
     {
         $this->markAssetsRendered();
 
+        if (isset($options['nonce'])) {
+            $this->nonce = $options['nonce'];
+        }
+
         return AssetManager::fluxAppearance($options);
     }
 
     public function editorStyles()
     {
-        return AssetManager::editorStyles();
+        return AssetManager::editorStyles($this->nonce());
     }
 
     public function editorScripts()
     {
-        return AssetManager::editorScripts();
+        return AssetManager::editorScripts($this->nonce());
     }
 
     public function classes($styles = null)
