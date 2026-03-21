@@ -21,6 +21,7 @@ class FluxManager
     {
         on('flush-state', function () {
             $this->hasRenderedAssets = false;
+            $this->nonce = null;
         });
 
         $this->bootComponents();
