@@ -85,9 +85,13 @@
     <?php endif; ?>
 
 <?php elseif ($heading): ?>
-    <div {{ $attributes->class('block space-y-[2px] in-data-flux-sidebar-collapsed-desktop:hidden') }} data-flux-sidebar-group>
+    <div {{ $attributes->class('block space-y-[2px]') }} data-flux-sidebar-group>
         <div class="px-3 py-2">
-            <div class="text-sm text-zinc-400 font-medium leading-none">{{ $heading }}</div>
+            <div class="text-sm text-zinc-400 font-medium leading-none in-data-flux-sidebar-collapsed-desktop:hidden">{{ $heading }}</div>
+
+            <div class="not-in-data-flux-sidebar-collapsed-desktop:hidden h-3.5 flex items-center">
+                <flux:separator class="" />
+            </div>
         </div>
 
         <div>
