@@ -371,6 +371,7 @@ Timeline
         grid-column: 3;
         grid-row: 2 / 5;
         align-self: center;
+        min-width: 0;
     }
 
     [data-flux-timeline-line-leading] {
