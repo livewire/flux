@@ -21,7 +21,6 @@ if ($variant === 'flyout') {
 }
 
 $closable ??= $variant === 'bare' ? false : true;
-
 $overflow = $scroll === 'body' && ! $flyout;
 
 if ($flyout) {
@@ -94,10 +93,6 @@ if ($dismissible === false) {
     $attributes = $attributes->merge(['disable-click-outside' => '']);
 }
 
-// Split attributes into three groups: content attributes (class, style, autofocus) go on the visible
-// panel element, dialog attributes (wire:close, x-on:close, etc.) stay on the <dialog> element, and
-// the rest go on <ui-modal>. For non-overflow modals the content and dialog attributes are merged
-// together since the <dialog> serves as both the container and the visible panel...
 [ $contentAttributes, $attributes ] = Flux::splitAttributes($attributes, ['autofocus', 'class', 'style']);
 [ $dialogAttributes, $attributes ] = Flux::splitAttributes($attributes, ['wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
 
@@ -124,7 +119,7 @@ if (! $overflow) {
         x-on:modal-close.document="handleClose($event)"
     >
         <?php if ($overflow): ?>
-            <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+            <div class="flex h-screen items-center justify-center p-4 sm:p-6">
                 <div {{ $contentAttributes->class($contentClasses) }} data-flux-modal-content>
                     {{ $slot }}
 
