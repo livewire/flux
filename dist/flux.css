@@ -76,6 +76,33 @@ Transition dialogs with fade a slight scale effect...
     background-color: rgba(0, 0, 0, 0.10);
 }
 
+[data-flux-modal] > dialog[data-flux-modal-overflow] {
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+    background: transparent;
+    transform: none;
+}
+
+[data-flux-modal-content] {
+    transform: scale(0.95);
+    transition: transform 0.075s allow-discrete;
+}
+
+dialog[open] [data-flux-modal-content] {
+    transform: scale(1);
+    transition: transform 0.15s allow-discrete;
+}
+
+@starting-style {
+    dialog[open] [data-flux-modal-content] {
+        transform: scale(0.95);
+    }
+}
+
 /**
 Native select styles...
 */

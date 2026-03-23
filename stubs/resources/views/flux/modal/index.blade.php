@@ -6,6 +6,7 @@
     'closable' => null,
     'trigger' => null,
     'variant' => null,
+    'scroll' => null,
     'flyout' => null,
     'name' => null,
 ])
@@ -20,6 +21,8 @@ if ($variant === 'flyout') {
 }
 
 $closable ??= $variant === 'bare' ? false : true;
+
+$overflow = $scroll === 'body' && ! $flyout;
 
 if ($flyout) {
     $classes = Flux::classes()
@@ -39,6 +42,19 @@ if ($flyout) {
         ->add(match ($variant) {
             default => 'bg-white dark:bg-zinc-800 border-transparent dark:border-zinc-700',
             'floating' => 'bg-white dark:bg-zinc-800 ring ring-black/5 dark:ring-zinc-700 shadow-lg rounded-xl',
+            'bare' => 'bg-transparent',
+        });
+} elseif ($overflow) {
+    $classes = Flux::classes();
+
+    $panelClasses = Flux::classes()
+        ->add('relative')
+        ->add(match ($variant) {
+            default => 'p-6 [:where(&)]:max-w-xl [:where(&)]:min-w-xs shadow-lg rounded-xl',
+            'bare' => '',
+        })
+        ->add(match ($variant) {
+            default => 'bg-white dark:bg-zinc-800 ring ring-black/5 dark:ring-zinc-700 shadow-lg rounded-xl',
             'bare' => 'bg-transparent',
         });
 } else {
@@ -78,7 +94,16 @@ if ($dismissible === false) {
     $attributes = $attributes->merge(['disable-click-outside' => '']);
 }
 
-[ $styleAttributes, $attributes ] = Flux::splitAttributes($attributes, ['autofocus', 'class', 'style', 'wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
+// Split attributes into three groups: content attributes (class, style, autofocus) go on the visible
+// panel element, dialog attributes (wire:close, x-on:close, etc.) stay on the <dialog> element, and
+// the rest go on <ui-modal>. For non-overflow modals the content and dialog attributes are merged
+// together since the <dialog> serves as both the container and the visible panel...
+[ $contentAttributes, $attributes ] = Flux::splitAttributes($attributes, ['autofocus', 'class', 'style']);
+[ $dialogAttributes, $attributes ] = Flux::splitAttributes($attributes, ['wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
+
+if (! $overflow) {
+    $dialogAttributes = $dialogAttributes->merge($contentAttributes->getAttributes());
+}
 @endphp
 
 <ui-modal {{ $attributes }} data-flux-modal>
@@ -88,23 +113,40 @@ if ($dismissible === false) {
 
     <dialog
         wire:ignore.self {{-- This needs to be here because the dialog element adds a "close" attribute that isn't durable... --}}
-        {{ $styleAttributes->class($classes) }}
+        {{ $dialogAttributes->class($classes) }}
         <?php if ($name): ?> data-modal="{{ $name }}" <?php endif; ?>
         <?php if ($flyout): ?> data-flux-flyout <?php endif; ?>
+        <?php if ($overflow): ?> data-flux-modal-overflow <?php endif; ?>
         @unblaze(scope: ['name' => $name])
         x-data="fluxModal(@js($scope['name']), @js(isset($__livewire) ? $__livewire->getId() : null))"
         @endunblaze
         x-on:modal-show.document="handleShow($event)"
         x-on:modal-close.document="handleClose($event)"
     >
-        {{ $slot }}
+        <?php if ($overflow): ?>
+            <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
+                <div {{ $contentAttributes->class($panelClasses) }} data-flux-modal-content>
+                    {{ $slot }}
 
-        <?php if ($closable): ?>
-            <div class="absolute top-0 end-0 mt-4 me-4">
-                <flux:modal.close>
-                    <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
-                </flux:modal.close>
+                    <?php if ($closable): ?>
+                        <div class="absolute top-0 end-0 mt-4 me-4">
+                            <flux:modal.close>
+                                <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
+                            </flux:modal.close>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
+        <?php else: ?>
+            {{ $slot }}
+
+            <?php if ($closable): ?>
+                <div class="absolute top-0 end-0 mt-4 me-4">
+                    <flux:modal.close>
+                        <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
+                    </flux:modal.close>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </dialog>
 </ui-modal>
