@@ -47,7 +47,7 @@ if ($flyout) {
 } elseif ($overflow) {
     $classes = Flux::classes();
 
-    $panelClasses = Flux::classes()
+    $contentClasses = Flux::classes()
         ->add('relative')
         ->add(match ($variant) {
             default => 'p-6 [:where(&)]:max-w-xl [:where(&)]:min-w-xs shadow-lg rounded-xl',
@@ -125,7 +125,7 @@ if (! $overflow) {
     >
         <?php if ($overflow): ?>
             <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
-                <div {{ $contentAttributes->class($panelClasses) }} data-flux-modal-content>
+                <div {{ $contentAttributes->class($contentClasses) }} data-flux-modal-content>
                     {{ $slot }}
 
                     <?php if ($closable): ?>
