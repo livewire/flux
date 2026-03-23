@@ -119,7 +119,7 @@ if (! $overflow) {
         x-on:modal-close.document="handleClose($event)"
     >
         <?php if ($overflow): ?>
-            <div class="flex h-screen items-center justify-center p-4 sm:p-6">
+            <div class="flex min-h-full items-center justify-center p-4 sm:p-6">
                 <div {{ $contentAttributes->class($contentClasses) }} data-flux-modal-content>
                     {{ $slot }}
 
