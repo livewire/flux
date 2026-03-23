@@ -39,7 +39,8 @@ extract(Flux::forwardedAttributes($attributes, [
 
         {{ $slot }}
 
-        @unblaze(scope: ['attributes' => $errorAttributes->all()])
+        {{-- We're using ->getAttributes() here because ->all() is only available since Laravel 11... --}}
+        @unblaze(scope: ['attributes' => $errorAttributes->getAttributes()])
         <flux:error :attributes="new \Illuminate\View\ComponentAttributeBag($scope['attributes'])" />
         @endunblaze
 
