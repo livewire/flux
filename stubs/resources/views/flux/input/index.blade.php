@@ -1,4 +1,12 @@
-@blaze(fold: true, unsafe: ['icon:trailing', 'icon:leading', 'icon:variant', 'mask:dynamic'])
+@blaze(fold: true, unsafe: [
+    // attributes
+    'icon:trailing', 'icon:leading', 'icon:variant', 'mask:dynamic',
+    // flux:with-field props
+    'name', 'label', 'badge',
+    'description', 'description:trailing',
+    'label:badge', 'label:aside', 'label:trailing',
+    'error:name', 'error:bag', 'error:message', 'error:icon', 'error:nested', 'error:deep',
+])
 
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconLeading ??= $attributes->pluck('icon:leading'); @endphp

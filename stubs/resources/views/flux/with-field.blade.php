@@ -1,4 +1,9 @@
-@blaze(fold: true, unsafe: ['description:trailing'])
+@blaze(fold: true, unsafe: [
+    'name', 'label', 'badge',
+    'description', 'description:trailing',
+    'label:badge', 'label:aside', 'label:trailing',
+    'error:name', 'error:bag', 'error:message', 'error:icon', 'error:nested', 'error:deep',
+])
 
 @php
 extract(Flux::forwardedAttributes($attributes, [
