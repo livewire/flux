@@ -343,11 +343,14 @@ Timeline
         --flux-timeline-content-gap: calc(var(--spacing) * 2);
     }
 
-    :where([data-flux-timeline-size="lg"]) {
+    :where([data-flux-timeline][data-flux-timeline-size="lg"]) {
         --flux-timeline-item-gap: calc(var(--spacing) * 8);
         --flux-timeline-content-gap: calc(var(--spacing) * 4);
         --flux-timeline-line-gap: 0px;
         --flux-timeline-line-width: 2px;
+    }
+
+    :where([data-flux-timeline-size="lg"]) {
         --flux-timeline-indicator-size: calc(var(--spacing) * 12);
     }
 
