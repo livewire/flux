@@ -53,15 +53,6 @@ if ($flyout) {
         });
 }
 
-// Support adding the .self modifier to the wire:model directive...
-if (($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wireModel->hasModifier('self')) {
-    unset($attributes[$wireModel->directive]);
-
-    $wireModel->directive .= '.self';
-
-    $attributes = $attributes->merge([$wireModel->directive => $wireModel->value]);
-}
-
 if ($attributes['@close'] ?? null) {
     $attributes['wire:close'] = $attributes['@close'];
 
