@@ -30,16 +30,19 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
             <div class="flex items-center bg-white border border-zinc-200 rounded-[8px] p-[1px] dark:bg-white/10 dark:border-white/10">
                 @if ($paginator->onFirstPage())
                     <div class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-300 dark:text-zinc-500">
-                        <flux:icon.chevron-left variant="micro" />
+                        <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                     </div>
                 @else
                     @if(method_exists($paginator,'getCursorName'))
                         <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->previousCursor()->encode() }}" wire:click="setPage('{{$paginator->previousCursor()->encode()}}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                            <flux:icon.chevron-left variant="micro" />
+                            <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                            <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                         </button>
                     @else
                         <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                            <flux:icon.chevron-left variant="micro" />
+                            <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                            <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                         </button>
                     @endif
                 @endif
@@ -47,16 +50,19 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
                 @if ($paginator->hasMorePages())
                     @if(method_exists($paginator,'getCursorName'))
                         <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->nextCursor()->encode() }}" wire:click="setPage('{{$paginator->nextCursor()->encode()}}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                            <flux:icon.chevron-right variant="micro" />
+                            <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                            <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                         </button>
                     @else
                         <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                            <flux:icon.chevron-right variant="micro" />
+                            <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                            <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                         </button>
                     @endif
                 @else
                     <div class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-300 dark:text-zinc-500">
-                        <flux:icon.chevron-right variant="micro" />
+                        <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                     </div>
                 @endif
             </div>
@@ -77,21 +83,25 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
             <div class="flex @[40rem]:hidden items-center bg-white border border-zinc-200 rounded-[8px] p-[1px] dark:bg-white/10 dark:border-white/10">
                 @if ($paginator->onFirstPage())
                     <div aria-disabled="true" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-300 dark:text-zinc-500">
-                        <flux:icon.chevron-left variant="micro" />
+                        <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                     </div>
                 @else
                     <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                        <flux:icon.chevron-left variant="micro" />
+                        <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                     </button>
                 @endif
 
                 @if ($paginator->hasMorePages())
                     <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                        <flux:icon.chevron-right variant="micro" />
+                        <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                     </button>
                 @else
                     <div aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-300 dark:text-zinc-500">
-                        <flux:icon.chevron-right variant="micro" />
+                        <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                     </div>
                 @endif
             </div>
@@ -100,11 +110,13 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
             <div class="hidden @[40rem]:flex items-center bg-white border border-zinc-200 rounded-[8px] p-[1px] dark:bg-white/10 dark:border-white/10">
                 @if ($paginator->onFirstPage())
                     <div aria-disabled="true" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-300 dark:text-zinc-500">
-                        <flux:icon.chevron-left variant="micro" />
+                        <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                     </div>
                 @else
                     <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.previous') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                        <flux:icon.chevron-left variant="micro" />
+                        <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                     </button>
                 @endif
 
@@ -141,11 +153,13 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
 
                 @if ($paginator->hasMorePages())
                     <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-400 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
-                        <flux:icon.chevron-right variant="micro" />
+                        <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                     </button>
                 @else
                     <div aria-label="{{ __('pagination.next') }}" class="flex justify-center items-center size-6 rounded-[6px] text-zinc-300 dark:text-zinc-500">
-                        <flux:icon.chevron-right variant="micro" />
+                        <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
+                        <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                     </div>
                 @endif
             </div>
