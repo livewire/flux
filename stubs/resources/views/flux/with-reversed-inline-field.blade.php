@@ -4,7 +4,7 @@
 ])
 
 @php
-extract(flux::forwardedattributes($attributes, [
+extract(Flux::forwardedattributes($attributes, [
     'name',
     'description',
     'label',
