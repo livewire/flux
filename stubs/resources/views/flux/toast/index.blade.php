@@ -9,6 +9,12 @@
     $classes = Flux::classes('p-2 flex rounded-xl shadow-lg border')
         ->add('border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 border-b-zinc-300/80')
         ->add($variant === 'primary' ? [
+            // Default
+            '[[data-flux-toast-dialog][data-variant=""]_&]:not-dark:bg-accent',
+            '[[data-flux-toast-dialog][data-variant=""]_&]:not-dark:border-accent',
+            '[[data-flux-toast-dialog][data-variant=""]_&]:not-dark:in-[ui-toast-group[position^="top"]:not([expanded]):not(:hover)]:border-b-white/10',
+            '[[data-flux-toast-dialog][data-variant=""]_&]:not-dark:in-[ui-toast-group[position^="bottom"]:not([expanded]):not(:hover)]:border-t-white/10',
+
             // Info variant
             '[[data-flux-toast-dialog][data-variant=info]_&]:bg-cyan-600',
             '[[data-flux-toast-dialog][data-variant=info]_&]:dark:bg-cyan-500',
@@ -46,24 +52,25 @@
 
     $headingClasses = Flux::classes('font-medium text-sm text-zinc-800 dark:text-white [&:not(:empty)+div]:font-normal [&:not(:empty)+div]:text-zinc-500 [&:not(:empty)+div]:dark:text-zinc-300 not-empty:pb-2')
         ->add($variant === 'primary' ? [
-            '[[data-flux-toast-dialog]:is([data-variant=success],[data-variant=info],[data-variant=danger])_&]:text-white',
+            '[[data-flux-toast-dialog]:is([data-variant=""],[data-variant=success],[data-variant=info],[data-variant=danger])_&]:text-white',
             '[[data-flux-toast-dialog][data-variant=warning]_&]:text-amber-950',
         ] : '');
 
     $textClasses = Flux::classes('font-medium text-sm text-zinc-800 dark:text-white')
         ->add($variant === 'primary' ? [
-            '[[data-flux-toast-dialog]:is([data-variant=success],[data-variant=info],[data-variant=danger])_&]:text-white',
+            '[[data-flux-toast-dialog]:is([data-variant=""],[data-variant=success],[data-variant=info],[data-variant=danger])_&]:text-white',
             '[[data-flux-toast-dialog][data-variant=warning]_&]:text-amber-950',
         ] : '');
 
     $closeButtonClasses = Flux::classes('inline-flex items-center justify-center gap-2 font-medium truncate h-8 w-8 text-sm rounded-md bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-400 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white disabled:opacity-50 dark:disabled:opacity-75 disabled:cursor-default')
         ->add($variant === 'primary' ? [
-            '[[data-flux-toast-dialog]:is([data-variant=success],[data-variant=info],[data-variant=danger])_&]:text-white',
-            '[[data-flux-toast-dialog][data-variant=warning]_&]:text-amber-950',
+            '[[data-flux-toast-dialog]:is([data-variant=""],[data-variant=success],[data-variant=info],[data-variant=danger])_&]:text-white',
+            '[[data-flux-toast-dialog][data-variant=""]_&]:not-dark:hover:bg-white/20',
             '[[data-flux-toast-dialog][data-variant=info]_&]:hover:bg-cyan-500',
             '[[data-flux-toast-dialog][data-variant=info]_&]:dark:hover:bg-cyan-400',
             '[[data-flux-toast-dialog][data-variant=success]_&]:hover:bg-lime-500',
             '[[data-flux-toast-dialog][data-variant=success]_&]:dark:hover:bg-lime-400',
+            '[[data-flux-toast-dialog][data-variant=warning]_&]:text-amber-950',
             '[[data-flux-toast-dialog][data-variant=warning]_&]:hover:bg-amber-200/80',
             '[[data-flux-toast-dialog][data-variant=danger]_&]:hover:bg-rose-500',
             '[[data-flux-toast-dialog][data-variant=danger]_&]:dark:hover:bg-rose-400',
