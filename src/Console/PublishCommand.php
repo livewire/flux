@@ -72,6 +72,7 @@ class PublishCommand extends Command
             'Tabs' => ['tabs','tab'],
             'Table' => ['table', 'pagination'],
             'Time picker' => ['time-picker'],
+            'Timeline' => ['timeline'],
         ],
     ];
 
