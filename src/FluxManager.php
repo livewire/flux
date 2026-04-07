@@ -176,11 +176,12 @@ class FluxManager
 
     public function componentExists($name)
     {
-        // Laravel 12+ uses xxh128 hashing for views https://github.com/laravel/framework/pull/52301...
-        if (app()->version() >= 12) {
-            return app('view')->exists(hash('xxh128', 'flux') . '::' . $name);
-        }
+        return app('view')->exists($this->getFluxHash() . '::' . $name);
+    }
 
-        return app('view')->exists(md5('flux') . '::' . $name);
+    public function getFluxHash()
+    {
+        // Laravel 12+ uses xxh128 hashing for views https://github.com/laravel/framework/pull/52301...
+        return app()->version() >= 12 ? hash('xxh128', 'flux') : md5('flux');
     }
 }
