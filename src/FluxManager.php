@@ -176,10 +176,10 @@ class FluxManager
 
     public function componentExists($name)
     {
-        return app('view')->exists($this->getFluxHash() . '::' . $name);
+        return app('view')->exists($this->getFluxViewNamespaceHash() . '::' . $name);
     }
 
-    public function getFluxHash()
+    public function getFluxViewNamespaceHash()
     {
         // Laravel 12+ uses xxh128 hashing for views https://github.com/laravel/framework/pull/52301...
         return app()->version() >= 12 ? hash('xxh128', 'flux') : md5('flux');

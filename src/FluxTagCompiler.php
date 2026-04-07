@@ -14,7 +14,7 @@ class FluxTagCompiler extends ComponentTagCompiler
 
             $class = \Illuminate\View\AnonymousComponent::class;
 
-            $fluxHash = Flux::getFluxHash();
+            $fluxHash = Flux::getFluxViewNamespaceHash();
 
             // Laravel 12+ uses xxh128 hashing for views https://github.com/laravel/framework/pull/52301...
             return "<?php if (!Flux::componentExists(\$name = {$component})) throw new \Exception(\"Flux component [{\$name}] does not exist.\"); ?>##BEGIN-COMPONENT-CLASS##@component('{$class}', 'flux::' . {$component}, [
