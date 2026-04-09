@@ -72,7 +72,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
     <div {{ $attributes->class('@container pt-3 border-t border-zinc-100 dark:border-zinc-700 flex justify-between items-center gap-3') }} data-flux-pagination>
         @if ($paginator->total() > 0)
             <div class="text-zinc-500 dark:text-zinc-400 text-xs font-medium whitespace-nowrap">
-                {!! __('Showing') !!} {{ $paginator->firstItem() }} {!! __('to') !!} {{ $paginator->lastItem() }} {!! __('of') !!} {{ $paginator->total() }} {!! __('results') !!}
+                {!! __('Showing') !!} {{ $paginator->firstItem() }} {!! __('to') !!} {{ $paginator->lastItem() }} {!! __('of') !!} {{ $paginator->total() }} {!! trans_choice('result|results', $paginator->total()) !!}
             </div>
         @else
             <div></div>
