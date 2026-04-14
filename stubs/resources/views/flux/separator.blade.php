@@ -24,7 +24,8 @@ $classes = Flux::classes('border-0 [print-color-adjust:exact]')
 @endphp
 
 <?php if ($text): ?>
-    <div data-orientation="{{ $orientation }}" {{ $attributes->class('flex items-center w-full') }} role="none" data-flux-separator>
+    <?php $containerAttributes = Flux::attributesAfter('container:', $attributes); ?>
+    <div data-orientation="{{ $orientation }}" {{ $containerAttributes->class('flex items-center w-full') }} role="none" data-flux-separator>
         <div {{ $attributes->class([$classes, 'grow']) }}></div>
 
         <span class="shrink mx-6 font-medium text-sm text-zinc-500 dark:text-zinc-300 whitespace-nowrap">{{ $text }}</span>
