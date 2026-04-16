@@ -15,7 +15,7 @@ $attributes = $attributes->merge([
     x-data="fluxInputClearable"
     x-on:click="clear()"
     tabindex="-1"
-    aria-label="Clear input"
+    aria-label="{{ __('Clear input') }}"
     data-flux-clear-button
 >
     <flux:icon.x-mark variant="micro" />

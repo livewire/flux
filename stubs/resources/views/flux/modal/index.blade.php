@@ -128,7 +128,7 @@ if (! $overflow) {
                     <?php if ($closable): ?>
                         <div class="absolute top-0 end-0 mt-4 me-4">
                             <flux:modal.close>
-                                <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
+                                <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="{{ __('Close modal') }}" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
                             </flux:modal.close>
                         </div>
                     <?php endif; ?>
@@ -140,7 +140,7 @@ if (! $overflow) {
             <?php if ($closable): ?>
                 <div class="absolute top-0 end-0 mt-4 me-4">
                     <flux:modal.close>
-                        <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="Close modal" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
+                        <flux:button variant="ghost" icon="x-mark" size="sm" aria-label="{{ __('Close modal') }}" class="text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!"></flux:button>
                     </flux:modal.close>
                 </div>
             <?php endif; ?>
