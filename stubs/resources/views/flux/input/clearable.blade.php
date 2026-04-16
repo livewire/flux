@@ -18,5 +18,5 @@ $attributes = $attributes->merge([
     aria-label="Clear input"
     data-flux-clear-button
 >
-    <flux:icon.x-mark variant="micro" />
+    <flux:icon.x-mark :variant="$iconVariant" />
 </flux:button>

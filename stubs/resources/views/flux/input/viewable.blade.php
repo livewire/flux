@@ -17,6 +17,6 @@ $attributes = $attributes->merge([
     x-bind:data-viewable-open="open"
     aria-label="{{ __('Toggle password visibility') }}"
 >
-    <flux:icon.eye-slash variant="micro" class="hidden [[data-viewable-open]>&]:block" />
-    <flux:icon.eye variant="micro" class="block [[data-viewable-open]>&]:hidden" />
+    <flux:icon.eye-slash :variant="$iconVariant" class="hidden [[data-viewable-open]>&]:block" />
+    <flux:icon.eye :variant="$iconVariant" class="block [[data-viewable-open]>&]:hidden" />
 </flux:button>

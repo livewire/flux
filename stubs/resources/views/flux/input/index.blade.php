@@ -174,7 +174,7 @@ $classes = Flux::classes()
                     <?php endif; ?>
 
                     <?php if ($clearable): ?>
-                        <flux:input.clearable inset="left right" :$size />
+                        <flux:input.clearable inset="left right" :$size :$iconVariant />
                     <?php endif; ?>
 
                     <?php if ($kbd): ?>
@@ -182,15 +182,15 @@ $classes = Flux::classes()
                     <?php endif; ?>
 
                     <?php if ($expandable): ?>
-                        <flux:input.expandable inset="left right" :$size />
+                        <flux:input.expandable inset="left right" :$size :$iconVariant />
                     <?php endif; ?>
 
                     <?php if ($copyable): ?>
-                        <flux:input.copyable inset="left right" :$size />
+                        <flux:input.copyable inset="left right" :$size :$iconVariant />
                     <?php endif; ?>
 
                     <?php if ($viewable): ?>
-                        <flux:input.viewable inset="left right" :$size />
+                        <flux:input.viewable inset="left right" :$size :$iconVariant />
                     <?php endif; ?>
 
                     <?php if (is_string($iconTrailing)): ?>
