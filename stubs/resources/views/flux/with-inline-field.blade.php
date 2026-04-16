@@ -29,7 +29,7 @@ extract(Flux::forwardedattributes($attributes, [
         <?php endif; ?>
 
         @unblaze(scope: ['name' => $name])
-        <flux:error :name="$scope['name']" />
+            <flux:error :name="$scope['name']" />
         @endunblaze
     </flux:field>
 <?php else: ?>

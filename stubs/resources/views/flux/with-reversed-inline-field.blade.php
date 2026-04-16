@@ -30,7 +30,7 @@ extract(Flux::forwardedattributes($attributes, [
         {{ $slot }}
 
         @unblaze(scope: ['name' => $name])
-        <flux:error :name="$scope['name']" />
+            <flux:error :name="$scope['name']" />
         @endunblaze
     </flux:field>
 <?php else: ?>
