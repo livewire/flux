@@ -12,6 +12,6 @@ $classes = Flux::classes('[grid-area:main]')
     ;
 @endphp
 
-<div {{ $attributes->class($classes) }} data-flux-main>
+<main {{ $attributes->class($classes) }} data-flux-main>
     {{ $slot }}
-</div>
+</main>
