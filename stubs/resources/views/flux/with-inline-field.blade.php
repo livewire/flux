@@ -28,7 +28,9 @@ extract(Flux::forwardedattributes($attributes, [
             <flux:description>{{ $description }}</flux:description>
         <?php endif; ?>
 
-        <flux:error :$name />
+        @unblaze(scope: ['name' => $name])
+            <flux:error :name="$scope['name']" />
+        @endunblaze
     </flux:field>
 <?php else: ?>
     {{ $slot }}
