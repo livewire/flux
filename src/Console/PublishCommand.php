@@ -58,6 +58,7 @@ class PublishCommand extends Command
             'Calendar' => ['calendar'],
             'Chart' => ['chart'],
             'Checkbox' => ['checkbox'],
+            'Color picker' => ['color-picker'],
             'Command' => ['command'],
             'Composer' => ['composer'],
             'Context' => ['context'],
