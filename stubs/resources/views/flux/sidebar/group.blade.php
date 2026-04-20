@@ -13,8 +13,10 @@
 ])
 
 @php
+$wireModel = $attributes->wire('model');
+
 // Support adding the .self modifier to the wire:model directive...
-if ($expandable && ($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wireModel->hasModifier('self')) {
+if ($expandable && $wireModel && $wireModel->directive && ! $wireModel->hasModifier('self')) {
     unset($attributes[$wireModel->directive]);
 
     $wireModel->directive .= '.self';
@@ -23,9 +25,7 @@ if ($expandable && ($wireModel = $attributes->wire('model')) && $wireModel->dire
 }
 
 // Support binding the state to a Livewire property
-$state = ($expandable && ($wireModel ?? null)?->value)
-    ? '$wire.' . $wireModel->value
-    : ($expanded ? 'true' : 'false');
+$state = $wireModel?->value ? '$wire.' . $wireModel->value : ($expanded ? 'true' : 'false');
 @endphp
 
 <?php if ($expandable && $heading): ?>
