@@ -12,9 +12,25 @@
     'icon' => null,
 ])
 
+@php
+// Support adding the .self modifier to the wire:model directive...
+if ($expandable && ($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wireModel->hasModifier('self')) {
+    unset($attributes[$wireModel->directive]);
+
+    $wireModel->directive .= '.self';
+
+    $attributes = $attributes->merge([$wireModel->directive => $wireModel->value]);
+}
+
+// Support binding the state to a Livewire property
+$state = ($expandable && ($wireModel ?? null)?->value)
+    ? '$wire.' . $wireModel->value
+    : ($expanded ? 'true' : 'false');
+@endphp
+
 <?php if ($expandable && $heading): ?>
     <?php if ($icon): ?>
-        <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} @if ($expanded === true) open @endif data-flux-sidebar-group>
+        <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} x-data="{ open: {{ $state }} }" x-model.self="open" @if ($expanded === true) open @endif data-flux-sidebar-group>
             <button type="button" class="border-1 border-transparent w-full h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
                 <div class="px-3">
                     <?php if (is_string($icon) && $icon !== ''): ?>
@@ -68,7 +84,7 @@
             </flux:menu>
         </flux:dropdown>
     <?php else: ?>
-        <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} @if ($expanded === true) open @endif data-flux-sidebar-group>
+        <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} x-data="{ open: {{ $state }} }" x-model.self="open" @if ($expanded === true) open @endif data-flux-sidebar-group>
             <button type="button" class="border-1 border-transparent w-full h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
                 <div class="ps-3.5 pe-3.5">
                     <flux:icon.chevron-down class="size-3! hidden group-data-open/disclosure-button:block" />
