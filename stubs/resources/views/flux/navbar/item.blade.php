@@ -22,7 +22,7 @@
 $square ??= $slot->isEmpty();
 
 // Size-up icons in square/icon-only buttons...
-$iconClasses = Flux::classes($square ? 'size-6' : 'size-5');
+$iconClasses = Flux::classes($square ? 'size-6!' : 'size-5!');
 
 $classes = Flux::classes()
     ->add('px-3 h-8 flex items-center rounded-lg')
@@ -72,7 +72,7 @@ $classes = Flux::classes()
     <?php endif; ?>
 
     <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="size-4! ms-1" />
+        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="size-5! ms-1" />
     <?php elseif ($iconTrailing): ?>
         {{ $iconTrailing }}
     <?php endif; ?>
