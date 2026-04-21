@@ -6,8 +6,24 @@
     'heading' => null,
 ])
 
+@php
+$wireModel = $attributes->wire('model');
+
+// Support adding the .self modifier to the wire:model directive...
+if ($expandable && $wireModel && $wireModel->directive && ! $wireModel->hasModifier('self')) {
+    unset($attributes[$wireModel->directive]);
+
+    $wireModel->directive .= '.self';
+
+    $attributes = $attributes->merge([$wireModel->directive => $wireModel->value]);
+}
+
+// Support binding the state to a Livewire property
+$state = $wireModel?->value ? '$wire.' . $wireModel->value : ($expanded ? 'true' : 'false');
+@endphp
+
 <?php if ($expandable && $heading): ?>
-    <ui-disclosure {{ $attributes->class('group/disclosure') }} @if ($expanded === true) open @endif data-flux-navlist-group>
+    <ui-disclosure {{ $attributes->class('group/disclosure') }} x-data="{ open: {{ $state }} }" x-model.self="open" @if ($expanded === true) open @endif data-flux-navlist-group>
         <button type="button" class="w-full h-10 lg:h-8 flex items-center group/disclosure-button mb-[2px] rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
             <div class="ps-3 pe-4">
                 <flux:icon.chevron-down class="size-3! hidden group-data-open/disclosure-button:block" />
