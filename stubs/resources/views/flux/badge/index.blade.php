@@ -97,7 +97,7 @@ $classes = Flux::classes()
 
     <?php if ($iconTrailing): ?>
         <div class="ps-1 flex items-center" data-flux-badge-icon:trailing>
-            <?php if (is_string($iconTrailing)): ?>
+            <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
             <?php else: ?>
                 {{ $iconTrailing }}
