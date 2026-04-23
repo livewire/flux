@@ -11,6 +11,7 @@
     'badgeColor' => null,
     'variant' => null,
     'iconDot' => null,
+    'iconTrailingDot' => null,
     'accent' => true,
     'square' => null,
     'badge' => null,
@@ -79,7 +80,7 @@ $classes = Flux::classes()
                 {{ $iconTrailing }}
             <?php endif; ?>
 
-            <?php if ($iconDot): ?>
+            <?php if ($iconTrailingDot): ?>
                 <div class="absolute top-[-2px] end-[-2px]">
                     <div class="size-[6px] rounded-full bg-zinc-500 dark:bg-zinc-400"></div>
                 </div>
