@@ -1,5 +1,10 @@
 @blaze(fold: true, memo: true)
 
+@props([
+    'iconVariant' => 'mini',
+    'size' => null,
+])
+
 @php
 $attributes = $attributes->merge([
     'variant' => 'subtle',
