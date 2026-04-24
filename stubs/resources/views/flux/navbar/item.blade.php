@@ -75,7 +75,7 @@ $classes = Flux::classes()
     <?php if ($iconTrailing): ?>
         <div class="relative">
             <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-                <flux:icon :icon="$iconTrailing" variant="micro" class="size-4 ms-1" />
+                <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!}" />
             <?php elseif ($iconTrailing): ?>
                 {{ $iconTrailing }}
             <?php endif; ?>
