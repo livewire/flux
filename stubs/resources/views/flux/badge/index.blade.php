@@ -86,22 +86,24 @@ $classes = Flux::classes()
     });
 @endphp
 
-<flux:button-or-div :attributes="$attributes->class($classes)" data-flux-badge>
-    <?php if (is_string($icon) && $icon !== ''): ?>
-        <flux:icon :$icon :variant="$iconVariant" :class="$iconClasses" data-flux-badge-icon />
-    <?php else: ?>
-        {{ $icon }}
-    <?php endif; ?>
+<flux:with-tooltip :$attributes>
+    <flux:button-or-div :attributes="$attributes->class($classes)" data-flux-badge>
+        <?php if (is_string($icon) && $icon !== ''): ?>
+            <flux:icon :$icon :variant="$iconVariant" :class="$iconClasses" data-flux-badge-icon />
+        <?php else: ?>
+            {{ $icon }}
+        <?php endif; ?>
 
-    {{ $slot->isEmpty() ? $label : $slot }}
+        {{ $slot->isEmpty() ? $label : $slot }}
 
-    <?php if ($iconTrailing): ?>
-        <div class="ps-1 flex items-center" data-flux-badge-icon:trailing>
-            <?php if (is_string($iconTrailing)): ?>
-                <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
-            <?php else: ?>
-                {{ $iconTrailing }}
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
-</flux:button-or-div>
+        <?php if ($iconTrailing): ?>
+            <div class="ps-1 flex items-center" data-flux-badge-icon:trailing>
+                <?php if (is_string($iconTrailing)): ?>
+                    <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$iconClasses" />
+                <?php else: ?>
+                    {{ $iconTrailing }}
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </flux:button-or-div>
+</flux:with-tooltip>
