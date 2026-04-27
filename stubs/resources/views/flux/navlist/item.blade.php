@@ -84,11 +84,11 @@ $classes = Flux::classes()
         <div class="relative">
             <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="size-4!" />
-            <?php elseif ($iconTrailing): ?>
+            <?php else: ?>
                 {{ $iconTrailing }}
             <?php endif; ?>
 
-            <?php if ($iconTrailingDot): ?>
+            <?php if ($iconDot): ?>
                 <div class="absolute top-[-2px] end-[-2px]">
                     <div class="size-[6px] rounded-full bg-zinc-500 dark:bg-zinc-400"></div>
                 </div>
