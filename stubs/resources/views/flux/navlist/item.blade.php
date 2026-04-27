@@ -11,7 +11,6 @@
     'badgeColor' => null,
     'variant' => null,
     'iconDot' => null,
-    'iconTrailingDot' => null,
     'accent' => true,
     'badge' => null,
     'icon' => null,
