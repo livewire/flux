@@ -56,14 +56,14 @@ $iconClasses = Flux::classes()
         </div>
     <?php endif; ?>
 
-    @if ($separator == null)
+    <?php if ($separator === null): ?>
         <flux:icon icon="chevron-right" variant="mini" class="{{ $separatorClasses->add('rtl:hidden') }}" />
         <flux:icon icon="chevron-left" variant="mini" class="{{ $separatorClasses->add('hidden rtl:inline') }}" />
-    @elseif (! is_string($separator))
+    <?php elseif (! is_string($separator)): ?>
         {{ $separator }}
-    @elseif ($separator === 'slash')
+    <?php elseif ($separator === 'slash'): ?>
         <flux:icon icon="slash" variant="mini" class="{{ $separatorClasses->add('rtl:-scale-x-100') }}" />
-    @else
+    <?php else: ?>
         <flux:icon :icon="$separator" variant="mini" class="{{ $separatorClasses }}" />
-    @endif
+    <?php endif; ?>
 </div>
