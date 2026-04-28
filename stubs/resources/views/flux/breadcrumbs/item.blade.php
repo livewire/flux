@@ -56,7 +56,7 @@ $iconClasses = Flux::classes()
         </div>
     <?php endif; ?>
 
-    <?php if ($separator === null): ?>
+    <?php if ($separator == null): ?>
         <flux:icon icon="chevron-right" variant="mini" class="{{ $separatorClasses->add('rtl:hidden') }}" />
         <flux:icon icon="chevron-left" variant="mini" class="{{ $separatorClasses->add('hidden rtl:inline') }}" />
     <?php elseif (! is_string($separator)): ?>
