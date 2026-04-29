@@ -6,11 +6,13 @@
 @props([
     'iconVariant' => 'mini',
     'iconTrailing' => null,
+    'badgeColor' => null,
     'variant' => 'default',
     'disabled' => false,
     'indent' => false,
     'suffix' => null,
     'value' => null,
+    'badge' => null,
     'icon' => null,
     'kbd' => null,
 ])
@@ -59,7 +61,9 @@ $classes = Flux::classes()
         {{ $icon }}
     <?php endif; ?>
 
-    {{ $slot }}
+    <?php if ($slot->isNotEmpty()): ?>
+        <div class="flex-1 text-sm font-medium leading-none whitespace-nowrap [[data-nav-footer]_&]:hidden [[data-nav-sidebar]_[data-nav-footer]_&]:block" data-content>{{ $slot }}</div>
+    <?php endif; ?>
 
     <?php if ($suffix): ?>
         <?php if (is_string($suffix)): ?>
@@ -75,5 +79,10 @@ $classes = Flux::classes()
         <flux:icon :icon="$iconTrailing" :variant="$iconVariant" :class="$trailingIconClasses" />
     <?php elseif ($iconTrailing): ?>
         {{ $iconTrailing }}
+    <?php endif; ?>
+
+    <?php if (isset($badge) && $badge !== ''): ?>
+        <?php $badgeAttributes = Flux::attributesAfter('badge:', $attributes, ['color' => $badgeColor]); ?>
+        <flux:navmenu.badge :attributes="$badgeAttributes">{{ $badge }}</flux:navmenu.badge>
     <?php endif; ?>
 </flux:button-or-link>
