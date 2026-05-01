@@ -38,9 +38,9 @@ if ($collapsibleOnMobile) {
 }
 @endphp
 
-@if ($collapsibleOnMobile)
+<?php if ($collapsibleOnMobile): ?>
     <flux:sidebar.backdrop />
-@endif
+<?php endif; ?>
 
 <ui-sidebar
     {{ $attributes->class($classes) }}
