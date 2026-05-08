@@ -72,7 +72,7 @@ $classes = Flux::classes()
     <?php endif; ?>
 
     <?php if ($iconDot && ! $icon && $iconTrailing): ?>
-        <div class="relative">
+        <div class="relative ms-1">
             <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
                 <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!}" />
             <?php else: ?>
@@ -84,7 +84,7 @@ $classes = Flux::classes()
             </div>
         </div>
     <?php elseif (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!}" />
+        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!} ms-1" />
     <?php elseif ($iconTrailing): ?>
         {{ $iconTrailing }}
     <?php endif; ?>
