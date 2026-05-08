@@ -16,18 +16,18 @@ $classes = Flux::classes()
     {{ $slot }}
 
     <div class="rounded-sm text-zinc-400 group-hover/sortable:text-zinc-800 dark:group-hover/sortable:text-white">
-        @if ($sorted)
-            @if ($direction === 'asc')
+        <?php if ($sorted): ?>
+            <?php if ($direction === 'asc'): ?>
                 <flux:icon.chevron-up variant="micro" />
-            @elseif ($direction === 'desc')
+            <?php elseif ($direction === 'desc'): ?>
                 <flux:icon.chevron-down variant="micro" />
-            @else
+            <?php else: ?>
                 <flux:icon.chevron-down variant="micro" />
-            @endif
-        @else
+            <?php endif; ?>
+        <?php else: ?>
             <div class="opacity-0 group-hover/sortable:opacity-100">
                 <flux:icon.chevron-down variant="micro" />
             </div>
-        @endif
+        <?php endif; ?>
     </div>
 </button>
