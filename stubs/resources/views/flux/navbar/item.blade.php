@@ -71,8 +71,20 @@ $classes = Flux::classes()
         <div class="{{ $icon ? 'ms-3' : '' }} flex-1 text-sm font-medium leading-none whitespace-nowrap [[data-nav-footer]_&]:hidden [[data-nav-sidebar]_[data-nav-footer]_&]:block" data-content>{{ $slot }}</div>
     <?php endif; ?>
 
-    <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!}" />
+    <?php if ($iconDot && ! $icon && $iconTrailing): ?>
+        <div class="relative ms-1">
+            <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+                <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!}" />
+            <?php else: ?>
+                {{ $iconTrailing }}
+            <?php endif; ?>
+
+            <div class="absolute top-[-2px] end-[-2px]">
+                <div class="size-[6px] rounded-full bg-zinc-500 dark:bg-zinc-400"></div>
+            </div>
+        </div>
+    <?php elseif (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+        <flux:icon :icon="$iconTrailing" :variant="$iconVariant" class="{!! $iconClasses !!} ms-1" />
     <?php elseif ($iconTrailing): ?>
         {{ $iconTrailing }}
     <?php endif; ?>
