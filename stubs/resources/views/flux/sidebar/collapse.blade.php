@@ -13,7 +13,7 @@
 
 @php
 $classes = Flux::classes()
-    ->add('w-10 h-8 flex items-center justify-center')
+    ->add('w-10 h-8 shrink-0 flex items-center justify-center')
     ->add('in-data-flux-sidebar-collapsed-desktop:opacity-0')
     ->add('in-data-flux-sidebar-collapsed-desktop:absolute')
     ->add('in-data-flux-sidebar-collapsed-desktop:in-data-flux-sidebar-active:opacity-100')
