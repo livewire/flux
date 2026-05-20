@@ -169,6 +169,7 @@ Custom element display rules...
     ui-editor { display: block; }
     ui-editor-content { display: block; }
     ui-progress { display: block; }
+    ui-carousel, ui-carousel-track, ui-carousel-slide { display: block; }
 }
 
 /**
