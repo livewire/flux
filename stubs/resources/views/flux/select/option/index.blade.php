@@ -1,4 +1,5 @@
-@blaze(fold: true, safe: [
+@blaze(fold: true, unsafe: [
+    // variant props
     'filterable', 'indicator', 'loading',
 ])
 
