@@ -25,7 +25,7 @@ extract(Flux::forwardedAttributes($attributes, [
     'badge' => null,
 ])
 
-<?php if (isset($label) || isset($description)): ?>
+<?php if (isset($label) || isset($description) || isset($descriptionTrailing)): ?>
     <?php
 
         $fieldAttributes = Flux::attributesAfter('field:', $attributes, []);
