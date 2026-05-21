@@ -20,7 +20,7 @@ $classes = Flux::classes()
     ->add('bg-white dark:bg-white/10 dark:disabled:bg-white/[7%]')
     ->add($rows === 'auto' ? 'field-sizing-content' : '')
     ->add($resize ? match ($resize) {
-        default => 'resize' // to prevent unhandled match type when user only provide the attribute without value
+        default => 'resize', // to prevent unhandled match type when user only provide the attribute without value
         'none' => 'resize-none',
         'both' => 'resize',
         'horizontal' => 'resize-x',
