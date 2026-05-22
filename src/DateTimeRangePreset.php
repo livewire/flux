@@ -41,6 +41,8 @@ enum DateTimeRangePreset: string
 
     public function dates(?Carbon $start = null)
     {
+        $currentMinute = Carbon::now()->startOfMinute();
+
         return match ($this) {
             static::Today => [ Carbon::now()->startOfDay(), Carbon::now()->endOfDay() ],
             static::Yesterday => [ Carbon::now()->subDay()->startOfDay(), Carbon::now()->subDay()->endOfDay() ],
@@ -69,10 +71,10 @@ enum DateTimeRangePreset: string
             static::Next3Months => [ Carbon::now()->startOfDay(), Carbon::now()->addMonths(3)->subDay()->endOfDay() ],
             static::Next6Months => [ Carbon::now()->startOfDay(), Carbon::now()->addMonths(6)->subDay()->endOfDay() ],
             static::AllTime => [ $start, Carbon::now()->endOfDay() ],
-            static::LastHour => [ Carbon::now()->subHour(), Carbon::now() ],
-            static::NextHour => [ Carbon::now(), Carbon::now()->addHour() ],
-            static::Last24Hours => [ Carbon::now()->subDay(), Carbon::now() ],
-            static::Next24Hours => [ Carbon::now(), Carbon::now()->addDay() ],
+            static::LastHour => [ $currentMinute->copy()->subHour()->addMinute(), $currentMinute->copy() ],
+            static::NextHour => [ $currentMinute->copy(), $currentMinute->copy()->addHour()->subMinute() ],
+            static::Last24Hours => [ $currentMinute->copy()->subDay()->addMinute(), $currentMinute->copy() ],
+            static::Next24Hours => [ $currentMinute->copy(), $currentMinute->copy()->addDay()->subMinute() ],
         };
     }
 
