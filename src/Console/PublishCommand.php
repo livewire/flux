@@ -56,6 +56,7 @@ class PublishCommand extends Command
             'Accordion' => ['accordion'],
             'Autocomplete' => ['autocomplete'],
             'Calendar' => ['calendar'],
+            'Carousel' => ['carousel'],
             'Chart' => ['chart'],
             'Checkbox' => ['checkbox'],
             'Color picker' => ['color-picker'],
