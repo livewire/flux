@@ -36,6 +36,11 @@
 
                             {{-- Text --}}
                             <div class="font-medium text-sm text-zinc-800 dark:text-white"><slot name="text"></slot></div>
+
+                            {{-- Link --}}
+                            <template name="link">
+                                <a class="font-medium text-sm text-[var(--color-accent-content)] decoration-[color-mix(in_oklab,var(--color-accent-content),transparent_80%)] underline underline-offset-[6px] hover:decoration-current"><slot name="text"></slot></a>
+                            </template>
                         </div>
                     </div>
 
