@@ -35,7 +35,8 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
                     </div>
                 @else
                     @if(method_exists($paginator,'getCursorName'))
-                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->previousCursor()->encode() }}" wire:click="setPage('{{$paginator->previousCursor()->encode()}}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                        @php($previousCursor = $paginator->previousCursor() ?? $paginator->cursor())
+                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $previousCursor?->encode() }}" wire:click="setPage('{{ $previousCursor?->encode() }}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                             <flux:icon.chevron-left variant="micro" class="rtl:hidden" />
                             <flux:icon.chevron-right variant="micro" class="hidden rtl:inline" />
                         </button>
@@ -49,7 +50,8 @@ $scrollIntoViewJsSnippet = ($scrollTo !== null && $scrollTo !== false)
 
                 @if ($paginator->hasMorePages())
                     @if(method_exists($paginator,'getCursorName'))
-                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $paginator->nextCursor()->encode() }}" wire:click="setPage('{{$paginator->nextCursor()->encode()}}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
+                        @php($nextCursor = $paginator->nextCursor() ?? $paginator->cursor())
+                        <button type="button" wire:key="cursor-{{ $paginator->getCursorName() }}-{{ $nextCursor?->encode() }}" wire:click="setPage('{{ $nextCursor?->encode() }}','{{ $paginator->getCursorName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" class="flex justify-center items-center size-8 sm:size-6 rounded-[6px] text-zinc-400 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/20 hover:text-zinc-800 dark:hover:text-white">
                             <flux:icon.chevron-right variant="micro" class="rtl:hidden" />
                             <flux:icon.chevron-left variant="micro" class="hidden rtl:inline" />
                         </button>
