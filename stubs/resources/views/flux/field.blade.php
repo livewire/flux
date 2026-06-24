@@ -33,6 +33,7 @@ $classes = Flux::classes()
         default => [ // Adjust spacing around description...
             '[&>[data-flux-label]+[data-flux-description]]:mt-0',
             '[&>[data-flux-label]+[data-flux-description]]:mb-3',
+            '[&>[data-flux-description]:first-child:has(+*)]:mb-3',
             '[&>*:not([data-flux-label])+[data-flux-description]]:mt-3',
         ],
         'bare' => '',
