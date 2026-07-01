@@ -14,7 +14,7 @@ $classes = Flux::classes([
 ])->add(match ($size) {
     default => 'text-base sm:text-sm rounded-s-lg',
     'sm' => 'text-sm rounded-s-md',
-    'xs' => 'text-xs rounded-s-sm',
+    'xs' => 'text-xs rounded-s-md',
 });
 @endphp
 
