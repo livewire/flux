@@ -14,14 +14,12 @@
 ])
 
 @php
-// Normalize the "indicator" prop into a position. `true` keeps the historical
-// right-aligned indicator, `false` hides it, and `start`/`end` (with `left`/`right`
-// aliases) control which side of the card the indicator sits on...
-$indicatorPosition = match ($indicator) {
-    'start', 'left' => 'start',
-    'end', 'right', true => 'end',
-    default => false,
-};
+// Normalize the "indicator" prop into a position while preserving the previous truthy/falsy behaviour...
+$indicatorPosition = $indicator ? 'end' : false;
+
+if ($indicator === 'start' || $indicator === 'left') {
+    $indicatorPosition = 'start';
+}
 
 $iconClasses = Flux::classes()
     ->add('inline-block mt-0.5 text-zinc-400 [ui-radio[data-checked]_&]:text-zinc-800 dark:[ui-radio[data-checked]_&]:text-white')
