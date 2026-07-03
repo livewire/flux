@@ -16,7 +16,6 @@ $classes = Flux::classes([
     'sm' => 'text-sm rounded-e-md',
     'xs' => 'text-xs rounded-e-md',
 });
-
 @endphp
 
 <div {{ $attributes->class($classes) }} data-flux-input-group-suffix>
