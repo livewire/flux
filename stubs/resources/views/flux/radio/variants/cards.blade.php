@@ -14,7 +14,7 @@
 ])
 
 @php
-// Normalize the "indicator" prop into a position while preserving the previous truthy/falsy behaviour...
+// Normalize the "indicator" prop into a position while preserving the previous truthy/falsy behavior...
 $indicatorPosition = $indicator ? 'end' : false;
 
 if ($indicator === 'start' || $indicator === 'left') {
