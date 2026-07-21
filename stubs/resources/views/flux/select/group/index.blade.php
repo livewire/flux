@@ -12,4 +12,4 @@ $variant = $variant !== 'default' && Flux::componentExists('select.variants.' . 
     : 'default';
 @endphp
 
-<flux:delegate-component :component="'select.option.group.variants.' . $variant">{{ $slot }}</flux:delegate-component>
+<flux:delegate-component :component="'select.group.variants.' . $variant">{{ $slot }}</flux:delegate-component>
