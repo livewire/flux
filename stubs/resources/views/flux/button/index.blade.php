@@ -76,8 +76,16 @@ $classes = Flux::classes()
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
                 : ($iconLeading && $iconLeading !== '' ? 'ps-3' : 'ps-4') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-3' : 'pe-4')
         ),
-        'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
-        'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
+        'sm' => 'h-8 text-sm rounded-md' . ' ' . (
+            $square
+                ? 'w-8'
+                : ($iconLeading && $iconLeading !== '' ? 'ps-2.5' : 'ps-3') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-2.5' : 'pe-3')
+        ),
+        'xs' => 'h-6 text-xs rounded-md' . ' ' . (
+            $square
+                ? 'w-6'
+                : ($iconLeading && $iconLeading !== '' ? 'ps-1.5' : 'ps-2') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-1.5' : 'pe-2')
+        ),
     })
     ->add('inline-flex') // Buttons are inline by default but links are blocks, so inline-flex is needed here to ensure link-buttons are displayed the same as buttons...
     ->add($inset ? match ($size) { // Inset...
