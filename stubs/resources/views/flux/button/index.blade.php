@@ -62,7 +62,7 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 }
 
 $classes = Flux::classes()
-    ->add('relative items-center font-medium justify-center gap-2 whitespace-nowrap')
+    ->add('relative items-center font-medium justify-center whitespace-nowrap')
     ->add('disabled:opacity-75 dark:disabled:opacity-75 disabled:cursor-default disabled:pointer-events-none')
     ->add(match ($align) {
         'start' => 'justify-start',
@@ -70,18 +70,18 @@ $classes = Flux::classes()
         'end' => 'justify-end',
     })
     ->add(match ($size) { // Size...
-        'base' => 'h-10 text-sm rounded-lg' . ' ' . (
+        'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . (
             $square
                 ? 'w-10'
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
                 : ($iconLeading && $iconLeading !== '' ? 'ps-3' : 'ps-4') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-3' : 'pe-4')
         ),
-        'sm' => 'h-8 text-sm rounded-md' . ' ' . (
+        'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . (
             $square
                 ? 'w-8'
                 : ($iconLeading && $iconLeading !== '' ? 'ps-2' : 'ps-3') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-2' : 'pe-3')
         ),
-        'xs' => 'h-6 text-xs rounded-md' . ' ' . (
+        'xs' => 'h-6 text-xs rounded-md gap-1' . ' ' . (
             $square
                 ? 'w-6'
                 : ($iconLeading && $iconLeading !== '' ? 'ps-1' : 'ps-2') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-1' : 'pe-2')
