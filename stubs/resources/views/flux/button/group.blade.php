@@ -47,6 +47,7 @@ $classes = Flux::classes()
         // Borders for sub-children wrapped in tooltips or time picker triggers...
         '[&>*:last-child:not(:first-child)>:is([data-flux-tooltip],ui-time-picker-trigger)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
         '[&>*:not(:first-child):not(:last-child)>:is([data-flux-tooltip],ui-time-picker-trigger)>[data-flux-group-target]:not([data-invalid])]:border-s-0',
+        '[&>*:has(+[data-flux-input-group-suffix])>:is([data-flux-tooltip],ui-time-picker-trigger)>[data-flux-group-target]:not([data-invalid])]:border-e-0',
     ])
     ;
 @endphp
