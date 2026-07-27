@@ -178,7 +178,7 @@ $classes = Flux::classes()
                     <?php endif; ?>
 
                     <?php if ($kbd): ?>
-                        <span class="pointer-events-none">{{ $kbd }}</span>
+                        <span class="pointer-events-none last:pe-2">{{ $kbd }}</span>
                     <?php endif; ?>
 
                     <?php if ($expandable): ?>
