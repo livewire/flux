@@ -8,7 +8,7 @@
 
 @php
 $classes = Flux::classes()
-    ->add('[:where(&)]:py-3 [:where(&)]:px-3 first:ps-0 last:pe-0 text-sm')
+    ->add('[:where(&)]:py-3 [:where(&)]:px-3 first:ps-0 last:pe-0 text-sm [&:has(>[data-flux-button])]:leading-[0] [&:has(>[data-flux-tooltip]>[data-flux-button])]:leading-[0]')
     ->add(match($align) {
         'center' => 'text-center [&>*]:mx-auto',
         'end' => 'text-end [&>*]:ms-auto',
