@@ -1,6 +1,6 @@
 @blaze(fold: true, unsafe: [
     // variant props
-    'filterable', 'indicator', 'loading',
+    'filterable', 'indicator', 'loading', 'icon', 'icon:variant', 'avatar', 'description',
 ])
 
 @aware([ 'variant', 'indicator' ])
