@@ -76,7 +76,7 @@ $classes = Flux::classes()
             <?php endif; ?>
 
             <?php if (! $slot->isEmpty()): ?>
-                <span>{{ $slot }}</span>
+                <span class="text-zinc-600 dark:text-zinc-300">{{ $slot }}</span>
             <?php endif; ?>
         </ui-switch>
     </flux:with-tooltip>
