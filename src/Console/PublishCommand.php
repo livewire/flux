@@ -49,6 +49,7 @@ class PublishCommand extends Command
             'Switch' => ['switch'],
             'Textarea' => ['textarea'],
             'Toast' => ['toast'],
+            'Toggle' => ['toggle'],
             'Tooltip' => ['tooltip'],
             'Typography' => ['heading', 'subheading', 'text', 'link'],
         ],
