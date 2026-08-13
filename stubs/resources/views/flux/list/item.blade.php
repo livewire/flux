@@ -69,7 +69,9 @@ $headingClasses = Flux::classes()
     <?php endif; ?>
 
     <div>
-        <flux:heading class="{{ $headingClasses }}">{{ $heading }}</flux:heading>
+        <flux:heading class="{{ $headingClasses }}">
+            {{ $slot->isNotEmpty() ? $slot : $heading }}
+        </flux:heading>
 
         <?php if (isset($description)): ?>
             <flux:text>{{ $description }}</flux:text>
