@@ -26,6 +26,14 @@ if (! isset($name)) {
 $square = $slot->isEmpty();
 
 $iconClasses = Flux::classes()
+    ->add(match ($variant) {
+        'subtle' => 'text-zinc-500 dark:text-zinc-400',
+        default => 'text-zinc-500 dark:text-white',
+    })
+    ->add(match ($variant) {
+        'subtle' => 'in-data-checked:text-zinc-600 in-data-checked:dark:text-white',
+        default => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+    })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
     ->add($attributes->pluck('icon:class'))
     ;
@@ -56,11 +64,12 @@ $classes = Flux::classes()
         'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
-    ->add(match ($variant) {
-        'subtle' => 'text-zinc-400 hover:text-zinc-800 dark:text-zinc-500 dark:hover:text-white',
-        default => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+    ->add(match ($variant) { // Text color...
+        'filled' => 'text-zinc-800 dark:text-white',
+        'outline' => 'text-zinc-800 dark:text-white',
+        'ghost' => 'text-zinc-800 dark:text-white',
+        'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
     })
-    ->add('data-checked:text-(--color-accent-content) data-checked:hover:text-(--color-accent-content) dark:data-checked:text-(--color-accent-content) dark:data-checked:hover:text-(--color-accent-content)')
     ->add(match ($variant) {
         'outline' => 'border border-zinc-200 hover:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600',
         default => '',
@@ -88,7 +97,7 @@ $classes = Flux::classes()
             <?php endif; ?>
 
             <?php if (! $slot->isEmpty()): ?>
-                <span class="text-zinc-600 dark:text-zinc-300">{{ $slot }}</span>
+                <span>{{ $slot }}</span>
             <?php endif; ?>
         </ui-switch>
     </flux:with-tooltip>
