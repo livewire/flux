@@ -48,13 +48,13 @@ $iconTrailingClasses = Flux::classes()
     ->add($attributes->pluck('icon-trailing:class'))
     ;
 
-$headingClasses = Flux::classes()
-    ->add($attributes->pluck('heading:class'))
-    ->add('*:[[data-flux-heading]:has(+[data-flux-text])]:mb-0.5')
+$contentClasses = Flux::classes()
+    ->add('text-sm font-medium text-zinc-800 dark:text-white')
+    ->add('*:[[data-flux-heading]:has(+[data-flux-subheading])]:mb-0.5')
     ;
 @endphp
 
-<flux:button-or-link :attributes="$attributes->class($classes)" :$as :$href>
+<flux:button-or-link :attributes="$attributes->class($classes)" :$as :$href data-flux-list-item>
     <?php if (is_string($icon) && $icon !== ''): ?>
         <div class="{{ $leadingClasses }}">
             <flux:icon :$icon :variant="$iconVariant" :class="$iconClasses" />
@@ -69,14 +69,8 @@ $headingClasses = Flux::classes()
         </div>
     <?php endif; ?>
 
-    <div>
-        <flux:heading class="{{ $headingClasses }}">
-            {{ $slot->isNotEmpty() ? $slot : $heading }}
-        </flux:heading>
-
-        <?php if (isset($description)): ?>
-            <flux:text>{{ $description }}</flux:text>
-        <?php endif; ?>
+    <div class="{{ $contentClasses }}">
+        {{ $slot }}
     </div>
 
     <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
