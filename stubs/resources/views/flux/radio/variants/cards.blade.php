@@ -14,6 +14,13 @@
 ])
 
 @php
+// Normalize the "indicator" prop into a position while preserving the previous truthy/falsy behavior...
+$indicatorPosition = $indicator ? 'end' : false;
+
+if ($indicator === 'start' || $indicator === 'left') {
+    $indicatorPosition = 'start';
+}
+
 $iconClasses = Flux::classes()
     ->add('inline-block mt-0.5 text-zinc-400 [ui-radio[data-checked]_&]:text-zinc-800 dark:[ui-radio[data-checked]_&]:text-white')
     // When using the outline icon variant, we need to size it down to match the default icon sizes...
@@ -21,7 +28,8 @@ $iconClasses = Flux::classes()
     ;
 
 $classes = Flux::classes()
-    ->add('relative flex justify-between gap-3 flex-1 p-4')
+    ->add('relative flex gap-3 flex-1 p-4')
+    ->add($indicatorPosition === 'start' ? 'justify-start' : 'justify-between')
     ->add('rounded-lg shadow-xs')
     ->add('bg-white dark:bg-white/10 dark:hover:bg-white/15 dark:data-checked:bg-white/15')
     ->add('after:absolute after:-inset-px after:rounded-lg')
@@ -54,6 +62,10 @@ $classes = Flux::classes()
 {{-- We have to put "data-flux-field" so that a single box can be disabled without "disabling" the group field label... --}}
 <ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-cards tabindex="-1" data-flux-field>
     <?php if ($label): ?>
+        <?php if ($indicatorPosition === 'start'): ?>
+            <flux:radio.indicator class="mt-px" />
+        <?php endif; ?>
+
         <div class="flex-1 flex gap-2">
             <?php if (is_string($icon) && $icon !== ''): ?>
                 <flux:icon :icon="$icon" :variant="$iconVariant" :class="$iconClasses" />
@@ -70,8 +82,8 @@ $classes = Flux::classes()
             </div>
         </div>
 
-        <?php if ($indicator): ?>
-            <flux:radio.indicator />
+        <?php if ($indicatorPosition === 'end'): ?>
+            <flux:radio.indicator class="mt-px" />
         <?php endif; ?>
     <?php else: ?>
         {{ $slot }}

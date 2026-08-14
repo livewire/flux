@@ -11,6 +11,7 @@
     'variant' => null,
     'size' => null,
     'name' => null,
+    'indicator' => true,
 ])
 
 @php
