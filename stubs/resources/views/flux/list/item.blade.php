@@ -22,7 +22,7 @@ $hover ??= $href || $as === 'button';
 
 $classes = Flux::classes()
     ->add('flex items-center w-full text-start')
-    ->add($description ? 'px-4 py-3' : 'px-4 py-4')
+    ->add($variant === 'bare' ? 'px-4 py-3.5' : 'px-4 py-4')
     ->add($variant === 'bare' ? 'rounded-lg' : null)
     ->add($hover ? 'hover:bg-zinc-800/4 dark:hover:bg-white/7' : null)
     ;
@@ -50,6 +50,7 @@ $iconTrailingClasses = Flux::classes()
 
 $headingClasses = Flux::classes()
     ->add($attributes->pluck('heading:class'))
+    ->add('*:[[data-flux-heading]:has(+[data-flux-text])]:mb-0.5')
     ;
 @endphp
 
