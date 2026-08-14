@@ -51,6 +51,8 @@ $iconTrailingClasses = Flux::classes()
 $contentClasses = Flux::classes()
     ->add('text-sm font-medium text-zinc-800 dark:text-white')
     ->add('*:[[data-flux-heading]:has(+[data-flux-subheading])]:mb-0.5')
+    ->add('*:[[data-flux-subheading]]:font-normal')
+    ->add('*:[[data-flux-text]]:font-normal')
     ;
 @endphp
 
