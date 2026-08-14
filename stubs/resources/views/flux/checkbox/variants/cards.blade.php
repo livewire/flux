@@ -71,7 +71,7 @@ $classes = Flux::classes()
             </div>
         </div>
 
-        <flux:checkbox.indicator />
+        <flux:checkbox.indicator class="mt-px" />
     <?php else: ?>
         {{ $slot }}
     <?php endif; ?>

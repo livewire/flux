@@ -63,7 +63,7 @@ $classes = Flux::classes()
 <ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-cards tabindex="-1" data-flux-field>
     <?php if ($label): ?>
         <?php if ($indicatorPosition === 'start'): ?>
-            <flux:radio.indicator />
+            <flux:radio.indicator class="mt-px" />
         <?php endif; ?>
 
         <div class="flex-1 flex gap-2">
@@ -83,7 +83,7 @@ $classes = Flux::classes()
         </div>
 
         <?php if ($indicatorPosition === 'end'): ?>
-            <flux:radio.indicator />
+            <flux:radio.indicator class="mt-px" />
         <?php endif; ?>
     <?php else: ?>
         {{ $slot }}
