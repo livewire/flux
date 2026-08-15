@@ -10,6 +10,7 @@
     'name' => null,
     'icon' => null,
     'color' => null,
+    'inset' => null,
 ])
 
 @php
@@ -30,14 +31,25 @@ $iconClasses = Flux::classes()
     ;
 
 $classes = Flux::classes()
-    ->add('group relative inline-flex items-center font-medium justify-center gap-2 whitespace-nowrap outline-offset-2')
+    ->add('group relative inline-flex items-center font-medium justify-center whitespace-nowrap outline-offset-2')
     ->add('transition select-none touch-manipulation')
     ->add('[&[disabled]]:opacity-75 dark:[&[disabled]]:opacity-75 [&[disabled]]:cursor-default')
     ->add(match ($size) {
-        'base' => 'h-10 text-sm rounded-lg' . ' ' . ($square ? 'w-10' : ($icon ? 'ps-3 pe-4' : 'px-4')),
-        'sm' => 'h-8 text-sm rounded-md' . ' ' . ($square ? 'w-8' : 'px-3'),
-        'xs' => 'h-6 text-xs rounded-md' . ' ' . ($square ? 'w-6' : 'px-2'),
+        'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . ($square ? 'w-10' : ($icon ? 'ps-3 pe-4' : 'px-4')),
+        'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . ($square ? 'w-8' : ($icon ? 'ps-2 pe-3' : 'px-3')),
+        'xs' => 'h-6 text-xs rounded-md gap-1' . ' ' . ($square ? 'w-6' : ($icon ? 'ps-1 pe-2' : 'px-2')),
     })
+    ->add($inset ? match ($size) {
+        'base' => $square
+            ? Flux::applyInset($inset, top: '-mt-2.5', right: '-me-2.5', bottom: '-mb-2.5', left: '-ms-2.5')
+            : Flux::applyInset($inset, top: '-mt-2.5', right: '-me-4', bottom: '-mb-3', left: ($icon ? '-ms-3' : '-ms-4')),
+        'sm' => $square
+            ? Flux::applyInset($inset, top: '-mt-1.5', right: '-me-1.5', bottom: '-mb-1.5', left: '-ms-1.5')
+            : Flux::applyInset($inset, top: '-mt-1.5', right: '-me-3', bottom: '-mb-1.5', left: ($icon ? '-ms-2' : '-ms-3')),
+        'xs' => $square
+            ? Flux::applyInset($inset, top: '-mt-1', right: '-me-1', bottom: '-mb-1', left: '-ms-1')
+            : Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: ($icon ? '-ms-1' : '-ms-2')),
+    } : '')
     ->add(match ($variant) {
         'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
         'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
