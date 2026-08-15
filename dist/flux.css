@@ -144,6 +144,7 @@ Custom element display rules...
 */
 @layer base {
     ui-button { display: block; }
+    ui-dropdown { display: inline-flex; }
     ui-label { display: inline-block; cursor: default; }
     ui-description { display: block; }
     ui-legend { display: block; }
