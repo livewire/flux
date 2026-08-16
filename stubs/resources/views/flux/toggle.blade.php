@@ -33,7 +33,7 @@ $iconClasses = Flux::classes()
 $classes = Flux::classes()
     ->add('group relative inline-flex items-center font-medium justify-center whitespace-nowrap outline-offset-2')
     ->add('transition select-none touch-manipulation')
-    ->add('[&[disabled]]:opacity-75 dark:[&[disabled]]:opacity-75 [&[disabled]]:cursor-default')
+    ->add('[&[disabled]]:opacity-75 dark:[&[disabled]]:opacity-75 [&[disabled]]:cursor-default [&[disabled]]:pointer-events-none')
     ->add(match ($size) {
         'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . ($square ? 'w-10' : ($icon ? 'ps-3 pe-4' : 'px-4')),
         'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . ($square ? 'w-8' : ($icon ? 'ps-2 pe-3' : 'px-3')),
