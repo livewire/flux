@@ -1,6 +1,6 @@
 @blaze(fold: true, unsafe: [
     // variant props
-    'name', 'placeholder', 'invalid', 'size', 'clear', 'close',
+    'name', 'placeholder', 'prefix', 'invalid', 'size', 'clear', 'close',
     'selectedSuffix', 'searchable', 'clearable', 'button', 'input', 'trigger', 'search', 'empty', 'multiple',
     // flux:with-field props
     'name', 'label', 'badge',
