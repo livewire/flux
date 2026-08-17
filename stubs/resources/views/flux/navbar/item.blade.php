@@ -21,13 +21,12 @@
 // Button should be a square if it has no text contents...
 $square ??= $slot->isEmpty();
 
-// Size-up icons in square/icon-only buttons...
-$iconClasses = Flux::classes($square ? 'size-6' : 'size-5');
+$iconClasses = Flux::classes('size-5');
 
 $classes = Flux::classes()
     ->add('px-3 h-8 flex items-center rounded-lg')
     ->add('relative') // This is here for the "active" bar at the bottom to be positioned correctly...
-    ->add($square ? 'px-2!' : '')
+    ->add($square ? 'h-10! px-2.5!' : '')
     ->add('text-zinc-500 dark:text-white/80 ')
     // Styles for when this link is the "current" one...
     ->add('data-current:after:absolute data-current:after:-bottom-3 data-current:after:inset-x-0 data-current:after:h-[2px]')
