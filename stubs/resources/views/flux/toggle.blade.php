@@ -30,13 +30,13 @@ $iconClasses = Flux::classes()
         'outline' => 'text-zinc-500 dark:text-white',
         'filled' => 'text-zinc-500 dark:text-white',
         'ghost' => 'text-zinc-500 dark:text-white',
-        'subtle' => 'text-zinc-500 dark:text-zinc-400',
+        'subtle' => 'text-zinc-400 dark:text-zinc-400',
     })
     ->add(match ($variant) {
         'outline' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'filled' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'ghost' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
-        'subtle' => 'in-data-checked:text-zinc-600 in-data-checked:dark:text-white',
+        'subtle' => 'group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800 in-data-checked:dark:text-white',
     })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
     ->add($attributes->pluck('icon:class'))
@@ -69,9 +69,9 @@ $classes = Flux::classes()
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
     ->add(match ($variant) { // Text color...
-        'outline' => 'text-zinc-800 dark:text-white',
-        'filled' => 'text-zinc-800 dark:text-white',
-        'ghost' => 'text-zinc-800 dark:text-white',
+        'outline' => 'text-zinc-700 data-checked:text-zinc-800 dark:text-white',
+        'filled' => 'text-zinc-700 data-checked:text-zinc-800 dark:text-white',
+        'ghost' => 'text-zinc-700 data-checked:text-zinc-800 dark:text-white',
         'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
     })
     ->add(match ($variant) {
