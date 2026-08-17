@@ -21,7 +21,6 @@
     'offLabel' => null,
     'onIcon' => null,
     'offIcon' => null,
-    'offIconVariant' => null,
 ])
 
 @php
