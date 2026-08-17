@@ -144,6 +144,7 @@ Custom element display rules...
 */
 @layer base {
     ui-button { display: block; }
+    ui-dropdown { display: inline-flex; }
     ui-label { display: inline-block; cursor: default; }
     ui-description { display: block; }
     ui-legend { display: block; }
@@ -154,15 +155,16 @@ Custom element display rules...
     ui-option-empty { display: block; cursor: default; }
     ui-empty { display: block; cursor: default; }
     ui-pillbox { display: block; }
+    ui-file-upload { display: block; }
     ui-checkbox-group { display: block; }
-    ui-checkbox { display: inline-block; user-select: none; }
-    ui-switch { display: inline-block; user-select: none; }
+    ui-checkbox { display: inline-block; user-select: none; -webkit-user-select: none; }
+    ui-switch { display: inline-block; user-select: none; -webkit-user-select: none; }
     ui-radio-group { display: block; }
-    ui-radio { display: inline-block; user-select: none; }
+    ui-radio { display: inline-block; user-select: none; -webkit-user-select: none; }
     ui-date-picker { display: block; }
     ui-time-picker { display: block; }
     ui-calendar { display: block; }
-    ui-calendar-preset, ui-calendar-previous, ui-calendar-next, ui-calender-next { display: block; user-select: none; }
+    ui-calendar-preset, ui-calendar-previous, ui-calendar-next, ui-calender-next { display: block; user-select: none; -webkit-user-select: none; }
     ui-menu[popover]:popover-open { display: block; }
     ui-menu[popover].\:popover-open { display: block; }
     ui-menu-checkbox, ui-menu-radio { cursor: default; display: contents; }
@@ -174,6 +176,7 @@ Custom element display rules...
     ui-editor-content { display: block; }
     ui-progress { display: block; }
     ui-carousel, ui-carousel-track, ui-carousel-slide { display: block; }
+    ui-tooltip { display: inline-flex; }
 }
 
 /**

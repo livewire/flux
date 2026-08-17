@@ -19,7 +19,7 @@ extract(Flux::forwardedAttributes($attributes, [
 ])
 
 <?php if ($tooltip): ?>
-    <flux:tooltip :content="$tooltip" :position="$tooltipPosition" :kbd="$tooltipKbd">
+    <flux:tooltip class="inline-flex" :content="$tooltip" :position="$tooltipPosition" :kbd="$tooltipKbd">
         {{ $slot }}
     </flux:tooltip>
 <?php else: ?>

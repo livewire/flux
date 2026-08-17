@@ -9,8 +9,8 @@
 $classes = Flux::classes()
     ->add('border')
     ->add(match ($variant) {
-        'soft' => '[:where(&)]:bg-black/[0.02] border-black/[0.025] dark:[:where(&)]:bg-white/[0.06] dark:border-white/[0.065]',
-        default => '[:where(&)]:bg-white border-zinc-200 dark:[:where(&)]:bg-white/10 dark:border-white/10',
+        'soft' => '[:where(&)]:bg-black/[0.02] [:where(&)]:border-black/[0.025] dark:[:where(&)]:bg-white/[0.06] dark:[:where(&)]:border-white/[0.065]',
+        default => '[:where(&)]:bg-white [:where(&)]:border-zinc-200 dark:[:where(&)]:bg-white/10 dark:[:where(&)]:border-white/10',
     })
     ->add(match ($size) {
         default => '[:where(&)]:p-6 [:where(&)]:rounded-xl',
