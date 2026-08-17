@@ -27,12 +27,16 @@ $square = $slot->isEmpty();
 
 $iconClasses = Flux::classes()
     ->add(match ($variant) {
+        'outline' => 'text-zinc-500 dark:text-white',
+        'filled' => 'text-zinc-500 dark:text-white',
+        'ghost' => 'text-zinc-500 dark:text-white',
         'subtle' => 'text-zinc-500 dark:text-zinc-400',
-        default => 'text-zinc-500 dark:text-white',
     })
     ->add(match ($variant) {
+        'outline' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'filled' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'ghost' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'subtle' => 'in-data-checked:text-zinc-600 in-data-checked:dark:text-white',
-        default => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
     })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
     ->add($attributes->pluck('icon:class'))
@@ -59,14 +63,14 @@ $classes = Flux::classes()
             : Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: ($icon ? '-ms-1' : '-ms-2')),
     } : '')
     ->add(match ($variant) {
-        'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
         'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
+        'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
         'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
     ->add(match ($variant) { // Text color...
-        'filled' => 'text-zinc-800 dark:text-white',
         'outline' => 'text-zinc-800 dark:text-white',
+        'filled' => 'text-zinc-800 dark:text-white',
         'ghost' => 'text-zinc-800 dark:text-white',
         'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
     })
