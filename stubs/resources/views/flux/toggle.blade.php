@@ -32,7 +32,7 @@ $iconClasses = Flux::classes()
         'ghost' => 'text-zinc-500 dark:text-zinc-300 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'subtle' => join(' ', [
             'text-zinc-400 group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
-            'dark:text-zinc-400/85 dark:group-hover:text-zinc-300 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
+            'dark:text-zinc-500 dark:group-hover:text-zinc-300 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
         ])
     })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
@@ -66,10 +66,10 @@ $classes = Flux::classes()
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
     ->add(match ($variant) { // Text color...
-        'outline' => 'text-zinc-700 data-checked:text-zinc-800 dark:text-zinc-200 dark:data-checked:text-white',
-        'filled' => 'text-zinc-700 data-checked:text-zinc-800 dark:text-zinc-200 dark:data-checked:text-white',
-        'ghost' => 'text-zinc-700 data-checked:text-zinc-800 dark:text-zinc-200 dark:data-checked:text-white',
-        'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-300 dark:data-checked:text-zinc-400 dark:data-checked:hover:text-white',
+        'outline' => 'text-zinc-500 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
+        'filled' => 'text-zinc-500 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
+        'ghost' => 'text-zinc-500 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
+        'subtle' => 'text-zinc-400 hover:text-zinc-500 data-checked:text-zinc-500 data-checked:hover:text-zinc-800 dark:text-zinc-500 dark:hover:text-zinc-300 dark:data-checked:text-zinc-400 dark:data-checked:hover:text-white',
     })
     ->add(match ($variant) {
         'outline' => 'border border-zinc-200 hover:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600',
