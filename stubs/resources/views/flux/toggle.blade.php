@@ -66,9 +66,9 @@ $classes = Flux::classes()
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
     ->add(match ($variant) { // Text color...
-        'outline' => 'text-zinc-500 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
-        'filled' => 'text-zinc-500 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
-        'ghost' => 'text-zinc-500 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
+        'outline' => 'text-zinc-600 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
+        'filled' => 'text-zinc-600 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
+        'ghost' => 'text-zinc-600 data-checked:text-zinc-800 dark:text-zinc-300 dark:data-checked:text-white',
         'subtle' => 'text-zinc-400 hover:text-zinc-500 data-checked:text-zinc-500 data-checked:hover:text-zinc-800 dark:text-zinc-500 dark:hover:text-zinc-300 dark:data-checked:text-zinc-400 dark:data-checked:hover:text-white',
     })
     ->add(match ($variant) {
