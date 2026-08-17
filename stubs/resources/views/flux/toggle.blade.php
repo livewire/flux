@@ -27,18 +27,12 @@ $square = $slot->isEmpty();
 
 $iconClasses = Flux::classes()
     ->add(match ($variant) {
-        'outline' => 'text-zinc-500 dark:text-white',
-        'filled' => 'text-zinc-500 dark:text-white',
-        'ghost' => 'text-zinc-500 dark:text-white',
-        'subtle' => 'text-zinc-400 dark:text-zinc-400',
-    })
-    ->add(match ($variant) {
-        'outline' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
-        'filled' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
-        'ghost' => 'in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'outline' => 'text-zinc-500 dark:text-white in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'filled' => 'text-zinc-500 dark:text-white in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'ghost' => 'text-zinc-500 dark:text-white in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'subtle' => join(' ', [
-            'group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
-            'dark:group-hover:text-white dark:in-data-checked:text-white dark:in-data-checked:group-hover:text-white',
+            'text-zinc-400 group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
+            'dark:text-zinc-400 dark:group-hover:text-white dark:in-data-checked:text-white dark:in-data-checked:group-hover:text-white',
         ]),
     })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
