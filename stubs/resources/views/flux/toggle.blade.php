@@ -32,7 +32,7 @@ $iconClasses = Flux::classes()
         'ghost' => 'text-zinc-500 dark:text-zinc-300 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'subtle' => join(' ', [
             'text-zinc-400 group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
-            'dark:text-zinc-500 dark:group-hover:text-zinc-300 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
+            'dark:text-zinc-400/85 dark:group-hover:text-zinc-300 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
         ])
     })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
