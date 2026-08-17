@@ -154,6 +154,7 @@ Custom element display rules...
     ui-option-empty { display: block; cursor: default; }
     ui-empty { display: block; cursor: default; }
     ui-pillbox { display: block; }
+    ui-file-upload { display: block; }
     ui-checkbox-group { display: block; }
     ui-checkbox { display: inline-block; user-select: none; -webkit-user-select: none; }
     ui-switch { display: inline-block; user-select: none; -webkit-user-select: none; }
