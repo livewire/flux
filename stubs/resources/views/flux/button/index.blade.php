@@ -63,7 +63,7 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
 
 $classes = Flux::classes()
     ->add('relative items-center font-medium justify-center whitespace-nowrap')
-    ->add('disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none')
+    ->add('disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none')
     ->add(match ($align) {
         'start' => 'justify-start',
         'center' => 'justify-center',
@@ -128,7 +128,7 @@ $classes = Flux::classes()
             'sm' => 'shadow-xs',
             'xs' => 'shadow-none',
         },
-        default => 'disabled:shadow-none',
+        default => '',
     })
     ->add(match ($variant) { // Grouped border treatments...
         'ghost' => '',
