@@ -1,7 +1,12 @@
 @blaze(fold: true, unsafe: [
-    'icon:class',
+    'icon:class', 'on:icon', 'off:icon', 'on:label', 'off:label',
     'tooltip:position', 'tooltip:kbd', 'tooltip',
 ])
+
+@php $onLabel ??= $attributes->pluck('on:label'); @endphp
+@php $offLabel ??= $attributes->pluck('off:label'); @endphp
+@php $onIcon ??= $attributes->pluck('on:icon'); @endphp
+@php $offIcon ??= $attributes->pluck('off:icon'); @endphp
 
 @props([
     'variant' => 'outline',
@@ -9,8 +14,13 @@
     'size' => 'base',
     'name' => null,
     'icon' => null,
+    'label' => null,
     'color' => null,
     'inset' => null,
+    'onLabel' => null,
+    'offLabel' => null,
+    'onIcon' => null,
+    'offIcon' => null,
 ])
 
 @php
@@ -22,8 +32,11 @@ if (! isset($name)) {
     $name = $attributes->whereStartsWith('wire:model')->first();
 }
 
-// Toggle should be square if it has no text contents...
-$square = $slot->isEmpty();
+$onIcon = is_string($onIcon) && $onIcon !== '' ? $onIcon : null;
+$offIcon = is_string($offIcon) && $offIcon !== '' ? $offIcon : null;
+
+$square = $slot->isEmpty() && ! $onLabel && ! $label;
+$hasIcon = $icon || $onIcon;
 
 $iconClasses = Flux::classes()
     ->add(match ($variant) {
@@ -44,20 +57,20 @@ $classes = Flux::classes()
     ->add('transition touch-manipulation')
     ->add('[&[disabled]]:opacity-50 dark:[&[disabled]]:opacity-50 [&[disabled]]:shadow-none [&[disabled]]:cursor-default [&[disabled]]:pointer-events-none')
     ->add(match ($size) {
-        'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . ($square ? 'w-10' : ($icon ? 'ps-3 pe-4' : 'px-4')),
-        'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . ($square ? 'w-8' : ($icon ? 'ps-2 pe-3' : 'px-3')),
-        'xs' => 'h-6 text-xs rounded-md gap-1' . ' ' . ($square ? 'w-6' : ($icon ? 'ps-1 pe-2' : 'px-2')),
+        'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . ($square ? 'w-10' : ($hasIcon ? 'ps-3 pe-4' : 'px-4')),
+        'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . ($square ? 'w-8' : ($hasIcon ? 'ps-2 pe-3' : 'px-3')),
+        'xs' => 'h-6 text-xs rounded-md gap-1' . ' ' . ($square ? 'w-6' : ($hasIcon ? 'ps-1 pe-2' : 'px-2')),
     })
     ->add($inset ? match ($size) {
         'base' => $square
             ? Flux::applyInset($inset, top: '-mt-2.5', right: '-me-2.5', bottom: '-mb-2.5', left: '-ms-2.5')
-            : Flux::applyInset($inset, top: '-mt-2.5', right: '-me-4', bottom: '-mb-3', left: ($icon ? '-ms-3' : '-ms-4')),
+            : Flux::applyInset($inset, top: '-mt-2.5', right: '-me-4', bottom: '-mb-3', left: ($hasIcon ? '-ms-3' : '-ms-4')),
         'sm' => $square
             ? Flux::applyInset($inset, top: '-mt-1.5', right: '-me-1.5', bottom: '-mb-1.5', left: '-ms-1.5')
-            : Flux::applyInset($inset, top: '-mt-1.5', right: '-me-3', bottom: '-mb-1.5', left: ($icon ? '-ms-2' : '-ms-3')),
+            : Flux::applyInset($inset, top: '-mt-1.5', right: '-me-3', bottom: '-mb-1.5', left: ($hasIcon ? '-ms-2' : '-ms-3')),
         'xs' => $square
             ? Flux::applyInset($inset, top: '-mt-1', right: '-me-1', bottom: '-mb-1', left: '-ms-1')
-            : Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: ($icon ? '-ms-1' : '-ms-2')),
+            : Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: ($hasIcon ? '-ms-1' : '-ms-2')),
     } : '')
     ->add(match ($variant) {
         'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
@@ -91,17 +104,18 @@ $classes = Flux::classes()
 <flux:accent :$color class="contents">
     <flux:with-tooltip :$attributes>
         <ui-switch {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif @if($checked) checked data-checked @endif data-flux-control data-flux-toggle>
-            <?php if (is_string($icon) && $icon !== ''): ?>
-                <span class="grid place-items-center">
-                    <flux:icon :$icon variant="outline" :class="$iconClasses->add('col-start-1 row-start-1 group-data-checked:hidden')" />
-                    <flux:icon :$icon variant="solid" :class="$iconClasses->add('col-start-1 row-start-1 hidden group-data-checked:block')" />
-                </span>
+            <?php if ((is_string($icon) && $icon !== '') || $onIcon): ?>
+                <flux:icon :icon="$onIcon ?? $icon" variant="solid" :class="$iconClasses->add('hidden group-data-checked:block')" />
+                <flux:icon :icon="$offIcon ?? $onIcon ?? $icon" variant="outline" :class="$iconClasses->add('group-data-checked:hidden')" />
             <?php elseif ($icon): ?>
                 {{ $icon }}
             <?php endif; ?>
 
-            <?php if (! $slot->isEmpty()): ?>
-                <span>{{ $slot }}</span>
+            <?php if ($slot->isNotEmpty() || $onLabel || $label): ?>
+                <?php $onLabel = $slot->isNotEmpty() ? $slot : ($onLabel ?? $label); ?>
+
+                <span class="group-data-checked:hidden">{{ $offLabel ?? $onLabel }}</span>
+                <span class="hidden group-data-checked:block">{{ $onLabel }}</span>
             <?php endif; ?>
         </ui-switch>
     </flux:with-tooltip>
