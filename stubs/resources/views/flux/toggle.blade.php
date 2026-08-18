@@ -68,7 +68,7 @@ $classes = Flux::classes()
     ->add(match ($variant) { // Text color...
         'outline' => 'text-zinc-600/90 data-checked:text-zinc-800 dark:text-zinc-300/95 dark:data-checked:text-white',
         'filled' => 'text-zinc-600/90 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
-        'ghost' => 'text-zinc-600/80 data-checked:text-zinc-800 dark:text-zinc-300/80 dark:data-checked:text-white',
+        'ghost' => 'text-zinc-600/90 data-checked:text-zinc-800 dark:text-zinc-300/80 dark:data-checked:text-white',
         'subtle' => join(' ', [
             'text-zinc-500 hover:text-zinc-500 data-checked:text-zinc-600 data-checked:hover:text-zinc-800',
             'dark:text-zinc-400/80 dark:hover:text-zinc-300 dark:data-checked:text-zinc-400 dark:data-checked:hover:text-white',
