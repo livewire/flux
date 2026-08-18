@@ -39,6 +39,8 @@ class AssetManager
         Route::get('/flux/editor.css', [static::class, 'editorCss']);
         Route::get('/flux/editor.js', [static::class, 'editorJs']);
         Route::get('/flux/editor.min.js', [static::class, 'editorMinJs']);
+        Route::get('/flux/tree-select.js', [static::class, 'treeSelectJs']);
+        Route::get('/flux/tree-select.min.js', [static::class, 'treeSelectMinJs']);
     }
 
     public function fluxJs() {
@@ -69,6 +71,18 @@ class AssetManager
         if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux editor.');
 
         return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/editor.min.js', 'text/javascript');
+    }
+
+    public function treeSelectJs() {
+        if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux tree select.');
+
+        return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/tree-select.js', 'text/javascript');
+    }
+
+    public function treeSelectMinJs() {
+        if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux tree select.');
+
+        return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/tree-select.min.js', 'text/javascript');
     }
 
     public static function scripts($options = [])
@@ -152,6 +166,21 @@ HTML;
         $nonceAttr = $nonce ? ' nonce="' . $nonce . '"' : '';
 
         return '<link rel="stylesheet" href="'. url('/flux/editor.css?id='. $versionHash) . '"' . $nonceAttr . '>';
+    }
+
+    public static function treeSelectScripts($nonce = null)
+    {
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+
+        $versionHash = $manifest['/tree-select.js'];
+
+        $nonceAttr = $nonce ? ' nonce="' . $nonce . '"' : '';
+
+        if (config('app.debug')) {
+            return '<script src="'. url('/flux/tree-select.js?id='. $versionHash) . '" defer' . $nonceAttr . '></script>';
+        } else {
+            return '<script src="'. url('/flux/tree-select.min.js?id='. $versionHash) . '" defer' . $nonceAttr . '></script>';
+        }
     }
 
     public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8')

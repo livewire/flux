@@ -76,6 +76,7 @@ class PublishCommand extends Command
             'Table' => ['table', 'pagination'],
             'Time picker' => ['time-picker'],
             'Timeline' => ['timeline'],
+            'Tree select' => ['tree-select'],
         ],
     ];
 
