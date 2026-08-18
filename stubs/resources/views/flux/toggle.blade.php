@@ -29,10 +29,10 @@ $iconClasses = Flux::classes()
     ->add(match ($variant) {
         'outline' => 'text-zinc-500/85 dark:text-zinc-300/80 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'filled' => 'text-zinc-500/85 dark:text-zinc-300/80 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
-        'ghost' => 'text-zinc-500/85 dark:text-zinc-400/80 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'ghost' => 'text-zinc-500/85 dark:text-zinc-400/90 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
         'subtle' => join(' ', [
-            'text-zinc-500/75 group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
-            'dark:text-zinc-500 dark:group-hover:text-zinc-400 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
+            'text-zinc-400/90 group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
+            'dark:text-zinc-500/90 dark:group-hover:text-zinc-400 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
         ])
     })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
@@ -66,11 +66,11 @@ $classes = Flux::classes()
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
     ->add(match ($variant) { // Text color...
-        'outline' => 'text-zinc-600/90 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
-        'filled' => 'text-zinc-600/90 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
-        'ghost' => 'text-zinc-600/90 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
+        'outline' => 'text-zinc-600/85 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
+        'filled' => 'text-zinc-600/85 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
+        'ghost' => 'text-zinc-600/85 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
         'subtle' => join(' ', [
-            'text-zinc-500 hover:text-zinc-500 data-checked:text-zinc-600 data-checked:hover:text-zinc-800',
+            'text-zinc-500/85 hover:text-zinc-500 data-checked:text-zinc-500 data-checked:hover:text-zinc-800',
             'dark:text-zinc-400/80 dark:hover:text-zinc-300 dark:data-checked:text-zinc-400 dark:data-checked:hover:text-white',
         ])
     })
