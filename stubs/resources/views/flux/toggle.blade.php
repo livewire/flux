@@ -39,6 +39,15 @@ $square = $slot->isEmpty() && ! $onLabel && ! $label;
 $hasIcon = $icon || $onIcon;
 
 $iconClasses = Flux::classes()
+    ->add(match ($variant) {
+        'outline' => 'text-zinc-500/85 dark:text-zinc-300/80 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'filled' => 'text-zinc-500/85 dark:text-zinc-300/80 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'ghost' => 'text-zinc-500/85 dark:text-zinc-400/90 in-data-checked:text-(--color-accent-content) dark:in-data-checked:text-(--color-accent-content)',
+        'subtle' => join(' ', [
+            'text-zinc-400/90 group-hover:text-zinc-500 in-data-checked:text-zinc-500 in-data-checked:group-hover:text-zinc-800',
+            'dark:text-zinc-500/90 dark:group-hover:text-zinc-400 dark:in-data-checked:text-zinc-400 dark:in-data-checked:group-hover:text-white',
+        ])
+    })
     ->add($square && $size !== 'xs' ? 'size-5' : 'size-4')
     ->add($attributes->pluck('icon:class'))
     ;
@@ -46,7 +55,7 @@ $iconClasses = Flux::classes()
 $classes = Flux::classes()
     ->add('group relative inline-flex items-center font-medium justify-center whitespace-nowrap outline-offset-2')
     ->add('transition touch-manipulation')
-    ->add('[&[disabled]]:opacity-75 dark:[&[disabled]]:opacity-75 [&[disabled]]:cursor-default [&[disabled]]:pointer-events-none')
+    ->add('[&[disabled]]:opacity-50 dark:[&[disabled]]:opacity-50 [&[disabled]]:shadow-none [&[disabled]]:cursor-default [&[disabled]]:pointer-events-none')
     ->add(match ($size) {
         'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . ($square ? 'w-10' : ($hasIcon ? 'ps-3 pe-4' : 'px-4')),
         'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . ($square ? 'w-8' : ($hasIcon ? 'ps-2 pe-3' : 'px-3')),
@@ -64,16 +73,20 @@ $classes = Flux::classes()
             : Flux::applyInset($inset, top: '-mt-1', right: '-me-2', bottom: '-mb-1', left: ($hasIcon ? '-ms-1' : '-ms-2')),
     } : '')
     ->add(match ($variant) {
-        'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
         'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
+        'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
         'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
         'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
     })
-    ->add(match ($variant) {
-        'subtle' => 'text-zinc-400 hover:text-zinc-800 dark:text-zinc-500 dark:hover:text-white',
-        default => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+    ->add(match ($variant) { // Text color...
+        'outline' => 'text-zinc-600/85 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
+        'filled' => 'text-zinc-600/85 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
+        'ghost' => 'text-zinc-600/85 data-checked:text-zinc-800 dark:text-zinc-300/90 dark:data-checked:text-white',
+        'subtle' => join(' ', [
+            'text-zinc-500/85 hover:text-zinc-500 data-checked:text-zinc-500 data-checked:hover:text-zinc-800',
+            'dark:text-zinc-400/80 dark:hover:text-zinc-300 dark:data-checked:text-zinc-400 dark:data-checked:hover:text-white',
+        ])
     })
-    ->add('data-checked:text-(--color-accent-content) data-checked:hover:text-(--color-accent-content) dark:data-checked:text-(--color-accent-content) dark:data-checked:hover:text-(--color-accent-content)')
     ->add(match ($variant) {
         'outline' => 'border border-zinc-200 hover:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600',
         default => '',
