@@ -114,8 +114,8 @@ $classes = Flux::classes()
             <?php if ($slot->isNotEmpty() || $onLabel || $label): ?>
                 <?php $onLabel = $slot->isNotEmpty() ? $slot : ($onLabel ?? $label); ?>
 
-                <span class="text-zinc-600 group-data-checked:hidden dark:text-zinc-300">{{ $offLabel ?? $onLabel }}</span>
-                <span class="hidden text-zinc-600 group-data-checked:block dark:text-zinc-300">{{ $onLabel }}</span>
+                <span class="group-data-checked:hidden">{{ $offLabel ?? $onLabel }}</span>
+                <span class="hidden group-data-checked:block">{{ $onLabel }}</span>
             <?php endif; ?>
         </ui-switch>
     </flux:with-tooltip>
