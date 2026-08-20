@@ -1,6 +1,7 @@
 @blaze(fold: true)
 
 @props([
+    'contained' => false,
     'paginate' => null,
 ])
 
@@ -22,7 +23,7 @@ $containerClasses = Flux::classes()
     {{ $header ?? '' }}
 
     <ui-table-scroll-area class="overflow-auto">
-        <table {{ $attributes->class($classes) }} data-flux-table>
+        <table {{ $attributes->class($classes) }} data-flux-table {{ $contained ? 'data-flux-table-contained' : '' }}>
             {{ $slot }}
         </table>
     </ui-table-scroll-area>

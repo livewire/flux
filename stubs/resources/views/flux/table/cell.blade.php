@@ -8,7 +8,9 @@
 
 @php
 $classes = Flux::classes()
-    ->add('[:where(&)]:py-3 [:where(&)]:px-3 first:ps-0 last:pe-0 text-sm')
+    ->add('text-sm [:where(&)]:py-3 [:where(&)]:px-3')
+    // Remove outer padding on first and last column unless the table is `contained`...
+    ->add('not-in-data-flux-table-contained:first:[:where(&)]:ps-0 not-in-data-flux-table-contained:last:[:where(&)]:pe-0')
     ->add(match($align) {
         'center' => 'text-center [&>*]:mx-auto',
         'end' => 'text-end [&>*]:ms-auto',
