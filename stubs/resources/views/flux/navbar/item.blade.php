@@ -29,7 +29,8 @@ $classes = Flux::classes()
     ->add($square ? 'h-10! px-2.5!' : '')
     ->add('text-zinc-500 dark:text-white/80 ')
     // Styles for when this link is the "current" one...
-    ->add('data-current:after:absolute data-current:after:-bottom-3 data-current:after:inset-x-0 data-current:after:h-[2px]')
+    ->add('data-current:after:absolute data-current:after:inset-x-0 data-current:after:h-[2px]')
+    ->add($square ? 'data-current:after:-bottom-2' : 'data-current:after:-bottom-3')
     ->add([
         '[--hover-fill:color-mix(in_oklab,_var(--color-accent-content),_transparent_90%)]',
 
