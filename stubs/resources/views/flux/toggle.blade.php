@@ -1,10 +1,11 @@
 @blaze(fold: true, unsafe: [
-    'icon:class', 'on:icon', 'off:icon', 'on:label', 'off:label',
+    'icon:class', 'icon:variant', 'on:icon', 'off:icon', 'on:label', 'off:label',
     'tooltip:position', 'tooltip:kbd', 'tooltip',
 ])
 
 @php $onLabel ??= $attributes->pluck('on:label'); @endphp
 @php $offLabel ??= $attributes->pluck('off:label'); @endphp
+@php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 @php $onIcon ??= $attributes->pluck('on:icon'); @endphp
 @php $offIcon ??= $attributes->pluck('off:icon'); @endphp
 
@@ -14,6 +15,7 @@
     'size' => 'base',
     'name' => null,
     'icon' => null,
+    'iconVariant' => 'solid',
     'label' => null,
     'color' => null,
     'inset' => null,
@@ -105,7 +107,7 @@ $classes = Flux::classes()
     <flux:with-tooltip :$attributes>
         <ui-switch {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif @if($checked) checked data-checked @endif data-flux-control data-flux-toggle>
             <?php if ((is_string($icon) && $icon !== '') || $onIcon): ?>
-                <flux:icon :icon="$onIcon ?? $icon" variant="solid" :class="$iconClasses->add('hidden group-data-checked:block')" />
+                <flux:icon :icon="$onIcon ?? $icon" :variant="$iconVariant" :class="$iconClasses->add('hidden group-data-checked:block')" />
                 <flux:icon :icon="$offIcon ?? $onIcon ?? $icon" variant="outline" :class="$iconClasses->add('group-data-checked:hidden')" />
             <?php elseif ($icon): ?>
                 {{ $icon }}
