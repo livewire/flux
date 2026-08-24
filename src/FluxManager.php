@@ -81,6 +81,11 @@ class FluxManager
         return AssetManager::editorScripts($this->nonce());
     }
 
+    public function treeSelectScripts()
+    {
+        return AssetManager::treeSelectScripts($this->nonce());
+    }
+
     public function classes($styles = null)
     {
         $builder = new ClassBuilder;
