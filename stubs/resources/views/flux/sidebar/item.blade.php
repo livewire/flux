@@ -20,7 +20,11 @@
 ])
 
 @php
-$tooltip ??= $slot->isNotEmpty() ? (string) $slot : null;
+// Slots contain rendered HTML (including conditional comments) and encoded entities.
+// Tooltips should mirror only the visible text.
+$tooltip ??= $slot->isNotEmpty()
+    ? trim(html_entity_decode(strip_tags((string) $slot), ENT_QUOTES | ENT_HTML5, 'UTF-8'))
+    : null;
 
 // Size-up icons in square/icon-only buttons...
 $iconClasses = Flux::classes('size-4')
