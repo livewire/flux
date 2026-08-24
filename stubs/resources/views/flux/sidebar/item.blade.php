@@ -20,7 +20,7 @@
 ])
 
 @php
-$tooltip ??= $slot->isNotEmpty() ? (string) $slot : null;
+$tooltip ??= $slot->isNotEmpty() ? strip_tags((string) $slot) : null;
 
 // Size-up icons in square/icon-only buttons...
 $iconClasses = Flux::classes('size-4')
