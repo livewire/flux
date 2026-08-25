@@ -21,6 +21,9 @@
     "conflict": {
         "livewire/blaze": "<1.0.0-beta.2"
     },
+    "suggest": {
+        "phiki/phiki": "Adds server-side syntax highlighting to the code component."
+    },
     "autoload": {
         "psr-4": {
             "Flux\\": "src/"
