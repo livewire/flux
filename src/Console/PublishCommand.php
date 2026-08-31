@@ -34,6 +34,7 @@ class PublishCommand extends Command
             'Checkbox' => ['checkbox'],
             'Dropdown' => ['dropdown', 'menu', 'navmenu'],
             'Field' => ['fieldset', 'legend', 'field', 'label', 'description', 'error'],
+            'Flag' => ['flag'],
             'Heading' => ['heading', 'subheading', 'text', 'link'],
             'Icon' => ['icon'],
             'Input' => ['input'],

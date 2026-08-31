@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class AssetManager
 {
+    protected static ?array $flagManifest = null;
+
     static function boot()
     {
         $instance = new static;
@@ -39,6 +41,46 @@ class AssetManager
         Route::get('/flux/editor.css', [static::class, 'editorCss']);
         Route::get('/flux/editor.js', [static::class, 'editorJs']);
         Route::get('/flux/editor.min.js', [static::class, 'editorMinJs']);
+        Route::get('/flux/flags/{country}', [static::class, 'flag'])
+            ->where('country', '[A-Za-z]{2}')
+            ->name('__flux.flag');
+    }
+
+    public function flag(string $country)
+    {
+        $country = strtoupper($country);
+
+        abort_unless(static::hasFlag($country), 404);
+
+        return $this->pretendResponseIsFile(
+            __DIR__.'/../dist/flags/'.$country.'.svg',
+            'image/svg+xml; charset=utf-8',
+            ['X-Content-Type-Options' => 'nosniff'],
+        );
+    }
+
+    public static function flagUrl(string $country): ?string
+    {
+        $country = strtoupper(trim($country));
+        $hash = static::flagManifest()[$country] ?? null;
+
+        if (! $hash) return null;
+
+        return route('__flux.flag', ['country' => $country], false).'?id='.$hash;
+    }
+
+    public static function hasFlag(string $country): bool
+    {
+        return isset(static::flagManifest()[strtoupper(trim($country))]);
+    }
+
+    protected static function flagManifest(): array
+    {
+        return static::$flagManifest ??= json_decode(
+            file_get_contents(__DIR__.'/../dist/flags/manifest.json'),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        )['flags'];
     }
 
     public function fluxJs() {
@@ -154,12 +196,12 @@ HTML;
         return '<link rel="stylesheet" href="'. url('/flux/editor.css?id='. $versionHash) . '"' . $nonceAttr . '>';
     }
 
-    public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8')
+    public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8', $headers = [])
     {
         $lastModified = filemtime($file);
 
         return $this->cachedFileResponse($file, $contentType, $lastModified,
-            fn ($headers) => response()->file($file, $headers));
+            fn ($cacheHeaders) => response()->file($file, array_merge($cacheHeaders, $headers)));
     }
 
     protected function cachedFileResponse($filename, $contentType, $lastModified, $downloadCallback)
