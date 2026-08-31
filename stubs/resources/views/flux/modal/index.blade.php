@@ -46,7 +46,8 @@ if ($flyout) {
             default => 'bg-white dark:bg-zinc-800 border-transparent dark:border-zinc-700',
             'floating' => 'bg-white dark:bg-zinc-800 ring ring-black/5 dark:ring-zinc-700 shadow-lg rounded-xl',
             'bare' => 'bg-transparent',
-        });
+        })
+        ->add(! $blocking && ! $variant ? 'ring ring-black/5 dark:ring-zinc-700 shadow-lg' : '');
 } elseif ($overflow) {
     $classes = Flux::classes();
 
