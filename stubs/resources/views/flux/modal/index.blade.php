@@ -9,6 +9,7 @@
     'variant' => null,
     'scroll' => null,
     'flyout' => null,
+    'blocking' => true,
     'name' => null,
 ])
 
@@ -108,7 +109,7 @@ if (! $overflow) {
 }
 @endphp
 
-<ui-modal {{ $attributes }} data-flux-modal>
+<ui-modal {{ $attributes }} data-flux-modal <?php if (! $blocking): ?> nonblocking <?php endif; ?>>
     <?php if ($trigger): ?>
         {{ $trigger }}
     <?php endif; ?>
@@ -118,6 +119,7 @@ if (! $overflow) {
         {{ $dialogAttributes->class($classes) }}
         <?php if ($name): ?> data-modal="{{ $name }}" <?php endif; ?>
         <?php if ($flyout): ?> data-flux-flyout <?php endif; ?>
+        <?php if (! $blocking): ?> popover="manual" data-flux-nonblocking role="dialog" aria-modal="false" <?php endif; ?>
         <?php if ($overflow): ?> data-flux-modal-overflow <?php endif; ?>
         @unblaze(scope: ['name' => $name])
         x-data="fluxModal(@js($scope['name']), @js(isset($__livewire) ? $__livewire->getId() : null))"

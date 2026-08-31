@@ -50,7 +50,7 @@ Transition dialogs with fade a slight scale effect...
     transition: all 0.075s allow-discrete;
 }
 
-[data-flux-modal] > dialog:not([open]) {
+[data-flux-modal] > dialog:not([open]):not([data-open]) {
     display: none;
 }
 
@@ -58,26 +58,31 @@ Transition dialogs with fade a slight scale effect...
 
 [data-flux-modal] > dialog[data-flux-flyout] { transform: scale(1) var(--flux-flyout-translate, var(--fx-flyout-translate, translateX(50px))); }
 
-[data-flux-modal] > dialog[open], [data-flux-modal] > dialog[open]::backdrop {
+[data-flux-modal] > dialog[open], [data-flux-modal] > dialog[data-open], [data-flux-modal] > dialog[open]::backdrop, [data-flux-modal] > dialog[data-open]::backdrop {
     opacity: 1;
     transform: translateX(0) scale(1);
     transition: all 0.15s allow-discrete;
 }
 
 @starting-style {
-    [data-flux-modal] > dialog[open], [data-flux-modal] > dialog[open]::backdrop {
+    [data-flux-modal] > dialog[open], [data-flux-modal] > dialog[data-open], [data-flux-modal] > dialog[open]::backdrop, [data-flux-modal] > dialog[data-open]::backdrop {
         opacity: 0;
     }
 
-    [data-flux-modal] > dialog[open] {
+    [data-flux-modal] > dialog[open], [data-flux-modal] > dialog[data-open] {
         transform: scale(0.95);
     }
 
-    [data-flux-modal] > dialog[open][data-flux-flyout] { transform: scale(1) var(--flux-flyout-translate, var(--fx-flyout-translate, translateX(50px))); }
+    [data-flux-modal] > dialog[open][data-flux-flyout], [data-flux-modal] > dialog[data-open][data-flux-flyout] { transform: scale(1) var(--flux-flyout-translate, var(--fx-flyout-translate, translateX(50px))); }
 }
 
 [data-flux-modal] > dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.10);
+}
+
+[data-flux-modal] > dialog[data-flux-nonblocking]::backdrop {
+    background-color: transparent;
+    pointer-events: none;
 }
 
 /*
