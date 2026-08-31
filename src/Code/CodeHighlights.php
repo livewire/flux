@@ -18,8 +18,8 @@ class CodeHighlights
             if (preg_match('/^(\d+):(\d+)-(\d+)$/', $range, $matches)) {
                 [$line, $start, $end] = array_map('intval', array_slice($matches, 1));
 
-                if ($line > 0 && $start > 0 && $end > $start) {
-                    $highlights->characters[$line][] = [$start - 1, $end - 1];
+                if ($line > 0 && $start > 0 && $end >= $start) {
+                    $highlights->characters[$line][] = [$start - 1, $end];
                 }
 
                 continue;
