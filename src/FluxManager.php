@@ -126,35 +126,24 @@ class FluxManager
     protected function renderPlainCode(string $code, string $language, ?string $highlight): string
     {
         $language = preg_replace('/[^a-z0-9_+-]/', '', strtolower($language)) ?: 'text';
-        $highlight = array_filter(array_map('trim', explode(',', $highlight ?? '')));
+        $highlights = Code\CodeHighlights::parse($highlight);
 
         $codeLines = preg_split('/\R/u', $code);
 
-        $lines = array_map(function ($line, $index) use ($highlight) {
+        $lines = array_map(function ($line, $index) use ($highlights) {
             $number = $index + 1;
-            $classes = $this->codeLineIsHighlighted($number, $highlight) ? 'line highlight' : 'line';
+            $classes = $highlights->includesLine($number) ? 'line highlight highlight-line' : 'line';
+            $content = implode('', array_map(
+                fn ($segment) => $segment[1]
+                    ? '<span class="highlight highlight-characters">'.e($segment[0]).'</span>'
+                    : e($segment[0]),
+                $highlights->segments($line, $number),
+            ));
 
-            return '<span class="'.$classes.'">'.e($line).'</span>';
+            return '<span class="'.$classes.'">'.$content.'</span>';
         }, $codeLines, array_keys($codeLines));
 
         return '<pre data-flux-code-pre><code class="language-'.$language.'">'.implode('', $lines).'</code></pre>';
-    }
-
-    protected function codeLineIsHighlighted(int $line, array $highlight): bool
-    {
-        foreach ($highlight as $range) {
-            if (ctype_digit($range) && (int) $range === $line) {
-                return true;
-            }
-
-            if (preg_match('/^(\d+)-(\d+)$/', $range, $matches)) {
-                if ($line >= (int) $matches[1] && $line <= (int) $matches[2]) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     public function disallowWireModel($attributes, $componentName)
