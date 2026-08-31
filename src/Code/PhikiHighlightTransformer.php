@@ -21,6 +21,10 @@ class PhikiHighlightTransformer extends AbstractTransformer
             $span->properties->get('class')->add('highlight', 'highlight-line');
         }
 
+        if ($diff = $this->highlights->diff($index + 1)) {
+            $span->properties->get('class')->add('diff', 'diff-'.$diff);
+        }
+
         return $span;
     }
 

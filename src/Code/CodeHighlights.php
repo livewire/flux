@@ -7,9 +7,10 @@ class CodeHighlights
     public function __construct(
         protected array $lines = [],
         protected array $characters = [],
+        protected array $diff = [],
     ) {}
 
-    public static function parse(?string $value): self
+    public static function parse(?string $value, string $code = '', string $language = 'text'): self
     {
         $highlights = new self;
 
@@ -44,6 +45,16 @@ class CodeHighlights
         }
         unset($ranges);
 
+        if (strtolower($language) === 'diff') {
+            foreach (preg_split('/\R/u', $code) as $index => $line) {
+                if (str_starts_with($line, '+') && ! str_starts_with($line, '+++')) {
+                    $highlights->diff[$index + 1] = 'added';
+                } elseif (str_starts_with($line, '-') && ! str_starts_with($line, '---')) {
+                    $highlights->diff[$index + 1] = 'removed';
+                }
+            }
+        }
+
         return $highlights;
     }
 
@@ -56,6 +67,11 @@ class CodeHighlights
         }
 
         return false;
+    }
+
+    public function diff(int $line): ?string
+    {
+        return $this->diff[$line] ?? null;
     }
 
     public function segments(string $text, int $line, int $offset = 0): array

@@ -30,8 +30,8 @@ class PhikiHighlighter
                 'dark' => 'flux-dark',
             ]);
 
-            if ($highlight) {
-                $html->transformer(new PhikiHighlightTransformer(CodeHighlights::parse($highlight)));
+            if ($highlight || strtolower($language) === 'diff') {
+                $html->transformer(new PhikiHighlightTransformer(CodeHighlights::parse($highlight, $code, $language)));
             }
 
             return (string) $html;

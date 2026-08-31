@@ -126,13 +126,22 @@ class FluxManager
     protected function renderPlainCode(string $code, string $language, ?string $highlight): string
     {
         $language = preg_replace('/[^a-z0-9_+-]/', '', strtolower($language)) ?: 'text';
-        $highlights = Code\CodeHighlights::parse($highlight);
+        $highlights = Code\CodeHighlights::parse($highlight, $code, $language);
 
         $codeLines = preg_split('/\R/u', $code);
 
         $lines = array_map(function ($line, $index) use ($highlights) {
             $number = $index + 1;
-            $classes = $highlights->includesLine($number) ? 'line highlight highlight-line' : 'line';
+            $classes = ['line'];
+
+            if ($highlights->includesLine($number)) {
+                $classes[] = 'highlight highlight-line';
+            }
+
+            if ($diff = $highlights->diff($number)) {
+                $classes[] = 'diff diff-'.$diff;
+            }
+
             $content = implode('', array_map(
                 fn ($segment) => $segment[1]
                     ? '<span class="highlight highlight-characters">'.e($segment[0]).'</span>'
@@ -140,7 +149,7 @@ class FluxManager
                 $highlights->segments($line, $number),
             ));
 
-            return '<span class="'.$classes.'">'.$content.'</span>';
+            return '<span class="'.implode(' ', $classes).'">'.$content.'</span>';
         }, $codeLines, array_keys($codeLines));
 
         return '<pre data-flux-code-pre><code class="language-'.$language.'">'.implode('', $lines).'</code></pre>';
