@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513 342">
+<rect fill="#FF0000" width="513" height="342"/>
+<polygon fill="#006600" points="197,0 197,176.6 197,342 0,342 0,0 "/>
+<circle fill="#FFFF00" cx="197.1" cy="171" r="64"/>
+<path fill="#FF0000" d="M161.1,139v40c0,19.9,16.1,36,36,36s36-16.1,36-36v-40H161.1z"/>
+<path fill="#FFFFFF" d="M197.1,191c-6.6,0-12-5.4-12-12v-16h24v16C209.1,185.6,203.8,191,197.1,191z"/>
+</svg>
