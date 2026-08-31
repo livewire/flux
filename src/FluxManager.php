@@ -21,6 +21,8 @@ class FluxManager
 
     protected $codeHighlighter = null;
 
+    protected $codeHighlighterResolved = false;
+
     public function boot()
     {
         on('flush-state', function () {
@@ -95,12 +97,21 @@ class FluxManager
     public function codeHighlighter(?callable $highlighter)
     {
         $this->codeHighlighter = $highlighter;
+        $this->codeHighlighterResolved = true;
 
         return $this;
     }
 
     public function highlightCode(string $code, string $language = 'text', ?string $highlight = null): HtmlString
     {
+        if (! $this->codeHighlighterResolved) {
+            $this->codeHighlighter = class_exists(\Phiki\Phiki::class)
+                ? new Code\PhikiHighlighter
+                : null;
+
+            $this->codeHighlighterResolved = true;
+        }
+
         if ($this->codeHighlighter) {
             $html = ($this->codeHighlighter)($code, $language, $highlight);
 
