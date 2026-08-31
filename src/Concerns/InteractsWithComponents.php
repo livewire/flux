@@ -25,11 +25,11 @@ trait InteractsWithComponents
                     $component->dispatch('modal-show', name: $this->name, scope: $component->getId());
                 }
 
-                public function close()
+                public function close(bool $silent = false)
                 {
                     $component = app('livewire')->current();
 
-                    $component->dispatch('modal-close', name: $this->name, scope: $component->getId());
+                    $component->dispatch('modal-close', name: $this->name, scope: $component->getId(), silent: $silent);
                 }
             };
         });
@@ -45,9 +45,9 @@ trait InteractsWithComponents
                 app('livewire')->current()->dispatch('modal-show', name: $this->name);
             }
 
-            public function close()
+            public function close(bool $silent = false)
             {
-                app('livewire')->current()->dispatch('modal-close', name: $this->name);
+                app('livewire')->current()->dispatch('modal-close', name: $this->name, silent: $silent);
             }
         };
     }
@@ -55,9 +55,9 @@ trait InteractsWithComponents
     public function modals()
     {
         return new class {
-            public function close()
+            public function close(bool $silent = false)
             {
-                app('livewire')->current()->dispatch('modal-close');
+                app('livewire')->current()->dispatch('modal-close', silent: $silent);
             }
         };
     }
