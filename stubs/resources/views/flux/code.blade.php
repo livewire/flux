@@ -13,8 +13,9 @@ $source = str_replace(["\r\n", "\r"], "\n", $source);
 $source = trim($source, "\n");
 
 $classes = Flux::classes()
-    ->add('relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-white/10')
-    ->add('bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200')
+    ->add('relative overflow-hidden rounded-2xl border')
+    ->add('[:where(&)]:border-zinc-200 dark:[:where(&)]:border-white/10')
+    ->add('[:where(&)]:bg-zinc-50 dark:[:where(&)]:bg-zinc-800 text-zinc-800 dark:text-zinc-200')
     ->add('text-sm');
 
 $contentClasses = Flux::classes()
