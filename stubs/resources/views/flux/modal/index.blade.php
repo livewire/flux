@@ -103,7 +103,7 @@ if ($escapable === false) {
 }
 
 [ $contentAttributes, $attributes ] = Flux::splitAttributes($attributes, ['autofocus', 'class', 'style']);
-[ $dialogAttributes, $attributes ] = Flux::splitAttributes($attributes, ['wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
+[ $dialogAttributes, $attributes ] = Flux::splitAttributes($attributes, ['aria-label', 'aria-labelledby', 'aria-describedby', 'wire:close', 'x-on:close', 'wire:cancel', 'x-on:cancel']);
 
 if (! $overflow) {
     $dialogAttributes = $dialogAttributes->merge($contentAttributes->getAttributes());
