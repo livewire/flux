@@ -142,12 +142,20 @@ class FluxManager
                 $classes[] = 'diff diff-'.$diff;
             }
 
+            $marker = $highlights->diffMarker($number);
+            $offset = $marker ? 1 : 0;
+            $line = $marker ? mb_substr($line, 1) : $line;
+
             $content = implode('', array_map(
                 fn ($segment) => $segment[1]
                     ? '<span class="highlight highlight-characters">'.e($segment[0]).'</span>'
                     : e($segment[0]),
-                $highlights->segments($line, $number),
+                $highlights->segments($line, $number, $offset),
             ));
+
+            if ($marker) {
+                $content = '<span class="diff-marker">'.$marker.'</span>'.$content;
+            }
 
             return '<span class="'.implode(' ', $classes).'">'.$content.'</span>';
         }, $codeLines, array_keys($codeLines));

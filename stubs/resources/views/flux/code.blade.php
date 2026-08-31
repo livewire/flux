@@ -25,16 +25,20 @@ $contentClasses = Flux::classes()
     ->add('[&_.line]:block [&_.line]:min-h-[2em] [&_.line]:pl-5 [&_.line]:leading-[2]')
     ->add($copyable ? '[&_.line]:pr-12' : '[&_.line]:pr-5')
     ->add('[&_.highlight]:empty:opacity-0')
-    ->add('[&_.diff]:empty:opacity-0')
+    ->add('[&_.diff]:empty:hidden')
     ->add('[&_.highlight-line]:border-l-2 [&_.highlight-line]:border-sky-400 [&_.highlight-line]:bg-sky-400/10 dark:[&_.highlight-line]:bg-sky-400/20')
     ->add('[&_.highlight-characters]:isolate [&_.highlight-characters]:relative')
     ->add('[&_.highlight-characters]:before:absolute [&_.highlight-characters]:before:-z-10 [&_.highlight-characters]:before:inset-y-0 [&_.highlight-characters]:before:inset-x-[-2px]')
     ->add('[&_.highlight-characters]:before:border-r-2 [&_.highlight-characters]:before:border-sky-400 [&_.highlight-characters]:before:bg-sky-400/10 dark:[&_.highlight-characters]:before:bg-sky-400/20')
+    ->add('[&_.diff]:relative [&_.diff]:pl-[calc(1.25rem+1ch)]!')
+    ->add('[&_.diff-marker]:absolute [&_.diff-marker]:left-5 [&_.diff-marker]:font-semibold')
     ->add('[&_.diff-added]:border-l-2 [&_.diff-added]:border-emerald-400 [&_.diff-added]:bg-emerald-400/10 dark:[&_.diff-added]:bg-emerald-400/20')
     ->add('[&_.diff-removed]:border-l-2 [&_.diff-removed]:border-red-400 [&_.diff-removed]:bg-red-400/10 dark:[&_.diff-removed]:bg-red-400/20')
     ->add('dark:[&_.shiki]:text-(--shiki-dark)! dark:[&_.shiki_span]:text-(--shiki-dark)!')
     ->add('dark:[&_.phiki]:text-(--phiki-dark-color)! dark:[&_.phiki_span]:text-(--phiki-dark-color)!')
-    ->add('dark:[&_.shiki_span]:[font-style:var(--shiki-dark-font-style)]! dark:[&_.phiki_span]:[font-style:var(--phiki-dark-font-style)]!');
+    ->add('dark:[&_.shiki_span]:[font-style:var(--shiki-dark-font-style)]! dark:[&_.phiki_span]:[font-style:var(--phiki-dark-font-style)]!')
+    ->add('[&_.diff-added_.diff-marker]:text-emerald-600! dark:[&_.diff-added_.diff-marker]:text-emerald-300!')
+    ->add('[&_.diff-removed_.diff-marker]:text-red-600! dark:[&_.diff-removed_.diff-marker]:text-red-300!');
 @endphp
 
 <div

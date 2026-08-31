@@ -74,6 +74,15 @@ class CodeHighlights
         return $this->diff[$line] ?? null;
     }
 
+    public function diffMarker(int $line): ?string
+    {
+        return match ($this->diff($line)) {
+            'added' => '+',
+            'removed' => '-',
+            default => null,
+        };
+    }
+
     public function segments(string $text, int $line, int $offset = 0): array
     {
         $ranges = $this->characters[$line] ?? [];

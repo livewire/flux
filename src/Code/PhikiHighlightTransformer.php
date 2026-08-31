@@ -33,6 +33,18 @@ class PhikiHighlightTransformer extends AbstractTransformer
         $offset = $this->offsets[$line] ?? 0;
         $this->offsets[$line] = $offset + mb_strlen($token->token->text);
         $segments = $this->highlights->segments($token->token->text, $line + 1, $offset);
+        $marker = $offset === 0 ? $this->highlights->diffMarker($line + 1) : null;
+
+        if ($marker && str_starts_with($segments[0][0], $marker)) {
+            $segments[0][0] = mb_substr($segments[0][0], 1);
+
+            $span->children = [
+                new Element('span', new Properties(['class' => new ClassList(['diff-marker'])]), [new Text($marker)]),
+                ...$this->renderSegments($segments),
+            ];
+
+            return $span;
+        }
 
         $hasHighlight = false;
 
@@ -47,7 +59,14 @@ class PhikiHighlightTransformer extends AbstractTransformer
             return $span;
         }
 
-        $span->children = array_map(function ($segment) {
+        $span->children = $this->renderSegments($segments);
+
+        return $span;
+    }
+
+    protected function renderSegments(array $segments): array
+    {
+        return array_map(function ($segment) {
             [$text, $highlighted] = $segment;
             $text = new Text(htmlspecialchars($text));
 
@@ -55,7 +74,5 @@ class PhikiHighlightTransformer extends AbstractTransformer
                 ? new Element('span', new Properties(['class' => new ClassList(['highlight', 'highlight-characters'])]), [$text])
                 : $text;
         }, $segments);
-
-        return $span;
     }
 }
