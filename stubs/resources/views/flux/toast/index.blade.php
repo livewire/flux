@@ -44,6 +44,22 @@
                         </div>
                     </div>
 
+                    {{-- Action button (unhidden and wired up by JS when an action is provided)... --}}
+                    <div class="hidden items-center" data-flux-toast-action>
+                        <button type="button" data-flux-toast-action-button class="relative inline-flex h-8 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-zinc-800/5 px-3 text-sm font-medium text-zinc-800 hover:bg-zinc-800/10 data-loading:pointer-events-none dark:bg-white/10 dark:text-white dark:hover:bg-white/20 [&[data-loading]_[data-flux-toast-action-label]]:opacity-0 [&[data-loading]_[data-flux-loading-indicator]]:opacity-100">
+                            <span class="transition-opacity" data-flux-toast-action-label></span>
+                            <span class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity" data-flux-loading-indicator>
+                                <svg class="size-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4Z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <a data-flux-toast-action-link class="inline-flex h-8 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-zinc-800/5 px-3 text-sm font-medium text-zinc-800 hover:bg-zinc-800/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                            <span data-flux-toast-action-label></span>
+                        </a>
+                    </div>
+
                     {{-- Close button --}}
                     <ui-close class="flex items-center">
                         <button type="button" class="inline-flex items-center font-medium justify-center gap-2 truncate disabled:opacity-50 dark:disabled:opacity-75 disabled:cursor-default h-8 text-sm rounded-md w-8 bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-400 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white" as="button">
