@@ -13,8 +13,8 @@ $classes = Flux::classes()
         default => '[:where(&)]:bg-white [:where(&)]:border-zinc-200 dark:[:where(&)]:bg-white/10 dark:[:where(&)]:border-white/10',
     })
     ->add(match ($size) {
-        default => '[:where(&)]:p-6 [:where(&)]:rounded-xl',
-        'sm' => '[:where(&)]:p-4 [:where(&)]:rounded-lg',
+        default => '[:where(&)]:p-6 [:where(&)]:rounded-xl [--flux-bleed:1.5rem]',
+        'sm' => '[:where(&)]:p-4 [:where(&)]:rounded-lg [--flux-bleed:1rem]',
     })
     ;
 @endphp
