@@ -36,7 +36,7 @@ $classes = Flux::classes()
         ]) }}
     >
         <img
-            src="{{ $country ? $src : url($src) }}"
+            src="{{ $src }}"
             alt="{{ $alt }}"
             loading="lazy"
             decoding="async"
