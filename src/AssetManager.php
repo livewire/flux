@@ -66,7 +66,9 @@ class AssetManager
 
         if (! $hash) return null;
 
-        return url(route('__flux.flag', ['country' => $country], false)).'?id='.$hash;
+        // Following scripts(), editorScripts(), and editorStyles()
+        // Related: https://github.com/livewire/flux/pull/2183
+        return url(route('__flux.flag', ['country' => $country], false).'?id='.$hash);
     }
 
     public static function hasFlag(string $country): bool
