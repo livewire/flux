@@ -66,7 +66,7 @@ class AssetManager
 
         if (! $hash) return null;
 
-        return route('__flux.flag', ['country' => $country], false).'?id='.$hash;
+        return url(route('__flux.flag', ['country' => $country], false)).'?id='.$hash;
     }
 
     public static function hasFlag(string $country): bool
