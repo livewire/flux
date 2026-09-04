@@ -61,6 +61,10 @@ if ($loading && $type !== 'submit' && ! $isJsMethod) {
     }
 }
 
+$isColored = $color
+    && in_array($variant, ['filled', 'outline', 'ghost', 'subtle'], true)
+    && ! in_array($color, ['slate', 'gray', 'zinc', 'neutral', 'stone', 'mauve', 'olive', 'mist', 'taupe'], true);
+
 $classes = Flux::classes()
     ->add('relative items-center font-medium justify-center whitespace-nowrap')
     ->add('disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none')
@@ -99,26 +103,41 @@ $classes = Flux::classes()
             ? Flux::applyInset($inset, top: '-mt-1', right: '-me-1', bottom: '-mb-1', left: '-ms-1')
             : Flux::applyInset($inset, top: '-mt-1', right: ($iconTrailing && $iconTrailing !== '' ? '-me-1' : '-me-2'), bottom: '-mb-1', left: ($iconLeading && $iconLeading !== '' ? '-ms-1' : '-ms-2')),
     } : '')
-    ->add(match ($variant) { // Background color...
-        'primary' => 'bg-[var(--color-accent)] hover:bg-[color-mix(in_oklab,_var(--color-accent),_transparent_10%)]',
-        'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
-        'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
-        'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500',
-        'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
-        'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
+    ->add(match (true) { // Background color...
+        $isColored && $variant === 'filled' => 'bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_80%)] hover:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_70%)] dark:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_60%)] dark:hover:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_50%)]',
+        $isColored && $variant === 'outline' => 'bg-white hover:bg-[color-mix(in_oklab,_var(--color-button-soft)_6%,_white)] dark:bg-zinc-700 dark:hover:bg-[color-mix(in_oklab,_var(--color-accent-content)_10%,_var(--color-zinc-700))]',
+        $isColored && $variant === 'ghost' => 'bg-transparent hover:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_80%)] active:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_70%)] dark:hover:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_60%)] dark:active:bg-[color-mix(in_oklab,_var(--color-button-soft),_transparent_50%)]',
+        $isColored && $variant === 'subtle' => 'bg-transparent hover:bg-(--color-button-tint) dark:hover:bg-[color-mix(in_oklab,_var(--color-button-deep),_transparent_28%)]',
+        default => match ($variant) {
+            'primary' => 'bg-[var(--color-accent)] hover:bg-[color-mix(in_oklab,_var(--color-accent),_transparent_10%)]',
+            'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
+            'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
+            'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500',
+            'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
+            'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
+        },
     })
-    ->add(match ($variant) { // Text color...
-        'primary' => 'text-[var(--color-accent-foreground)]',
-        'filled' => 'text-zinc-800 dark:text-white',
-        'outline' => 'text-zinc-800 dark:text-white',
-        'danger' => 'text-white',
-        'ghost' => 'text-zinc-800 dark:text-white',
-        'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+    ->add(match (true) { // Text color...
+        $isColored && $variant === 'filled' => 'text-(--color-button-strong) dark:text-(--color-button-soft-foreground)',
+        $isColored && $variant === 'outline' => 'text-(--color-button-strong) dark:text-(--color-accent-content)',
+        $isColored && $variant === 'ghost' => 'text-(--color-button-strong) dark:text-(--color-button-muted)',
+        $isColored && $variant === 'subtle' => 'text-[color-mix(in_oklab,_var(--color-accent-content),_var(--color-zinc-500)_46%)] hover:text-(--color-button-strong) dark:text-[color-mix(in_oklab,_var(--color-button-muted),_var(--color-zinc-400)_48%)] dark:hover:text-(--color-button-muted)',
+        default => match ($variant) {
+            'primary' => 'text-[var(--color-accent-foreground)]',
+            'filled' => 'text-zinc-800 dark:text-white',
+            'outline' => 'text-zinc-800 dark:text-white',
+            'danger' => 'text-white',
+            'ghost' => 'text-zinc-800 dark:text-white',
+            'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+        },
     })
-    ->add(match ($variant) { // Border color...
-        'primary' => 'border border-black/10 dark:border-0',
-        'outline' => 'border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600',
-         default => '',
+    ->add(match (true) { // Border color...
+        $isColored && $variant === 'outline' => 'border border-[color-mix(in_oklab,_var(--color-button-border)_18%,_var(--color-zinc-200))] border-b-[color-mix(in_oklab,_color-mix(in_oklab,_var(--color-button-border)_26%,_var(--color-zinc-300))_80%,_transparent)] hover:border-[color-mix(in_oklab,_var(--color-button-border)_28%,_var(--color-zinc-200))] hover:border-b-[color-mix(in_oklab,_var(--color-button-border)_36%,_var(--color-zinc-200))] dark:border-[color-mix(in_oklab,_var(--color-accent-content)_22%,_var(--color-zinc-600))] dark:border-b-[color-mix(in_oklab,_var(--color-accent-content)_30%,_var(--color-zinc-600))] dark:hover:border-[color-mix(in_oklab,_var(--color-accent-content)_32%,_var(--color-zinc-600))] dark:hover:border-b-[color-mix(in_oklab,_var(--color-accent-content)_40%,_var(--color-zinc-600))]',
+        default => match ($variant) {
+            'primary' => 'border border-black/10 dark:border-0',
+            'outline' => 'border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600',
+            default => '',
+        },
     })
     ->add(match ($variant) { // Shadows...
         'primary' => 'shadow-[inset_0px_1px_--theme(--color-white/.2)]',
@@ -144,7 +163,7 @@ $classes = Flux::classes()
         $type === 'submit' ? '[&[disabled]>[data-flux-loading-indicator]]:opacity-100' : '[&[data-loading]>[data-flux-loading-indicator]]:opacity-100 [&[data-flux-loading]>[data-flux-loading-indicator]]:opacity-100',
         $type === 'submit' ? '[&[disabled]]:pointer-events-none' : 'data-loading:pointer-events-none data-flux-loading:pointer-events-none',
     ] : [])
-    ->add($variant === 'primary' ? match ($color) {
+    ->add(($variant === 'primary' || $isColored) ? match ($color) {
         'slate' => '[--color-accent:var(--color-slate-800)] [--color-accent-content:var(--color-slate-800)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-white)] dark:[--color-accent-content:var(--color-white)] dark:[--color-accent-foreground:var(--color-slate-800)]',
         'gray' => '[--color-accent:var(--color-gray-800)] [--color-accent-content:var(--color-gray-800)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-white)] dark:[--color-accent-content:var(--color-white)] dark:[--color-accent-foreground:var(--color-gray-800)]',
         'zinc' => '[--color-accent:var(--color-zinc-800)] [--color-accent-content:var(--color-zinc-800)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-white)] dark:[--color-accent-content:var(--color-white)] dark:[--color-accent-foreground:var(--color-zinc-800)]',
@@ -171,6 +190,26 @@ $classes = Flux::classes()
         'fuchsia' => '[--color-accent:var(--color-fuchsia-600)] [--color-accent-content:var(--color-fuchsia-600)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-fuchsia-600)] dark:[--color-accent-content:var(--color-fuchsia-400)] dark:[--color-accent-foreground:var(--color-white)]',
         'pink' => '[--color-accent:var(--color-pink-600)] [--color-accent-content:var(--color-pink-600)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-pink-600)] dark:[--color-accent-content:var(--color-pink-400)] dark:[--color-accent-foreground:var(--color-white)]',
         'rose' => '[--color-accent:var(--color-rose-500)] [--color-accent-content:var(--color-rose-500)] [--color-accent-foreground:var(--color-white)] dark:[--color-accent:var(--color-rose-500)] dark:[--color-accent-content:var(--color-rose-400)] dark:[--color-accent-foreground:var(--color-white)]',
+        default => '',
+    } : '')
+    ->add($isColored ? match ($color) {
+        'red' => '[--color-button-tint:var(--color-red-50)] [--color-button-soft-foreground:var(--color-red-200)] [--color-button-muted:var(--color-red-300)] [--color-button-soft:var(--color-red-400)] [--color-button-border:var(--color-red-500)] [--color-button-strong:var(--color-red-700)] [--color-button-deep:var(--color-red-950)]',
+        'orange' => '[--color-button-tint:var(--color-orange-50)] [--color-button-soft-foreground:var(--color-orange-200)] [--color-button-muted:var(--color-orange-300)] [--color-button-soft:var(--color-orange-400)] [--color-button-border:var(--color-orange-500)] [--color-button-strong:var(--color-orange-700)] [--color-button-deep:var(--color-orange-950)]',
+        'amber' => '[--color-button-tint:var(--color-amber-50)] [--color-button-soft-foreground:var(--color-amber-200)] [--color-button-muted:var(--color-amber-300)] [--color-button-soft:var(--color-amber-400)] [--color-button-border:var(--color-amber-500)] [--color-button-strong:var(--color-amber-700)] [--color-button-deep:var(--color-amber-950)]',
+        'yellow' => '[--color-button-tint:var(--color-yellow-50)] [--color-button-soft-foreground:var(--color-yellow-200)] [--color-button-muted:var(--color-yellow-300)] [--color-button-soft:var(--color-yellow-400)] [--color-button-border:var(--color-yellow-500)] [--color-button-strong:var(--color-yellow-700)] [--color-button-deep:var(--color-yellow-950)]',
+        'lime' => '[--color-button-tint:var(--color-lime-50)] [--color-button-soft-foreground:var(--color-lime-200)] [--color-button-muted:var(--color-lime-300)] [--color-button-soft:var(--color-lime-400)] [--color-button-border:var(--color-lime-500)] [--color-button-strong:var(--color-lime-700)] [--color-button-deep:var(--color-lime-950)]',
+        'green' => '[--color-button-tint:var(--color-green-50)] [--color-button-soft-foreground:var(--color-green-200)] [--color-button-muted:var(--color-green-300)] [--color-button-soft:var(--color-green-400)] [--color-button-border:var(--color-green-500)] [--color-button-strong:var(--color-green-700)] [--color-button-deep:var(--color-green-950)]',
+        'emerald' => '[--color-button-tint:var(--color-emerald-50)] [--color-button-soft-foreground:var(--color-emerald-200)] [--color-button-muted:var(--color-emerald-300)] [--color-button-soft:var(--color-emerald-400)] [--color-button-border:var(--color-emerald-500)] [--color-button-strong:var(--color-emerald-700)] [--color-button-deep:var(--color-emerald-950)]',
+        'teal' => '[--color-button-tint:var(--color-teal-50)] [--color-button-soft-foreground:var(--color-teal-200)] [--color-button-muted:var(--color-teal-300)] [--color-button-soft:var(--color-teal-400)] [--color-button-border:var(--color-teal-500)] [--color-button-strong:var(--color-teal-700)] [--color-button-deep:var(--color-teal-950)]',
+        'cyan' => '[--color-button-tint:var(--color-cyan-50)] [--color-button-soft-foreground:var(--color-cyan-200)] [--color-button-muted:var(--color-cyan-300)] [--color-button-soft:var(--color-cyan-400)] [--color-button-border:var(--color-cyan-500)] [--color-button-strong:var(--color-cyan-700)] [--color-button-deep:var(--color-cyan-950)]',
+        'sky' => '[--color-button-tint:var(--color-sky-50)] [--color-button-soft-foreground:var(--color-sky-200)] [--color-button-muted:var(--color-sky-300)] [--color-button-soft:var(--color-sky-400)] [--color-button-border:var(--color-sky-500)] [--color-button-strong:var(--color-sky-700)] [--color-button-deep:var(--color-sky-950)]',
+        'blue' => '[--color-button-tint:var(--color-blue-50)] [--color-button-soft-foreground:var(--color-blue-200)] [--color-button-muted:var(--color-blue-300)] [--color-button-soft:var(--color-blue-400)] [--color-button-border:var(--color-blue-500)] [--color-button-strong:var(--color-blue-700)] [--color-button-deep:var(--color-blue-950)]',
+        'indigo' => '[--color-button-tint:var(--color-indigo-50)] [--color-button-soft-foreground:var(--color-indigo-200)] [--color-button-muted:var(--color-indigo-300)] [--color-button-soft:var(--color-indigo-400)] [--color-button-border:var(--color-indigo-500)] [--color-button-strong:var(--color-indigo-700)] [--color-button-deep:var(--color-indigo-950)]',
+        'violet' => '[--color-button-tint:var(--color-violet-50)] [--color-button-soft-foreground:var(--color-violet-200)] [--color-button-muted:var(--color-violet-300)] [--color-button-soft:var(--color-violet-400)] [--color-button-border:var(--color-violet-500)] [--color-button-strong:var(--color-violet-700)] [--color-button-deep:var(--color-violet-950)]',
+        'purple' => '[--color-button-tint:var(--color-purple-50)] [--color-button-soft-foreground:var(--color-purple-200)] [--color-button-muted:var(--color-purple-300)] [--color-button-soft:var(--color-purple-400)] [--color-button-border:var(--color-purple-500)] [--color-button-strong:var(--color-purple-700)] [--color-button-deep:var(--color-purple-950)]',
+        'fuchsia' => '[--color-button-tint:var(--color-fuchsia-50)] [--color-button-soft-foreground:var(--color-fuchsia-200)] [--color-button-muted:var(--color-fuchsia-300)] [--color-button-soft:var(--color-fuchsia-400)] [--color-button-border:var(--color-fuchsia-500)] [--color-button-strong:var(--color-fuchsia-700)] [--color-button-deep:var(--color-fuchsia-950)]',
+        'pink' => '[--color-button-tint:var(--color-pink-50)] [--color-button-soft-foreground:var(--color-pink-200)] [--color-button-muted:var(--color-pink-300)] [--color-button-soft:var(--color-pink-400)] [--color-button-border:var(--color-pink-500)] [--color-button-strong:var(--color-pink-700)] [--color-button-deep:var(--color-pink-950)]',
+        'rose' => '[--color-button-tint:var(--color-rose-50)] [--color-button-soft-foreground:var(--color-rose-200)] [--color-button-muted:var(--color-rose-300)] [--color-button-soft:var(--color-rose-400)] [--color-button-border:var(--color-rose-500)] [--color-button-strong:var(--color-rose-700)] [--color-button-deep:var(--color-rose-950)]',
         default => '',
     } : '')
     ;
