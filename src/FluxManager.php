@@ -2,6 +2,8 @@
 
 namespace Flux;
 
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HtmlString;
 use Flux\Concerns\InteractsWithComponents;
 use Composer\InstalledVersions;
 use Illuminate\Support\Str;
@@ -16,6 +18,10 @@ class FluxManager
     public $hasRenderedAssets = false;
 
     protected $nonce = null;
+
+    protected $codeHighlighter = null;
+
+    protected $codeHighlighterResolved = false;
 
     public function boot()
     {
@@ -91,6 +97,75 @@ class FluxManager
         $builder = new ClassBuilder;
 
         return $styles ? $builder->add($styles) : $builder;
+    }
+
+    public function codeHighlighter(?callable $highlighter)
+    {
+        $this->codeHighlighter = $highlighter;
+        $this->codeHighlighterResolved = true;
+
+        return $this;
+    }
+
+    public function highlightCode(string $code, string $language = 'text', ?string $highlight = null): HtmlString
+    {
+        if (! $this->codeHighlighterResolved) {
+            $this->codeHighlighter = class_exists(\Phiki\Phiki::class)
+                ? new Code\PhikiHighlighter
+                : null;
+
+            $this->codeHighlighterResolved = true;
+        }
+
+        if ($this->codeHighlighter) {
+            $html = ($this->codeHighlighter)($code, $language, $highlight);
+
+            if ($html !== null) {
+                return new HtmlString($html instanceof Htmlable ? $html->toHtml() : (string) $html);
+            }
+        }
+
+        return new HtmlString($this->renderPlainCode($code, $language, $highlight));
+    }
+
+    protected function renderPlainCode(string $code, string $language, ?string $highlight): string
+    {
+        $language = preg_replace('/[^a-z0-9_+-]/', '', strtolower($language)) ?: 'text';
+        $highlights = Code\CodeHighlights::parse($highlight, $code, $language);
+
+        $codeLines = preg_split('/\R/u', $code);
+
+        $lines = array_map(function ($line, $index) use ($highlights) {
+            $number = $index + 1;
+            $classes = ['line'];
+
+            if ($highlights->includesLine($number)) {
+                $classes[] = 'highlight highlight-line';
+            }
+
+            if ($diff = $highlights->diff($number)) {
+                $classes[] = 'diff diff-'.$diff;
+            }
+
+            $marker = $highlights->diffMarker($number);
+            $offset = $marker ? 1 : 0;
+            $line = $marker ? mb_substr($line, 1) : $line;
+
+            $content = implode('', array_map(
+                fn ($segment) => $segment[1]
+                    ? '<span class="highlight highlight-characters">'.e($segment[0]).'</span>'
+                    : e($segment[0]),
+                $highlights->segments($line, $number, $offset),
+            ));
+
+            if ($marker) {
+                $content = '<span class="diff-marker">'.$marker.'</span>'.$content;
+            }
+
+            return '<span class="'.implode(' ', $classes).'">'.$content.'</span>';
+        }, $codeLines, array_keys($codeLines));
+
+        return '<pre data-flux-code-pre><code class="language-'.$language.'">'.implode('', $lines).'</code></pre>';
     }
 
     public function disallowWireModel($attributes, $componentName)

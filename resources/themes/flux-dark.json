@@ -1,0 +1,80 @@
+{
+    "name": "flux-dark",
+    "type": "dark",
+    "colors": {
+        "editor.background": "#27272A",
+        "editor.foreground": "#EEFFFF"
+    },
+    "tokenColors": [
+        {
+            "name": "Comments",
+            "scope": ["comment"],
+            "settings": { "foreground": "#8E908C", "fontStyle": "italic" }
+        },
+        {
+            "name": "Text",
+            "scope": ["text"],
+            "settings": { "foreground": "#EEFFFF" }
+        },
+        {
+            "name": "Strings",
+            "scope": ["string"],
+            "settings": { "foreground": "#FF9BDE" }
+        },
+        {
+            "name": "Keyword",
+            "scope": ["keyword"],
+            "settings": { "foreground": "#88DDFF" }
+        },
+        {
+            "name": "HTML Tag Name",
+            "scope": ["entity.name.tag"],
+            "settings": { "foreground": "#81E6FF" }
+        },
+        {
+            "name": "HTML Tag Greater Than / Less Than",
+            "scope": ["punctuation.definition.tag"],
+            "settings": { "foreground": "#88DDFF" }
+        },
+        {
+            "name": "HTML Tag Attributes",
+            "scope": ["entity.other.attribute-name"],
+            "settings": { "foreground": "#75FFC7" }
+        },
+        {
+            "name": "HTML Tag Attribute Equals",
+            "scope": ["punctuation.separator.key-value"],
+            "settings": { "foreground": "#88DDFF" }
+        },
+        {
+            "name": "Function scope",
+            "scope": ["storage"],
+            "settings": { "foreground": "#81E6FF" }
+        },
+        {
+            "name": "Functions",
+            "scope": ["entity.name.function", "support.function"],
+            "settings": { "foreground": "#75FFC7" }
+        },
+        {
+            "name": "Variables",
+            "scope": ["variable"],
+            "settings": { "foreground": "#EEFFFF" }
+        },
+        {
+            "name": "Numbers",
+            "scope": ["constant.numeric"],
+            "settings": { "foreground": "#CC3EF6" }
+        },
+        {
+            "name": "Types / Classes",
+            "scope": ["entity.name.type", "support.class", "entity.other.inherited-class"],
+            "settings": { "foreground": "#FF9BDE" }
+        },
+        {
+            "name": "Namespaces Before Class",
+            "scope": ["source"],
+            "settings": { "foreground": "#88DDFF" }
+        }
+    ]
+}
