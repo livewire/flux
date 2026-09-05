@@ -15,7 +15,7 @@
 <?php if ($expandable && $heading): ?>
     <?php if ($icon): ?>
         <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} @if ($expanded === true) open @endif data-flux-sidebar-group>
-            <button type="button" class="border-1 border-transparent w-full h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
+            <button type="button" class="border-1 border-transparent w-full min-w-0 h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
                 <div class="px-3">
                     <?php if (is_string($icon) && $icon !== ''): ?>
                         <flux:icon :icon="$icon" :variant="$iconVariant" class="size-4" />
@@ -24,7 +24,7 @@
                     <?php endif; ?>
                 </div>
 
-                <span class="flex-1 text-left rtl:text-right text-sm font-medium leading-none">{{ $heading }}</span>
+                <span class="flex-1 text-left rtl:text-right text-sm font-medium truncate">{{ $heading }}</span>
 
                 <div class="ps-3 pe-2.5">
                     <flux:icon.chevron-down class="size-3! hidden group-data-open/disclosure-button:block" />
@@ -32,7 +32,7 @@
                 </div>
             </button>
 
-            <div class="relative hidden data-open:block ps-7" @if ($expanded === true) data-open @endif>
+            <div class="relative min-w-0 hidden data-open:block ps-7" @if ($expanded === true) data-open @endif>
                 <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-5"></div>
 
                 <div class="flex flex-col">
@@ -69,16 +69,16 @@
         </flux:dropdown>
     <?php else: ?>
         <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} @if ($expanded === true) open @endif data-flux-sidebar-group>
-            <button type="button" class="border-1 border-transparent w-full h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
+            <button type="button" class="border-1 border-transparent w-full min-w-0 h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
                 <div class="ps-3.5 pe-3.5">
                     <flux:icon.chevron-down class="size-3! hidden group-data-open/disclosure-button:block" />
                     <flux:icon.chevron-right class="size-3! block group-data-open/disclosure-button:hidden rtl:rotate-180" />
                 </div>
 
-                <span class="text-sm font-medium leading-none">{{ $heading }}</span>
+                <span class="text-sm font-medium truncate">{{ $heading }}</span>
             </button>
 
-            <div class="relative hidden data-open:block ps-7" @if ($expanded === true) data-open @endif>
+            <div class="relative min-w-0 hidden data-open:block ps-7" @if ($expanded === true) data-open @endif>
                 <div class="absolute inset-y-[3px] w-px bg-zinc-200 dark:bg-white/30 start-0 ms-5"></div>
 
                 <div class="flex flex-col">
@@ -90,11 +90,9 @@
 
 <?php elseif ($heading): ?>
     <div {{ $attributes->class('flex flex-col in-data-flux-sidebar-collapsed-desktop:hidden') }} data-flux-sidebar-group>
-        <div class="px-3 py-2">
-            <div class="text-sm text-zinc-400 font-medium leading-none">{{ $heading }}</div>
-        </div>
+        <div class="px-3 py-2 text-sm text-zinc-400 font-medium leading-none truncate">{{ $heading }}</div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col min-w-0">
             {{ $slot }}
         </div>
     </div>

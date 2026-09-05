@@ -59,7 +59,7 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<flux:tooltip :position="$tooltipPosition" class="block">
+<flux:tooltip :position="$tooltipPosition" class="block min-w-0">
     <flux:button-or-link :attributes="$attributes->class($classes)" data-flux-sidebar-item>
         <?php if ($icon): ?>
             <div class="relative">
