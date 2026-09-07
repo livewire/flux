@@ -41,6 +41,8 @@ class AssetManager
         Route::get('/flux/editor.css', [static::class, 'editorCss']);
         Route::get('/flux/editor.js', [static::class, 'editorJs']);
         Route::get('/flux/editor.min.js', [static::class, 'editorMinJs']);
+        Route::get('/flux/phone/{asset}', [static::class, 'phoneAsset'])
+            ->where('asset', 'phone(?:\.min|\.module|-utils)?\.js|phone\.css|phone-flags(?:@2x)?\.webp');
         Route::get('/flux/flags/{country}', [static::class, 'flag'])
             ->where('country', '[A-Za-z]{2}')
             ->name('__flux.flag');
@@ -196,6 +198,43 @@ HTML;
         $nonceAttr = $nonce ? ' nonce="' . $nonce . '"' : '';
 
         return '<link rel="stylesheet" href="'. url('/flux/editor.css?id='. $versionHash) . '"' . $nonceAttr . '>';
+    }
+
+    public function phoneAsset(string $asset)
+    {
+        if (! Flux::pro()) throw new \Exception('Flux Pro is required to use the Flux phone input.');
+
+        $type = match (pathinfo($asset, PATHINFO_EXTENSION)) {
+            'css' => 'text/css',
+            'webp' => 'image/webp',
+            default => 'text/javascript',
+        };
+
+        return $this->pretendResponseIsFile(__DIR__.'/../../flux-pro/dist/'.$asset, $type);
+    }
+
+    public static function phoneScripts($nonce = null)
+    {
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+        $asset = config('app.debug') ? 'phone.js' : 'phone.min.js';
+        $nonceAttr = $nonce ? ' nonce="' . $nonce . '"' : '';
+
+        return '<script src="'.url('/flux/phone/'.$asset.'?id='.$manifest['/phone.js']).'" defer'.$nonceAttr.'></script>';
+    }
+
+    public static function phoneStyles($nonce = null)
+    {
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+        $nonceAttr = $nonce ? ' nonce="' . $nonce . '"' : '';
+
+        return '<link rel="stylesheet" href="'.url('/flux/phone/phone.css?id='.$manifest['/phone.css']).'"'.$nonceAttr.'>';
+    }
+
+    public static function phoneUtilsUrl()
+    {
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+
+        return url('/flux/phone/phone-utils.js?id='.$manifest['/phone-utils.js']);
     }
 
     public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8', $headers = [])
