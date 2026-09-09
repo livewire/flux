@@ -28,3 +28,6 @@ jobs:
 
       - name: Check PHP syntax
         run: find src -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Run modal Livewire id regression
+        run: php tests/ModalDialogPreservesLivewireIdTest.php
