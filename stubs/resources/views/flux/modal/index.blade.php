@@ -120,6 +120,10 @@ if (! $overflow) {
         <?php if ($flyout): ?> data-flux-flyout <?php endif; ?>
         <?php if ($overflow): ?> data-flux-modal-overflow <?php endif; ?>
         @unblaze(scope: ['name' => $name])
+        {{-- Stamp the owner Livewire id on the dialog so wire:click still resolves after showModal() (top layer / polyfill move). Nested Livewire roots in the slot still win via closest(). Keep this in @unblaze so Blaze does not fold a stale id. --}}
+        <?php if (isset($__livewire)): ?>
+            wire:id="{{ $__livewire->getId() }}"
+        <?php endif; ?>
         x-data="fluxModal(@js($scope['name']), @js(isset($__livewire) ? $__livewire->getId() : null))"
         @endunblaze
         x-on:modal-show.document="handleShow($event)"
