@@ -24,7 +24,7 @@
 $iconLeading = $icon ??= $iconLeading;
 
 // Button should be a square if it has no text contents...
-$square ??= $slot->isEmpty();
+$square ??= $slot->isEmpty() && ! ($iconLeading && $iconTrailing);
 
 // Size-up icons in square/icon-only buttons... (xs buttons just get micro size/style...)
 $iconVariant ??= ($size === 'xs')
