@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class AssetManager
 {
     protected static ?array $flagManifest = null;
+    protected static ?array $phoneManifest = null;
 
     static function boot()
     {
@@ -209,7 +210,7 @@ HTML;
 
     public static function phoneScripts($nonce = null)
     {
-        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+        $manifest = static::phoneManifest();
         $asset = config('app.debug') ? 'phone.js' : 'phone.min.js';
         $nonceAttr = $nonce ? ' nonce="' . $nonce . '"' : '';
 
@@ -218,9 +219,18 @@ HTML;
 
     public static function phoneUtilsUrl()
     {
-        $manifest = json_decode(file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'), true);
+        $manifest = static::phoneManifest();
 
         return url('/flux/phone/phone-utils.js?id='.$manifest['/phone-utils.js']);
+    }
+
+    protected static function phoneManifest(): array
+    {
+        return static::$phoneManifest ??= json_decode(
+            file_get_contents(__DIR__.'/../../flux-pro/dist/manifest.json'),
+            true,
+            flags: JSON_THROW_ON_ERROR,
+        );
     }
 
     public function pretendResponseIsFile($file, $contentType = 'application/javascript; charset=utf-8', $headers = [])
