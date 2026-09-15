@@ -55,6 +55,12 @@ $iconClasses = Flux::classes()
 $classes = Flux::classes()
     ->add('group relative inline-flex items-center font-medium justify-center whitespace-nowrap outline-offset-2')
     ->add('transition touch-manipulation')
+    ->add([
+        '*:transition-opacity',
+        '[&[data-loading]>:not([data-flux-loading-indicator])]:opacity-0',
+        '[&[data-loading]>[data-flux-loading-indicator]]:opacity-100',
+        'data-loading:pointer-events-none',
+    ])
     ->add('[&[disabled]]:opacity-50 dark:[&[disabled]]:opacity-50 [&[disabled]]:shadow-none [&[disabled]]:cursor-default [&[disabled]]:pointer-events-none')
     ->add(match ($size) {
         'base' => 'h-10 text-sm rounded-lg gap-2' . ' ' . ($square ? 'w-10' : ($hasIcon ? 'ps-3 pe-4' : 'px-4')),
@@ -104,6 +110,10 @@ $classes = Flux::classes()
 <flux:accent :$color class="contents">
     <flux:with-tooltip :$attributes>
         <ui-switch {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif @if($checked) checked data-checked @endif data-flux-control data-flux-toggle>
+            <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator aria-hidden="true">
+                <flux:icon icon="loading" variant="micro" :class="$square && $size !== 'xs' ? 'size-5' : 'size-4'" />
+            </div>
+
             <?php if ((is_string($icon) && $icon !== '') || $onIcon): ?>
                 <flux:icon :icon="$onIcon ?? $icon" variant="solid" :class="$iconClasses->add('hidden group-data-checked:block')" />
                 <flux:icon :icon="$offIcon ?? $onIcon ?? $icon" variant="outline" :class="$iconClasses->add('group-data-checked:hidden')" />

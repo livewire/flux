@@ -22,6 +22,7 @@ $classes = Flux::classes()
     ->add('rounded-full')
     ->add('transition')
     ->add('bg-zinc-800/15 [&[disabled]]:opacity-50 dark:bg-transparent dark:border dark:border-white/20 dark:[&[disabled]]:border-white/10')
+    ->add('data-loading:opacity-50 data-loading:pointer-events-none dark:data-loading:border-white/10')
     ->add('[print-color-adjust:exact]')
     ->add([
         'data-checked:bg-(--color-accent)',
