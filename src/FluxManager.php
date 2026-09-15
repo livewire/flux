@@ -81,6 +81,11 @@ class FluxManager
         return AssetManager::editorScripts($this->nonce());
     }
 
+    public function phoneScripts()
+    {
+        return AssetManager::phoneScripts($this->nonce());
+    }
+
     public function flagUrl(string $country): ?string
     {
         return AssetManager::flagUrl($country);
