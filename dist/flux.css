@@ -42,6 +42,13 @@
         "sidebar footer  aside";
 }
 
+@media (width >= theme(--breakpoint-lg)) {
+    *:has(> [data-flux-main][data-flux-main-inset]) {
+        height: 100dvh;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+}
+
 /*
 Transition dialogs with fade a slight scale effect...
 */
