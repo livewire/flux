@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, unsafe: ['tooltip:position', 'tooltip:kbd', 'tooltip'])
 
 @props([
     'accent' => true,
@@ -24,6 +24,8 @@ $classes = Flux::classes()
 {{-- We have to put tabindex="-1" here because otherwise, Livewire requests will wipe out tabindex state, --}}
 {{-- even with durable attributes for some reason... --}}
 {{-- We have to put "data-flux-field" so that a single box can be disabled without "disabling" the group field label... --}}
-<ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-pills tabindex="-1" data-flux-field>
-    {{ $slot->isNotEmpty() ? $slot : $label }}
-</ui-radio>
+<flux:with-tooltip :$attributes>
+    <ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-pills tabindex="-1" data-flux-field>
+        {{ $slot->isNotEmpty() ? $slot : $label }}
+    </ui-radio>
+</flux:with-tooltip>
