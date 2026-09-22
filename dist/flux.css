@@ -733,3 +733,188 @@ Timeline
 [data-flux-timeline-item]:not(:last-child) [data-flux-timeline-block]~[data-flux-timeline-gap-trailing] {
     height: var(--flux-timeline-item-gap);
 }
+
+/**
+Card
+*/
+
+/* Sizes:
+/* ------------------------------------------------------------ */
+@layer components {
+    /* --flux-card-px and --flux-card-py are how far text sits from the card's edge inside a header or footer.
+    Everything else about the card's geometry is derived from them.
+
+    A card with bare content is the card that has always shipped, so it keeps that geometry (lg). A card with
+    a header, body, or footer is a different kind of object and defaults to md instead. Parts are detected as
+    children of the card, or one wrapper deep (a <form> around them), as long as that wrapper isn't a card of
+    its own. Setting a body variant is also a declaration that there are parts... */
+    :where([data-flux-card]) {
+        --flux-card-px: calc(var(--spacing) * 6);
+        --flux-card-py: calc(var(--spacing) * 4);
+        --flux-card-radius: var(--radius-xl);
+        --flux-card-action-height: calc(var(--spacing) * 8);
+        --flux-card-leading: calc(var(--spacing) * 6);
+        --flux-card-gap: calc(var(--spacing) * 6);
+    }
+
+    :where([data-flux-card]:not([data-flux-card-body-variant="seamless"])),
+    :where([data-flux-card]:has(> :is([data-flux-card-header], [data-flux-card-body], [data-flux-card-footer]))),
+    :where([data-flux-card]:has(> :not([data-flux-card]) > :is([data-flux-card-header], [data-flux-card-body], [data-flux-card-footer]))) {
+        --flux-card-px: calc(var(--spacing) * 4);
+        --flux-card-py: calc(var(--spacing) * 4);
+        --flux-card-radius: var(--radius-xl);
+        --flux-card-leading: calc(var(--spacing) * 5);
+        --flux-card-gap: calc(var(--spacing) * 6);
+    }
+
+    /* The heading's line decides how far actions hang, so how far a button ends up from a band's corner: the
+    compact sizes keep it tight, and it grows with the card from lg up... */
+    :where([data-flux-card-size="sm"]) {
+        --flux-card-px: calc(var(--spacing) * 4);
+        --flux-card-py: calc(var(--spacing) * 3);
+        --flux-card-radius: var(--radius-lg);
+        --flux-card-leading: calc(var(--spacing) * 5);
+        --flux-card-gap: calc(var(--spacing) * 5);
+    }
+
+    :where([data-flux-card-size="md"]) {
+        --flux-card-px: calc(var(--spacing) * 4);
+        --flux-card-py: calc(var(--spacing) * 4);
+        --flux-card-radius: var(--radius-xl);
+        --flux-card-leading: calc(var(--spacing) * 5);
+        --flux-card-gap: calc(var(--spacing) * 6);
+    }
+
+    :where([data-flux-card-size="lg"]) {
+        --flux-card-px: calc(var(--spacing) * 6);
+        --flux-card-py: calc(var(--spacing) * 4);
+        --flux-card-radius: var(--radius-xl);
+        --flux-card-leading: calc(var(--spacing) * 6);
+        --flux-card-gap: calc(var(--spacing) * 6);
+    }
+
+    :where([data-flux-card-size="xl"]) {
+        --flux-card-px: calc(var(--spacing) * 6);
+        --flux-card-py: calc(var(--spacing) * 6);
+        --flux-card-radius: var(--radius-2xl);
+        --flux-card-leading: calc(var(--spacing) * 6);
+        --flux-card-gap: calc(var(--spacing) * 6);
+    }
+}
+
+/* Variables:
+/* ------------------------------------------------------------ */
+@layer components {
+    :where([data-flux-card]) {
+        --flux-card-gutter: 0px;
+
+        /* Actions are taller than the heading line beside them, so they hang into the surrounding padding
+        rather than growing it, by this much on each side. They hang sideways as far as they hang upwards,
+        which keeps them concentric with the corner they sit in... */
+        --flux-card-hang-y: calc((var(--flux-card-action-height) - var(--flux-card-leading)) / 2);
+
+        /* Seamless: the card itself is padded evenly and its parts sit bare inside of it, so the corner the
+        actions hang into is the card's own... */
+        --flux-card-padding: var(--flux-card-px);
+        --flux-card-part-px: 0px;
+        --flux-card-part-py: 0px;
+        --flux-card-body-padding: 0px;
+        --flux-card-hang-x: var(--flux-card-hang-y);
+
+        /* With no bands to separate them, the header and footer need more room from the body than a band
+        would get. --flux-card-gap is tuned per size above... */
+        --flux-card-part-gap: var(--flux-card-gap);
+
+        /* How far content has to reach to bleed to the nearest visible edge (see <flux:table bleed>). Inside
+        a body that's the body's own padding, except that a seamless body has none and sits in the card's... */
+        --flux-bleed: var(--flux-card-padding);
+        --flux-card-body-bleed: var(--flux-card-padding);
+
+        /* A band follows the card's corners, so one with its own background never pokes out of them... */
+        --flux-card-band-radius: max(0px, calc(var(--flux-card-radius) - var(--flux-card-padding)));
+    }
+
+    /* Every other body variant: the header and footer become padded bands around the body. The body pads its
+    content by the full amount inside its panel. The bands measure theirs from the card's edge instead, so an
+    inset card's gutter comes out of their padding; their text then sits 4px outside of the body's, which is
+    deliberate. The bands are padded unevenly, so the sideways hang makes up the difference... */
+    :where([data-flux-card][data-flux-card-body-variant]:not([data-flux-card-body-variant="seamless"])) {
+        --flux-card-padding: var(--flux-card-gutter);
+        --flux-card-part-px: calc(var(--flux-card-px) - var(--flux-card-gutter));
+        --flux-card-part-py: calc(var(--flux-card-py) - var(--flux-card-gutter));
+        --flux-card-part-gap: var(--flux-card-py);
+        --flux-card-body-padding: var(--flux-card-px);
+        --flux-card-hang-x: calc(var(--flux-card-px) - var(--flux-card-py) + var(--flux-card-hang-y));
+        --flux-card-body-bleed: var(--flux-card-body-padding);
+    }
+
+    :where([data-flux-card][data-flux-card-body-variant="inset"]) {
+        --flux-card-gutter: var(--spacing);
+    }
+}
+
+/** Layouts
+/* ------------------------------------------------------------ */
+@layer components {
+    :where([data-flux-card]) {
+        padding: var(--flux-card-padding);
+        border-radius: var(--flux-card-radius);
+    }
+
+    :where([data-flux-card-body]) {
+        padding: var(--flux-card-body-padding);
+        --flux-bleed: var(--flux-card-body-bleed);
+    }
+
+    :where([data-flux-card-header], [data-flux-card-footer]) {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        padding-inline: var(--flux-card-part-px);
+
+        & > :where(*) {
+            grid-column-start: 2;
+        }
+    }
+
+    :where([data-flux-card-header]) {
+        padding-block: var(--flux-card-part-py) var(--flux-card-part-gap);
+        border-start-start-radius: var(--flux-card-band-radius);
+        border-start-end-radius: var(--flux-card-band-radius);
+
+        /* When actions outgrow their hang (a bigger button, a heading with tighter leading), the flexible
+        first row absorbs all of the overflow so the heading can center against them... */
+        grid-template-rows: 1fr;
+    }
+
+    :where([data-flux-card-footer]) {
+        padding-block: var(--flux-card-part-gap) var(--flux-card-part-py);
+        border-end-start-radius: var(--flux-card-band-radius);
+        border-end-end-radius: var(--flux-card-band-radius);
+
+        /* Footer actions never hang sideways. They're usually form buttons, so they line up with the
+        fields above them instead of hugging the corner... */
+        --flux-card-hang-x: 0px;
+    }
+
+    /* Trailing by default... */
+    :where([data-flux-card-header], [data-flux-card-footer]) > :where([data-flux-card-actions]) {
+        grid-column-start: 3;
+        grid-row: 1 / span 2;
+        align-self: start;
+        margin-block: calc(var(--flux-card-hang-y) * -1);
+        margin-inline: calc(var(--spacing) * 4) calc(var(--flux-card-hang-x) * -1);
+
+        /* Leading when placed before the heading... */
+        &:where(:first-child:not(:only-child)) {
+            grid-column-start: 1;
+            margin-inline: calc(var(--flux-card-hang-x) * -1) calc(var(--spacing) * 4);
+        }
+    }
+
+    /* There's no heading line to pin actions to in the footer, so they center instead... */
+    :where([data-flux-card-footer]) > :where([data-flux-card-actions]) {
+        grid-row: 1;
+        align-self: center;
+    }
+}
