@@ -3,6 +3,7 @@
 @props([
     'body' => 'seamless',
     'variant' => null,
+    'divider' => null,
     'size' => null,
 ])
 
@@ -17,23 +18,23 @@ $classes = Flux::classes()
     // It's also the only thing giving the white body an edge, so it matches the outline variant's weight...
     ->add(match (true) {
         $variant === 'filled' => '',
-        $coloredBands => 'ring ring-zinc-900/14',
+        $coloredBands => 'ring ring-zinc-900/14 dark:ring-white/10',
         default => 'inset-ring',
     })
     ->add(match ($variant) {
         'filled' => '',
-        'muted' => 'inset-ring-zinc-900/3',
-        'soft' => 'inset-ring-zinc-900/3',
-        'outline' => 'inset-ring-zinc-900/14',
-        default => 'inset-ring-zinc-900/14 shadow-xs',
+        'muted' => 'inset-ring-zinc-900/3 dark:inset-ring-white/5',
+        'soft' => 'inset-ring-zinc-900/3 dark:inset-ring-white/5',
+        'outline' => 'inset-ring-zinc-900/14 dark:inset-ring-white/15',
+        default => 'inset-ring-zinc-900/14 shadow-xs dark:inset-ring-white/10 dark:shadow-none',
         // @todo: Add :where statements back in when done...
     })
-    ->add($coloredBands ? 'bg-white' : match ($variant) {
-        'filled' => 'bg-zinc-800/5',
-        'muted' => 'bg-zinc-900/4',
-        'soft' => 'bg-zinc-900/2',
-        'outline' => 'bg-transparent',
-        default => 'bg-white',
+    ->add($coloredBands ? 'bg-white dark:bg-white/10' : match ($variant) {
+        'filled' => 'bg-zinc-900/4 dark:bg-white/10',
+        'muted' => 'bg-zinc-900/4 dark:bg-white/7',
+        'soft' => 'bg-zinc-900/2 dark:bg-white/5',
+        'outline' => 'bg-transparent dark:bg-transparent',
+        default => 'bg-white dark:bg-white/10',
     })
     ;
 

@@ -25,8 +25,8 @@ $classes = Flux::classes()
         },
     })
     ->add(in_array($body, ['inset', 'flush']) ? match ($body) {
-        'inset' => 'bg-white inset-ring inset-ring-zinc-300/75',
-        'flush' => 'bg-white shadow-xs inset-ring inset-ring-zinc-300/75',
+        'inset' => 'bg-white inset-ring inset-ring-zinc-300/75 dark:bg-white/10 dark:inset-ring-white/10',
+        'flush' => 'bg-white shadow-xs inset-ring inset-ring-zinc-300/75 dark:bg-white/10 dark:inset-ring-white/10 dark:shadow-none',
     } : '')
     ;
 @endphp

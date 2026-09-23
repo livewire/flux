@@ -747,8 +747,10 @@ Card
     A card with bare content is the card that has always shipped, so it keeps that geometry (lg). A card with
     a header, body, or footer is a different kind of object and defaults to md instead. Parts are detected as
     children of the card, or one wrapper deep (a <form> around them), as long as that wrapper isn't a card of
-    its own. Setting a body variant is also a declaration that there are parts... */
-    :where([data-flux-card]) {
+    its own. Setting a body variant is also a declaration that there are parts.
+
+    A header or footer outside of any card sizes itself the same way (see the standalone rules below)... */
+    :where([data-flux-card], [data-flux-card-standalone]) {
         --flux-card-px: calc(var(--spacing) * 6);
         --flux-card-py: calc(var(--spacing) * 4);
         --flux-card-radius: var(--radius-xl);
@@ -760,6 +762,14 @@ Card
     :where([data-flux-card]:not([data-flux-card-body-variant="seamless"])),
     :where([data-flux-card]:has(> :is([data-flux-card-header], [data-flux-card-body], [data-flux-card-footer]))),
     :where([data-flux-card]:has(> :not([data-flux-card]) > :is([data-flux-card-header], [data-flux-card-body], [data-flux-card-footer]))) {
+        --flux-card-px: calc(var(--spacing) * 4);
+        --flux-card-py: calc(var(--spacing) * 4);
+        --flux-card-radius: var(--radius-xl);
+        --flux-card-leading: calc(var(--spacing) * 5);
+        --flux-card-gap: calc(var(--spacing) * 6);
+    }
+
+    :where([data-flux-card-standalone]:not([data-flux-card-size])) {
         --flux-card-px: calc(var(--spacing) * 4);
         --flux-card-py: calc(var(--spacing) * 4);
         --flux-card-radius: var(--radius-xl);
@@ -805,7 +815,7 @@ Card
 /* Variables:
 /* ------------------------------------------------------------ */
 @layer components {
-    :where([data-flux-card]) {
+    :where([data-flux-card], [data-flux-card-standalone]) {
         --flux-card-gutter: 0px;
 
         /* Actions are taller than the heading line beside them, so they hang into the surrounding padding
@@ -851,6 +861,29 @@ Card
     :where([data-flux-card][data-flux-card-body-variant="inset"]) {
         --flux-card-gutter: var(--spacing);
     }
+
+    /* A header or footer outside of any card sits on the container's edge with nothing to hang into, so its
+    actions stay inside its box. A header's actions still hang past the heading line so the two center on
+    each other; the header always makes room for that above its text (see the layout rules), so the text
+    sits in the same place whether or not there are actions. A footer has no heading line, so its actions
+    just define the row... */
+    :where([data-flux-card-standalone]) {
+        --flux-card-hang-x: 0px;
+
+        /* The card it sits beside has padding of its own before any content, so it needs less of a gap than a
+        header inside one... */
+        --flux-card-part-gap: calc(var(--flux-card-gap) - var(--spacing));
+    }
+
+    :where([data-flux-card-standalone][data-flux-card-footer]) {
+        --flux-card-hang-y: 0px;
+    }
+
+    /* With a subheading the header is a block of text rather than a line, so the actions align to its top
+    edge instead of centering on the heading... */
+    :where([data-flux-card-standalone][data-flux-card-header]:has(> [data-flux-text])) {
+        --flux-card-hang-y: 0px;
+    }
 }
 
 /** Layouts
@@ -864,6 +897,15 @@ Card
     :where([data-flux-card-body]) {
         padding: var(--flux-card-body-padding);
         --flux-bleed: var(--flux-card-body-bleed);
+
+        /* A body is the same shape as a seamless card, a padded surface with no bands, so a header or footer
+        placed inside of one gets the seamless treatment: bare, the seamless gap from the content, and
+        actions hanging into the body's own padding... */
+        --flux-card-part-px: 0px;
+        --flux-card-part-py: 0px;
+        --flux-card-part-gap: var(--flux-card-gap);
+        --flux-card-hang-x: var(--flux-card-hang-y);
+        --flux-card-band-radius: 0px;
     }
 
     :where([data-flux-card-header], [data-flux-card-footer]) {
@@ -885,6 +927,11 @@ Card
         /* When actions outgrow their hang (a bigger button, a heading with tighter leading), the flexible
         first row absorbs all of the overflow so the heading can center against them... */
         grid-template-rows: 1fr;
+
+        /* Standalone: the actions' hang would poke past the top edge, so the header makes room for it... */
+        &:where([data-flux-card-standalone]) {
+            padding-top: var(--flux-card-hang-y);
+        }
     }
 
     :where([data-flux-card-footer]) {
