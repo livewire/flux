@@ -10,10 +10,11 @@
 ])
 
 @php
-// Divided and separated cards are white, so this is where the card's variant shows its color...
+// Divided and separated cards are white, so this is where the card's variant shows its color. The bands recede
+// from the body in both modes, so in dark mode they darken it rather than lighten it...
 $tint = match ($variant) {
-    'muted' => 'bg-zinc-900/4 dark:bg-white/5',
-    'soft' => 'bg-zinc-900/3 dark:bg-white/5',
+    'muted' => 'bg-zinc-900/4 dark:bg-black/20',
+    'soft' => 'bg-zinc-900/3 dark:bg-black/15',
     default => null,
 };
 
@@ -28,7 +29,7 @@ $line = match ($divider) {
 $classes = Flux::classes()
     ->add(match ($body) {
         'divided' => [$line, $tint],
-        'separated' => $tint ?? 'bg-zinc-900/3 dark:bg-white/5',
+        'separated' => $tint ?? 'bg-zinc-900/3 dark:bg-black/15',
         default => '',
     })
     ;

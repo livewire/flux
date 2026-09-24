@@ -829,6 +829,7 @@ Card
         --flux-card-part-px: 0px;
         --flux-card-part-py: 0px;
         --flux-card-body-padding: 0px;
+        --flux-card-body-px: var(--flux-card-body-padding);
         --flux-card-hang-x: var(--flux-card-hang-y);
 
         /* With no bands to separate them, the header and footer need more room from the body than a band
@@ -840,14 +841,15 @@ Card
         --flux-bleed: var(--flux-card-padding);
         --flux-card-body-bleed: var(--flux-card-padding);
 
-        /* A band follows the card's corners, so one with its own background never pokes out of them... */
-        --flux-card-band-radius: max(0px, calc(var(--flux-card-radius) - var(--flux-card-padding)));
+        /* A band follows the card's corners, so one with its own background never pokes out of them. It sits
+        inside the card's 1px edge as well as its padding... */
+        --flux-card-band-radius: max(0px, calc(var(--flux-card-radius) - var(--flux-card-padding) - 1px));
     }
 
     /* Every other body variant: the header and footer become padded bands around the body. The body pads its
     content by the full amount inside its panel. The bands measure theirs from the card's edge instead, so an
-    inset card's gutter comes out of their padding; their text then sits 4px outside of the body's, which is
-    deliberate. The bands are padded unevenly, so the sideways hang makes up the difference... */
+    inset card's gutter comes out of their padding (and its panel's sides, below, so the two line up). The
+    bands are padded unevenly, so the sideways hang makes up the difference... */
     :where([data-flux-card][data-flux-card-body-variant]:not([data-flux-card-body-variant="seamless"])) {
         --flux-card-padding: var(--flux-card-gutter);
         --flux-card-part-px: calc(var(--flux-card-px) - var(--flux-card-gutter));
@@ -858,8 +860,12 @@ Card
         --flux-card-body-bleed: var(--flux-card-body-padding);
     }
 
+    /* An inset panel sits inside the gutter and its own 1px edge, so its sides take both back out of the
+    padding. Its content then lines up with the bands' text above and below it... */
     :where([data-flux-card][data-flux-card-body-variant="inset"]) {
         --flux-card-gutter: var(--spacing);
+        --flux-card-body-px: calc(var(--flux-card-px) - var(--flux-card-gutter) - 1px);
+        --flux-card-body-bleed: var(--flux-card-body-px);
     }
 
     /* A header or footer outside of any card sits on the container's edge with nothing to hang into, so its
@@ -889,13 +895,17 @@ Card
 /** Layouts
 /* ------------------------------------------------------------ */
 @layer components {
+    /* Every edge in a card is a 1px border inside the box it belongs to, with the fill clipped to the inside of
+    it. The edge then sits over whatever surrounds the box, the page for the card and the band for a body
+    panel, so it keeps its contrast on any background. Padding sits inside the edge, as it does in every other
+    Flux component. The parts decide the colors; the widths and clipping are here... */
     :where([data-flux-card]) {
         padding: var(--flux-card-padding);
         border-radius: var(--flux-card-radius);
     }
 
     :where([data-flux-card-body]) {
-        padding: var(--flux-card-body-padding);
+        padding: var(--flux-card-body-padding) var(--flux-card-body-px, var(--flux-card-body-padding));
         --flux-bleed: var(--flux-card-body-bleed);
 
         /* A body is the same shape as a seamless card, a padded surface with no bands, so a header or footer
@@ -906,6 +916,49 @@ Card
         --flux-card-part-gap: var(--flux-card-gap);
         --flux-card-hang-x: var(--flux-card-hang-y);
         --flux-card-band-radius: 0px;
+    }
+
+    /* A panel keeps a transparent 1px border for its edge to sit in and draws the edge on a pseudo-element
+    covering that border, since a box-shadow ring on the panel itself would land inside the border, over the
+    fill. A flush panel's sides sit on the card's edge, so it overlaps that edge by its own; the ring's corners
+    then run into the card's edge instead of stopping short of it... */
+    :where([data-flux-card][data-flux-card-body-variant="inset"] [data-flux-card-body]),
+    :where([data-flux-card][data-flux-card-body-variant="flush"] [data-flux-card-body]) {
+        position: relative;
+        background-clip: padding-box;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+    }
+
+    /* The same goes for its top and bottom wherever there's no band between it and the card's edge, so the
+    panel's ring lies right on top of the card's and follows its curve at the corners. Both are drawn in full,
+    the panel's over the card's, so the panel keeps one unbroken outline... */
+    :where([data-flux-card][data-flux-card-body-variant="flush"] [data-flux-card-body]) {
+        margin: -1px;
+        --flux-card-body-clip-top: 0px;
+        --flux-card-body-clip-bottom: 0px;
+
+        &:where([data-flux-card-header] ~ *) {
+            margin-top: 0;
+            --flux-card-body-clip-top: -1px;
+        }
+
+        &:where(:has(~ [data-flux-card-footer])) {
+            margin-bottom: 0;
+            --flux-card-body-clip-bottom: -3px;
+        }
+
+        /* The panel's shadow rides on the pseudo-element too, so its spill past the card can be cut. Next to a
+        band it's left to spill over it... */
+        &::before {
+            clip-path: inset(var(--flux-card-body-clip-top) 0 var(--flux-card-body-clip-bottom));
+        }
     }
 
     :where([data-flux-card-header], [data-flux-card-footer]) {

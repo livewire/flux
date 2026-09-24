@@ -14,21 +14,20 @@
 $coloredBands = in_array($body, ['divided', 'separated']) && $variant !== 'filled';
 
 $classes = Flux::classes()
-    // A colored header or footer would darken an inset ring wherever it overlaps it, so their ring sits outside.
-    // It's also the only thing giving the white body an edge, so it matches the outline variant's weight...
-    ->add(match (true) {
-        $variant === 'filled' => '',
-        $coloredBands => 'ring ring-zinc-900/14 dark:ring-white/10',
-        default => 'inset-ring',
-    })
-    ->add(match ($variant) {
+    // Every card has a 1px edge inside its box, with the fill clipped to the inside of it so the edge sits over
+    // the page and keeps its contrast on any background (see flux.css). Filled has no edge to show. Muted and
+    // soft edges include their fill's tint, since they don't sit on top of it. A divided or separated card's
+    // white body needs a real edge whatever the variant, so those match the outline variant's weight...
+    ->add($variant === 'filled' ? 'border border-transparent' : 'border bg-clip-padding dark:bg-clip-border')
+    ->add($coloredBands ? 'border-zinc-900/14 dark:border-white/10' : match ($variant) {
         'filled' => '',
-        'muted' => 'inset-ring-zinc-900/3 dark:inset-ring-white/5',
-        'soft' => 'inset-ring-zinc-900/3 dark:inset-ring-white/5',
-        'outline' => 'inset-ring-zinc-900/14 dark:inset-ring-white/15',
-        default => 'inset-ring-zinc-900/14 shadow-xs dark:inset-ring-white/10 dark:shadow-none',
+        'muted' => 'border-zinc-900/10 dark:border-white/12',
+        'soft' => 'border-zinc-900/7 dark:border-white/10',
+        'outline' => 'border-zinc-900/14 dark:border-white/15',
+        default => 'border-zinc-900/14 dark:border-white/10',
         // @todo: Add :where statements back in when done...
     })
+    ->add($variant === null ? 'shadow-xs dark:shadow-none' : '')
     ->add($coloredBands ? 'bg-white dark:bg-white/10' : match ($variant) {
         'filled' => 'bg-zinc-900/4 dark:bg-white/10',
         'muted' => 'bg-zinc-900/4 dark:bg-white/7',
