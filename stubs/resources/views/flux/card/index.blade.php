@@ -24,7 +24,7 @@ $classes = Flux::classes()
     ->add($coloredBands ? 'border-zinc-900/10 dark:border-white/10' : match ($variant) {
         'filled' => '',
         'muted' => 'border-zinc-900/10 dark:border-white/12',
-        'soft' => 'border-zinc-900/7 dark:border-white/5',
+        'soft' => 'border-zinc-900/7 dark:border-white/7',
         'outline' => 'border-zinc-900/10 dark:border-white/15',
         default => 'border-zinc-900/10 dark:border-white/10',
         // @todo: Add :where statements back in when done...
@@ -36,7 +36,7 @@ $classes = Flux::classes()
     // mode goes without. :highlight="false" turns it off...
     ->add(! $highlight || $variant === 'filled' ? '' : 'relative after:pointer-events-none after:absolute after:inset-0 after:rounded-[calc(var(--flux-card-radius)-1px)] after:inset-ring after:inset-ring-white/25 dark:after:hidden after:[mask-image:linear-gradient(to_bottom,black,transparent)]')
     ->add($coloredBands ? 'bg-white dark:bg-white/10' : match ($variant) {
-        'filled' => 'bg-zinc-900/3 dark:bg-white/10',
+        'filled' => 'bg-zinc-900/3 dark:bg-white/6',
         'muted' => 'bg-zinc-900/4 dark:bg-white/7',
         'soft' => 'bg-zinc-900/2 dark:bg-white/5',
         'outline' => 'bg-transparent',

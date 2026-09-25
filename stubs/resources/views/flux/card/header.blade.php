@@ -15,7 +15,7 @@
 // flux-band:, so a header or footer placed inside a body stays bare (see flux.css)...
 $tint = match ($variant) {
     'muted' => 'flux-band:bg-zinc-900/4 flux-band:dark:bg-black/20',
-    'soft' => 'flux-band:bg-zinc-900/3 flux-band:dark:bg-black/15',
+    'soft' => 'flux-band:bg-zinc-900/3 flux-band:dark:bg-black/35',
     default => null,
 };
 

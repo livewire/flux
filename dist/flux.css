@@ -970,10 +970,23 @@ Card
         /* Its sides are the card's edge, so it sits above anything the card draws along that edge from inside
         (the card's highlight, see its template), which would otherwise run down over the panel... */
         z-index: 1;
+        --flux-card-body-clip-x: 0px;
         --flux-card-body-clip-top: 0px;
         --flux-card-body-clip-bottom: 0px;
         --flux-card-body-clip-top-radius: var(--flux-card-radius);
         --flux-card-body-clip-bottom-radius: var(--flux-card-radius);
+
+        /* In dark mode the panel's edge is translucent (see its template), so wherever it lies on the card's own
+        edge it's cut off rather than doubling it: always at the sides, and at a top or bottom with no band, along
+        with that side's corners, by clipping to the edge's inner curve. Next to a band it still draws, and there
+        it comes out the same as the card's edge, since both are the same translucent line over the same fill... */
+        @variant dark {
+            --flux-card-body-clip-x: 1px;
+            --flux-card-body-clip-top: 1px;
+            --flux-card-body-clip-bottom: 1px;
+            --flux-card-body-clip-top-radius: max(0px, calc(var(--flux-card-radius) - 1px));
+            --flux-card-body-clip-bottom-radius: max(0px, calc(var(--flux-card-radius) - 1px));
+        }
 
         &:where([data-flux-card-header] ~ *) {
             margin-top: 0;
@@ -992,7 +1005,7 @@ Card
         left to spill over it: shadow-xs reaches 1px above the panel and 3px below... */
         &::before {
             clip-path: inset(
-                var(--flux-card-body-clip-top) 0 var(--flux-card-body-clip-bottom)
+                var(--flux-card-body-clip-top) var(--flux-card-body-clip-x) var(--flux-card-body-clip-bottom)
                 round var(--flux-card-body-clip-top-radius) var(--flux-card-body-clip-top-radius)
                     var(--flux-card-body-clip-bottom-radius) var(--flux-card-body-clip-bottom-radius)
             );
