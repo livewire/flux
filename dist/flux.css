@@ -1090,9 +1090,16 @@ Card
         border-end-start-radius: var(--flux-card-band-radius);
         border-end-end-radius: var(--flux-card-band-radius);
 
-        /* Footer actions never hang sideways. They're usually form buttons, so they line up with the
-        fields above them instead of hugging the corner... */
+        /* Footer actions don't hang sideways where there's no band to square up with. They're usually form
+        buttons, so they line up with the fields above them instead (see below for bands)... */
         --flux-card-hang-x: 0px;
+    }
+
+    /* A footer that's one of the card's bands squares its actions up with the band's corner, the same way a
+    header does. Not inside a body, where it's bare, and not in a seamless card, which has no bands... */
+    :where([data-flux-card][data-flux-card-body-variant]:not([data-flux-card-body-variant="seamless"]) > [data-flux-card-footer]),
+    :where([data-flux-card][data-flux-card-body-variant]:not([data-flux-card-body-variant="seamless"]) > :not([data-flux-card], [data-flux-card-body]) > [data-flux-card-footer]) {
+        --flux-card-hang-x: calc(var(--flux-card-px) - var(--flux-card-py) + var(--flux-card-hang-y));
     }
 
     /* A header's bottom padding and a footer's top padding are its gap from the content beside it. With nothing
