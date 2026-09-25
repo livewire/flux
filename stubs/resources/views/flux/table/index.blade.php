@@ -26,7 +26,7 @@ $containerClasses = Flux::classes()
     ;
 @endphp
 
-<div class="{{ $containerClasses }}">
+<div class="{{ $containerClasses }}" @if ($bleed) data-flux-table-bleed @endif>
     {{ $header ?? '' }}
 
     <ui-table-scroll-area class="overflow-auto">
