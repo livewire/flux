@@ -12,7 +12,11 @@ $classes = Flux::classes()
     ->add('leading-[var(--flux-card-leading)]')
     ;
 
-$attributes = $attributes->merge(['class' => $classes])
+$attributes = $attributes->merge([
+    'class' => $classes,
+    'data-flux-card-heading' => '',
+    'data-flux-card-heading-size' => $size,
+]);
 @endphp
 
 <flux:heading :$attributes :$size :$accent :$level>

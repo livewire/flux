@@ -11,25 +11,33 @@
 
 @php
 // Divided and separated cards are white, so this is where the card's variant shows its color. The bands recede
-// from the body in both modes, so in dark mode they darken it rather than lighten it...
+// from the body in both modes, so in dark mode they darken it rather than lighten it. Every band class carries
+// flux-band:, so a header or footer placed inside a body stays bare (see flux.css)...
 $tint = match ($variant) {
-    'muted' => 'bg-zinc-900/4 dark:bg-black/20',
-    'soft' => 'bg-zinc-900/3 dark:bg-black/15',
+    'muted' => 'flux-band:bg-zinc-900/4 flux-band:dark:bg-black/20',
+    'soft' => 'flux-band:bg-zinc-900/3 flux-band:dark:bg-black/15',
     default => null,
 };
 
 // Divided cards draw their lines across the card. divider="inset" stops them at the content's edges instead,
-// which takes a drawn line rather than a border. The border stays, invisibly, so both take the same room...
+// which takes a drawn line rather than a border. The border stays, invisibly, so both take the same room. A line
+// only divides (see flux-after-content in flux.css)...
 $line = match ($divider) {
-    'inset' => 'border-t border-transparent relative after:absolute after:inset-x-[var(--flux-card-part-px)] after:-top-px after:border-t after:border-zinc-900/5 dark:after:border-white/10',
-    default => 'border-t border-zinc-900/5 dark:border-white/10',
+    'inset' => 'flux-band:flux-after-content:border-t flux-band:flux-after-content:border-transparent flux-band:flux-after-content:relative flux-band:flux-after-content:after:absolute flux-band:flux-after-content:after:inset-x-[var(--flux-card-part-px)] flux-band:flux-after-content:after:-top-px flux-band:flux-after-content:after:border-t flux-band:flux-after-content:after:border-zinc-900/5 flux-band:flux-after-content:dark:after:border-white/10',
+    default => 'flux-band:flux-after-content:border-t flux-band:flux-after-content:border-zinc-900/5 flux-band:flux-after-content:dark:border-white/10',
 };
+
+// A filled card has no edge, just its fill running under a transparent border. Its bands sit inside that
+// border, so a separated one paints its tint out over it too with a ring (clipped off the body's side), or a
+// rim of the card's own fill would show around it. The ring has to match the band exactly, so the two colors
+// are written side by side...
+$filledBand = 'flux-band:bg-zinc-900/2 flux-band:ring-zinc-900/2 flux-band:dark:bg-black/15 flux-band:dark:ring-black/15 flux-band:ring flux-band:[clip-path:inset(0_-1px_-1px_-1px)]';
 
 // Layout, padding, and how <flux:card.actions> hang into it all live in flux.css...
 $classes = Flux::classes()
     ->add(match ($body) {
         'divided' => [$line, $tint],
-        'separated' => $tint ?? 'bg-zinc-900/3 dark:bg-black/15',
+        'separated' => $variant === 'filled' ? $filledBand : ($tint ?? 'flux-band:bg-zinc-900/2 flux-band:dark:bg-black/15'),
         default => '',
     })
     ;

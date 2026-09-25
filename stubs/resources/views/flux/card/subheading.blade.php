@@ -7,7 +7,8 @@
 @php
 $classes = Flux::classes()
     // Tucks under whichever heading comes before it...
-    ->add('[:where([data-flux-heading]+&)]:mt-1')
+    ->add('[:where([data-flux-card-heading-size=base]+&)]:mt-1')
+    ->add('[:where([data-flux-card-heading-size=lg]+&)]:mt-2')
     ;
 
 $attributes = $attributes->merge(['class' => $classes]);
