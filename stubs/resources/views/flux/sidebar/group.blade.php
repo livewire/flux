@@ -12,13 +12,20 @@
     'icon' => null,
 ])
 
+@php
+// When using the outline icon variant, we need to size it down to match the default icon sizes...
+$iconClasses = Flux::classes()
+    ->add($iconVariant === 'outline' ? 'size-4' : '')
+    ->add($attributes->pluck('icon:class'));
+@endphp
+
 <?php if ($expandable && $heading): ?>
     <?php if ($icon): ?>
         <ui-disclosure {{ $attributes->class('group/disclosure in-data-flux-sidebar-collapsed-desktop:hidden') }} @if ($expanded === true) open @endif data-flux-sidebar-group>
             <button type="button" class="border-1 border-transparent w-full min-w-0 h-8 in-data-flux-sidebar-on-mobile:h-10 flex items-center group/disclosure-button my-px rounded-lg hover:bg-zinc-800/5 dark:hover:bg-white/[7%] text-zinc-500 hover:text-zinc-800 dark:text-white/80 dark:hover:text-white">
                 <div class="px-3">
                     <?php if (is_string($icon) && $icon !== ''): ?>
-                        <flux:icon :icon="$icon" :variant="$iconVariant" class="size-4" />
+                        <flux:icon :icon="$icon" :variant="$iconVariant" :class="$iconClasses" />
                     <?php else: ?>
                         {{ $icon }}
                     <?php endif; ?>
@@ -46,7 +53,7 @@
                 <?php if ($icon): ?>
                     <div class="relative">
                         <?php if (is_string($icon) && $icon !== ''): ?>
-                            <flux:icon :icon="$icon" :variant="$iconVariant" class="in-data-flux-menu:text-zinc-400 in-data-flux-menu:dark:text-white/80 in-data-flux-menu:[[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current size-4" />
+                            <flux:icon :icon="$icon" :variant="$iconVariant" :class="$iconClasses->add('in-data-flux-menu:text-zinc-400 in-data-flux-menu:dark:text-white/80 in-data-flux-menu:[[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current')" />
                         <?php else: ?>
                             {{ $icon }}
                         <?php endif; ?>
