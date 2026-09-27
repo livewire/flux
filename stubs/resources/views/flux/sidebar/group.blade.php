@@ -14,8 +14,7 @@
 
 @php
 // When using the outline icon variant, we need to size it down to match the default icon sizes...
-$iconClasses = Flux::classes()
-    ->add($iconVariant === 'outline' ? 'size-4' : '')
+$iconClasses = Flux::classes('size-4')
     ->add($attributes->pluck('icon:class'));
 @endphp
 
