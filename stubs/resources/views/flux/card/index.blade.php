@@ -2,7 +2,7 @@
 
 @props([
     'body' => 'seamless',
-    'variant' => null,
+    'variant' => 'default',
     'divider' => null,
     'size' => null,
     'highlight' => true,
@@ -19,16 +19,16 @@ $classes = Flux::classes()
     // sits over the page and keeps its contrast on any background (see flux.css); muted and soft edges include
     // their fill's tint for that reason. In dark mode the edge lies over the fill instead. Filled has no edge to
     // show. A divided or separated card's white body needs a real edge whatever the variant, so those match the
-    // ghost variant's weight...
+    // outline variant's weight...
     ->add($variant === 'filled' ? 'border [:where(&)]:border-transparent' : 'border bg-clip-padding dark:bg-clip-border')
     ->add($coloredBands ? '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/10' : match ($variant) {
         'filled' => '',
         'muted' => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/12',
         'soft' => '[:where(&)]:border-zinc-900/7 dark:[:where(&)]:border-white/7',
-        'ghost' => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/15',
+        'outline' => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/15',
         default => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/10',
     })
-    ->add(in_array($variant, [null, 'outline'], true) ? '[:where(&)]:shadow-xs dark:[:where(&)]:shadow-none' : '')
+    ->add(in_array($variant, [null, 'default'], true) ? '[:where(&)]:shadow-xs dark:[:where(&)]:shadow-none' : '')
     // A faint highlight just inside the edge, drawn over the card's parts so bands and panels that
     // reach the edge don't cover it. Its corners follow the inside of the edge rather than the outside, and it
     // fades out toward the bottom, like light falling from above. Filled has no edge for it to follow, and dark
@@ -38,7 +38,7 @@ $classes = Flux::classes()
         'filled' => '[:where(&)]:bg-zinc-900/3 dark:[:where(&)]:bg-white/6',
         'muted' => '[:where(&)]:bg-zinc-900/4 dark:[:where(&)]:bg-white/7',
         'soft' => '[:where(&)]:bg-zinc-900/2 dark:[:where(&)]:bg-white/5',
-        'ghost' => '[:where(&)]:bg-transparent',
+        'outline' => '[:where(&)]:bg-transparent',
         default => '[:where(&)]:bg-white dark:[:where(&)]:bg-white/10',
     })
     ;
@@ -47,7 +47,7 @@ $classes = Flux::classes()
 // [data-flux-card-body] already means <flux:card.body>...
 $attributes = $attributes->merge([
     'data-flux-card-body-variant' => $body,
-    'data-flux-card-variant' => $variant ?? 'outline',
+    'data-flux-card-variant' => $variant ?? 'default',
     'data-flux-card-divider' => $divider,
 ]);
 
