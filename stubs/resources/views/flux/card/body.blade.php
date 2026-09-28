@@ -1,54 +1,18 @@
 @blaze(fold: true)
 
-@aware(['body' => 'seamless', 'variant' => null])
-
-@props([
-    'body' => 'seamless',
-    'variant' => null,
-])
-
 @php
-// A panel sits one tone away from the band around it. A tinted card's band already makes a white panel read
-// as raised; a white card's can't, so there the panel is a recessed well instead. Dark mode keeps the same
-// shapes, kept quiet: a well is darker than its band, a raised panel lighter, and either way its edge is
-// lighter than its fill so the edge still reads. An outline card has no fill to darken in dark mode, so its
-// panel gets a faint one of its own instead...
-$well = in_array($variant, [null, 'outline'], true);
-
-$fill = match (true) {
-    $variant === 'outline' => 'bg-zinc-50 dark:bg-white/4',
-    $well => 'bg-zinc-50 dark:bg-black/15',
-    default => 'bg-white dark:bg-white/4',
-};
-
-$edge = $well ? 'dark:before:inset-ring-white/8' : 'dark:before:inset-ring-white/10';
-
-// A panel's corners follow the card's size, so they live in flux.css with the rest of its geometry...
+// The root card supplies the body treatment and surface. CSS scopes these variants to that card so a
+// nested card's defaults cannot pick up an ancestor's explicitly passed Blade props.
 $classes = Flux::classes()
-    ->add(match ($body) {
-        // A panel's edge is drawn on a pseudo-element over a transparent border, so it sits over the band (see
-        // flux.css, where a flush panel also overlaps the card's edge). Only the colors are decided here. A well's
-        // shadow rides there too, so it starts under the edge rather than just inside it and the edge stays crisp.
-        // A flush panel's shadow does as well, so flux.css can keep it from spilling past the card's sides...
-        'inset' => [
-            $fill,
-            $edge,
-            'border border-transparent before:inset-ring before:inset-ring-zinc-900/8',
-            $well ? 'before:inset-shadow-[0_1.5px_2.5px_rgb(0_0_0/0.05)] dark:before:inset-shadow-none' : 'shadow-xs',
-        ],
-        // Experiment: a flush panel's edge lies over the card's own wherever it meets the card's sides, so a
-        // translucent edge came out darker there than along the bands. In light mode an opaque one covers the
-        // card's instead, so it's one color all the way around. Dark mode can't pick one opaque color for every
-        // background, so there the edge stays translucent and flux.css clips it off wherever the card's own edge
-        // is already drawn. Over bled media it's translucent in both, so it shades the media's outermost pixel
-        // instead of drawing a light line across it (see <flux:card.bleed>)...
-        'flush' => [
-            $fill,
-            'border border-transparent before:inset-ring before:inset-ring-zinc-200 dark:before:inset-ring-white/10 before:shadow-xs dark:before:shadow-none',
-            'has-[>[data-flux-card-bleed]]:before:inset-ring-zinc-900/10 dark:has-[>[data-flux-card-bleed]]:before:inset-ring-white/10',
-        ],
-        default => '',
-    })
+    ->add('flux-card-panel:border flux-card-panel:[:where(&)]:border-transparent flux-card-panel:before:inset-ring')
+    ->add('flux-card-panel:flux-card-well:[:where(&)]:bg-zinc-50 flux-card-panel:flux-card-white:dark:[:where(&)]:bg-black/15')
+    ->add('flux-card-panel:flux-card-raised:[:where(&)]:bg-white flux-card-panel:flux-card-raised:dark:[:where(&)]:bg-white/4 flux-card-panel:flux-card-ghost:dark:[:where(&)]:bg-white/4')
+    ->add('flux-card-inset:[:where(&)]:before:inset-ring-zinc-900/8')
+    ->add('flux-card-inset:flux-card-well:dark:[:where(&)]:before:inset-ring-white/8 flux-card-inset:flux-card-raised:dark:[:where(&)]:before:inset-ring-white/10')
+    ->add('flux-card-inset:flux-card-well:[:where(&)]:before:inset-shadow-[0_1.5px_2.5px_rgb(0_0_0/0.05)] flux-card-inset:flux-card-well:dark:[:where(&)]:before:inset-shadow-none flux-card-inset:flux-card-raised:[:where(&)]:shadow-xs')
+    // Flush panels share the card's edge. The pseudo-element lets flux.css clip the overlapping shadow.
+    ->add('flux-card-flush:[:where(&)]:before:inset-ring-zinc-200 flux-card-flush:dark:[:where(&)]:before:inset-ring-white/10 flux-card-flush:[:where(&)]:before:shadow-xs flux-card-flush:dark:[:where(&)]:before:shadow-none')
+    ->add('flux-card-flush:has-[>[data-flux-card-bleed]]:[:where(&)]:before:inset-ring-zinc-900/10 flux-card-flush:dark:has-[>[data-flux-card-bleed]]:[:where(&)]:before:inset-ring-white/10')
     ;
 @endphp
 

@@ -1,56 +1,21 @@
 @blaze(fold: true)
 
-@aware(['body' => null, 'variant' => null, 'divider' => null])
-
-@props([
-    'body' => null,
-    'variant' => null,
-    'divider' => null,
-    'size' => null,
-])
+@props(['size' => null])
 
 @php
-// Divided and separated cards are white, so this is where the card's variant shows its color. The bands recede
-// from the body in both modes, so in dark mode they darken it rather than lighten it. Every band class carries
-// flux-band:, so a header or footer placed inside a body stays bare (see flux.css)...
-$tint = match ($variant) {
-    'muted' => 'flux-band:bg-zinc-900/4 flux-band:dark:bg-black/20',
-    'soft' => 'flux-band:bg-zinc-900/3 flux-band:dark:bg-black/35',
-    default => null,
-};
-
-// Divided cards draw their lines across the card. divider="inset" stops them at the content's edges instead,
-// which takes a drawn line rather than a border. The border stays, invisibly, so both take the same room. A line
-// only divides (see flux-after-content in flux.css)...
-$line = match ($divider) {
-    'inset' => 'flux-band:flux-after-content:border-t flux-band:flux-after-content:border-transparent flux-band:flux-after-content:relative flux-band:flux-after-content:after:absolute flux-band:flux-after-content:after:inset-x-[var(--flux-card-part-px)] flux-band:flux-after-content:after:-top-px flux-band:flux-after-content:after:border-t flux-band:flux-after-content:after:border-zinc-900/5 flux-band:flux-after-content:dark:after:border-white/10',
-    default => 'flux-band:flux-after-content:border-t flux-band:flux-after-content:border-zinc-900/5 flux-band:flux-after-content:dark:border-white/10',
-};
-
-// A filled card has no edge, just its fill running under a transparent border. Its bands sit inside that
-// border, so a separated one paints its tint out over it too with a ring (clipped off the body's side), or a
-// rim of the card's own fill would show around it. The ring has to match the band exactly, so the two colors
-// are written side by side...
-$filledBand = 'flux-band:bg-zinc-900/2 flux-band:ring-zinc-900/2 flux-band:dark:bg-black/15 flux-band:dark:ring-black/15 flux-band:ring flux-band:[clip-path:inset(0_-1px_-1px_-1px)]';
-
-// Layout, padding, and how <flux:card.actions> hang into it all live in flux.css...
+// These variants match only a card's own bands. Parts inside a body remain bare.
 $classes = Flux::classes()
-    ->add(match ($body) {
-        'divided' => [$line, $tint],
-        'separated' => $variant === 'filled' ? $filledBand : ($tint ?? 'flux-band:bg-zinc-900/2 flux-band:dark:bg-black/15'),
-        default => '',
-    })
+    ->add('flux-card-divided:flux-card-muted:[:where(&)]:bg-zinc-900/4 flux-card-divided:flux-card-muted:dark:[:where(&)]:bg-black/20')
+    ->add('flux-card-divided:flux-card-soft:[:where(&)]:bg-zinc-900/3 flux-card-divided:flux-card-soft:dark:[:where(&)]:bg-black/35')
+    ->add('flux-card-separated:flux-card-muted:[:where(&)]:bg-zinc-900/4 flux-card-separated:flux-card-muted:dark:[:where(&)]:bg-black/20')
+    ->add('flux-card-separated:flux-card-soft:[:where(&)]:bg-zinc-900/3 flux-card-separated:flux-card-soft:dark:[:where(&)]:bg-black/35')
+    ->add('flux-card-separated:flux-card-standard:[:where(&)]:bg-zinc-900/2 flux-card-separated:flux-card-standard:dark:[:where(&)]:bg-black/15')
+    ->add('flux-card-separated:flux-card-filled:[:where(&)]:bg-zinc-900/2 flux-card-separated:flux-card-filled:[:where(&)]:ring-zinc-900/2 flux-card-separated:flux-card-filled:dark:[:where(&)]:bg-black/15 flux-card-separated:flux-card-filled:dark:[:where(&)]:ring-black/15 flux-card-separated:flux-card-filled:ring flux-card-separated:flux-card-filled:[clip-path:inset(0_-1px_-1px_-1px)]')
+    ->add('flux-card-divided:flux-after-content:border-t flux-card-divided:flux-after-content:[:where(&)]:border-zinc-900/5 flux-card-divided:flux-after-content:dark:[:where(&)]:border-white/10')
+    ->add('flux-card-divided:flux-card-divider-inset:flux-after-content:border-transparent flux-card-divided:flux-card-divider-inset:flux-after-content:dark:border-transparent flux-card-divided:flux-card-divider-inset:flux-after-content:relative flux-card-divided:flux-card-divider-inset:flux-after-content:after:absolute flux-card-divided:flux-card-divider-inset:flux-after-content:after:inset-x-[var(--flux-card-part-px)] flux-card-divided:flux-card-divider-inset:flux-after-content:after:-top-px flux-card-divided:flux-card-divider-inset:flux-after-content:after:border-t flux-card-divided:flux-card-divider-inset:flux-after-content:[:where(&)]:after:border-zinc-900/5 flux-card-divided:flux-card-divider-inset:flux-after-content:dark:[:where(&)]:after:border-white/10')
     ;
-
-// Only a card above sets body. Without one this part is on its own, so it carries its own size for flux.css...
-if ($body === null) {
-    $attributes = $attributes->merge([
-        'data-flux-card-standalone' => true,
-        'data-flux-card-size' => $size,
-    ]);
-}
 @endphp
 
-<div {{ $attributes->class($classes) }} data-flux-card-footer>
+<div {{ $attributes->class($classes) }} data-flux-card-footer data-flux-card-standalone @if ($size) data-flux-card-size="{{ $size }}" @endif>
     {{ $slot }}
 </div>

@@ -19,28 +19,27 @@ $classes = Flux::classes()
     // sits over the page and keeps its contrast on any background (see flux.css); muted and soft edges include
     // their fill's tint for that reason. In dark mode the edge lies over the fill instead. Filled has no edge to
     // show. A divided or separated card's white body needs a real edge whatever the variant, so those match the
-    // outline variant's weight...
-    ->add($variant === 'filled' ? 'border border-transparent' : 'border bg-clip-padding dark:bg-clip-border')
-    ->add($coloredBands ? 'border-zinc-900/10 dark:border-white/10' : match ($variant) {
+    // ghost variant's weight...
+    ->add($variant === 'filled' ? 'border [:where(&)]:border-transparent' : 'border bg-clip-padding dark:bg-clip-border')
+    ->add($coloredBands ? '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/10' : match ($variant) {
         'filled' => '',
-        'muted' => 'border-zinc-900/10 dark:border-white/12',
-        'soft' => 'border-zinc-900/7 dark:border-white/7',
-        'outline' => 'border-zinc-900/10 dark:border-white/15',
-        default => 'border-zinc-900/10 dark:border-white/10',
-        // @todo: Add :where statements back in when done...
+        'muted' => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/12',
+        'soft' => '[:where(&)]:border-zinc-900/7 dark:[:where(&)]:border-white/7',
+        'ghost' => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/15',
+        default => '[:where(&)]:border-zinc-900/10 dark:[:where(&)]:border-white/10',
     })
-    ->add($variant === null ? 'shadow-xs dark:shadow-none' : '')
-    // Experiment: a faint highlight just inside the edge, drawn over the card's parts so bands and panels that
+    ->add(in_array($variant, [null, 'outline'], true) ? '[:where(&)]:shadow-xs dark:[:where(&)]:shadow-none' : '')
+    // A faint highlight just inside the edge, drawn over the card's parts so bands and panels that
     // reach the edge don't cover it. Its corners follow the inside of the edge rather than the outside, and it
     // fades out toward the bottom, like light falling from above. Filled has no edge for it to follow, and dark
     // mode goes without. :highlight="false" turns it off...
-    ->add(! $highlight || $variant === 'filled' ? '' : 'relative after:pointer-events-none after:absolute after:inset-0 after:rounded-[calc(var(--flux-card-radius)-1px)] after:inset-ring after:inset-ring-white/25 dark:after:hidden after:[mask-image:linear-gradient(to_bottom,black,transparent)]')
-    ->add($coloredBands ? 'bg-white dark:bg-white/10' : match ($variant) {
-        'filled' => 'bg-zinc-900/3 dark:bg-white/6',
-        'muted' => 'bg-zinc-900/4 dark:bg-white/7',
-        'soft' => 'bg-zinc-900/2 dark:bg-white/5',
-        'outline' => 'bg-transparent',
-        default => 'bg-white dark:bg-white/10',
+    ->add(! $highlight || $variant === 'filled' ? '' : 'relative after:pointer-events-none after:absolute after:inset-0 after:rounded-[calc(var(--flux-card-radius)-1px)] after:inset-ring [:where(&)]:after:inset-ring-white/25 dark:after:hidden after:[mask-image:linear-gradient(to_bottom,black,transparent)]')
+    ->add($coloredBands ? '[:where(&)]:bg-white dark:[:where(&)]:bg-white/10' : match ($variant) {
+        'filled' => '[:where(&)]:bg-zinc-900/3 dark:[:where(&)]:bg-white/6',
+        'muted' => '[:where(&)]:bg-zinc-900/4 dark:[:where(&)]:bg-white/7',
+        'soft' => '[:where(&)]:bg-zinc-900/2 dark:[:where(&)]:bg-white/5',
+        'ghost' => '[:where(&)]:bg-transparent',
+        default => '[:where(&)]:bg-white dark:[:where(&)]:bg-white/10',
     })
     ;
 
@@ -48,6 +47,8 @@ $classes = Flux::classes()
 // [data-flux-card-body] already means <flux:card.body>...
 $attributes = $attributes->merge([
     'data-flux-card-body-variant' => $body,
+    'data-flux-card-variant' => $variant ?? 'outline',
+    'data-flux-card-divider' => $divider,
 ]);
 
 if ($size) {
