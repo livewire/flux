@@ -23,6 +23,8 @@ if (! isset($name)) {
 }
 
 $classes = Flux::classes()
+    // A tooltip wrapper (via "tooltip" prop) becomes the flex item, so it has to stretch like the radio it wraps...
+    ->add('[&>ui-tooltip]:flex-1')
     ->add('block flex p-1')
     ->add('rounded-lg bg-zinc-800/5 dark:bg-white/10')
     ->add($size === 'sm' ? 'h-8 py-[3px] px-[3px]' : 'h-10 p-1')

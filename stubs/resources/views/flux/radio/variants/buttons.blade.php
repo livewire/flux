@@ -1,4 +1,4 @@
-@blaze(fold: true)
+@blaze(fold: true, unsafe: ['tooltip:position', 'tooltip:kbd', 'tooltip'])
 
 @props([
     'accent' => true,
@@ -54,14 +54,16 @@ $iconAttributes = Flux::attributesAfter('icon:', $attributes, [
 {{-- We have to put tabindex="-1" here because otherwise, Livewire requests will wipe out tabindex state, --}}
 {{-- even with durable attributes for some reason... --}}
 {{-- We have to put "data-flux-field" so that a single box can be disabled without "disabling" the group field label... --}}
-<ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-buttons tabindex="-1" data-flux-field>
-    <?php if (is_string($icon) && $icon !== ''): ?>
-        <flux:icon :icon="$icon" :attributes="$iconAttributes" />
-    <?php elseif ($icon): ?>
-        {{ $icon }}
-    <?php endif; ?>
+<flux:with-tooltip :$attributes>
+    <ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-buttons tabindex="-1" data-flux-field>
+        <?php if (is_string($icon) && $icon !== ''): ?>
+            <flux:icon :icon="$icon" :attributes="$iconAttributes" />
+        <?php elseif ($icon): ?>
+            {{ $icon }}
+        <?php endif; ?>
 
-    <?php if ($slot->isNotEmpty() || isset($label)): ?>
-        <span>{{ $slot->isNotEmpty() ? $slot : $label }}</span>
-    <?php endif; ?>
-</ui-radio>
+        <?php if ($slot->isNotEmpty() || isset($label)): ?>
+            <span>{{ $slot->isNotEmpty() ? $slot : $label }}</span>
+        <?php endif; ?>
+    </ui-radio>
+</flux:with-tooltip>

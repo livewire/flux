@@ -1,4 +1,4 @@
-@blaze(fold: true, unsafe: ['icon:variant'])
+@blaze(fold: true, unsafe: ['icon:variant', 'tooltip:position', 'tooltip:kbd', 'tooltip'])
 
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
 
@@ -60,32 +60,34 @@ $classes = Flux::classes()
 {{-- We have to put tabindex="-1" here because otherwise, Livewire requests will wipe out tabindex state, --}}
 {{-- even with durable attributes for some reason... --}}
 {{-- We have to put "data-flux-field" so that a single box can be disabled without "disabling" the group field label... --}}
-<ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-cards tabindex="-1" data-flux-field>
-    <?php if ($label): ?>
-        <?php if ($indicatorPosition === 'start'): ?>
-            <flux:radio.indicator class="mt-px" />
-        <?php endif; ?>
-
-        <div class="flex-1 flex gap-2">
-            <?php if (is_string($icon) && $icon !== ''): ?>
-                <flux:icon :icon="$icon" :variant="$iconVariant" :class="$iconClasses" />
-            <?php elseif ($icon): ?>
-                {{ $icon }}
+<flux:with-tooltip :$attributes>
+    <ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-cards tabindex="-1" data-flux-field>
+        <?php if ($label): ?>
+            <?php if ($indicatorPosition === 'start'): ?>
+                <flux:radio.indicator class="mt-px" />
             <?php endif; ?>
 
-            <div class="flex-1">
-                <flux:heading>{{ $slot->isNotEmpty() ? $slot : $label }}</flux:heading>
-
-                <?php if ($description): ?>
-                    <flux:subheading size="sm">{{ $description }}</flux:subheading>
+            <div class="flex-1 flex gap-2">
+                <?php if (is_string($icon) && $icon !== ''): ?>
+                    <flux:icon :icon="$icon" :variant="$iconVariant" :class="$iconClasses" />
+                <?php elseif ($icon): ?>
+                    {{ $icon }}
                 <?php endif; ?>
-            </div>
-        </div>
 
-        <?php if ($indicatorPosition === 'end'): ?>
-            <flux:radio.indicator class="mt-px" />
+                <div class="flex-1">
+                    <flux:heading>{{ $slot->isNotEmpty() ? $slot : $label }}</flux:heading>
+
+                    <?php if ($description): ?>
+                        <flux:subheading size="sm">{{ $description }}</flux:subheading>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <?php if ($indicatorPosition === 'end'): ?>
+                <flux:radio.indicator class="mt-px" />
+            <?php endif; ?>
+        <?php else: ?>
+            {{ $slot }}
         <?php endif; ?>
-    <?php else: ?>
-        {{ $slot }}
-    <?php endif; ?>
-</ui-radio>
+    </ui-radio>
+</flux:with-tooltip>

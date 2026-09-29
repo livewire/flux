@@ -1,4 +1,4 @@
-@blaze(fold: true, unsafe: ['icon:trailing', 'icon:variant'])
+@blaze(fold: true, unsafe: ['icon:trailing', 'icon:variant', 'tooltip:position', 'tooltip:kbd', 'tooltip'])
 
 @php $iconTrailing ??= $attributes->pluck('icon:trailing'); @endphp
 @php $iconVariant ??= $attributes->pluck('icon:variant'); @endphp
@@ -37,18 +37,20 @@ $iconClasses = Flux::classes('text-zinc-500 dark:text-zinc-400 [ui-radio[data-ch
 
 {{-- We have to put tabindex="-1" here because otherwise, Livewire requests will wipe out tabindex state, --}}
 {{-- even with durable attributes for some reason... --}}
-<ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-segmented tabindex="-1">
-    <?php if (is_string($icon) && $icon !== ''): ?>
-        <flux:icon :$icon :variant="$iconVariant" class="{!! $iconClasses !!}" />
-    <?php elseif ($icon): ?>
-        {{ $icon }}
-    <?php endif; ?>
+<flux:with-tooltip :$attributes>
+    <ui-radio {{ $attributes->class($classes) }} data-flux-control data-flux-radio-segmented tabindex="-1">
+        <?php if (is_string($icon) && $icon !== ''): ?>
+            <flux:icon :$icon :variant="$iconVariant" class="{!! $iconClasses !!}" />
+        <?php elseif ($icon): ?>
+            {{ $icon }}
+        <?php endif; ?>
 
-    {{ $slot->isNotEmpty() ? $slot : $label }}
+        {{ $slot->isNotEmpty() ? $slot : $label }}
 
-    <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
-        <flux:icon :icon="$iconTrailing" variant="micro" />
-    <?php elseif ($iconTrailing): ?>
-        {{ $iconTrailing }}
-    <?php endif; ?>
-</ui-radio>
+        <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>
+            <flux:icon :icon="$iconTrailing" variant="micro" />
+        <?php elseif ($iconTrailing): ?>
+            {{ $iconTrailing }}
+        <?php endif; ?>
+    </ui-radio>
+</flux:with-tooltip>
