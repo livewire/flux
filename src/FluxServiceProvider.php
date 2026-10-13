@@ -42,6 +42,7 @@ class FluxServiceProvider extends ServiceProvider
             Blade::anonymousComponentPath(resource_path('views/flux'), 'flux');
         }
 
+        // view:cache compiles views at their real path, so keep ".." out of this one...
         Blade::anonymousComponentPath(dirname(__DIR__).'/stubs/resources/views/flux', 'flux');
     }
 
