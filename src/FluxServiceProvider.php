@@ -42,7 +42,9 @@ class FluxServiceProvider extends ServiceProvider
             Blade::anonymousComponentPath(resource_path('views/flux'), 'flux');
         }
 
-        Blade::anonymousComponentPath(__DIR__.'/../stubs/resources/views/flux', 'flux');
+        // view:cache compiles each view at its real path, so keep ".." out of this one
+        // or every Flux component compiles again on the first request...
+        Blade::anonymousComponentPath(dirname(__DIR__).'/stubs/resources/views/flux', 'flux');
     }
 
     public function bootFallbackBlazeDirectivesIfBlazeIsNotInstalled()
