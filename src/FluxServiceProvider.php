@@ -27,6 +27,7 @@ class FluxServiceProvider extends ServiceProvider
         $this->bootMacros();
 
         app('livewire')->propertySynthesizer(DateRangeSynth::class);
+        app('livewire')->propertySynthesizer(DateTimeRangeSynth::class);
 
         AssetManager::boot();
 
