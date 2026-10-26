@@ -171,25 +171,32 @@ class AssetManager
             let applyDark = () => document.documentElement.classList.add('dark')
             let applyLight = () => document.documentElement.classList.remove('dark')
 
+            // Browsers can deny access to localStorage, so persisting the appearance is best-effort...
+            let persist = callback => { try { callback(window.localStorage) } catch {} }
+
             if (appearance === 'system') {
                 let media = window.matchMedia('(prefers-color-scheme: dark)')
 
-                window.localStorage.removeItem('flux.appearance')
+                persist(storage => storage.removeItem('flux.appearance'))
 
                 media.matches ? applyDark() : applyLight()
             } else if (appearance === 'dark') {
-                window.localStorage.setItem('flux.appearance', 'dark')
+                persist(storage => storage.setItem('flux.appearance', 'dark'))
 
                 applyDark()
             } else if (appearance === 'light') {
-                window.localStorage.setItem('flux.appearance', 'light')
+                persist(storage => storage.setItem('flux.appearance', 'light'))
 
                 applyLight()
             }
         }
     }
 
-    window.Flux.applyAppearance(window.localStorage.getItem('flux.appearance') || 'system')
+    try {
+        window.Flux.applyAppearance(window.localStorage.getItem('flux.appearance') || 'system')
+    } catch {
+        window.Flux.applyAppearance('system')
+    }
 </script>
 HTML;
     }
