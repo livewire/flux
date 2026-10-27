@@ -40,7 +40,7 @@ $classes = Flux::classes()
             alt="{{ $alt }}"
             loading="lazy"
             decoding="async"
-            class="size-full object-cover"
+            class="absolute inset-0 size-full object-cover"
         >
     </span>
 <?php else: ?>
