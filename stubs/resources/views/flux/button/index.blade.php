@@ -113,8 +113,8 @@ $classes = Flux::classes()
             'filled' => 'bg-zinc-800/5 hover:bg-zinc-800/10 dark:bg-white/10 dark:hover:bg-white/20',
             'outline' => 'bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75',
             'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500',
-            'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
-            'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15',
+            'ghost' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 in-data-flux-sidebar:data-open:bg-zinc-800/5 dark:in-data-flux-sidebar:data-open:bg-white/15',
+            'subtle' => 'bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 in-data-flux-sidebar:data-open:bg-zinc-800/5 dark:in-data-flux-sidebar:data-open:bg-white/15',
         },
     })
     ->add(match (true) { // Text color...
@@ -128,7 +128,7 @@ $classes = Flux::classes()
             'outline' => 'text-zinc-800 dark:text-white',
             'danger' => 'text-white',
             'ghost' => 'text-zinc-800 dark:text-white',
-            'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white',
+            'subtle' => 'text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white in-data-flux-sidebar:data-open:text-zinc-800 dark:in-data-flux-sidebar:data-open:text-white',
         },
     })
     ->add(match (true) { // Border color...
