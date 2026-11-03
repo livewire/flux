@@ -42,12 +42,18 @@ $classes = Flux::classes()
             'data-current:text-(--color-accent-content) hover:data-current:text-(--color-accent-content)',
             'data-current:bg-white dark:data-current:bg-white/[7%] data-current:border data-current:border-zinc-200 dark:data-current:border-transparent',
             'hover:text-zinc-800 dark:hover:text-white dark:hover:bg-white/[7%] hover:bg-zinc-800/5 ',
+            // Keep the hover treatment while a popover this item triggers, or one inside it, is open...
+            'not-data-current:data-open:text-zinc-800 dark:not-data-current:data-open:text-white dark:not-data-current:data-open:bg-white/[7%] not-data-current:data-open:bg-zinc-800/5',
+            'not-data-current:has-data-open:text-zinc-800 dark:not-data-current:has-data-open:text-white dark:not-data-current:has-data-open:bg-white/[7%] not-data-current:has-data-open:bg-zinc-800/5',
             'border border-transparent',
         ],
         false => [
             'data-current:text-zinc-800 dark:data-current:text-zinc-100 data-current:border-zinc-200',
             'data-current:bg-white dark:data-current:bg-white/10 data-current:border data-current:border-zinc-200 dark:data-current:border-white/10 data-current:shadow-xs',
             'hover:text-zinc-800 dark:hover:text-white',
+            // Keep the hover treatment while a popover this item triggers, or one inside it, is open...
+            'not-data-current:data-open:text-zinc-800 dark:not-data-current:data-open:text-white',
+            'not-data-current:has-data-open:text-zinc-800 dark:not-data-current:has-data-open:text-white',
         ],
     })
     // Override the default styles to match dropdowns for when the item is inside a collapsed group dropdown...

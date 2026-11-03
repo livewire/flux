@@ -42,11 +42,11 @@
         </ui-disclosure>
 
         <flux:dropdown hover class="in-data-flux-sidebar-on-mobile:hidden not-in-data-flux-sidebar-collapsed-desktop:hidden" position="right" align="start" data-flux-sidebar-group-dropdown>
-            <button type="button" class="border-1 border-transparent w-full px-3 in-data-flux-menu:px-2 h-8 flex gap-3 items-center group/disclosure-button my-px rounded-lg in-data-flux-sidebar-collapsed-desktop:not-in-data-flux-menu:w-10 in-data-flux-sidebar-collapsed-desktop:not-in-data-flux-menu:justify-center hover:bg-zinc-800/5 dark:hover:bg-white/[7%] in-data-flux-menu:hover:bg-zinc-50 dark:in-data-flux-menu:hover:bg-zinc-600 text-zinc-500 in-data-flux-menu:text-zinc-800 hover:text-zinc-800 dark:text-white/80 in-data-flux-menu:dark:text-white dark:hover:text-white">
+            <button type="button" class="border-1 border-transparent w-full px-3 in-data-flux-menu:px-2 h-8 flex gap-3 items-center group/disclosure-button my-px rounded-lg in-data-flux-sidebar-collapsed-desktop:not-in-data-flux-menu:w-10 in-data-flux-sidebar-collapsed-desktop:not-in-data-flux-menu:justify-center hover:bg-zinc-800/5 dark:hover:bg-white/[7%] data-open:bg-zinc-800/5 dark:data-open:bg-white/[7%] in-data-flux-menu:hover:bg-zinc-50 dark:in-data-flux-menu:hover:bg-zinc-600 in-data-flux-menu:data-open:bg-zinc-50 dark:in-data-flux-menu:data-open:bg-zinc-600 text-zinc-500 in-data-flux-menu:text-zinc-800 hover:text-zinc-800 data-open:text-zinc-800 dark:text-white/80 in-data-flux-menu:dark:text-white dark:hover:text-white dark:data-open:text-white">
                 <?php if ($icon): ?>
                     <div class="relative">
                         <?php if (is_string($icon) && $icon !== ''): ?>
-                            <flux:icon :icon="$icon" :variant="$iconVariant" class="in-data-flux-menu:text-zinc-400 in-data-flux-menu:dark:text-white/80 in-data-flux-menu:[[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current size-4" />
+                            <flux:icon :icon="$icon" :variant="$iconVariant" class="in-data-flux-menu:text-zinc-400 in-data-flux-menu:dark:text-white/80 in-data-flux-menu:[[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current [[data-flux-sidebar-group-dropdown]>button[data-open]_&]:text-current size-4" />
                         <?php else: ?>
                             {{ $icon }}
                         <?php endif; ?>
@@ -56,8 +56,8 @@
                 <span class="hidden in-data-flux-menu:block flex-1 text-start text-sm font-medium leading-none text-zinc-800 dark:text-white">{{ $heading }}</span>
 
                 <div class="hidden in-data-flux-menu:block">
-                    <flux:icon.chevron-right :variant="$iconVariant" class="ms-auto size-4 text-zinc-400 [[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current rtl:hidden" />
-                    <flux:icon.chevron-left :variant="$iconVariant" class="ms-auto size-4 text-zinc-400 [[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current hidden rtl:inline" />
+                    <flux:icon.chevron-right :variant="$iconVariant" class="ms-auto size-4 text-zinc-400 [[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current [[data-flux-sidebar-group-dropdown]>button[data-open]_&]:text-current rtl:hidden" />
+                    <flux:icon.chevron-left :variant="$iconVariant" class="ms-auto size-4 text-zinc-400 [[data-flux-sidebar-group-dropdown]>button:hover_&]:text-current [[data-flux-sidebar-group-dropdown]>button[data-open]_&]:text-current hidden rtl:inline" />
                 </div>
             </button>
 
