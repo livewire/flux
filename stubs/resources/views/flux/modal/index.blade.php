@@ -10,6 +10,7 @@
     'scroll' => null,
     'flyout' => null,
     'name' => null,
+    'transition' => null,
 ])
 
 @php
@@ -98,6 +99,10 @@ if ($dismissible === false) {
 
 if ($escapable === false) {
     $attributes = $attributes->merge(['disable-escape' => '']);
+}
+
+if ($transition === false) {
+    $attributes = $attributes->merge(['data-flux-no-transition' => '']);
 }
 
 [ $contentAttributes, $attributes ] = Flux::splitAttributes($attributes, ['autofocus', 'class', 'style']);

@@ -138,6 +138,67 @@ dialog[open] [data-flux-modal-content] {
     }
 }
 
+/*
+Opt out of modal transitions with :transition="false"...
+*/
+[data-flux-modal][data-flux-no-transition] > dialog,
+[data-flux-modal][data-flux-no-transition] > dialog::backdrop,
+[data-flux-modal][data-flux-no-transition] [data-flux-modal-content] {
+    transition: none;
+}
+
+/*
+Keep the fade but drop the scale and slide when reduced motion is preferred...
+*/
+@media (prefers-reduced-motion: reduce) {
+    [data-flux-modal] > dialog,
+    [data-flux-modal] > dialog[data-flux-flyout],
+    [data-flux-modal-content] {
+        transform: none;
+    }
+
+    @starting-style {
+        [data-flux-modal] > dialog[open],
+        [data-flux-modal] > dialog[open][data-flux-flyout],
+        dialog[open] [data-flux-modal-content] {
+            transform: none;
+        }
+    }
+}
+
+/*
+Transition dropdowns, navmenus and tooltips with a fade and a short slide away from their trigger (submenus stay instant)...
+*/
+@layer base {
+    /* Slide direction: down by default, up for top, sideways for left and right... */
+    [position^="top"] > [popover] { --flux-popover-offset: 0 0.25rem; }
+    [position^="left"] > [popover] { --flux-popover-offset: 0.25rem 0; }
+    [position^="right"] > [popover] { --flux-popover-offset: -0.25rem 0; }
+
+    :is([data-flux-menu]:not(:where([data-flux-menu-submenu] > *)), [data-flux-navmenu], [data-flux-tooltip-content])[popover] {
+        opacity: 0;
+        translate: var(--flux-popover-offset, 0 -0.25rem);
+        transition: opacity 0.075s, translate 0.075s, display 0.075s allow-discrete, overlay 0.075s allow-discrete;
+
+        /* Separate rules so browsers without :popover-open still get the polyfill class... */
+        &:popover-open { opacity: 1; translate: 0 0; transition-duration: 0.15s; }
+        &.\:popover-open { opacity: 1; translate: 0 0; transition-duration: 0.15s; }
+
+        @starting-style {
+            &:popover-open { opacity: 0; translate: var(--flux-popover-offset, 0 -0.25rem); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            --flux-popover-offset: 0 0;
+        }
+    }
+
+    /* Opt out with :transition="false". Scoped so an opted-out modal doesn't affect the dropdowns inside it... */
+    :is(ui-dropdown, ui-tooltip)[data-flux-no-transition] [popover] {
+        transition: none;
+    }
+}
+
 /**
 Native select styles...
 */
@@ -337,6 +398,31 @@ ui-toast-group {
             transition: opacity 0.35s allow-discrete, transform 0.35s allow-discrete, height 0.35s allow-discrete;
         }
     }
+}
+
+/*
+Keep the fade but drop the slide and stacking motion when reduced motion is preferred (before the opt-out, so the opt-out wins)...
+*/
+@media (prefers-reduced-motion: reduce) {
+    ui-toast [data-flux-toast-dialog],
+    ui-toast [data-flux-toast-dialog].showing,
+    ui-toast-group [data-flux-toast-dialog],
+    ui-toast-group [data-flux-toast-dialog] > * {
+        transition-property: opacity;
+    }
+
+    /* The toast group slides each toast in and out with an inline transform... */
+    ui-toast-group [data-flux-toast-dialog] > * {
+        transform: none !important;
+    }
+}
+
+/*
+Opt out of toast transitions with :transition="false"...
+*/
+:is(ui-toast, ui-toast-group)[data-flux-no-transition] [data-flux-toast-dialog],
+:is(ui-toast, ui-toast-group)[data-flux-no-transition] [data-flux-toast-dialog] > * {
+    transition: none;
 }
 
 /**
