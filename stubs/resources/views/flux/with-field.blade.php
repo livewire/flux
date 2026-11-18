@@ -15,7 +15,14 @@ extract(Flux::forwardedAttributes($attributes, [
 ]));
 @endphp
 
-@php $descriptionTrailing = $descriptionTrailing ??= $attributes->pluck('description:trailing'); @endphp
+@php
+if (! isset($descriptionTrailing)) {
+    $descriptionTrailing = $attributes->pluck('description:trailing');
+
+    // Blade escapes bound attribute values, so unescape this one the same way Flux::forwardedAttributes() does for the other props...
+    $descriptionTrailing = is_string($descriptionTrailing) ? htmlspecialchars_decode($descriptionTrailing, ENT_QUOTES) : $descriptionTrailing;
+}
+@endphp
 
 @props([
     'name' => $attributes->whereStartsWith('wire:model')->first(),
