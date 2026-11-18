@@ -18,7 +18,6 @@ $tooltip = $tooltip ?? $placeholder;
 $tooltipKbd ??= $kbd;
 
 $tooltipClasses = Flux::classes()
-    ->add('w-full')
     ->add('in-data-flux-sidebar-header:in-data-flux-sidebar-collapsed-desktop:in-data-flux-sidebar-active:hidden')
     ;
 
