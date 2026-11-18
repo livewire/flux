@@ -14,7 +14,9 @@
 
     $iconClasses = Flux::classes()
         ->add('inline-block size-5 text-[var(--callout-icon)] dark:text-[var(--callout-icon)]')
+        // `class:icon` is @deprecated but needed for backwards compatibility...
         ->add($attributes->pluck('class:icon'))
+        ->add($attributes->pluck('icon:class'))
         ;
 @endphp
 
