@@ -7,9 +7,14 @@
     'content' => null,
     'kbd' => null,
     'toggleable' => null,
+    'transition' => null,
 ])
 
 @php
+if ($transition === false) {
+    $attributes = $attributes->merge(['data-flux-no-transition' => '']);
+}
+
 // Support adding the .self modifier to the wire:model directive...
 if (($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wireModel->hasModifier('self')) {
     unset($attributes[$wireModel->directive]);
