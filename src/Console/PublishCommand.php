@@ -38,6 +38,7 @@ class PublishCommand extends Command
             'Heading' => ['heading', 'subheading', 'text', 'link'],
             'Icon' => ['icon'],
             'Input' => ['input'],
+            'Item' => ['item'],
             'Layout' => ['header', 'sidebar', 'aside', 'main', 'footer', 'container', 'brand', 'profile', 'spacer'],
             'Modal' => ['modal'],
             'Navbar' => ['navbar', 'navlist'],

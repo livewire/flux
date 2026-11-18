@@ -221,7 +221,7 @@ $classes = Flux::classes()
 @endphp
 
 <flux:with-tooltip :$attributes>
-    <flux:button-or-link-pure :$type :attributes="$attributes->class($classes)" data-flux-button>
+    <flux:button-or-link-pure :$type :attributes="$attributes->class($classes)" data-flux-button :data-flux-button-square="$square ? '' : null">
         <?php if ($loading): ?>
             <div class="absolute inset-0 flex items-center justify-center opacity-0" data-flux-loading-indicator>
                 <flux:icon icon="loading" :variant="$iconVariant" :class="$iconClasses" />
