@@ -21,6 +21,17 @@ form) is supported, but nested cards and parts inside a body start a new context
 /* A footer's divider only divides: none with nothing above it, or straight under a header, whose own line
 already divides the two... */
 @custom-variant flux-after-content (&:not(:first-child, [data-flux-card-header] + *));
+@custom-variant flux-item-standalone (&:where(:not([data-flux-item-group] > *)));
+
+/* A narrow item moves its actions under the text when they include a labeled button, so the heading keeps
+its room. Compact controls (switches, values, icon buttons, dropdowns showing a value) stay beside it... */
+@custom-variant flux-item-stacked {
+    @container (width < 24rem) {
+        &:where([data-flux-item]:has(> [data-flux-item-actions] [data-flux-button]:not([data-flux-button-square], [data-flux-dropdown] > *, [data-flux-dropdown] > [data-flux-tooltip] > *)) > *) {
+            @slot;
+        }
+    }
+}
 
 @theme {
     --color-accent: var(--color-zinc-800);
