@@ -25,6 +25,8 @@ if (! isset($name)) {
 
 $classes = Flux::classes()
     ->add('flex gap-3')
+    // A tooltip wrapper (via "tooltip" prop) becomes the flex item, so it has to stretch like the radio it wraps...
+    ->add('[&>ui-tooltip]:flex-1')
     ;
 @endphp
 
