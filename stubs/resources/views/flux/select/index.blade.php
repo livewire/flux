@@ -13,6 +13,8 @@
     'variant' => 'default',
 ])
 
-<flux:with-field :$attributes>
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
+<flux:with-field :attributes="$fieldAttributes">
     <flux:delegate-component :component="'select.variants.' . $variant">{{ $slot }}</flux:delegate-component>
 </flux:with-field>

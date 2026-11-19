@@ -32,7 +32,9 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<flux:with-field :$attributes>
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
+<flux:with-field :attributes="$fieldAttributes">
     <textarea
         {{ $attributes->class($classes) }}
         rows="{{ $rows }}"

@@ -166,6 +166,21 @@ class FluxManager
         return $newAttributes;
     }
 
+    /**
+     * Remove the attributes flux:with-field consumes (label, badge, description, and the field:,
+     * label:, description: and error: prefixed ones) so they don't also end up on the control.
+     */
+    public function withoutFieldAttributes($attributes)
+    {
+        return $attributes->filter(fn ($value, $key) =>
+            ! in_array($key, ['label', 'badge', 'description', 'description:trailing'], true)
+            && ! str_starts_with($key, 'field:')
+            && ! str_starts_with($key, 'label:')
+            && ! str_starts_with($key, 'description:')
+            && ! str_starts_with($key, 'error:')
+        );
+    }
+
     public function applyInset($inset, $top, $right, $bottom, $left)
     {
         if ($inset === null) return '';

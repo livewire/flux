@@ -63,7 +63,9 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<flux:with-field :$attributes :$name>
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
+<flux:with-field :attributes="$fieldAttributes" :$name>
     <div {{ $attributes->class($classes) }} data-flux-input-group>
         {{ $slot }}
     </div>

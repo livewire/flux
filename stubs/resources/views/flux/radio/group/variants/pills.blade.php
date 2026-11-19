@@ -27,7 +27,9 @@ $classes = Flux::classes()
     ;
 @endphp
 
-<flux:with-field :$attributes>
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
+<flux:with-field :attributes="$fieldAttributes">
     <ui-radio-group {{ $attributes->class($classes) }} @if($showName) name="{{ $name }}" @endif data-flux-radio-group-pills>
         {{ $slot }}
     </ui-radio-group>
