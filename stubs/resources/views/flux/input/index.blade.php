@@ -131,12 +131,14 @@ $classes = Flux::classes()
     ;
 @endphp
 
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
 <?php if ($type === 'file'): ?>
-    <flux:with-field :$attributes :$name>
+    <flux:with-field :attributes="$fieldAttributes" :$name>
         <flux:input.file :$attributes :$name :$size />
     </flux:with-field>
 <?php elseif ($as !== 'button'): ?>
-    <flux:with-field :$attributes :$name>
+    <flux:with-field :attributes="$fieldAttributes" :$name>
         <div {{ $attributes->only('class')->class('w-full relative block group/input') }} data-flux-input>
             <?php if (is_string($iconLeading) && $iconLeading !== ''): ?>
                 <div class="pointer-events-none absolute top-0 bottom-0 border-s border-transparent flex items-center justify-center text-xs text-zinc-400/75 dark:text-white/60 ps-3 start-0">

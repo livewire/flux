@@ -17,7 +17,9 @@
         ->add('[&_[data-flux-input-group]]:w-auto')
 @endphp
 
-<flux:with-field :$attributes>
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
+<flux:with-field :attributes="$fieldAttributes">
     <ui-otp
         {{ $attributes->class($classes) }}
         data-flux-otp

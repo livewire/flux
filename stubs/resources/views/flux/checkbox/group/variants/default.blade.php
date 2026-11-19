@@ -24,7 +24,9 @@ if (($wireModel = $attributes->wire('model')) && $wireModel->directive && ! $wir
 }
 @endphp
 
-<flux:with-field :$attributes>
+@php [$fieldAttributes, $attributes] = [$attributes, Flux::withoutFieldAttributes($attributes)]; @endphp
+
+<flux:with-field :attributes="$fieldAttributes">
     <ui-checkbox-group {{ $attributes->class($classes) }} data-flux-checkbox-group>
         {{ $slot }}
     </ui-checkbox-group>
