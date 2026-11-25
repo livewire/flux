@@ -80,7 +80,7 @@ $classes = Flux::classes()
                 // If we have an icon, we want to reduce the padding on the side that has the icon...
                 : ($iconLeading && $iconLeading !== '' ? 'ps-3' : 'ps-4') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-3' : 'pe-4')
         ),
-        'sm' => 'h-8 text-sm rounded-md gap-2' . ' ' . (
+        'sm' => 'h-8 text-sm rounded-md gap-1.5' . ' ' . (
             $square
                 ? 'w-8'
                 : ($iconLeading && $iconLeading !== '' ? 'ps-2' : 'ps-3') . ' ' . ($iconTrailing && $iconTrailing !== '' ? 'pe-2' : 'pe-3')
